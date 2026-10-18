@@ -1,0 +1,16 @@
+name: research
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - calculix=2.23
+  - pip
+  - pip:
+      - numpy==2.5.4
+      - scipy==1.18.1
+      - pandas==3.0.6
+      - matplotlib==3.11.2
+      - scikit-learn==1.9.1
+      - pytest==9.1.1
+      - gmsh==4.15.2
+      - openseespy==3.8.0.0
