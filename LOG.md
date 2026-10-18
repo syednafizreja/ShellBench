@@ -4,3 +4,4 @@
 - Env 'research' uses Python 3.12 (OpenSeesPy needs python312.dll)
 - Installed: gmsh, OpenSeesPy, CalculiX 2.23, numpy, scipy, pandas, matplotlib, scikit-learn, pytest
 - Fixed: missing Documents folder, conda in PowerShell, Git PATH
+- Claude Code connected; Project created with env research / Py 3.12
