@@ -1,1 +1,10 @@
 thesis_source/
+__pycache__/
+.pytest_cache/
+*.frd
+*.dat
+*.sta
+*.cvg
+*.12d
+spooles.out
+.vscode/
