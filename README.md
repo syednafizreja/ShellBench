@@ -8,7 +8,7 @@ How much embodied carbon do thin-shell floors save in code-designed RC frames in
 
 ## Status
 
-Work in progress — Day 0.
+Work in progress.
 
 ## Repository structure
 
@@ -21,7 +21,9 @@ ShellBench/
 ├── figures/          generated figures
 ├── notes/            working notes
 ├── paper/            manuscript
+├── pyproject.toml    package and pytest configuration
 ├── environment.yml   conda environment specification
+├── CLAUDE.md         rules for AI assistance
 ├── CITATION.cff      citation metadata
 ├── LICENSE           MIT licence
 └── LOG.md            research log
@@ -43,6 +45,10 @@ From the repository root, with the `research` environment active:
 ```bash
 pytest
 ```
+
+## Use of AI assistance
+
+The code in this repository is written with Claude (Anthropic) and checked by the author. The rules Claude works under are in [CLAUDE.md](CLAUDE.md).
 
 ## Author
 
