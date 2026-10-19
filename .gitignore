@@ -8,3 +8,4 @@ __pycache__/
 *.12d
 spooles.out
 .vscode/
+.claude/settings.local.json
