@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "shellbench"
+version = "0.1.0"
+description = "Whole-building embodied-carbon savings of thin-shell floors in code-designed RC frames in seismic zones."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Syed Nafiz Reja Hasib" }]
+# Dependencies are pinned in environment.yml (conda env "research").
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
