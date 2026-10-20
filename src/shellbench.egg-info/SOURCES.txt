@@ -1,0 +1,10 @@
+LICENSE
+README.md
+pyproject.toml
+src/shellbench/__init__.py
+src/shellbench.egg-info/PKG-INFO
+src/shellbench.egg-info/SOURCES.txt
+src/shellbench.egg-info/dependency_links.txt
+src/shellbench.egg-info/top_level.txt
+tests/test_placeholder.py
+tests/test_smoke.py
