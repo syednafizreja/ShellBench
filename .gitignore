@@ -9,3 +9,4 @@ __pycache__/
 spooles.out
 .vscode/
 .settings.local.json
+*.egg-info/

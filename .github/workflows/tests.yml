@@ -1,0 +1,30 @@
+# Run the pytest suite on every push and pull request.
+# The tests only need pytest and the package itself, so this installs those
+# rather than the full conda environment (OpenSeesPy, gmsh, CalculiX).
+# When tests start importing the analysis libraries, install them here too.
+
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install package and pytest
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pytest==9.1.1
+          python -m pip install -e .
+
+      - name: Run tests
+        run: pytest -v
