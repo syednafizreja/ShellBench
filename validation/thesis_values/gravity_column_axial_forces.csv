@@ -1,0 +1,17 @@
+load_case [text],axis [text],floor [text],N_top [kN],N_bottom [kN],source [text],flag [text]
+dead,A/D,4,196.69,232.55,"Thesis s6.2.1, Table 4-9 'Specific calculation results'",none
+dead,A/D,3,485.4,521.26,"Thesis s6.2.1, Table 4-9 'Specific calculation results'",none
+dead,A/D,2,774.83,810.69,"Thesis s6.2.1, Table 4-9 'Specific calculation results'",none
+dead,A/D,1,1073.36,1118.68,"Thesis s6.2.1, Table 4-9 'Specific calculation results'",none
+dead,B/C,4,275.99,311.85,"Thesis s6.2.1, Table 4-9 'Specific calculation results'",none
+dead,B/C,3,685.56,721.42,"Thesis s6.2.1, Table 4-9 'Specific calculation results'",none
+dead,B/C,2,1094.42,1130.28,"Thesis s6.2.1, Table 4-9 'Specific calculation results'",none
+dead,B/C,1,1513.09,1558.41,"Thesis s6.2.1, Table 4-9 'Specific calculation results'",none
+live,A/D,4,15.10,15.10,"Thesis s7.3, unnumbered table after Table 7-4 (Figure 7-2 axial force under live load)",none
+live,A/D,3,88.63,88.63,"Thesis s7.3, unnumbered table after Table 7-4 (Figure 7-2 axial force under live load)",none
+live,A/D,2,162.14,162.14,"Thesis s7.3, unnumbered table after Table 7-4 (Figure 7-2 axial force under live load)",none
+live,A/D,1,237.59,237.59,"Thesis s7.3, unnumbered table after Table 7-4 (Figure 7-2 axial force under live load)",none
+live,B/C,4,30.40,30.40,"Thesis s7.3, unnumbered table after Table 7-4 (Figure 7-2 axial force under live load)",none
+live,B/C,3,409.08,409.08,"Thesis s7.3, unnumbered table after Table 7-4 (Figure 7-2 axial force under live load)","D4: 30.40 + 32.77 + 108.32 = 171.49, not 409.08 (running sum breaks here; floors 2-1 follow from 409.08)"
+live,B/C,2,550.18,550.18,"Thesis s7.3, unnumbered table after Table 7-4 (Figure 7-2 axial force under live load)",D4: carries the floor-3 error
+live,B/C,1,689.34,689.34,"Thesis s7.3, unnumbered table after Table 7-4 (Figure 7-2 axial force under live load)",D4: carries the floor-3 error
