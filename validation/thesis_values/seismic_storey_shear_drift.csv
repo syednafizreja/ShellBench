@@ -1,0 +1,6 @@
+level [text],V [kN],sum_D [N/mm],du [mm],u [mm],h [mm],theta [-],source [text],flag [text]
+1,363.06,92842,4.04,4.04,4550,0.000887912,"Thesis s8.4, Table 8-12 'Displacement checking computation under lateral horizontal earthquake'","D9: hand-check row; V/sum_D = 3.91 mm, printed 4.04 (+3.3%) [J]; B4: shear includes the level-5 force"
+2,332.03,107488,3.19,7.23,3600,0.000886111,"Thesis s8.4, Table 8-12 'Displacement checking computation under lateral horizontal earthquake'",D9: printed du about 3.3% above V/sum_D [J]; B4: shear includes the level-5 force
+3,277.47,107488,2.67,9.90,3600,0.000741666,"Thesis s8.4, Table 8-12 'Displacement checking computation under lateral horizontal earthquake'",D9: printed du about 3.4% above V/sum_D [J]; B4: shear includes the level-5 force
+4,199.85,107488,1.93,11.83,3600,0.000536111,"Thesis s8.4, Table 8-12 'Displacement checking computation under lateral horizontal earthquake'",D9: printed du about 3.8% above V/sum_D [J]; B4: shear includes the level-5 force
+5,98.29,107488,0.95,12.78,3600,0.000263889,"Thesis s8.4, Table 8-12 'Displacement checking computation under lateral horizontal earthquake'","B4: erroneous extra level (decided 20 Oct 2026); kept as printed, not a validation target"

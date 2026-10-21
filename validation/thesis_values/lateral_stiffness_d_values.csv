@@ -1,0 +1,5 @@
+level [text],column [text],K [-],alpha_c [-],D [N/mm],source [text],flag [text]
+1,A/D,0.621,0.427,19302,"Thesis s7.3, Table 7-6 'Computation table of lateral displacement stiffness of frame Column-1'",D5: hand-check row; from s2.6 stiffnesses K = 4.875/7.72 = 0.632 [J]
+1,B/C,2.03,1.31,27120,"Thesis s7.3, Table 7-6 'Computation table of lateral displacement stiffness of frame Column-1'",D6: from s2.6 stiffnesses K = (4.875+6.68)/7.72 = 1.50 and alpha_c = 0.57 [J]; printed K and alpha_c not reproducible
+2-4,A/D,0.92,1.02,19621,"Thesis s7.3, Table 7-6 'Computation table of lateral displacement stiffness of frame Column-1'","D6: alpha_c > 1 is impossible; from s2.6 K = 0.50, alpha_c = 0.20 [J]; printed label '2, 3 / 4'"
+2-4,B/C,1.91,0.834,34123,"Thesis s7.3, Table 7-6 'Computation table of lateral displacement stiffness of frame Column-1'","D6: from s2.6 K = 1.19, alpha_c = 0.37 [J]; printed label '2, 3 / 4'"

@@ -1,0 +1,5 @@
+level [text],W_k [kN],V [kN],sum_D [N/mm],du [mm],u [mm],h [mm],theta [-],source [text],flag [text]
+1,10.74,42.67,92842,0.78,0.78,4050,0.00019259,"Thesis s8.2, Table 8-2 'Displacement checking computation of wind load'; sum_D from Table 7-7",D7: du printed 0.78 but V/sum_D = 0.46 mm [J]; B4: h = 4050 used for wind (ground column 4550)
+2,10.1,31.93,107488,0.91,1.69,3600,0.00046944,"Thesis s8.2, Table 8-2 'Displacement checking computation of wind load'; sum_D from Table 7-7","D7: V/sum_D = 0.30 mm [J]; D8: theta = u/h (1.69/3600), not du/h"
+3,10.41,21.83,107488,0.51,2.2,3600,0.00061111,"Thesis s8.2, Table 8-2 'Displacement checking computation of wind load'; sum_D from Table 7-7","D7: V/sum_D = 0.20 mm [J]; D8: theta = u/h (2.2/3600), not du/h"
+4,11.42,11.42,107488,1.13,3.33,3600,0.000925,"Thesis s8.2, Table 8-2 'Displacement checking computation of wind load'; sum_D from Table 7-7","D7: V/sum_D = 0.11 mm [J]; D8: theta = u/h (3.33/3600), not du/h"
