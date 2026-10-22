@@ -6,13 +6,16 @@ How to check each paper: click the DOI link and confirm the title, authors, year
 
 "Read?" says how much I actually read: **Full** = whole text; **Abstract** = abstract only, so nothing beyond the abstract goes in the matrix; **No** = not yet opened [?].
 
+## Access statement (for the Methods section)
+
+All 19 papers in the list, and both foundation papers, are legally free to read without an institutional login: each is open access at the publisher (gold or hybrid OA under a Creative Commons licence) or has the authors' accepted manuscript in a university repository. They were identified with OpenAlex / Unpaywall OA flags and checked on 22 Oct 2026. Where we read an accepted manuscript (rows 1 and 2, and Mergos 2024), we cite the version of record and note that the accepted manuscript was read; content is the same after peer review, but page layout differs. No paywalled paper is used for any claim. Suggested Methods wording [J]: "All sources were accessed through open-access versions of record or authors' accepted manuscripts deposited in institutional repositories."
+
 ## A. Thin-shell and low-carbon concrete floors
 
 | # | Paper | DOI (check here) | Free full text | Read? |
 |---|---|---|---|---|
-| 1 | Hawkins, Orr, Ibell, Shepherd (2020). A design methodology to reduce the embodied carbon of concrete buildings using thin-shell floors. *Engineering Structures* 207, 110195 | https://doi.org/10.1016/j.engstruct.2020.110195 | None found. Author copy may be on https://www.researchgate.net/publication/338885938 | Abstract |
+| 1 | Hawkins, Orr, Ibell, Shepherd (2020). A design methodology to reduce the embodied carbon of concrete buildings using thin-shell floors. *Engineering Structures* 207, 110195 | https://doi.org/10.1016/j.engstruct.2020.110195 | Accepted manuscript (Univ. of Bath, CC BY-NC-ND): https://researchportal.bath.ac.uk/files/203056865/Accepted_manuscript.pdf | Full (AAM) |
 | 2 | Jayasinghe, Orr, Ibell, Boshoff (2021). Comparing the embodied carbon and cost of concrete floor solutions. *J. Cleaner Production* 324, 129268 | https://doi.org/10.1016/j.jclepro.2021.129268 | https://purehost.bath.ac.uk/ws/files/226509748/Compare_Cost_and_Carbon_2nd_Revision_Amila_final_manuscript.pdf | Full |
-| 3 | Ismail, Mueller (2021). Minimizing embodied energy of reinforced concrete floor systems in developing countries through shape optimization. *Engineering Structures* 246, 112955 | https://doi.org/10.1016/j.engstruct.2021.112955 | None found. Try https://www.researchgate.net/publication/353996546 | No [?] |
 | 4 | Jayasinghe, Orr, Hawkins, Ibell, Boshoff (2022). Comparing different strategies of minimising embodied carbon in concrete floors. *J. Cleaner Production* 345, 131177 | https://doi.org/10.1016/j.jclepro.2022.131177 | https://www.sciencedirect.com/science/article/pii/S0959652622008083 | Full |
 | 5 | Oval, Nuh, Costa, et al. (2023). A prototype low-carbon segmented concrete shell building floor system. *Structures* 49 | https://doi.org/10.1016/j.istruc.2023.01.063 | https://www.sciencedirect.com/science/article/pii/S2352012423000644 | Full |
 | 6 | Feickert, Mueller (2023). Thin shell foundations: quantification of embodied carbon reduction through materially efficient geometry. *Architecture, Structures and Construction* 4(1) | https://doi.org/10.1007/s44150-023-00101-z | https://link.springer.com/content/pdf/10.1007/s44150-023-00101-z.pdf | Full |
@@ -39,9 +42,9 @@ How to check each paper: click the DOI link and confirm the title, authors, year
 | 17 | Fang, Kenny, Mueller (2025). Material efficiency as a key opportunity to reduce embodied carbon in structural systems: data insights from 226 fully designed projects. *J. Structural Engineering* | https://doi.org/10.1061/JSENDH.STENG-14451 | https://ascelibrary.org/doi/pdf/10.1061/JSENDH.STENG-14451 | Full |
 | 18 | Gauch, Dunant, Hawkins, Cabrera Serrenho (2023). What really matters in multi-storey building design? *Applied Energy* 333, 120585 | https://doi.org/10.1016/j.apenergy.2022.120585 | https://www.sciencedirect.com/science/article/pii/S0306261922018426 | Full |
 | 19 | Lyu, Sory, Reinhart, Mueller, Kirchain, Norford (2025). Advanced parametric and machine learning techniques for reducing embodied carbon in concrete structures. *Building Simulation 2025* | https://doi.org/10.26868/25222708.2025.1339 | https://publications.ibpsa.org/proceedings/bs/2025/papers/bs2025_1339.pdf | Full |
-| 20 | Fang, Brown, De Wolf, Mueller (2023). Reducing embodied carbon in structural systems: a review of early-stage design strategies. *J. Building Engineering* 76, 107054 | https://doi.org/10.1016/j.jobe.2023.107054 | https://dspace.mit.edu/bitstream/1721.1/152266/1/2023-06-09%20preprint.pdf | No [?] |
+| 20 | Fang, Brown, De Wolf, Mueller (2023). Reducing embodied carbon in structural systems: a review of early-stage design strategies. *J. Building Engineering* 76, 107054 | https://doi.org/10.1016/j.jobe.2023.107054 | https://dspace.mit.edu/bitstream/1721.1/152266/1/2023-06-09%20preprint.pdf | No (open preprint; MIT server refused automated access on 22 Oct) |
 
-Dropped from the old list: Suwondo et al. 2025 (low-tier journal, not needed now that rows 11-16 cover seismic EC).
+Dropped: Ismail & Mueller 2021 (*Engineering Structures* 246, 112955; no legal open copy, not needed for any gap; the related MIT thesis is from 2019, outside our window). Suwondo et al. 2025 (low-tier journal, not needed now that rows 11-16 cover seismic EC).
 
 ## Foundations, before 2020 (cited for method only, not in the matrix)
 
@@ -52,4 +55,4 @@ Dropped from the old list: Suwondo et al. 2025 (low-tier journal, not needed now
 
 Every DOI above was checked today against OpenAlex or Crossref; the titles matched.
 
-Import all 22 into Zotero (or EndNote) in one click: https://literature.researchfasttrack.com/zotero?ids=10.1016/j.engstruct.2020.110195,10.1016/j.jclepro.2021.129268,10.1016/j.engstruct.2021.112955,10.1016/j.jclepro.2022.131177,10.1016/j.istruc.2023.01.063,10.1007/s44150-023-00101-z,10.1061/JSENDH.STENG-12320,10.1007/s44150-025-00126-6,10.1016/j.compstruc.2025.108042,10.1016/j.istruc.2025.109427,10.1016/j.jobe.2026.117119,10.3390/buildings16122408,10.1016/j.enbuild.2024.114505,10.1016/j.dibe.2022.100079,10.3390/buildings13071714,10.1007/s10518-025-02191-0,10.1061/JSENDH.STENG-14451,10.1016/j.apenergy.2022.120585,10.26868/25222708.2025.1339,10.1016/j.jobe.2023.107054,10.1016/j.engstruct.2017.01.075,10.1016/j.istruc.2018.10.006
+Import all 21 into Zotero (or EndNote) in one click: https://literature.researchfasttrack.com/zotero?ids=10.1016/j.engstruct.2020.110195,10.1016/j.jclepro.2021.129268,10.1016/j.jclepro.2022.131177,10.1016/j.istruc.2023.01.063,10.1007/s44150-023-00101-z,10.1061/JSENDH.STENG-12320,10.1007/s44150-025-00126-6,10.1016/j.compstruc.2025.108042,10.1016/j.istruc.2025.109427,10.1016/j.jobe.2026.117119,10.3390/buildings16122408,10.1016/j.enbuild.2024.114505,10.1016/j.dibe.2022.100079,10.3390/buildings13071714,10.1007/s10518-025-02191-0,10.1061/JSENDH.STENG-14451,10.1016/j.apenergy.2022.120585,10.26868/25222708.2025.1339,10.1016/j.jobe.2023.107054,10.1016/j.engstruct.2017.01.075,10.1016/j.istruc.2018.10.006
