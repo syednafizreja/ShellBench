@@ -1,10 +1,12 @@
 # Research question (charter amendment, 22 Oct 2026)
 
-This file records a change to the research question in the ShellBench Project Charter. The charter PDF is kept outside this repository. The charter was reissued on 22 Oct 2026 with the revised question and a dated amendment note: the Claude Docs charter was edited, and a new PDF was exported as "ShellBench Project Charter (amended 22 Oct 2026).pdf". The new PDF still has to be uploaded to the Claude Project knowledge in place of the 19 Oct PDF.
+This file records a change to the research question in the ShellBench Project Charter. The charter PDF is kept outside this repository. The charter was reissued on 22 Oct 2026 with the revised question (storey count included) and a dated amendment note: the Claude Docs charter was edited, and a new PDF was exported as "ShellBench Project Charter (amended 22 Oct 2026).pdf". The new PDF still has to be uploaded to the Claude Project knowledge in place of the 19 Oct PDF.
 
 ## Revised question
 
-> How much do thin-shell floors cut the whole-building A1-A3 embodied carbon of an RC frame designed to GB 50010 / GB 50011, and how does that saving change with seismic intensity once diaphragm, tie and topping needs are met?
+> How much do thin-shell floors cut the whole-building A1-A3 embodied carbon of a GB 50010 / GB 50011 RC frame across 3-8 storeys, and how does the saving change with storey count and seismic intensity once diaphragm, tie and topping needs are met?
+
+Storey count restored by the author on 22 Oct 2026. The first revision had dropped it, but the building family (3-8 storeys) and frozen hypothesis H2 ("grows with seismic intensity and storey count") keep it. Leaving it out would make the stated question disagree with the experimental design.
 
 Original question: how much embodied carbon do thin-shell floors save in code-designed RC frames in seismic zones, once every knock-on effect is counted?
 
@@ -21,7 +23,7 @@ Decided by the author on 22 Oct 2026 after the stress test in [goal_stress_test.
 ## What Paper 1 will report
 
 1. Absolute and percentage A1-A3 saving against the best conventional floor (and against the anchor).
-2. How that saving varies with PGA.
+2. How that saving varies with PGA and with storey count (3-8).
 3. The minimum topping needed for diaphragm action, and its carbon cost.
 
 Smaller holes H4-H9 (vertical seismic action, one building, Chinese carbon factors, shell validation, storey height, buildability) are handled as sensitivity cases or in the discussion. They do not widen the scope.
