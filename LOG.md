@@ -37,3 +37,14 @@ Later still on 22 Oct (closing Day 4 carry-overs, on my instruction): Fang et al
 Page numbers were added for rows 20-24.
 Compliance: sources - no new references; row 20 now read from a legal open copy. AI use - Claude downloaded, read and checked the papers and edited gap_matrix.md, reading_list.md and q1_standards.md; I still need to read rows 20-24 myself before citing them (R4). Numbers - every new number is quoted from the paper with a page. Data - nothing confidential committed; thesis_source/ not tracked. Repo - branch day04-review-rows, PR merged, Week 1 issue updated.
 Update, 22 Oct: I have read and reviewed rows 20-24 myself; Claude's PDF check was a cross-check of my reading. All 23 rows in the gap matrix are now ticked [x] (the [x]ᶜ marker is removed). This meets R4.
+
+Day 4 carry-overs closed, 22 Oct:
+- **Page numbers:** rows 4, 6, 8, 10, 12, 13, 15, 16, 18 and 19 now have pages from PDFs read with page breaks, and row 5 has accepted-manuscript pages. Rows 9, 11 and 14 keep section locators only. Their version of record is on ScienceDirect, which blocks automated downloads and reserves text and data mining, and their repository copies refused access. To close them, open each PDF in a browser and add the page.
+- **Row 15 correction:** the hybrid's foundation is in the bill of materials (core-wall footing 700 mm against 900 mm, §4.2 p. 9). "Lighter foundations only suggested" was too strong. Added to G2 as context [J].
+- **Fang 2023 version:** the file is dated 9 June 2023 and Crossref registered the DOI on 20 June 2023, which fits the cover's "author's final manuscript" [J].
+- **Charter:** reissued with the revised question and a dated amendment note. The PDF is saved beside the original on the Desktop; it still needs uploading to the Claude Project knowledge.
+- **Grade-dependent detailing for intensities 8-9:** moved to the Week 3 issue (#3), where goal_stress_test.md schedules it. It needs GB 50011 clauses from my copy.
+
+Open decision for me: the revised question drops "storey count", but frozen H2 and the building family (3-8 storeys) keep it. The family PGA range (0.05-0.20 g) is also narrower than the anchor sweep (to 0.40 g). Decide whether storey count stays in the question.
+
+Compliance: sources - no new references; page numbers come from legal open copies (version of record or accepted manuscript, named in reading_list.md). AI use - Claude downloaded and read the PDFs, added pages, corrected row 15 and edited the charter text to my amendment; I review. Numbers - every new number is quoted with a page. Data - nothing confidential committed; thesis_source/ not tracked. Repo - branch day04-closeout, PR merged, Week 1 and Week 3 issues updated.
