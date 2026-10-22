@@ -1,6 +1,6 @@
 # Research question (charter amendment, 22 Oct 2026)
 
-This file records a change to the research question in the ShellBench Project Charter. The charter PDF is kept outside this repository. The charter was reissued on 22 Oct 2026 with the revised question (storey count included) and a dated amendment note: the Claude Docs charter was edited, and a new PDF was exported as "ShellBench Project Charter (amended 22 Oct 2026).pdf". The new PDF still has to be uploaded to the Claude Project knowledge in place of the 19 Oct PDF.
+This file records a change to the research question in the ShellBench Project Charter. The charter PDF is kept outside this repository. The charter was reissued on 22 Oct 2026 with the revised question (storey count included) and a dated amendment note: the Claude Docs charter was edited, and a new PDF was exported as "ShellBench Project Charter (amended 22 Oct 2026).pdf". The author uploaded the new PDF to the Claude Project knowledge on 22 Oct 2026, replacing the 19 Oct PDF.
 
 ## Revised question
 
