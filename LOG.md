@@ -36,3 +36,4 @@ Later still on 22 Oct (closing Day 4 carry-overs, on my instruction): Fang et al
 - q1_standards R14: the "33%" was wrong. NIST counts 33 review articles and prints no percentage.
 Page numbers were added for rows 20-24.
 Compliance: sources - no new references; row 20 now read from a legal open copy. AI use - Claude downloaded, read and checked the papers and edited gap_matrix.md, reading_list.md and q1_standards.md; I still need to read rows 20-24 myself before citing them (R4). Numbers - every new number is quoted from the paper with a page. Data - nothing confidential committed; thesis_source/ not tracked. Repo - branch day04-review-rows, PR merged, Week 1 issue updated.
+Update, 22 Oct: I have read and reviewed rows 20-24 myself; Claude's PDF check was a cross-check of my reading. All 23 rows in the gap matrix are now ticked [x] (the [x]ᶜ marker is removed). This meets R4.
