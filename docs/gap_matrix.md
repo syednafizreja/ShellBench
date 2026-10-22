@@ -1,0 +1,73 @@
+# Gap matrix (Day 4, 22 Oct 2026)
+
+Research question (revised 22 Oct 2026, see [research_question.md](research_question.md)): how much do thin-shell floors cut the whole-building A1-A3 embodied carbon of an RC frame designed to GB 50010 / GB 50011, and how does that saving change with seismic intensity once diaphragm, tie and topping needs are met?
+
+Rules used here:
+- Only papers from 2020-2026 (your rule, 22 Oct). Pre-2020 work (Liew 2017; Hawkins et al. 2018) is cited for method only and is not in the matrix.
+- Every claim has a locator (section, table or abstract). Page numbers are "p. [?]" because I read the papers as web text without page breaks. Please add the page when you tick a row.
+- [J] = my judgement. [?] = not verified. "Abstract only" rows cannot support a gap statement on their own.
+- Paper numbers match [reading_list.md](reading_list.md).
+- Review status: on 22 Oct 2026 the author checked every evidence locator against the papers and agreed with all rows and G1-G4. Rows marked [x] are reviewed; page numbers still marked p. [?] are to be added from the PDFs. Rows 1, 3 and 20 stay unticked (not read in full).
+
+Column key: **Seismic?** = were seismic or lateral loads part of the design? **Ties/fill/topping?** = were they counted in the carbon? **Scale** = element, floor bay, one storey, or whole building.
+
+## A. Thin-shell and low-carbon floors
+
+| # | Paper | What they built or studied | Floor type | Seismic? | Ties/fill/topping? | Scale | Relation to our question | Evidence (locator) | Tick |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | Hawkins et al. 2020 | A design method for vaulted TRC shell floors with prestressed steel ties and structural fill; EC versus flat slabs, 6-18 m spans | Thin shell (TRC) | Not stated in abstract [?] | Ties and fill are part of the system; whether counted in EC is not stated in the abstract [?] | Floor bay [?] | 53-58% EC saving and 43-53% lower self-weight, which "would save additional material in columns and foundations". Knock-on claimed, not quantified (in abstract). **Abstract only.** | Abstract; Highlights. p. [?] | [ ] |
+| 2 | Jayasinghe et al. 2021 | Parametric EC and cost of conventional floor types against column spacing | Flat, two-way, PT, one-way, ribbed, troughed, hollow-core. No shells | No | Not applicable. Foundations, ground slab and shear walls excluded | One floor (slabs, beams, columns) | Shows that column grid drives floor EC. Conventional baseline only | §2 floor types; scope list (cost excludes "foundation ... shear walls"). p. [?] | [x] |
+| 3 | Ismail & Mueller 2021 | Shape-optimised RC floors for developing countries (from title) | Shaped/ribbed RC [?] | [?] | [?] | [?] | **Not read. No free copy.** Keep out of gap statements | None | [ ] |
+| 4 | Jayasinghe et al. 2022 | Compares strategies to cut floor EC: thickness, concrete grade, other systems, thin shells | Flat slab, PT, two-way, hollow-core, thin shell (groin vault) | No. Says shells need "further research ... in terms of vibration, acoustics, fire safety and lateral stability" (citing Hawkins et al. 2020) | Yes. Shells "with fillers" and steel ties counted. Column share taken from flat-slab results | One storey; "foundations ... were excluded" | Up to 65% EC saving with shells, gravity only. Names lateral stability as open | §3.3; §3.4 scope; §5 Conclusions. p. [?] | [x] |
+| 5 | Oval et al. 2023 | Full-scale segmented shell floor prototype (4.5 m) on columns with tie rods and levelled floor; LCA | Segmented thin shell (sprayed fibre RC) | No. Load cases: G, G' = 1.0 kN/m², Q = 1.5 kN/m² | Yes. Tie rods and levelled floor are in the system; Table 6 carbon breakdown includes the stainless tie rods | One bay (prototype) | 100 kg/m², about 25% of a flat slab's mass, "less load on the columns ... and on the foundations" (not quantified). About 50% A1-A3 saving. §7 Future work has no lateral item [J] | Abstract; §2 design; Table 6; §7. p. [?] | [x] |
+| 6 | Feickert & Mueller 2023 | Shape-optimised thin-shell foundations; a full 6-storey frame model with shaped floors, beams and footings | Shaped floors in the full model (Table 5); shell footings | No. "The lateral load resisting system (LLRS) is not considered" | Not stated [?] | Whole frame (gravity) plus footing | Only 2020-26 paper that carries floor savings down to the foundations, but with no lateral system | Section "Embodied carbon impact of foundations in full structural building model"; Table 5. p. [?] | [x] |
+| 7 | Reksowardojo et al. 2023 | Rib-stiffened slabs with adaptive tensioning; design and control benchmark | Ribbed slab with actuators | No (gravity and serviceability) | Not applicable | Floor panel | Up to 67% material saving. Floor element only | Abstract. p. [?] | [x] |
+| 8 | Nuh et al. 2025 | Reconfigurable segmented fan shell floor, quarter-scale prototypes | Segmented thin shell | No. Gravity: SDL 1.0 kPa, live 1.5 kPa | Yes. M24 tie resists the horizontal thrust; counted in EC [?] | One bay | 19% EC premium over a non-reconfigurable shell (ACORN). Gravity only | Load-case section; tie section; EC comparison section. p. [?] | [x] |
+| 9 | Pollet et al. 2025 | Deep-learning surrogate (MLP/CNN/GNN) for buckling and stress of 20,000 shells | Monolithic thin shell on four corner columns | No. Self-weight, 1 kN/m² levelling and 2.5 kN/m² live load | Levelling as a load only; no ties [?] | Single shell | Shows surrogates work for shells, but gravity only and no carbon at building scale. Relevant to Paper 2 | Abstract; §2.2.1; §2.2.3. p. [?] | [x] |
+| 10 | Belizario-Silva et al. 2025 | 28 RC floor alternatives in one building, four column spans | Flat, PT and beam-supported floors. No shells | No. "seismic loads were not considered, as the building was assumed to be in Brazil" | Not applicable | One building; foundations excluded [?] | 48-167 kgCO2/m². Assumes seismic loads would not change the ranking because shear walls would be added to all options. **This assumption is untested** [J] | §5 Discussion (limitations). p. [?] | [x] |
+
+## B. Seismic design and embodied carbon
+
+| # | Paper | What they built or studied | Floor type | Seismic? | Ties/fill/topping? | Scale | Relation to our question | Evidence (locator) | Tick |
+|---|---|---|---|---|---|---|---|---|---|
+| 11 | Krieg et al. 2026 | Quantitative review of 52 papers on seismic design and EC | Mixed (conventional) | Yes (review) | Not applicable | Whole buildings (review) | Only 17% of reviewed papers included foundations. PGA 0.1 to 0.2 g raised A1-A3 EC by 19% on average (one source study). Research needs (§9.2) do not name floor systems [J] | §5.4; §6.4; §9.2. p. [?] | [x] |
+| 12 | Yardımcı & Bayraktarlı 2026 | BIM LCA of an 8-storey RC building, TBDY-2018 seismic versus gravity-only | 32 cm hollow-block slab, "fixed for mass isolation" | Yes | Not applicable | Whole building with mat foundation | Floor held fixed on purpose. Names "mass-optimized slab systems" as future research | §3.1 (Tables); §6 Conclusions. p. [?] | [x] |
+| 13 | Mergos 2024 | Optimises RC frames for minimum concrete or EC, 2-6 storeys | Slabs not designed (loads only) [?] | Yes. EC8 DCL, q = 1.5 | Not applicable | Frame | Says findings "cannot be generalized to ... slabs" and calls for future studies on other members | §2; §3.1; Conclusions. p. [?] | [x] |
+| 14 | Mergos 2022 | Surrogate-based optimum design of 3D RC frames to Eurocodes | Slabs as loads only (6 kN/m² dead) | 4-storey: wind. 12-storey: EC8 DCL, PGA 0.36 g, q = 1.5 | Not applicable | Frame | Surrogate design of seismic frames, but floors not varied. Relevant to Paper 2 | §4.1; §4.2. p. [?] | [x] |
+| 15 | Zhang et al. 2023 | 10-storey concrete versus timber-concrete hybrid hotel, Guizhou, China | Concrete versus CLT/timber-concrete floors | Yes. GB 50011-2010, 0.1 g, site class II | Not applicable | Whole building | Lighter building cut base shear by 37% (X) and 27% (Y). Lighter foundations only "suggested", not designed. Same code and PGA as our anchor | §2.2; §3.3. p. [?] | [x] |
+| 16 | Çelebi & Kırtel 2025 | Analysis of a collapsed 6-storey ribbed-slab RC building (2023 Kahramanmaraş earthquakes) against a beam-slab twin | Ribbed slab versus beam-slab | Yes (analysis of an earthquake) | Not applicable | Whole building | Floor type changed the seismic response: lower in-plane stiffness gave longer periods, and vertical inertia doubled first-storey second-order effects. No carbon | Abstract; §4. p. [?] | [x] |
+
+## C. Context: where the carbon sits, sensitivity, fast tools
+
+| # | Paper | What they built or studied | Floor type | Seismic? | Ties/fill/topping? | Scale | Relation to our question | Evidence (locator) | Tick |
+|---|---|---|---|---|---|---|---|---|---|
+| 17 | Fang, Kenny & Mueller 2025 | 226 fully designed structures (Thornton Tomasetti data) | Mixed, real projects | Not a variable. Lists "seismic requirements" as future data | Not applicable | Whole structures | Floors are 42% of structural EC (52% of superstructure); foundations 23%. Floors and foundations vary most | Results text and Table 6 (p. 5 [?]); summary table (p. 12 [?]); future work (p. 13 [?]) | [x] |
+| 18 | Gauch et al. 2023 | Sensitivity of EC, cost and operational energy in multi-storey buildings | Conventional decking options | Concrete shear walls designed for lateral stability; no seismic case found | Not applicable | Whole building (no cores or basements) | Floors and layout drive EC; no seismic case | §2.1; §2.3. p. [?] | [x] |
+| 19 | Lyu et al. 2025 | Parametric RC frame model plus neural-network surrogate for EC (2-10 storeys) | RC slabs (ACI 318) | No. "does not account for lateral loads" | Not applicable | Whole frame including foundations | Surrogate for whole-frame EC, but gravity only and no shell floors. Relevant to Paper 2 | Methods; Discussion (Limitations). p. [?] | [x] |
+| 20 | Fang et al. 2023 (review) | Review of early-stage strategies for structural EC (from title) | [?] | [?] | [?] | [?] | **Not read yet.** Keep out of gap statements | None | [ ] |
+
+## Gap statements (draft, for your review)
+
+Each gap says what is missing, why it matters, and how ShellBench fills it. The rows in brackets are the evidence.
+
+**G1. No study puts thin-shell floors into a seismically designed RC frame.**
+- *Missing:* Shell-floor studies from 2020-2026 are gravity-only (rows 4, 5, 8, 9). Lateral stability is named as open research (row 4, citing row 1). Seismic EC studies hold the floor fixed (row 12: "fixed for mass isolation") or do not design it (rows 13, 14). Row 12 lists "mass-optimized slab systems" and row 13 lists slabs as future work.
+- *Why it matters:* Floors are the largest share of structural EC (42%, row 17). In seismic design, mass drives the base shear, and a lighter building cut it by 27-37% (row 15) [J: this mechanism is why the saving could grow beyond the floor].
+- *How ShellBench fills it:* Redesign the anchor RC frame with shell floors under GB 50010 / GB 50011 at PGA 0.10 g, site class II, and recompute columns, beams and foundations.
+
+**G2. The knock-on saving below the floor is claimed but not measured.**
+- *Missing:* Shell papers say that lower self-weight "would save" material in columns and foundations (rows 1, 5) but do not quantify it. Row 4 excludes foundations. Row 6 quantifies the foundation saving but leaves out the lateral system. Only 17% of seismic EC studies include foundations (row 11).
+- *Why it matters:* Foundations are about 23% of structural EC (row 17). A floor-only boundary can understate or overstate the whole-building result [J].
+- *How ShellBench fills it:* A whole-building A1-A3 boundary that includes ties, fill and topping, columns, beams and foundations, reported element by element.
+
+**G3. Whether seismic design changes the floor ranking is assumed, not tested.**
+- *Missing:* Row 10 assumes seismic loads would not change its ranking of floors. Row 16 shows that floor type itself changes seismic response (in-plane stiffness, periods, vertical inertia).
+- *Why it matters:* If a shell floor's lower mass and different diaphragm behaviour shift the frame design, the gravity-only ranking (rows 4, 10) may not hold in seismic regions [J].
+- *How ShellBench fills it:* Compare the floor options under the same seismic design and report whether the ranking holds. Check diaphragm action and periods with OpenSeesPy.
+
+**G4 (Paper 2). No fast tool predicts the whole-building EC of shell-floored seismic frames.**
+- *Missing:* Surrogates exist for single shells under gravity (row 9), for gravity-only RC frames (row 19) and for seismic frames with fixed floors (row 14). None combines all three.
+- *Why it matters:* Designers need early-stage answers before a full seismic design [J].
+- *How ShellBench fills it:* A parametric family of ShellBench designs and a surrogate trained on them.
+
+Not used for gaps: rows 1, 3 and 20 (not read in full).
