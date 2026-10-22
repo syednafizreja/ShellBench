@@ -20,3 +20,8 @@ Day 3 done: six CSVs in validation/thesis_values/ (beam-end moments, column axia
 Hand checks: (1) ground A/D D-value from s2.6 stiffnesses: K = 0.6315, alpha_c = 0.4300, D = 19 241 N/mm vs printed 19 302 (0.3 %). (2) T 8-12 level 1: du = 363.06e3 / 92 842 = 3.91 mm vs printed 4.04 (printed 3.3 % high); theta = 4.04 / 4550 = 0.000888 matches exactly. Typing confirmed; the differences are in the thesis arithmetic, not the typing.
 Carried forward: flags D1-D12 (validation/thesis_values/README.md), notably T 7-6 K and alpha_c not reproducible (D6), T 8-2 du != V/sum_D (D7), T 8-12 du 3.3-3.9 % above V/sum_D (D9), s9.2 As_prov vs bars (D10). The anchor report must name these.
 Tomorrow: Day 4, literature and the gap matrix.
+
+## Day 4 - 22 Oct 2026
+Day 4 done: docs/gap_matrix.md (20 papers, 2020-2026 only; 17 rows reviewed by me against the evidence locators; rows 1, 3, 20 not read in full) with gap statements G1-G4; docs/reading_list.md with DOI and free-copy links (all DOIs checked, no mismatches).
+Stress test: docs/goal_stress_test.md. No 2020-2026 paper found that puts thin-shell floors in a seismically designed frame. Holes H1-H9; I adopted the three main fixes (PGA sweep 0.05-0.40 g, best-conventional-floor baseline, topping thickness + diaphragm check). Revised question in docs/research_question.md and README.
+Carried forward: page numbers p. [?] in the gap matrix; full text for Hawkins 2020, Ismail & Mueller 2021, Fang et al. 2023; grade-dependent detailing for intensities 8-9 in the redesign loop; charter PDF to be reissued with the new question.
