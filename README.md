@@ -71,6 +71,9 @@ The hypotheses (H1–H4) will be frozen in public in Week 3, before any family r
 | [docs/baseline_spec.md](docs/baseline_spec.md) | Every model input for the thesis building, each with its thesis section or table. 16 inconsistencies found in the thesis (B1–B16), each with the author's decision and reason. |
 | [validation/thesis_values/](validation/thesis_values/) | Six CSV files (95 rows) of thesis results: beam-end moments, column axial forces, D-values, wind drift, seismic storey shear and drift, beam steel. Every row names its source table. 12 flags (D1–D12) mark values that look wrong; they are left as printed. |
 | [tests/](tests/) | Checks that every validation file has units in its headers, no empty cells and numbers where numbers belong. |
+| [docs/gap_matrix.md](docs/gap_matrix.md) | 23 papers from 2020-2026, each with what it studied, whether seismic loads and ties were included, and a section locator; gap statements G1-G4. Sources in [docs/reading_list.md](docs/reading_list.md), all legal open copies. |
+| [docs/goal_stress_test.md](docs/goal_stress_test.md) | Red-team review of the research question (holes H1-H9) and the fixes adopted. |
+| [docs/q1_standards.md](docs/q1_standards.md) | Journal and publication-ethics rules (Elsevier, Springer Nature, COPE) that the project follows every day, with a daily compliance check. |
 
 ## The anchor building
 
@@ -95,7 +98,7 @@ The thesis is kept private and is not in this repository. Only the values typed 
 ShellBench/
 ├── src/shellbench/       Python package (analysis and design code; version string only so far)
 ├── tests/                pytest suite
-├── docs/                 specifications and reports (baseline_spec.md)
+├── docs/                 specifications, literature, charter and journal-rule notes
 ├── validation/
 │   └── thesis_values/    thesis results as CSV validation targets, with flags
 ├── data/                 input data (empty so far)
