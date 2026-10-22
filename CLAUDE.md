@@ -22,3 +22,12 @@ SI units everywhere; every function has a docstring; no hidden constants; every 
 - Windows 11, PowerShell, conda environment `research` (Python 3.12). Use it for every command.
 - `conda` is not on the PowerShell PATH. Run commands with `C:\Users\ASUS\miniconda3\Scripts\conda.exe run -n research <command>`.
 - `thesis_source/` is private and git-ignored. Never commit it.
+
+## Sync with cloud Claude
+
+Two Claudes work on this project: Claude in the Claude app (cloud, project threads) and Claude Code in VS Code (this laptop). Neither can message the other, so the repo carries the handover.
+
+- **At session start:** run `git pull origin main`, then read `docs/handoff.md` (newest entry first) and the latest entry in `LOG.md`. Follow the decisions listed there, and tell me in one line what the last handoff said.
+- **At session end:** add a dated entry at the top of `docs/handoff.md`: what you did, decisions I made, and what is open. Commit and push it with the work.
+- **Rules that apply to both:** `docs/research_question.md` is the living charter. `docs/q1_standards.md` is followed every day. Only 2020-2026 open-access literature goes in the gap matrix.
+- **Quizzes:** these happen in the Claude app only. In VS Code, skip rule 5.
