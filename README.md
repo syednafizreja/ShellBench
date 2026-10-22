@@ -5,7 +5,9 @@
 ![Licence: MIT](https://img.shields.io/badge/licence-MIT-green)
 ![Status: week 1 of 8](https://img.shields.io/badge/status-week%201%20of%208-orange)
 
-**How much embodied carbon do thin-shell floors save in code-designed reinforced-concrete frames in seismic zones, once every knock-on effect is counted?**
+**How much do thin-shell floors cut the whole-building A1–A3 embodied carbon of an RC frame designed to GB 50010 / GB 50011, and how does that saving change with seismic intensity once diaphragm, tie and topping needs are met?**
+
+(Revised 22 Oct 2026; see [docs/research_question.md](docs/research_question.md).)
 
 A thinner floor weighs less. Less weight means smaller seismic forces, which can mean smaller beams, columns and footings. ShellBench follows that chain through the whole building, using real design codes, rather than comparing floors on their own.
 
