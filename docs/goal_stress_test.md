@@ -30,6 +30,8 @@ Verdict: the gap is real. The weak spots are in **how** we answer it, not **whet
 
 > How much does replacing conventional floors with thin-shell floors reduce the whole-building A1-A3 embodied carbon of an RC frame designed to GB 50010 / GB 50011, and how does that saving change with seismic intensity once diaphragm, tie and topping requirements are met?
 
+Later on 22 Oct 2026 the author restored storey count (3-8 storeys, as in H2 and the building family). The current wording is in [research_question.md](research_question.md).
+
 What changes from the charter: the PGA sweep (H1), the fair baseline (H2) and the diaphragm/topping check (H3). The anchor building, the codes and the 0.10 g validation stay the same. Workload (corrected 22 Oct): the sweep is not compute only. At intensities 8 and 9 the frame's seismic grade changes (GB 50011 Table 6.1.2 [?]), so the design loop must apply grade-dependent detailing and axial-ratio limits, and the frame may need larger members. Build those rules into the redesign loop in week 3, not as an afterthought [J].
 
 ## What does not change

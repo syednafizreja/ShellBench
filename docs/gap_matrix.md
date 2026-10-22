@@ -1,6 +1,6 @@
 # Gap matrix (Day 4, 22 Oct 2026)
 
-Research question (revised 22 Oct 2026, see [research_question.md](research_question.md)): how much do thin-shell floors cut the whole-building A1-A3 embodied carbon of an RC frame designed to GB 50010 / GB 50011, and how does that saving change with seismic intensity once diaphragm, tie and topping needs are met?
+Research question (revised 22 Oct 2026, see [research_question.md](research_question.md)): how much do thin-shell floors cut the whole-building A1-A3 embodied carbon of a GB 50010 / GB 50011 RC frame across 3-8 storeys, and how does the saving change with storey count and seismic intensity once diaphragm, tie and topping needs are met?
 
 Rules used here:
 - Only papers from 2020-2026 (your rule, 22 Oct). Pre-2020 work (Liew 2017; Hawkins et al. 2018) is cited for method only and is not in the matrix.
