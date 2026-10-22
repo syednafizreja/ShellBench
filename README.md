@@ -5,7 +5,7 @@
 ![Licence: MIT](https://img.shields.io/badge/licence-MIT-green)
 ![Status: week 1 of 8](https://img.shields.io/badge/status-week%201%20of%208-orange)
 
-**How much do thin-shell floors cut the whole-building A1–A3 embodied carbon of an RC frame designed to GB 50010 / GB 50011, and how does that saving change with seismic intensity once diaphragm, tie and topping needs are met?**
+**How much do thin-shell floors cut the whole-building A1–A3 embodied carbon of a GB 50010 / GB 50011 RC frame across 3–8 storeys, and how does the saving change with storey count and seismic intensity once diaphragm, tie and topping needs are met?**
 
 (Revised 22 Oct 2026; see [docs/research_question.md](docs/research_question.md).)
 
