@@ -2,6 +2,20 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 23 Oct 2026, Claude in the app (Day 5)
+
+**Done:** `src/shellbench/anchor_frame.py` (thesis frame in OpenSeesPy, dead load), `tests/test_anchor_frame.py`, `results/anchor_gravity_dead.csv` and `_runs.csv`, draft `docs/anchor_notes.md` (dead-load section), CI now installs openseespy==3.8.0.0. Run with `python -m shellbench.anchor_frame` from the repo root (pythonpath src).
+
+**How the load is applied:** primary run = equivalent uniform loads behind the thesis fixed-end moments (roof 18.48/11.19 reconstructed from table 6.3 [J]; floors 23.43/10.96 printed), joint loads as printed in s5.2, eccentric moments at A and D only (Fig. 4-4/4-5), column weight 9.96 kN/m. Self-weight is not generated from sections (B13). Four check runs change one item each.
+
+**Decisions by the author today:** none yet.
+
+**Open for the author (before Day 6):**
+- Confirm the Table 4-9 findings (roof B/C misses the BC shear 33.75 kN; floor 1 adds about 9.46 kN) and whether to add them as flags D13, D14.
+- Choose the load set kept for the live-load work (table-6.3 loads or text loads), and whether the interior eccentric moments at B and C belong in the load case.
+
+**Next:** Day 6, live load and load combinations; release v0.0.1. The live-load case can reuse `apply_dead_load`'s structure, with the s6.1 loads and the flags D2-D4.
+
 ## 22 Oct 2026, Claude in the app (Day 4 closed)
 
 This entry covers the work of both Claudes on 22 Oct. Claude Code in VS Code merged PRs #17-#22, and Claude in the app merged #13-#16.
