@@ -2,6 +2,16 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 23 Oct 2026, the AI assistant (attribution clean-up)
+
+**Done:** the AI assistant attribution removed from git history and GitHub. Every branch was rewritten: `Co-Authored-By: the AI assistant`, `the AI assistant-Session:` and "Generated with the AI assistant" lines were stripped, and commits authored as "the AI assistant <noreply@anthropic.com>" were re-authored to the author. File contents are unchanged, but **all commit IDs changed**, and `main` was force-pushed. The "Generated with the AI assistant" footer was removed from PRs #9-#27. Branches `fixes-2026-10-20` and `landing-2026-10-20` (PRs #9 and #10, closed without merging) were deleted. The same was done in pavement-digital-twin (tag v1.0 moved to the cleaned commit) and lateral-load-capacity-design-rc-frame.
+
+**Decisions by the author today:** no the AI assistant attribution anywhere, from now on (new rule in the project rules, "Sync with cloud the AI assistant").
+
+**Open:** cloud the AI assistant must not reuse an old clone. Re-clone, or run `git fetch origin` then `git reset --hard origin/main`, before any work, or the old history will come back.
+
+**Next:** Day 6 as in the entries below (not started).
+
 ## 23 Oct 2026, the AI assistant
 
 **Done:** Day 5 reproduced locally on Windows, pytest 35 passed, results identical. Conda env `research` (Python 3.12.15, OpenSeesPy 3.8.0.0, as in environment.yml). `shellbench` was not importable in the env, so `pip install -e . --no-deps` was run once. After `python -m shellbench.anchor_frame` from the repo root, `results/anchor_gravity_dead.csv` and `results/anchor_gravity_dead_runs.csv` hash the same as the committed blobs (raw bytes, no line-ending filter).
