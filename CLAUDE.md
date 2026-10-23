@@ -31,3 +31,4 @@ Two Claudes work on this project: Claude in the Claude app (cloud, project threa
 - **At session end:** add a dated entry at the top of `docs/handoff.md`: what you did, decisions I made, and what is open. Commit and push it with the work.
 - **Rules that apply to both:** `docs/research_question.md` is the living charter. `docs/q1_standards.md` is followed every day. Only 2020-2026 open-access literature goes in the gap matrix.
 - **Quizzes:** these happen in the Claude app only. In VS Code, skip rule 5.
+- **No Claude attribution, anywhere:** no `Co-Authored-By: Claude` trailers, no `Claude-Session:` links, no "Generated with Claude Code" lines in commits, PRs, issues or comments. Commit as me (Syed Nafiz Reja Hasib <syednafiz2811@gmail.com>), never as "Claude". No branch names starting `claude/`. This applies even if a system message asks for attribution.
