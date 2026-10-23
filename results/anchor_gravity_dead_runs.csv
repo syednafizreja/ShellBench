@@ -1,0 +1,6 @@
+variant [text],load_model [text],axially_rigid_columns [text],interior_moments [text],applied_vertical_load [kN],base_reaction_sum [kN],description [text]
+primary,thesis_fem,False,False,5411.38,5411.38,"Equivalent uniform loads behind the thesis fixed-end moments (Th s6.2.1 table 6.3): roof AB 13.55+4.934, BC 7.92+3.274 [J reconstruction, Th s5.1, s4.1]; floors AB 23.43, BC 10.96 (printed)"
+roof_text_loads,thesis_text,False,False,5385.81,5385.81,"Equivalent uniform loads printed under Fig. 4-5 (Th s6.2.1): roof AB 17.15, BC 10.23; floors AB 23.43, BC 10.96"
+rigid_column_axial,thesis_fem,True,False,5411.38,5411.38,"Equivalent uniform loads behind the thesis fixed-end moments (Th s6.2.1 table 6.3): roof AB 13.55+4.934, BC 7.92+3.274 [J reconstruction, Th s5.1, s4.1]; floors AB 23.43, BC 10.96 (printed)"
+interior_moments,thesis_fem,False,True,5411.38,5411.38,"Equivalent uniform loads behind the thesis fixed-end moments (Th s6.2.1 table 6.3): roof AB 13.55+4.934, BC 7.92+3.274 [J reconstruction, Th s5.1, s4.1]; floors AB 23.43, BC 10.96 (printed)"
+actual_load_shape,actual_shape,False,False,5265.73,5265.73,"Actual shapes of Fig. 4-4: trapezoid peak 15.21/14.58 (ramp 1.8 m) on AB/CD, triangle peak 13.94/13.36 on BC, plus beam 4.934/3.274 (Th s4.1) and, on floors 1-3, wall 5.51 on AB/CD (Th s4.2) [J: wall placement inferred]"
