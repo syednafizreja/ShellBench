@@ -2,7 +2,7 @@
 
 One line of explanation for every difference above 10 % between the anchor model and the thesis (Playbook Day 6). This file starts with the dead-load case (Day 5, 23 Oct 2026). The live-load case is added on Day 6.
 
-Status: **draft by Claude, to be confirmed by the author.** Every explanation is [J] until the author has checked it against the thesis. Numbers come from `results/anchor_gravity_dead.csv` (written by `src/shellbench/anchor_frame.py`) or are arithmetic on printed thesis values, with the table named.
+Status: dead-load section **reviewed by the author on 23 Oct 2026** (decisions at the end). Explanations not covered by those decisions stay [J]. Numbers come from `results/anchor_gravity_dead.csv` (written by `src/shellbench/anchor_frame.py`) or are arithmetic on printed thesis values, with the table named.
 
 Sign convention: beam-end moments are clockwise positive on the member end, as in the thesis. Column axial forces are positive in compression.
 
@@ -72,9 +72,11 @@ Joints A2 to A4 are nearly balanced. A1 and every B joint are not, so the thesis
 - **M, AB right ends (1-5 %).** These look close, but with rigid columns they move to 8-13 %. Axial shortening and the unbalanced B joints happen to offset each other here. So the closeness is not evidence that either side is right.
 - **Equivalent-load method.** Replacing the trapezoid and triangle with equivalent uniform loads gives the right fixed-end moments; the closed-form test in `tests/test_anchor_frame.py` confirms this. But the equivalent loads carry 19 % (trapezoid, α = 0.25) and 25 % (triangle) more total load than the shapes they replace [J]. That changes the beam shears and the column axial forces: the `actual_load_shape` run gives axial forces 2-4 % lower than the primary run. For the carbon model, the load path should use the actual shapes, not the equivalent loads.
 
-### Open for the author
+### Decisions by the author (23 Oct 2026)
 
-1. Confirm or correct the two thesis-arithmetic findings: the missing roof BC shear, and the floor-1 column weight counted twice. If you agree, they become flags D13 and D14 in `validation/thesis_values/README.md`.
-2. Decide which load set the anchor keeps for Day 6 onwards: the table-6.3 loads (primary) or the text loads.
-3. Decide whether the interior eccentric moments at B and C belong in the load case. The figures leave them out, while the table and the B3 balance suggest they were used.
-4. Note that Fig. 4-4 labels the AB beam weight 3.61 kN/m, but the fixed-end moments use 4.934 kN/m (§4.1). Decision B13 kept the printed 4.934 for frame beams, which agrees with the table.
+1. **Table 4-9 findings accepted.** They become flags D13 (roof BC shear missing at B/C) and D14 (ground-column weight counted twice at floor 1) in `validation/thesis_values/README.md`.
+2. **Table 6.3 joint imbalance flagged.** This is D15. The author checked B4 by hand: 68.77 − 52.84 − 67.74 = −51.81 kN·m, not 0. So the 36 % on the roof BC moment is a thesis arithmetic error, not a modelling error.
+3. **Load set:** the anchor keeps the table-6.3 loads (the `primary` run: roof 18.48 / 11.19 kN/m), because they generated the later force tables.
+4. **Interior eccentric moments at B and C are left out**, as in Fig. 4-4 and 4-5. The `interior_moments` run stays only as a check. Note [J]: the B3 balance (−39.19 against 38.09) is the one sign that the table may have used them. The anchor report should mention it as a possible remaining cause at B3 only.
+
+Still open: Fig. 4-4 labels the AB beam weight 3.61 kN/m, while the fixed-end moments use 4.934 kN/m (§4.1). This is consistent with decision B13, so no action is needed.
