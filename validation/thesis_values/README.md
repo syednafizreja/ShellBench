@@ -50,6 +50,9 @@ corrections.
 - D10. s9.2 As_prov does not match the bar designation in 6 rows (e.g. 3C20 = 942 mm2, printed 603).
 - D11. s9.2 floor 1 CD middle: As_req 2030.66 > As_prov 603.
 - D12. s9.2 column "gammaRE x M" is printed in N.mm but equals 0.3 x M in kN*m (e.g. 0.3 x 119.78 = 35.934), while s9.1 states gammaRE = 0.75. Header here says kN*m [J].
+- D13. Dead, Table 4-9, B/C roof: N_top = 214.11 + 61.88 = 275.99 includes only the AB beam shear; the BC beam shear (33.75, Table 4-7) is missing. Floors 3-1 carry the omission down. Found Day 5 (anchor model), confirmed by the author 23 Oct 2026.
+- D14. Dead, Table 4-9, floor 1: N_top exceeds the running sum by 9.46 kN (A/D: 810.69 + 167.77 + 85.44 = 1063.90, printed 1073.36) and 9.15 kN (B/C). 9.46 = 45.32 - 35.86, so the ground-column weight is counted twice [J]. Confirmed by the author 23 Oct 2026.
+- D15. Dead, s6.2.1 table 6.3: final member-end moments do not balance at joints A1 and B1-B4 (out by 39-80 kN*m; e.g. B4: 68.77 - 52.84 - 67.74 = -51.81, should be 0). Beam ends at those joints are arithmetic errors in the hand distribution, not model targets to match. Confirmed by the author 23 Oct 2026 (B4 checked by hand). Details in docs/anchor_notes.md.
 
 ## Hand checks (Day 3)
 
