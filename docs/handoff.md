@@ -8,11 +8,12 @@ Newest entry first. Each Claude reads this at the start of a session and adds an
 
 **How the load is applied:** primary run = equivalent uniform loads behind the thesis fixed-end moments (roof 18.48/11.19 reconstructed from table 6.3 [J]; floors 23.43/10.96 printed), joint loads as printed in s5.2, eccentric moments at A and D only (Fig. 4-4/4-5), column weight 9.96 kN/m. Self-weight is not generated from sections (B13). Four check runs change one item each.
 
-**Decisions by the author today:** none yet.
+**Decisions by the author today:**
+- Flags D13 (Table 4-9 roof BC shear missing), D14 (floor-1 column weight twice) and D15 (table 6.3 joints A1, B1-B4 out of balance; B4 checked by hand: -51.81 kN*m) are now in validation/thesis_values/.
+- The anchor keeps the table-6.3 loads (`primary` run).
+- No interior eccentric moments at B and C.
 
-**Open for the author (before Day 6):**
-- Confirm the Table 4-9 findings (roof B/C misses the BC shear 33.75 kN; floor 1 adds about 9.46 kN) and whether to add them as flags D13, D14.
-- Choose the load set kept for the live-load work (table-6.3 loads or text loads), and whether the interior eccentric moments at B and C belong in the load case.
+**Open:** none for Day 5.
 
 **Next:** Day 6, live load and load combinations; release v0.0.1. The live-load case can reuse `apply_dead_load`'s structure, with the s6.1 loads and the flags D2-D4.
 
