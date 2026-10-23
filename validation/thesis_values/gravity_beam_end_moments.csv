@@ -1,28 +1,28 @@
 load_case [text],floor [text],span [text],beam_end [text],M_end [kN*m],source [text],flag [text]
 dead,4,AB,left (A),-67.76,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
-dead,4,AB,right (B),68.77,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
-dead,4,BC,left (B),-67.74,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
-dead,4,BC,right (C),67.74,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
-dead,4,CD,left (C),-68.77,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
+dead,4,AB,right (B),68.77,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",D15: joint out of balance in table 6.3
+dead,4,BC,left (B),-67.74,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",D15: joint out of balance in table 6.3
+dead,4,BC,right (C),67.74,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",D15: joint out of balance in table 6.3
+dead,4,CD,left (C),-68.77,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",D15: joint out of balance in table 6.3
 dead,4,CD,right (D),67.76,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
 dead,3,AB,left (A),-96.15,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
-dead,3,AB,right (B),90.82,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
-dead,3,BC,left (B),-46.88,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
-dead,3,BC,right (C),46.88,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
-dead,3,CD,left (C),-90.82,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
+dead,3,AB,right (B),90.82,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",D15: joint out of balance in table 6.3
+dead,3,BC,left (B),-46.88,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",D15: joint out of balance in table 6.3
+dead,3,BC,right (C),46.88,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",D15: joint out of balance in table 6.3
+dead,3,CD,left (C),-90.82,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",D15: joint out of balance in table 6.3
 dead,3,CD,right (D),97.64,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",D1: 97.64 breaks symmetry with AB left -96.15; mid-span table s6.2.1 uses 96.15/90.82 for CD
 dead,2,AB,left (A),-97.64,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
-dead,2,AB,right (B),87.18,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
-dead,2,BC,left (B),-44.24,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
-dead,2,BC,right (C),44.24,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
-dead,2,CD,left (C),-87.18,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
+dead,2,AB,right (B),87.18,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",D15: joint out of balance in table 6.3
+dead,2,BC,left (B),-44.24,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",D15: joint out of balance in table 6.3
+dead,2,BC,right (C),44.24,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",D15: joint out of balance in table 6.3
+dead,2,CD,left (C),-87.18,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",D15: joint out of balance in table 6.3
 dead,2,CD,right (D),97.64,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
-dead,1,AB,left (A),-97.12,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
-dead,1,AB,right (B),89.2,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
-dead,1,BC,left (B),-51.33,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
-dead,1,BC,right (C),51.33,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
-dead,1,CD,left (C),-89.2,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
-dead,1,CD,right (D),97.12,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",none
+dead,1,AB,left (A),-97.12,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",D15: joint out of balance in table 6.3
+dead,1,AB,right (B),89.2,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",D15: joint out of balance in table 6.3
+dead,1,BC,left (B),-51.33,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",D15: joint out of balance in table 6.3
+dead,1,BC,right (C),51.33,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",D15: joint out of balance in table 6.3
+dead,1,CD,left (C),-89.2,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",D15: joint out of balance in table 6.3
+dead,1,CD,right (D),97.12,"Thesis s6.2.1, table '6.3 Quadratic distribution of frame bending moment internal force at constant load', final row of floor block",D15: joint out of balance in table 6.3
 live,4,AB,left (A),-4.55,"Thesis s7.2, table '7.2 Secondary distribution of frame bending moment internal force under live load', final row of floor block",none
 live,4,AB,right (B),7.98,"Thesis s7.2, table '7.2 Secondary distribution of frame bending moment internal force under live load', final row of floor block",none
 live,4,BC,left (B),-1.35,"Thesis s7.2, table '7.2 Secondary distribution of frame bending moment internal force under live load', final row of floor block",none
