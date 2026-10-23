@@ -2,6 +2,16 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 23 Oct 2026, Claude Code in VS Code
+
+**Done:** Day 5 reproduced locally on Windows, pytest 35 passed, results identical. Conda env `research` (Python 3.12.15, OpenSeesPy 3.8.0.0, as in environment.yml). `shellbench` was not importable in the env, so `pip install -e . --no-deps` was run once. After `python -m shellbench.anchor_frame` from the repo root, `results/anchor_gravity_dead.csv` and `results/anchor_gravity_dead_runs.csv` hash the same as the committed blobs (raw bytes, no line-ending filter).
+
+**Decisions by the author today:** none new.
+
+**Open:** none. No code or results changed.
+
+**Next:** Day 6 as in the entry below (not started).
+
 ## 23 Oct 2026, Claude in the app (Day 5)
 
 **Done:** `src/shellbench/anchor_frame.py` (thesis frame in OpenSeesPy, dead load), `tests/test_anchor_frame.py`, `results/anchor_gravity_dead.csv` and `_runs.csv`, draft `docs/anchor_notes.md` (dead-load section), CI now installs openseespy==3.8.0.0. Run with `python -m shellbench.anchor_frame` from the repo root (pythonpath src).
