@@ -2,6 +2,16 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 24 Oct 2026, Claude in the app (Day 6 close: routine changes)
+
+**Done:** release v0.0.1 published by the new `.github/workflows/release.yml` (PR #31): merging a PR that adds `docs/releases/v<version>.md` (first line "# Title"), with that version in pyproject.toml, creates the tag and release. Cloud sessions cannot create releases directly (HTTP 403). New project command `.claude/commands/sync.md` (PR #33): in VS Code, `/sync` pulls, reinstalls, runs pytest and the anchor model, checks results are byte-identical, writes the handoff entry and merges a `dayNN-sync` PR.
+
+**Decisions by the author today:** daily routine is one message in the app plus `/sync` in VS Code at day end; no per-day VS Code prompts. Extra local steps for a day go in the cloud handoff entry, which `/sync` step 4 reads.
+
+**Open:** as in the cross-check entry below (D16 re-confirm with revised scope, D17-D20, code clauses).
+
+**Next:** Day 7, weekly review.
+
 ## 24 Oct 2026, Claude Code in VS Code (Day 6 cross-check)
 
 **Done:** Day 6 reproduced on Windows: pytest 64 passed; all 7 results files regenerate byte-identical to the committed blobs. Cross-checked D16-D20 against the thesis .docx (not the typed files). Typed table 7.2: all 296 cells match. D18 (floor 2, C right beam, -26.66) and D19 (B1, -27.67) were redone by hand and hold. D20's back-calculation holds. Table 8-13 changed D16/D17:
