@@ -1,0 +1,6 @@
+variant [text],load_model [text],axially_rigid_columns [text],interior_moments [text],applied_vertical_load [kN],base_reaction_sum [kN],description [text]
+primary,thesis_fem,False,False,1307.32,1307.32,"Uniform loads behind the thesis live fixed-end moments (Th s7.1, table 7.2): roof AB 1.60, BC 0.94 (printed); floors AB 12x27.70/7.2^2 = 6.41, BC 12x3.52/6.6^2 = 0.97 [J back-calculated]"
+shear_loads,thesis_shear,False,False,1605.11,1605.11,"Loads printed in Th s6.1 and used for the beam shears (Tables 7-2, 7-3): roof AB 1.60, BC 0.94; floors AB 8.08, BC 12.37"
+rigid_column_axial,thesis_fem,True,False,1307.32,1307.32,"Uniform loads behind the thesis live fixed-end moments (Th s7.1, table 7.2): roof AB 1.60, BC 0.94 (printed); floors AB 12x27.70/7.2^2 = 6.41, BC 12x3.52/6.6^2 = 0.97 [J back-calculated]"
+interior_moments,thesis_fem,False,True,1307.32,1307.32,"Uniform loads behind the thesis live fixed-end moments (Th s7.1, table 7.2): roof AB 1.60, BC 0.94 (printed); floors AB 12x27.70/7.2^2 = 6.41, BC 12x3.52/6.6^2 = 0.97 [J back-calculated]"
+actual_load_shape,actual_shape,False,False,1499.83,1499.83,"Slab live loads of Th s6.1 as actual shapes: trapezoid peak 1.80 roof / 9.00 floors (ramp 1.8 m) on AB/CD, triangle peak 3.3 roof / 19.80 floors on BC"

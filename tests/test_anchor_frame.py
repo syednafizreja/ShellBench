@@ -145,7 +145,7 @@ def test_hogging_moments_have_thesis_signs():
 def test_comparison_table_written(tmp_path):
     """main() writes one comparison row per dead-load target (24 moments + 16 axial)."""
     shutil.copytree(REPO / "validation", tmp_path / "validation")
-    rows = af.main(tmp_path)
+    rows = af.main(tmp_path)["dead"]
     assert len(rows) == 40
     out = tmp_path / "results" / "anchor_gravity_dead.csv"
     with open(out, newline="", encoding="utf-8") as fh:
