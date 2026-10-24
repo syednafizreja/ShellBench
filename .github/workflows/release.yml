@@ -1,0 +1,43 @@
+# Publish a GitHub release when a new version reaches main.
+# The version is read from pyproject.toml. A release is made only if
+# docs/releases/v<version>.md exists and the tag v<version> does not exist yet.
+# The first line of that file ("# Title") is the release title; the rest is
+# the release notes. This lets releases happen through a normal merged PR.
+
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - pyproject.toml
+      - docs/releases/**
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Read version
+        id: ver
+        run: |
+          v=$(python3 -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          echo "tag=v$v" >> "$GITHUB_OUTPUT"
+          echo "notes=docs/releases/v$v.md" >> "$GITHUB_OUTPUT"
+
+      - name: Create release if new
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.ver.outputs.tag }}
+          NOTES: ${{ steps.ver.outputs.notes }}
+        run: |
+          if [ ! -f "$NOTES" ]; then echo "No $NOTES; nothing to release."; exit 0; fi
+          if gh release view "$TAG" >/dev/null 2>&1; then echo "$TAG already released."; exit 0; fi
+          title=$(head -n 1 "$NOTES" | sed 's/^# *//')
+          tail -n +2 "$NOTES" > body.md
+          gh release create "$TAG" --target "$GITHUB_SHA" --title "$title" --notes-file body.md

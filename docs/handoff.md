@@ -11,9 +11,9 @@ Newest entry first. Each Claude reads this at the start of a session and adds an
 
 So D16/D17 are revised, Table 8-13 is not a validation target, and the "23 % low" estimate is withdrawn (`docs/anchor_notes.md`, "Cross-check of Table 8-13"). The seismic text read by the pattern of items i-v gives 1.2 G_E +/- 1.3 E_h [J], as `combinations.py` holds. Results files unchanged.
 
-**Decisions by the author today:** none yet.
+**Decisions by the author today:** D16 confirmed in the app (roof A support by hand, PR #30). The cross-check came after and narrows its scope (13 of 15 roof rows, no level-1 rows).
 
-**Open (author only):** confirm D16-D20 as revised; name the code clause for 1.3/1.5 and for the seismic 1.2/1.3 in your own copies of the codes. Claude did not supply clause numbers.
+**Open (author only):** re-confirm D16 with its revised scope and confirm D17-D20; name the code clause for 1.3/1.5 and for the seismic 1.2/1.3 in your own copies of the codes. Claude did not supply clause numbers.
 
 **Next:** Day 7, weekly review.
 

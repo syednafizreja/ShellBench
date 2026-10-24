@@ -59,11 +59,11 @@ corrections.
 - D14. Dead, Table 4-9, floor 1: N_top exceeds the running sum by 9.46 kN (A/D: 810.69 + 167.77 + 85.44 = 1063.90, printed 1073.36) and 9.15 kN (B/C). 9.46 = 45.32 - 35.86, so the ground-column weight is counted twice [J]. Confirmed by the author 23 Oct 2026.
 - D15. Dead, s6.2.1 table 6.3: final member-end moments do not balance at joints A1 and B1-B4 (out by 39-80 kN*m; e.g. B4: 68.77 - 52.84 - 67.74 = -51.81, should be 0). Beam ends at those joints are arithmetic errors in the hand distribution, not model targets to match. Confirmed by the author 23 Oct 2026 (B4 checked by hand). Details in docs/anchor_notes.md.
 
-Proposed on Day 6 (24 Oct 2026), **awaiting the author's confirmation**.
+Proposed on Day 6 (24 Oct 2026). D16 confirmed by the author the same day; D17-D20 **await the author's confirmation**.
 Details and arithmetic in docs/anchor_notes.md (live-load and combination
 sections); the checks are coded in `src/shellbench/thesis_checks.py`.
 
-- D16. Table 8-13: the column headed "1.3 Dead load + 1.5 x live" equals 1.0 x dead + 1.5 x live in 13 of the 15 roof rows (e.g. -67.76 + 1.5 x -22.18 = -101.03). The two D-support rows (-44.495, 54.755) and all 15 level-1 rows fit neither 1.0 nor 1.3.
+- D16. Table 8-13: the column headed "1.3 Dead load + 1.5 x live" equals 1.0 x dead + 1.5 x live in 13 of the 15 roof rows (e.g. -67.76 + 1.5 x -22.18 = -101.03). The two D-support rows (-44.495, 54.755) and all 15 level-1 rows fit neither 1.0 nor 1.3. **Confirmed by the author 24 Oct 2026** (A support checked by hand) for the first wording ("all 13 rows"); the revised scope awaits the author's re-confirmation.
 - D17. Table 8-13: the dead and wind columns are cells of table 6.3, not frame forces (roof A support "V" 68.77 is the B4 left-beam final moment; the roof AB shear is 61.88, Table 4-9); the live column matches neither table 7.2 (roof A support -22.18 against -4.55) nor any other thesis table; the wind combination columns cannot be reproduced from simple factors a x D + b x L + c x W. Table 8-13 is therefore not a validation target.
 
 D16 and D17 were revised on 24 Oct 2026 after Claude Code cross-checked
