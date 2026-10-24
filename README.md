@@ -11,7 +11,7 @@
 
 A thinner floor weighs less. Less weight means smaller seismic forces, which can mean smaller beams, columns and footings. ShellBench follows that chain through the whole building, using real design codes, rather than comparing floors on their own.
 
-> **Status.** Week 1 of an 8-week plan. The thesis building has been audited and its published results typed in as validation targets. The first analysis code exists: the thesis frame in OpenSeesPy under dead load, compared with the thesis (Day 5). Daily progress is in [LOG.md](LOG.md).
+> **Status.** Week 1 of an 8-week plan. The thesis building has been audited and its published results typed in as validation targets. The thesis frame runs in OpenSeesPy under dead load (Day 5), live load and the thesis gravity combination (Day 6), and every difference above 10 % from the thesis has a written reason. First release: [v0.0.1](https://github.com/syednafizreja/ShellBench/releases/tag/v0.0.1), "Baseline spec and gravity check". Daily progress is in [LOG.md](LOG.md).
 
 ---
 
@@ -69,10 +69,12 @@ The hypotheses (H1–H4) will be frozen in public in Week 3, before any family r
 | Item | What it holds |
 |---|---|
 | [docs/baseline_spec.md](docs/baseline_spec.md) | Every model input for the thesis building, each with its thesis section or table. 16 inconsistencies found in the thesis (B1–B16), each with the author's decision and reason. |
-| [validation/thesis_values/](validation/thesis_values/) | Six CSV files (95 rows) of thesis results: beam-end moments, column axial forces, D-values, wind drift, seismic storey shear and drift, beam steel. Every row names its source table. 12 flags (D1–D12) mark values that look wrong; they are left as printed. |
+| [validation/thesis_values/](validation/thesis_values/) | Eight CSV files of thesis results: beam-end moments, column axial forces, D-values, wind drift, seismic storey shear and drift, beam steel, the full live-load distribution table and the roof rows of the combination table. Every row names its source table. Flags D1–D15 mark values that look wrong (D16–D20 proposed on Day 6); they are left as printed. |
 | [tests/](tests/) | Checks that every validation file has units in its headers, no empty cells and numbers where numbers belong; closed-form and equilibrium tests of the anchor frame. |
-| [src/shellbench/anchor_frame.py](src/shellbench/anchor_frame.py) | The thesis transverse frame as a 2D elastic OpenSeesPy model, loaded with dead load the way the thesis distributes it. |
-| [results/anchor_gravity_dead.csv](results/anchor_gravity_dead.csv) | Dead-load beam-end moments and column axial forces, model against thesis, with % differences and four check runs. Causes in [docs/anchor_notes.md](docs/anchor_notes.md). |
+| [src/shellbench/anchor_frame.py](src/shellbench/anchor_frame.py) | The thesis transverse frame as a 2D elastic OpenSeesPy model, loaded with dead and live load the way the thesis distributes them. |
+| [src/shellbench/combinations.py](src/shellbench/combinations.py) | The thesis load combinations as data (1.3D + 1.5L now; wind and seismic ones wait for their load cases). |
+| [src/shellbench/thesis_checks.py](src/shellbench/thesis_checks.py) | Arithmetic checks on the thesis tables: column sums and joint balance of the live-load moment distribution, factors of the combination table. |
+| [results/](results/) | Dead-load, live-load and 1.3D + 1.5L comparisons with the thesis (beam-end moments, column axial forces, % differences, check runs), and the thesis-table checks. Causes of every difference above 10 % in [docs/anchor_notes.md](docs/anchor_notes.md). |
 | [docs/gap_matrix.md](docs/gap_matrix.md) | 23 papers from 2020-2026, each with what it studied, whether seismic loads and ties were included, and a section locator; gap statements G1-G4. Sources in [docs/reading_list.md](docs/reading_list.md), all legal open copies. |
 | [docs/goal_stress_test.md](docs/goal_stress_test.md) | Red-team review of the research question (holes H1-H9) and the fixes adopted. |
 | [docs/q1_standards.md](docs/q1_standards.md) | Journal and publication-ethics rules (Elsevier, Springer Nature, COPE) that the project follows every day, with a daily compliance check. |
@@ -98,13 +100,13 @@ The thesis is kept private and is not in this repository. Only the values typed 
 
 ```
 ShellBench/
-├── src/shellbench/       Python package (analysis and design code; anchor frame from Day 5)
+├── src/shellbench/       Python package (anchor frame, load combinations, thesis checks)
 ├── tests/                pytest suite
 ├── docs/                 specifications, literature, charter and journal-rule notes
 ├── validation/
 │   └── thesis_values/    thesis results as CSV validation targets, with flags
 ├── data/                 input data (empty so far)
-├── results/              generated results (empty so far)
+├── results/              generated results (anchor frame, gravity)
 ├── figures/              generated figures (empty so far)
 ├── paper/                manuscripts (empty so far)
 ├── notes/                working notes (empty so far)

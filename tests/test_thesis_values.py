@@ -5,7 +5,7 @@ not judge whether the thesis values are right; they check that every file is
 well formed, so later validation code can read it without guessing units.
 
 Rules checked:
-1. The six expected files exist.
+1. The expected files exist (six from Day 3, two added on Day 6).
 2. Every header cell has the form ``name [unit]``. Labels use ``[text]`` and
    dimensionless numbers use ``[-]``.
 3. Every row has as many cells as the header and no cell is empty.
@@ -27,6 +27,8 @@ EXPECTED_FILES = [
     "wind_drift.csv",
     "seismic_storey_shear_drift.csv",
     "beam_steel_areas.csv",
+    "live_distribution_table_7_2.csv",
+    "combination_beam_roof.csv",
 ]
 
 HEADER_PATTERN = re.compile(r"^[A-Za-z][A-Za-z0-9_]* \[[^\[\]]+\]$")
@@ -40,7 +42,7 @@ def read_csv(path):
 
 
 def test_all_expected_files_exist():
-    """All six Day 3 files are present in validation/thesis_values/."""
+    """All expected files are present in validation/thesis_values/."""
     missing = [name for name in EXPECTED_FILES if not (THESIS_DIR / name).is_file()]
     assert not missing, f"missing files: {missing}"
 

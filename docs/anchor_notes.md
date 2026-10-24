@@ -1,8 +1,10 @@
 # Anchor notes: why the model and the thesis differ
 
-One line of explanation for every difference above 10 % between the anchor model and the thesis (Playbook Day 6). This file starts with the dead-load case (Day 5, 23 Oct 2026). The live-load case is added on Day 6.
+© 2026 Syed Nafiz Reja Hasib. All rights reserved.
 
-Status: dead-load section **reviewed by the author on 23 Oct 2026** (decisions at the end). Explanations not covered by those decisions stay [J]. Numbers come from `results/anchor_gravity_dead.csv` (written by `src/shellbench/anchor_frame.py`) or are arithmetic on printed thesis values, with the table named.
+One line of explanation for every difference above 10 % between the anchor model and the thesis (Playbook Day 6). Dead load was added on Day 5 (23 Oct 2026); live load and the load combinations on Day 6 (24 Oct 2026).
+
+Status: dead-load section **reviewed by the author on 23 Oct 2026** (decisions at the end of that section). Live-load and combination sections: **draft, Day 6, for the author to review**; every explanation there is [J] until then. Numbers come from files in `results/` (written by `src/shellbench/anchor_frame.py`) or are arithmetic on printed thesis values, with the table named.
 
 Sign convention: beam-end moments are clockwise positive on the member end, as in the thesis. Column axial forces are positive in compression.
 
@@ -80,3 +82,126 @@ Joints A2 to A4 are nearly balanced. A1 and every B joint are not, so the thesis
 4. **Interior eccentric moments at B and C are left out**, as in Fig. 4-4 and 4-5. The `interior_moments` run stays only as a check. Note [J]: the B3 balance (−39.19 against 38.09) is the one sign that the table may have used them. The anchor report should mention it as a possible remaining cause at B3 only.
 
 Still open: Fig. 4-4 labels the AB beam weight 3.61 kN/m, while the fixed-end moments use 4.934 kN/m (§4.1). This is consistent with decision B13, so no action is needed.
+
+
+## Live load (Day 6)
+
+Numbers in this section come from `results/anchor_gravity_live.csv`, `results/anchor_gravity_live_runs.csv`, `results/thesis_table_7_2_check.csv` and `results/thesis_table_7_2_joints.csv`, or are arithmetic on printed thesis values with the table named.
+
+### How the thesis applies live load
+
+As with the dead load, the thesis gives the live load more than once, and the versions do not agree:
+
+| Where | Roof AB | Roof BC | Floors AB | Floors BC | Used for |
+|---|---|---|---|---|---|
+| §6.1 slab loads (actual shapes) | trapezoid 1.80 | triangle 3.3 | trapezoid 9.00 | triangle 19.80 | Drawing only |
+| §6.1 equivalent loads | 1.60 | 2.06 | 8.08 | 12.37 | Beam shears, Tables 7-2 and 7-3 (roof BC uses 0.94) |
+| Fixed-end row of table "7.2" (§7.1) | 1.60 (FEM 6.91) | 0.94 (FEM 3.41) | 6.41 (from FEM 27.70) | 0.97 (from FEM 3.52) | Beam-end moments |
+
+All values are kN/m. The floor values in the last row are back-calculated from the printed fixed-end moments (q = 12 M / L²) [J]. The text under table "7.2" also says that beam BC "does not bear the live load", and Table 7-1 sets its span moment to 0, which matches neither 12.37 nor 0.97.
+
+Two observations [J]:
+- 6.41 = 2.0 × 3.6 × (1 − 2 × 0.25² + 0.25³), the office load of §3.2.2 (2.0 kN/m²), not the 2.5 kN/m² of §6.1. So the live **moment** targets correspond to the code office value, while the **shear and axial** targets correspond to 2.5 / 3.0 kN/m² (decision B3). This does not change B3, but the anchor report should say it.
+- §6.1 converts the AB trapezoid with "(1 − 2 × 0.92² + 0.92³)", but the numbers only come out (1.80 → 1.60; 9.00 → 8.01) with α = 1.8 / 7.2 = 0.25. The joint-load line uses 8.01, the shear tables 8.08.
+
+The model's primary run uses the fixed-end-moment loads, because they produced the moment targets; this is the same choice the author made for the dead load on Day 5. Joint loads are the printed §6.1 totals (9.82, 21.07, 45.03, 108.32 kN). Eccentric moments act at A and D only (1.47 and 5.89 kN·m, §7.1), following the Day 5 decision. The other runs change one thing each:
+
+| Run | What changes |
+|---|---|
+| `primary` | Loads behind the table "7.2" fixed-end moments; moments at A and D only; columns axially flexible |
+| `shear_loads` | Floor loads 8.08 and 12.37, as used for the shears |
+| `rigid_column_axial` | Columns axially rigid, as the hand method assumes |
+| `interior_moments` | Adds the moments at B and C printed in table "7.2" (3.16 roof, 15.64 floors) |
+| `actual_load_shape` | Trapezoid and triangle shapes of §6.1 instead of equivalent loads |
+
+All five runs satisfy vertical equilibrium, and the applied load equals a hand sum of the printed loads (`tests/test_anchor_live.py`).
+
+### Three checks on the thesis itself
+
+**1. Column sums in table "7.2".** In a moment-distribution table, each final moment is the sum of the column above it (fixed-end moment plus every distribution and carry-over step). At floors 2-4 the printed finals do not equal those sums:
+
+| Floor | Largest gap (printed − column sum) | Example |
+|---|---|---|
+| 4 (roof) | 6.20 kN·m (B, lower column) | A, right beam: printed −4.55, sum −6.66 |
+| 3 | 5.24 kN·m (B, left beam) | B, left beam: printed 27.92, sum 22.68 |
+| 2 | 23.28 kN·m (C, right beam) | C, right beam: printed −3.38, sum −26.66 (this is flag D2) |
+| 1 | 0.06 kN·m at A, B and D; 1.74 at joint C | sums hold, except the copied C column |
+
+Full list: `results/thesis_table_7_2_check.csv`.
+
+**2. Joint balance in table "7.2".** With the column sums, the exterior joints balance the printed eccentric moment (A4: −1.46 against −1.47; A3: −5.87 and A2: −5.86 against −5.89). A1 is out by 1.03. The interior joints do not balance, either at 0 (no interior moment) or at +15.64 (moment applied): B4 −4.40, B3 −0.47, B2 +6.22, B1 −27.67 kN·m. At B the first distribution step is also not the distribution factor times the unbalanced moment: at B3 the step adds to −12.18, while the fixed-end moments give 27.70 − 3.52 = 24.18 (or 8.54 with the 15.64 applied) [J]. So at B3 the balance near 0 is a coincidence of the carry-overs, and the table does not show which interior moment, if any, was used. Full list: `results/thesis_table_7_2_joints.csv`.
+
+**3. Running sums for the B/C column (Figure 7-2 table).** Flag D4 (Day 3) already notes that 30.40 + 32.77 + 108.32 = 171.49, not 409.08. The "V transfer" of 32.77 also equals the AB right shear 29.67 plus the roof BC shear 3.10. The floor BC shear in Table 7-3 is 40.82. So the axial forces use the roof BC value at every floor [J], which fits the fixed-end-moment load (0.97 kN/m), not the shear table. Continuing the thesis's own sums without the jump: 171.49 (floor 3), 171.49 + 32.78 + 108.32 = 312.59 (floor 2), 312.59 + 30.84 + 108.32 = 451.75 (floor 1).
+
+### Differences above 10 % (primary run)
+
+Moments are compared with the printed table "7.2" values in `results/anchor_gravity_live.csv`. "Rigid vs sum" is the `rigid_column_axial` run against the column sum, from `results/thesis_table_7_2_check.csv`; it shows what is left once the two main effects are removed.
+
+| Quantity | Thesis | Model | Diff | Rigid vs sum | Likely cause | Type |
+|---|---|---|---|---|---|---|
+| M, floor 4, AB left / CD right | ∓4.55 | ∓9.86 | 117 % | 5 % | Printed final is not the column sum (−6.66), plus axial shortening. The moment is small (under 10 kN·m), so a few kN·m is a large percentage | Possible mistake + method |
+| M, floor 4, AB right / CD left | ±7.98 | ±3.66 | 54 % | 32 % | Joint B4 does not balance even with the column sums (−4.40) | Possible mistake |
+| M, floor 4, BC ends | ∓1.35 | ∓2.87 | 113 % | 5 % | Printed final is not the column sum (−3.50); axial shortening | Possible mistake + method |
+| M, floor 3, AB left / CD right | ∓23.72 | ∓30.48 | 29 % | 2 % | Axial shortening of the columns: the interior joint loads (108.32 kN) are 2.4 times the exterior ones (45.03 kN), so B and C shorten more than A and D. The hand method ignores this | Method |
+| M, floor 3, AB right / CD left | ±27.92 | ±20.58 | 26 % | 12 % | Axial shortening, and the printed final is 5.24 above its column sum; the rest is the B3 distribution step | Method + possible mistake |
+| M, floor 2, AB left / CD right | ∓23.25 | ∓30.15 | 30 % | 2 % | Axial shortening | Method |
+| M, floor 2, AB right | 27.92 | 22.11 | 21 % | 2 % | Axial shortening (6.5 % with rigid columns against the printed value) | Method |
+| M, floor 2, BC ends | ∓3.38 | ∓4.30 | 27 % | 2 % | Printed final is not the column sum (−4.60); axial shortening | Possible mistake + method |
+| M, floor 2, CD left | −3.38 | −22.11 | 554 % | 2 % | Copy error D2: the BC value was repeated; the column sum is −26.66 | Mistake |
+| M, floor 1, AB right / CD left | ±17.58 | ±22.73 | 29 % | 43 % | Joint B1 is out of balance by 27.7 kN·m in the thesis | Possible mistake |
+| M, floor 1, BC ends | ∓7.86 | ∓4.88 | 38 % | 36 % | Joint B1 out of balance, as above | Possible mistake |
+| N, floors 3-1, B/C | 409.08 / 550.18 / 689.34 | 162.30 / 295.79 / 429.66 | 60 / 46 / 38 % | n/a | Running-sum error D4. Against the continued sums (171.49 / 312.59 / 451.75) the model is 5.4 / 5.4 / 4.9 % lower, because its AB load is 6.41 kN/m against the 8.08 used for the thesis shears | Mistake |
+
+### Differences below 10 % worth knowing about
+
+- **N, A/D, all floors (−6 to +9 %).** The thesis sums use the 8.08 kN/m shears; the model uses 6.41 kN/m. The roof is +9 % because the model's roof end moments differ from the printed ones (see the table above), which moves shear towards A (small numbers: 16.44 against 15.10 kN).
+- **M, floor 1, AB left (2.6 %).** This is the one interior-floor beam end where the column sum, the joint balance and the model all agree.
+- **Axial shortening is a larger effect for live load than for dead load.** For dead load, making the columns rigid moved the AB left ends by about 8-9 percentage points (Day 5); for live load it moves them by about 17-20 points, because the live joint loads are much larger at B and C than at A and D. For the carbon model this matters [J]: the hand method's moments are not a conservative stand-in for a frame analysis.
+- **Pattern loading.** The thesis puts the full live load on every span at once, and so does the model. A reviewer may ask about chequerboard live load for beam span moments. It is not in the thesis or the charter, so it is not modelled here [J].
+
+## Load combinations (Day 6)
+
+Numbers come from `results/anchor_gravity_combination.csv` and `validation/thesis_values/combination_beam_roof.csv`.
+
+### What the thesis used
+
+§8.7 and the headers of Tables 8-13 and 8-15 give (baseline_spec S13):
+
+1. 1.3 D + 1.5 L
+2. 1.3 D + 1.5 (L ± 0.6 W)
+3. 1.3 D + 1.5 (0.7 L ± W)
+4. A seismic combination. The text is garbled ("Gravitational freight multiplied by1.21.3 times"); it reads as 1.2 × gravity representative value + 1.3 × earthquake [?]. The author should check it in GB 50011 before Day 9.
+
+These are coded as data in `src/shellbench/combinations.py`. The author should confirm which code clause gives 1.3 / 1.5 in their copy (GB 55001-2021 or GB 50009 [?]); the code does not name one. Combinations 2-4 need the wind (Day 8) and seismic (Day 9) cases, so they are reported as pending.
+
+### A check on Table 8-13
+
+In all 13 roof rows of Table 8-13 the column headed "1.3 Dead load + 1.5 × live" equals **1.0 × dead + 1.5 × live**. For example, at the A support: −67.76 + 1.5 × (−22.18) = −101.03, as printed; 1.3 × (−67.76) + 1.5 × (−22.18) = −121.36 would be expected. The test `tests/test_combinations.py` checks every row. If this holds through the rest of the table, the thesis design forces for gravity are about 23 % low on the dead-load part [J]. This matters for Layer 2: a generator that applies 1.3 correctly may not reproduce the thesis member sizes, and the reason would be this, not the generator.
+
+Two more things in Table 8-13 do not fit [J]:
+- Its live-load column does not match table "7.2". At the roof A support it gives −22.18, against −4.55 in table "7.2".
+- The wind columns could not be reproduced. A search over simple factor sets a × D + b × L + c × W (a, b, c from 0 to ±1.95) found no set that fits even the first four roof rows of either wind column. They are left for Day 8.
+
+### Differences above 10 % (1.3 D + 1.5 L)
+
+The reference is 1.3 × (thesis dead) + 1.5 × (thesis live), from the typed tables. Every difference above 10 % comes from the dead and live differences explained above; the combination adds no new cause:
+
+| Rows | Diff | Carried from |
+|---|---|---|
+| M, floor 4, AB left / CD right; floor 3 and 2, AB left / CD right | 11-18 % | Axial shortening (dead and live) and the roof column-sum error (live) |
+| M, floor 4, BC ends | 33 % | Dead joint B4 (D15) and the live roof column-sum error |
+| M, floor 3, AB right / CD left | 11 % | Axial shortening and the live B3 column-sum gap |
+| M, floor 2, CD left | 25 % | Copy errors D2 (live) |
+| M, floor 1, BC ends | 19 % | Dead joint B1 (D15) and live joint B1 |
+| N, floor 4, B/C | 11-13 % | D13 (dead roof BC shear missing) |
+| N, floors 3-1, B/C | 12-21 % | D4 (live running sum) and D13 |
+
+### Proposed flags (for the author to confirm)
+
+- **D16.** Table 8-13: the "1.3 D + 1.5 L" column is 1.0 D + 1.5 L in every roof row.
+- **D17.** Table 8-13: the live column does not match table "7.2", and the wind columns cannot be reproduced from simple factors.
+- **D18.** Table "7.2": at floors 2-4 the printed finals are not the sums of their columns (up to 6.2 kN·m; 23.28 at the D2 cell).
+- **D19.** Table "7.2": joints B4, B2 and B1 do not balance even with the column sums (−4.40, +6.22, −27.67 kN·m), and the first distribution step at B does not follow the distribution factors.
+- **D20.** Live load sets: the fixed-end moments use 6.41 / 0.97 kN/m, the shears 8.08 / 12.37 kN/m, the text says BC carries no live load, and the B/C axial sums use the roof BC shear (3.10) at every floor.
+
+© 2026 Syed Nafiz Reja Hasib. All rights reserved.
