@@ -10,6 +10,9 @@ printed.
 Header rule: every column is `name [unit]`. `[text]` marks a label,
 `[-]` a dimensionless number. Units: kN, kN*m, N/mm, mm, mm2.
 `tests/test_thesis_values.py` checks this rule and that no cell is empty.
+In the two Day 6 files, `[mixed]` columns hold distribution factors [-] or
+moments [kN*m] (table 7.2, by `row`), and moments [kN*m] or shears [kN]
+(Table 8-13, by `force`).
 
 | File | Thesis source | Rows |
 |---|---|---|
@@ -19,6 +22,8 @@ Header rule: every column is `name [unit]`. `[text]` marks a label,
 | wind_drift.csv | s8.2 Table 8-2 (sum_D also in Table 7-7) | 4 |
 | seismic_storey_shear_drift.csv | s8.4 Table 8-12 | 5 |
 | beam_steel_areas.csv | s9.2 unnumbered beam reinforcement table | 18 |
+| live_distribution_table_7_2.csv | s7.2 table "7.2", every cell (factors, joint moments, fixed-end moments, steps, finals); added Day 6 | 296 |
+| combination_beam_roof.csv | s8.7 Table 8-13, level-5 (roof) rows: dead, live, wind and the first combination column; added Day 6 | 13 |
 
 ## Reading notes
 
@@ -53,6 +58,16 @@ corrections.
 - D13. Dead, Table 4-9, B/C roof: N_top = 214.11 + 61.88 = 275.99 includes only the AB beam shear; the BC beam shear (33.75, Table 4-7) is missing. Floors 3-1 carry the omission down. Found Day 5 (anchor model), confirmed by the author 23 Oct 2026.
 - D14. Dead, Table 4-9, floor 1: N_top exceeds the running sum by 9.46 kN (A/D: 810.69 + 167.77 + 85.44 = 1063.90, printed 1073.36) and 9.15 kN (B/C). 9.46 = 45.32 - 35.86, so the ground-column weight is counted twice [J]. Confirmed by the author 23 Oct 2026.
 - D15. Dead, s6.2.1 table 6.3: final member-end moments do not balance at joints A1 and B1-B4 (out by 39-80 kN*m; e.g. B4: 68.77 - 52.84 - 67.74 = -51.81, should be 0). Beam ends at those joints are arithmetic errors in the hand distribution, not model targets to match. Confirmed by the author 23 Oct 2026 (B4 checked by hand). Details in docs/anchor_notes.md.
+
+Proposed on Day 6 (24 Oct 2026), **awaiting the author's confirmation**.
+Details and arithmetic in docs/anchor_notes.md (live-load and combination
+sections); the checks are coded in `src/shellbench/thesis_checks.py`.
+
+- D16. Table 8-13, roof rows: the column headed "1.3 Dead load + 1.5 x live" equals 1.0 x dead + 1.5 x live in all 13 rows (e.g. -67.76 + 1.5 x -22.18 = -101.03).
+- D17. Table 8-13: the live column does not match table 7.2 (roof A support -22.18 against -4.55), and the wind combination columns cannot be reproduced from simple factors a x D + b x L + c x W.
+- D18. Table 7.2, floors 2-4: printed finals are not the sums of their columns (up to 6.20 kN*m; 23.28 at floor 2, C right beam, which is D2).
+- D19. Table 7.2: joints B4, B2, B1 do not balance even with the column sums (-4.40, +6.22, -27.67 kN*m), and the first distribution step at B is not factor x unbalanced moment.
+- D20. Live load sets disagree: fixed-end moments imply AB 6.41 and BC 0.97 kN/m (6.41 = 2.0 kN/m2 office load x 3.6 x 0.8906 [J]); shears use 8.08 and 12.37; the text says BC carries no live load; the B/C axial sums use the roof BC shear 3.10 at every floor instead of 40.82 (Table 7-3).
 
 ## Hand checks (Day 3)
 
