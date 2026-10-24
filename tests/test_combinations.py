@@ -7,7 +7,8 @@
 3. With only dead and live solved, one combination is evaluated and the wind
    and seismic ones are reported as pending.
 4. Thesis Table 8-13 (roof rows): the column headed "1.3 D + 1.5 L" equals
-   1.0 D + 1.5 L in every row (proposed flag D16).
+   1.0 D + 1.5 L in 13 of the 15 rows; the two D-support rows fit neither
+   (proposed flag D16).
 """
 
 from pathlib import Path
@@ -72,10 +73,15 @@ def test_only_gravity_combination_available_on_day_6():
 
 
 def test_table_8_13_used_1_0_dead_not_1_3():
-    """Every roof row of Table 8-13 equals 1.0 D + 1.5 L (D16), and none equals 1.3 D + 1.5 L."""
+    """13 of the 15 roof rows of Table 8-13 equal 1.0 D + 1.5 L (D16); none equals 1.3 D + 1.5 L.
+
+    The two D-support rows fit neither factor set.
+    """
     rows = tc.read_combination_table(TABLE_8_13)
-    assert len(rows) == 13
+    assert len(rows) == 15
     as_printed = tc.combination_factor_check(rows, 1.0, cb.GAMMA_Q)
-    assert all(abs(r["printed_minus_recomputed"]) < 0.01 for r in as_printed)
+    fits = [abs(r["printed_minus_recomputed"]) < 0.01 for r in as_printed]
+    assert sum(fits) == 13
+    assert {r["location"] for r, ok in zip(rows, fits) if not ok} == {"D support"}
     as_headed = tc.combination_factor_check(rows, cb.GAMMA_G, cb.GAMMA_Q)
     assert all(abs(r["printed_minus_recomputed"]) > 1.0 for r in as_headed)
