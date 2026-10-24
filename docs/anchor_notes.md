@@ -176,11 +176,26 @@ These are coded as data in `src/shellbench/combinations.py`. The author should c
 
 ### A check on Table 8-13
 
-In all 13 roof rows of Table 8-13 the column headed "1.3 Dead load + 1.5 × live" equals **1.0 × dead + 1.5 × live**. For example, at the A support: −67.76 + 1.5 × (−22.18) = −101.03, as printed; 1.3 × (−67.76) + 1.5 × (−22.18) = −121.36 would be expected. The test `tests/test_combinations.py` checks every row. If this holds through the rest of the table, the thesis design forces for gravity are about 23 % low on the dead-load part [J]. This matters for Layer 2: a generator that applies 1.3 correctly may not reproduce the thesis member sizes, and the reason would be this, not the generator.
+In 13 of the 15 roof rows of Table 8-13 the column headed "1.3 Dead load + 1.5 × live" equals **1.0 × dead + 1.5 × live** (the first draft said all 13 typed rows; see the cross-check below). For example, at the A support: −67.76 + 1.5 × (−22.18) = −101.03, as printed; 1.3 × (−67.76) + 1.5 × (−22.18) = −121.36 would be expected. The test `tests/test_combinations.py` checks every row. If this holds through the rest of the table, the thesis design forces for gravity are about 23 % low on the dead-load part [J]. (The cross-check below shows that it does not hold at level 1, and that the inputs are not frame forces, so this estimate is withdrawn.) This matters for Layer 2: a generator that applies 1.3 correctly may not reproduce the thesis member sizes, and the reason would be this, not the generator.
 
 Two more things in Table 8-13 do not fit [J]:
 - Its live-load column does not match table "7.2". At the roof A support it gives −22.18, against −4.55 in table "7.2".
 - The wind columns could not be reproduced. A search over simple factor sets a × D + b × L + c × W (a, b, c from 0 to ±1.95) found no set that fits even the first four roof rows of either wind column. They are left for Day 8.
+
+### Cross-check of Table 8-13 against the thesis (Claude Code, 24 Oct 2026)
+
+Done on the thesis .docx (tables read in body order), not on the typed files. It changes D16 and D17:
+
+1. **The roof block has 15 rows, not 13.** The two D-support rows (M −44.495, V 54.755) were left out of the typed file. They fit neither 1.0 D + 1.5 L (−101.03, −104.095) nor 1.3 D + 1.5 L. Both rows are now in `combination_beam_roof.csv`, as printed. So the 1.0 factor holds in 13 of 15 roof rows.
+2. **The level-1 block fits neither factor set in any of its 15 rows.** Example: A support, dead −97.64, live −24.53, printed 48.31 (1.0 D + 1.5 L gives −134.44). Levels 4 to 2 are not printed in the table text.
+3. **The dead and wind inputs are cells of table 6.3, not frame forces.** Every level-5 dead value is a roof-block cell of table 6.3. These come from the final row (67.76, 68.77, 52.84, 67.74), the second distribution step (25.72, 18.96) and the carry-over row (9.92). The "V" rows hold moments: A support V 68.77 is the B4 left-beam final moment, while the roof AB shear is 61.88 (Table 4-9). Every non-zero level-5 wind value is a table 6.3 cell too. These come from the roof first-step and carry-over rows (2.77, 4.08, 9.92, 1.38) and the floor-3 carry-over row (5.87, 7.74). The level-1 dead values are floor-3 and floor-2 cells of table 6.3, not floor-1 cells. They include −97.64, which is the D1 copy error.
+4. **The live values (22.18, 23.55, 17.65, 25.59, 22.60, 8.22, 5.63) appear nowhere else in the thesis text** except Tables 8-14 and 8-15. Their source is unknown. Figures were not searched.
+
+What follows [J]: Table 8-13 cannot be a validation target for combined forces. The 1.0 factor in D16 is real arithmetic, but it is applied to inputs that are not frame forces. So the "about 23 % low on the dead part" estimate above does not measure the error in the thesis design forces; that error is not known. The Layer 2 warning stands, in a stronger form: the thesis member sizes may not follow from any correct combination. The wind columns could not be reproduced (D17) partly because their inputs are table 6.3 cells.
+
+Typed table "7.2" was checked in the same way: all 296 cells in `live_distribution_table_7_2.csv` equal the thesis cells, in reading order. Two D18/D19 numbers were redone by hand from those cells. Floor 2, C right beam: −27.70 + 2.31 − 2.18 + 0.91 = −26.66 (printed −3.38). Joint B1: 17.64 − 26.89 − 10.56 − 7.86 = −27.67.
+
+**Seismic wording (§8.7).** Items i to v write "1.31.5" for "1.3 D + 1.5", and mark right-hand wind with a minus ("primary freight-0.6 right wind"). Read the same way, item vi ("multiplied by1.21.3 times left of collision") is 1.2 G_E + 1.3 E_h with the earthquake from the left. Item vii ("multiplied by1.2-1.3 times") is 1.2 G_E − 1.3 E_h, from the right [J]. This is what `combinations.py` holds. It still needs the author's check against the code before Day 9.
 
 ### Differences above 10 % (1.3 D + 1.5 L)
 
@@ -198,8 +213,8 @@ The reference is 1.3 × (thesis dead) + 1.5 × (thesis live), from the typed tab
 
 ### Proposed flags (for the author to confirm)
 
-- **D16.** Table 8-13: the "1.3 D + 1.5 L" column is 1.0 D + 1.5 L in every roof row.
-- **D17.** Table 8-13: the live column does not match table "7.2", and the wind columns cannot be reproduced from simple factors.
+- **D16.** Table 8-13: the "1.3 D + 1.5 L" column is 1.0 D + 1.5 L in 13 of the 15 roof rows; the two D-support rows and all 15 level-1 rows fit neither 1.0 nor 1.3 (revised after the cross-check above).
+- **D17.** Table 8-13: the dead and wind columns are cells copied from table 6.3, not frame forces ("V" rows hold moments); the live column matches neither table "7.2" nor any other thesis table; the wind combination columns cannot be reproduced from simple factors. So Table 8-13 is not a validation target (revised after the cross-check above).
 - **D18.** Table "7.2": at floors 2-4 the printed finals are not the sums of their columns (up to 6.2 kN·m; 23.28 at the D2 cell).
 - **D19.** Table "7.2": joints B4, B2 and B1 do not balance even with the column sums (−4.40, +6.22, −27.67 kN·m), and the first distribution step at B does not follow the distribution factors.
 - **D20.** Live load sets: the fixed-end moments use 6.41 / 0.97 kN/m, the shears 8.08 / 12.37 kN/m, the text says BC carries no live load, and the B/C axial sums use the roof BC shear (3.10) at every floor.

@@ -2,6 +2,21 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 24 Oct 2026, Claude Code in VS Code (Day 6 cross-check)
+
+**Done:** Day 6 reproduced on Windows: pytest 64 passed; all 7 results files regenerate byte-identical to the committed blobs. Cross-checked D16-D20 against the thesis .docx (not the typed files). Typed table 7.2: all 296 cells match. D18 (floor 2, C right beam, -26.66) and D19 (B1, -27.67) were redone by hand and hold. D20's back-calculation holds. Table 8-13 changed D16/D17:
+- The roof block has 15 rows. The 2 D-support rows were missing from `combination_beam_roof.csv`; they are now added. They fit neither 1.0D+1.5L nor 1.3D+1.5L.
+- No level-1 row fits either factor set.
+- The dead and wind columns are table 6.3 cells, not frame forces.
+
+So D16/D17 are revised, Table 8-13 is not a validation target, and the "23 % low" estimate is withdrawn (`docs/anchor_notes.md`, "Cross-check of Table 8-13"). The seismic text read by the pattern of items i-v gives 1.2 G_E +/- 1.3 E_h [J], as `combinations.py` holds. Results files unchanged.
+
+**Decisions by the author today:** none yet.
+
+**Open (author only):** confirm D16-D20 as revised; name the code clause for 1.3/1.5 and for the seismic 1.2/1.3 in your own copies of the codes. Claude did not supply clause numbers.
+
+**Next:** Day 7, weekly review.
+
 ## 24 Oct 2026, Claude in the app (Day 6)
 
 **Done:** live load and load combinations in `src/shellbench/anchor_frame.py`; new `src/shellbench/combinations.py` (thesis combinations as data; 1.3D+1.5L evaluated, wind and seismic pending) and `src/shellbench/thesis_checks.py` (column sums and joint balance of thesis table 7.2; factor check of Table 8-13). New validation files `live_distribution_table_7_2.csv` and `combination_beam_roof.csv`. New results: `anchor_gravity_live.csv`, `_live_runs.csv`, `anchor_gravity_combination.csv`, `thesis_table_7_2_check.csv`, `thesis_table_7_2_joints.csv`. Dead-load results byte-identical to Day 5. `docs/anchor_notes.md` has live-load and combination sections. pytest 64 passed. Package version set to 0.0.1 (pyproject, `__init__`, CITATION.cff) and release v0.0.1 "Baseline spec and gravity check" published. Run with `python -m shellbench.anchor_frame`; `main()` now returns a dict (`dead`, `live`, `combination`).

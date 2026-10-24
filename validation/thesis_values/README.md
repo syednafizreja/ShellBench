@@ -23,7 +23,7 @@ moments [kN*m] (table 7.2, by `row`), and moments [kN*m] or shears [kN]
 | seismic_storey_shear_drift.csv | s8.4 Table 8-12 | 5 |
 | beam_steel_areas.csv | s9.2 unnumbered beam reinforcement table | 18 |
 | live_distribution_table_7_2.csv | s7.2 table "7.2", every cell (factors, joint moments, fixed-end moments, steps, finals); added Day 6 | 296 |
-| combination_beam_roof.csv | s8.7 Table 8-13, level-5 (roof) rows: dead, live, wind and the first combination column; added Day 6 | 13 |
+| combination_beam_roof.csv | s8.7 Table 8-13, level-5 (roof) rows: dead, live, wind and the first combination column; added Day 6 (D-support rows added in the Day 6 cross-check) | 15 |
 
 ## Reading notes
 
@@ -63,8 +63,13 @@ Proposed on Day 6 (24 Oct 2026), **awaiting the author's confirmation**.
 Details and arithmetic in docs/anchor_notes.md (live-load and combination
 sections); the checks are coded in `src/shellbench/thesis_checks.py`.
 
-- D16. Table 8-13, roof rows: the column headed "1.3 Dead load + 1.5 x live" equals 1.0 x dead + 1.5 x live in all 13 rows (e.g. -67.76 + 1.5 x -22.18 = -101.03).
-- D17. Table 8-13: the live column does not match table 7.2 (roof A support -22.18 against -4.55), and the wind combination columns cannot be reproduced from simple factors a x D + b x L + c x W.
+- D16. Table 8-13: the column headed "1.3 Dead load + 1.5 x live" equals 1.0 x dead + 1.5 x live in 13 of the 15 roof rows (e.g. -67.76 + 1.5 x -22.18 = -101.03). The two D-support rows (-44.495, 54.755) and all 15 level-1 rows fit neither 1.0 nor 1.3.
+- D17. Table 8-13: the dead and wind columns are cells of table 6.3, not frame forces (roof A support "V" 68.77 is the B4 left-beam final moment; the roof AB shear is 61.88, Table 4-9); the live column matches neither table 7.2 (roof A support -22.18 against -4.55) nor any other thesis table; the wind combination columns cannot be reproduced from simple factors a x D + b x L + c x W. Table 8-13 is therefore not a validation target.
+
+D16 and D17 were revised on 24 Oct 2026 after Claude Code cross-checked
+Table 8-13 against the thesis .docx (docs/anchor_notes.md, "Cross-check of
+Table 8-13"). The same check found all 296 typed cells of table 7.2 equal
+to the thesis.
 - D18. Table 7.2, floors 2-4: printed finals are not the sums of their columns (up to 6.20 kN*m; 23.28 at floor 2, C right beam, which is D2).
 - D19. Table 7.2: joints B4, B2, B1 do not balance even with the column sums (-4.40, +6.22, -27.67 kN*m), and the first distribution step at B is not factor x unbalanced moment.
 - D20. Live load sets disagree: fixed-end moments imply AB 6.41 and BC 0.97 kN/m (6.41 = 2.0 kN/m2 office load x 3.6 x 0.8906 [J]); shears use 8.08 and 12.37; the text says BC carries no live load; the B/C axial sums use the roof BC shear 3.10 at every floor instead of 40.82 (Table 7-3).
