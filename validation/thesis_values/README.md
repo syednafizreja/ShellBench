@@ -59,10 +59,8 @@ corrections.
 - D14. Dead, Table 4-9, floor 1: N_top exceeds the running sum by 9.46 kN (A/D: 810.69 + 167.77 + 85.44 = 1063.90, printed 1073.36) and 9.15 kN (B/C). 9.46 = 45.32 - 35.86, so the ground-column weight is counted twice [J]. Confirmed by the author 23 Oct 2026.
 - D15. Dead, s6.2.1 table 6.3: final member-end moments do not balance at joints A1 and B1-B4 (out by 39-80 kN*m; e.g. B4: 68.77 - 52.84 - 67.74 = -51.81, should be 0). Beam ends at those joints are arithmetic errors in the hand distribution, not model targets to match. Confirmed by the author 23 Oct 2026 (B4 checked by hand). Details in docs/anchor_notes.md.
 
-Found on Day 6 (24 Oct 2026). **Accepted on 24 Oct 2026 by Claude on the
-author's instruction** (the author asked Claude to settle them without
-asking). The author has not checked D17-D21 or the revised D16 scope, and
-must do so before the anchor report cites them (R3, R4). Details and
+Found on Day 6 (24 Oct 2026). **Accepted by the author on 24 Oct 2026**
+(D16 and D17 in their revised wording); Claude Code cross-checked. Details and
 arithmetic in docs/anchor_notes.md (live-load and combination sections);
 the checks are coded in `src/shellbench/thesis_checks.py`.
 
