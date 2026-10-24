@@ -117,7 +117,8 @@ THESIS_COMBINATIONS: tuple[Combination, ...] = (
 )
 
 #: What Table 8-13 actually computed in its "1.3 Dead load + 1.5 x live"
-#: column: every roof row equals 1.0 x dead + 1.5 x live (checked in
+#: column: 13 of the 15 roof rows equal 1.0 x dead + 1.5 x live; the two
+#: D-support rows fit neither factor set (checked in
 #: tests/test_combinations.py against validation/thesis_values/
 #: combination_beam_roof.csv). Kept only to document that finding; it is not
 #: a design combination.
