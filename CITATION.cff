@@ -2,7 +2,8 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 type: software
 title: "ShellBench"
-version: 0.1.0
+version: 0.0.1
+date-released: "2026-10-24"
 abstract: >-
   Quantifying the whole-building embodied-carbon savings of thin-shell floors
   in code-designed reinforced-concrete frames in seismic zones.

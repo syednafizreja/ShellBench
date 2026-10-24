@@ -6,16 +6,18 @@ What this module does
 ---------------------
 It rebuilds the transverse frame on axis (2) of the author's thesis building
 (4 storeys, spans 7.2 / 6.6 / 7.2 m) as a linear-elastic 2D frame in
-OpenSeesPy, applies the dead-load case the way the thesis distributes it, and
-compares beam-end moments and column axial forces with the typed thesis values
-in ``validation/thesis_values/``.
+OpenSeesPy, applies the dead-load case (Day 5) and the live-load case (Day 6)
+the way the thesis distributes them, combines them with the thesis load
+factors (``shellbench.combinations``), and compares beam-end moments and column
+axial forces with the typed thesis values in ``validation/thesis_values/``.
 
 Inputs come only from ``docs/baseline_spec.md`` (geometry, sections, material)
-and from the thesis load derivation it points to (Th §4.1, §5.1, §5.2, §6.2.1,
-Fig. 4-4 and 4-5). Every constant below names its source.
+and from the thesis load derivation it points to (dead: Th §4.1, §5.1, §5.2,
+§6.2.1, Fig. 4-4 and 4-5; live: Th §6, §6.1, §7.1, §7.2). Every constant below
+names its source.
 
-Load models
------------
+Dead-load models
+----------------
 The thesis describes the dead load in three slightly different ways, so the
 model can apply any of them (see ``LOAD_MODELS``):
 
@@ -43,6 +45,30 @@ In all models the concentrated joint loads are the printed totals of Th §5.2
 exterior joints A and D only, as drawn in Fig. 4-4 and 4-5, and column
 self-weight is 9.96 kN/m (Th §4.1). Self-weight is never generated from the
 sections, so nothing is counted twice (baseline_spec B13 note).
+
+Live-load models
+----------------
+The live load is also given more than once, and again the versions differ
+(see ``LIVE_LOAD_MODELS`` and docs/anchor_notes.md, live-load section):
+
+``thesis_fem`` (primary)
+    The uniform loads behind the fixed-end moments of the thesis live-load
+    distribution table (Th §7.1, §7.2 table "7.2"): roof AB 1.60, BC 0.94 kN/m
+    (printed in §7.1); floors 1-3 back-calculated from the printed fixed-end
+    moments, AB 12 x 27.70 / 7.2^2 = 6.41 kN/m and BC 12 x 3.52 / 6.6^2 =
+    0.97 kN/m [J]. These loads produced the moment targets.
+``thesis_shear``
+    The loads printed in §6.1 and used for the beam shears (Tables 7-2, 7-3),
+    and hence for the column axial forces: roof AB 1.60, BC 0.94; floors AB
+    8.08, BC 12.37 kN/m.
+``actual_shape``
+    The slab loads of §6.1 as trapezoids (AB/CD, peak 1.80 roof and 9.00
+    floors, ramps 1.8 m) and triangles (BC, peak 3.3 roof and 19.80 floors).
+
+In all live-load models the joint loads are the printed totals of §6.1 (2)
+(9.82, 21.07, 45.03, 108.32 kN) and the eccentricity moments act at A and D
+only (1.47 and 5.89 kN*m, §7.1), matching the author's Day 5 decision for the
+dead load. Live load has no column self-weight.
 
 Units: kN, m, kN*m, kN/m, kN/m^2 (SI-derived, consistent).
 Sign convention of the outputs: beam-end moments follow the thesis (clockwise
@@ -134,6 +160,36 @@ EXTERIOR_JOINT_MOMENTS_KN_M: dict[str, float] = {"roof": 20.26, "floor": 25.16}
 #: thesis's own final moments at joint B3 sum to -39.19 kN*m (clockwise-positive
 #: member ends), which balances only an anticlockwise 38.09 at B [J].
 INTERIOR_JOINT_MOMENTS_KN_M: dict[str, float] = {"roof": 31.79, "floor": 38.09}
+
+# ---------------------------------------------------------------------------
+# Live loads as the thesis distributes them (Day 6)
+# ---------------------------------------------------------------------------
+
+#: Concentrated live joint loads [kN], printed totals of Th §6.1 (2).
+#: Keys as ``JOINT_LOADS_KN``.
+LIVE_JOINT_LOADS_KN: dict[tuple[str, str], float] = {
+    ("exterior", "roof"): 9.82,     # node A4 / D4, Th §6.1 (2) item 1
+    ("interior", "roof"): 21.07,    # node B4 / C4, Th §6.1 (2) item 2
+    ("exterior", "floor"): 45.03,   # nodes A1-3 / D1-3, Th §6.1 (2) item 3
+    ("interior", "floor"): 108.32,  # nodes B1-3 / C1-3, Th §6.1 (2) item 4
+}
+
+#: Live eccentricity moments at exterior joints [kN*m], Th §7.1 (joint load x
+#: 0.150 m: 9.82 x 0.150 = 1.47, 45.03 x 0.150 = 5.89) and the first row of
+#: table "7.2". Same sense as the dead-load moments (anticlockwise at A).
+LIVE_EXTERIOR_JOINT_MOMENTS_KN_M: dict[str, float] = {"roof": 1.47, "floor": 5.89}
+
+#: Live eccentricity moments at interior joints [kN*m], first row of table
+#: "7.2" (Th §7.2): 3.16 at B4 and 15.64 at B1-3. §7.1 prints 16.64 for B1-3,
+#: and 108.32 x 0.150 = 16.25 [J]; the table value is used because it entered
+#: the distribution. Used only by the ``interior_moments`` check, with the
+#: same sense as the dead-load check (anticlockwise at B).
+LIVE_INTERIOR_JOINT_MOMENTS_KN_M: dict[str, float] = {"roof": 3.16, "floor": 15.64}
+
+#: Printed live fixed-end moments of floors 1-3 [kN*m], Th §7.1 and the second
+#: row of table "7.2": AB 27.70, BC 3.52. Used to back-calculate the uniform
+#: loads that produced them (q = 12 M / L^2).
+LIVE_FLOOR_FEM_KN_M: dict[str, float] = {"side": 27.70, "mid": 3.52}
 
 
 @dataclass(frozen=True)
@@ -229,6 +285,51 @@ LOAD_MODELS: dict[str, LoadModel] = {
             ("roof", "mid"): BeamLoad(3.274, "triangle", 13.94),
             ("floor", "side"): BeamLoad(4.934 + 5.51, "trapezoid", 14.58, 1.8),
             ("floor", "mid"): BeamLoad(3.274, "triangle", 13.36),
+        },
+    ),
+}
+
+
+#: The three live-load models described in the module docstring.
+LIVE_LOAD_MODELS: dict[str, LoadModel] = {
+    "thesis_fem": LoadModel(
+        name="thesis_fem",
+        description=(
+            "Uniform loads behind the thesis live fixed-end moments (Th s7.1, table 7.2): "
+            "roof AB 1.60, BC 0.94 (printed); floors AB 12x27.70/7.2^2 = 6.41, "
+            "BC 12x3.52/6.6^2 = 0.97 [J back-calculated]"
+        ),
+        beams={
+            ("roof", "side"): BeamLoad(uniform_kn_m=1.60),
+            ("roof", "mid"): BeamLoad(uniform_kn_m=0.94),
+            ("floor", "side"): BeamLoad(uniform_kn_m=12.0 * LIVE_FLOOR_FEM_KN_M["side"] / SPANS_M[0] ** 2),
+            ("floor", "mid"): BeamLoad(uniform_kn_m=12.0 * LIVE_FLOOR_FEM_KN_M["mid"] / SPANS_M[1] ** 2),
+        },
+    ),
+    "thesis_shear": LoadModel(
+        name="thesis_shear",
+        description=(
+            "Loads printed in Th s6.1 and used for the beam shears (Tables 7-2, 7-3): "
+            "roof AB 1.60, BC 0.94; floors AB 8.08, BC 12.37"
+        ),
+        beams={
+            ("roof", "side"): BeamLoad(uniform_kn_m=1.60),
+            ("roof", "mid"): BeamLoad(uniform_kn_m=0.94),
+            ("floor", "side"): BeamLoad(uniform_kn_m=8.08),
+            ("floor", "mid"): BeamLoad(uniform_kn_m=12.37),
+        },
+    ),
+    "actual_shape": LoadModel(
+        name="actual_shape",
+        description=(
+            "Slab live loads of Th s6.1 as actual shapes: trapezoid peak 1.80 roof / 9.00 "
+            "floors (ramp 1.8 m) on AB/CD, triangle peak 3.3 roof / 19.80 floors on BC"
+        ),
+        beams={
+            ("roof", "side"): BeamLoad(0.0, "trapezoid", 1.80, 1.8),
+            ("roof", "mid"): BeamLoad(0.0, "triangle", 3.3),
+            ("floor", "side"): BeamLoad(0.0, "trapezoid", 9.00, 1.8),
+            ("floor", "mid"): BeamLoad(0.0, "triangle", 19.80),
         },
     ),
 }
@@ -339,20 +440,26 @@ def build_frame(axially_rigid_columns: bool = False) -> FrameModel:
     return fm
 
 
-def apply_dead_load(fm: FrameModel, load_model: LoadModel,
-                    interior_moments: bool = False) -> float:
-    """Apply the dead-load case to a built frame.
+def apply_gravity_case(fm: FrameModel, load_model: LoadModel,
+                       joint_loads: dict[tuple[str, str], float],
+                       exterior_moments: dict[str, float],
+                       interior_moments: dict[str, float] | None,
+                       column_weight_kn_m: float) -> float:
+    """Apply one gravity load case (beam line loads, joint loads and moments).
 
     Args:
         fm: The frame returned by ``build_frame``.
-        load_model: Which beam line-load description to use.
-        interior_moments: If True, also apply the interior eccentricity
-            moments of the thesis distribution table at B and C (a check; the
-            thesis load figures do not show them).
+        load_model: Beam line-load description for this case.
+        joint_loads: Concentrated joint loads, keyed as ``JOINT_LOADS_KN`` [kN].
+        exterior_moments: Eccentricity moments at A and D by level type
+            [kN*m]; anticlockwise at A, clockwise at D.
+        interior_moments: Eccentricity moments at B and C by level type
+            [kN*m] (anticlockwise at B, clockwise at C), or None to leave them
+            out.
+        column_weight_kn_m: Column self-weight line load [kN/m] (0 for live).
 
     Returns:
-        The total applied vertical load [kN] (beams, joints, columns), for
-        equilibrium checks.
+        The total applied vertical load [kN], for equilibrium checks.
     """
     ops.timeSeries("Constant", 1)
     ops.pattern("Plain", 1, 1)
@@ -363,11 +470,11 @@ def apply_dead_load(fm: FrameModel, load_model: LoadModel,
         kind = "roof" if lvl == n_levels else "floor"
         for ax in AXES:
             side = "exterior" if ax in ("A", "D") else "interior"
-            p = JOINT_LOADS_KN[(side, kind)]
+            p = joint_loads[(side, kind)]
             if side == "exterior":
-                m = EXTERIOR_JOINT_MOMENTS_KN_M[kind] * (1.0 if ax == "A" else -1.0)
-            elif interior_moments:
-                m = INTERIOR_JOINT_MOMENTS_KN_M[kind] * (1.0 if ax == "B" else -1.0)
+                m = exterior_moments[kind] * (1.0 if ax == "A" else -1.0)
+            elif interior_moments is not None:
+                m = interior_moments[kind] * (1.0 if ax == "B" else -1.0)
             else:
                 m = 0.0
             ops.load(fm.node[(ax, lvl)], 0.0, -p, m)
@@ -382,10 +489,53 @@ def apply_dead_load(fm: FrameModel, load_model: LoadModel,
                 ops.eleLoad("-ele", ele, "-type", "-beamUniform", -q, 0.0)
                 total += q * seg
 
-    for (ax, storey), ele in fm.column.items():
-        ops.eleLoad("-ele", ele, "-type", "-beamUniform", 0.0, -COLUMN_SELF_WEIGHT_KN_M)
-        total += COLUMN_SELF_WEIGHT_KN_M * STOREY_HEIGHTS_M[storey - 1]
+    if column_weight_kn_m:
+        for (ax, storey), ele in fm.column.items():
+            ops.eleLoad("-ele", ele, "-type", "-beamUniform", 0.0, -column_weight_kn_m)
+            total += column_weight_kn_m * STOREY_HEIGHTS_M[storey - 1]
     return total
+
+
+def apply_dead_load(fm: FrameModel, load_model: LoadModel,
+                    interior_moments: bool = False) -> float:
+    """Apply the dead-load case to a built frame (Th §5.1, §5.2, §6.2.1).
+
+    Args:
+        fm: The frame returned by ``build_frame``.
+        load_model: Which beam line-load description to use.
+        interior_moments: If True, also apply the interior eccentricity
+            moments of the thesis distribution table at B and C (a check; the
+            thesis load figures do not show them).
+
+    Returns:
+        The total applied vertical load [kN] (beams, joints, columns), for
+        equilibrium checks.
+    """
+    return apply_gravity_case(
+        fm, load_model, JOINT_LOADS_KN, EXTERIOR_JOINT_MOMENTS_KN_M,
+        INTERIOR_JOINT_MOMENTS_KN_M if interior_moments else None,
+        COLUMN_SELF_WEIGHT_KN_M)
+
+
+def apply_live_load(fm: FrameModel, load_model: LoadModel,
+                    interior_moments: bool = False) -> float:
+    """Apply the live-load case to a built frame (Th §6.1, §7.1, §7.2).
+
+    The whole live load is applied on every span at once, as in the thesis
+    (no pattern or chequerboard loading).
+
+    Args:
+        fm: The frame returned by ``build_frame``.
+        load_model: Which live line-load description to use.
+        interior_moments: If True, also apply the interior eccentricity
+            moments of table "7.2" at B and C (a check).
+
+    Returns:
+        The total applied vertical load [kN], for equilibrium checks.
+    """
+    return apply_gravity_case(
+        fm, load_model, LIVE_JOINT_LOADS_KN, LIVE_EXTERIOR_JOINT_MOMENTS_KN_M,
+        LIVE_INTERIOR_JOINT_MOMENTS_KN_M if interior_moments else None, 0.0)
 
 
 def solve_static() -> None:
@@ -456,8 +606,8 @@ def base_reaction_sum() -> float:
 
 
 @dataclass
-class DeadLoadResult:
-    """Output of one dead-load run.
+class GravityResult:
+    """Output of one gravity-load run (dead or live).
 
     Attributes:
         variant: Name of the run.
@@ -474,8 +624,12 @@ class DeadLoadResult:
     reaction_kn: float
 
 
+#: Name kept from Day 5 so existing code and tests still read naturally.
+DeadLoadResult = GravityResult
+
+
 def run_dead_load(load_model: str = "thesis_fem", axially_rigid_columns: bool = False,
-                  interior_moments: bool = False, variant: str | None = None) -> DeadLoadResult:
+                  interior_moments: bool = False, variant: str | None = None) -> GravityResult:
     """Build, load and solve the frame for one dead-load variant.
 
     Args:
@@ -490,7 +644,34 @@ def run_dead_load(load_model: str = "thesis_fem", axially_rigid_columns: bool = 
     fm = build_frame(axially_rigid_columns)
     applied = apply_dead_load(fm, LOAD_MODELS[load_model], interior_moments)
     solve_static()
-    result = DeadLoadResult(
+    result = GravityResult(
+        variant=variant or load_model,
+        moments=beam_end_moments(fm),
+        axial=column_axial_forces(fm),
+        applied_kn=applied,
+        reaction_kn=base_reaction_sum(),
+    )
+    ops.wipe()
+    return result
+
+
+def run_live_load(load_model: str = "thesis_fem", axially_rigid_columns: bool = False,
+                  interior_moments: bool = False, variant: str | None = None) -> GravityResult:
+    """Build, load and solve the frame for one live-load variant.
+
+    Args:
+        load_model: Key of ``LIVE_LOAD_MODELS``.
+        axially_rigid_columns: See ``build_frame``.
+        interior_moments: See ``apply_live_load``.
+        variant: Name for the run; defaults to the load-model key.
+
+    Returns:
+        A GravityResult with moments, axial forces and the equilibrium totals.
+    """
+    fm = build_frame(axially_rigid_columns)
+    applied = apply_live_load(fm, LIVE_LOAD_MODELS[load_model], interior_moments)
+    solve_static()
+    result = GravityResult(
         variant=variant or load_model,
         moments=beam_end_moments(fm),
         axial=column_axial_forces(fm),
@@ -511,12 +692,22 @@ VARIANTS: dict[str, dict] = {
     "actual_load_shape": {"load_model": "actual_shape"},
 }
 
+#: The live-load runs reported, built the same way as ``VARIANTS``.
+LIVE_VARIANTS: dict[str, dict] = {
+    "primary": {"load_model": "thesis_fem"},
+    "shear_loads": {"load_model": "thesis_shear"},
+    "rigid_column_axial": {"load_model": "thesis_fem", "axially_rigid_columns": True},
+    "interior_moments": {"load_model": "thesis_fem", "interior_moments": True},
+    "actual_load_shape": {"load_model": "actual_shape"},
+}
 
-def read_thesis_targets(repo_root: Path) -> list[dict]:
-    """Read the dead-load validation targets typed on Day 3.
+
+def read_thesis_targets(repo_root: Path, load_case: str = "dead") -> list[dict]:
+    """Read the gravity validation targets typed on Day 3 for one load case.
 
     Args:
         repo_root: Repository root containing ``validation/thesis_values``.
+        load_case: ``"dead"`` or ``"live"`` (the ``load_case`` column).
 
     Returns:
         One dict per target with keys quantity, floor, member, end, thesis,
@@ -526,7 +717,7 @@ def read_thesis_targets(repo_root: Path) -> list[dict]:
     rows = []
     with open(folder / "gravity_beam_end_moments.csv", newline="", encoding="utf-8") as fh:
         for r in csv.DictReader(fh):
-            if r["load_case [text]"] != "dead":
+            if r["load_case [text]"] != load_case:
                 continue
             rows.append({
                 "quantity": "M_end", "unit": "kN*m", "floor": r["floor [text]"],
@@ -536,7 +727,7 @@ def read_thesis_targets(repo_root: Path) -> list[dict]:
             })
     with open(folder / "gravity_column_axial_forces.csv", newline="", encoding="utf-8") as fh:
         for r in csv.DictReader(fh):
-            if r["load_case [text]"] != "dead":
+            if r["load_case [text]"] != load_case:
                 continue
             for end, col in (("top", "N_top [kN]"), ("bottom", "N_bottom [kN]")):
                 rows.append({
@@ -547,14 +738,14 @@ def read_thesis_targets(repo_root: Path) -> list[dict]:
     return rows
 
 
-def model_value(result: DeadLoadResult, target: dict) -> float:
+def model_value(result: GravityResult, target: dict) -> float:
     """Pick the model value that matches one thesis target.
 
     Column targets for "A/D" and "B/C" are compared with axes A and B; the
     model is symmetric, which the tests check.
 
     Args:
-        result: A dead-load run.
+        result: A gravity-load run.
         target: One row from ``read_thesis_targets``.
 
     Returns:
@@ -579,7 +770,7 @@ def percent_difference(model: float, thesis: float) -> float:
     return (model - thesis) / abs(thesis) * 100.0
 
 
-def comparison_rows(results: dict[str, DeadLoadResult], targets: list[dict]) -> list[dict]:
+def comparison_rows(results: dict[str, GravityResult], targets: list[dict]) -> list[dict]:
     """Build the comparison table rows for the primary run and all variants.
 
     Args:
@@ -628,38 +819,217 @@ def write_csv(rows: list[dict], path: Path) -> None:
         writer.writerows(rows)
 
 
-def main(repo_root: Path | None = None) -> list[dict]:
-    """Run every variant, compare with the thesis and save the table.
-
-    Writes ``results/anchor_gravity_dead.csv`` (one row per thesis target)
-    and ``results/anchor_gravity_dead_runs.csv`` (equilibrium totals per run).
+def runs_table(results: dict[str, GravityResult], variants: dict[str, dict],
+               load_models: dict[str, LoadModel]) -> list[dict]:
+    """Build the equilibrium summary rows, one per run.
 
     Args:
-        repo_root: Repository root; defaults to two levels above this file's
-            package folder.
+        results: Runs keyed by variant name.
+        variants: The variant definitions that produced them.
+        load_models: The load-model dictionary the variants refer to.
 
     Returns:
-        The comparison rows that were written.
+        One dict per run with its settings, applied load and base reaction.
     """
-    root = repo_root or Path(__file__).resolve().parents[2]
-    results = {name: run_dead_load(variant=name, **kw) for name, kw in VARIANTS.items()}
-    rows = comparison_rows(results, read_thesis_targets(root))
-    write_csv(rows, root / "results" / "anchor_gravity_dead.csv")
-    runs = [{
+    return [{
         "variant [text]": name,
         "load_model [text]": kw["load_model"],
         "axially_rigid_columns [text]": str(kw.get("axially_rigid_columns", False)),
         "interior_moments [text]": str(kw.get("interior_moments", False)),
         "applied_vertical_load [kN]": round(results[name].applied_kn, 2),
         "base_reaction_sum [kN]": round(results[name].reaction_kn, 2),
-        "description [text]": LOAD_MODELS[kw["load_model"]].description,
-    } for name, kw in VARIANTS.items()]
-    write_csv(runs, root / "results" / "anchor_gravity_dead_runs.csv")
+        "description [text]": load_models[kw["load_model"]].description,
+    } for name, kw in variants.items()]
+
+
+def effects(result: GravityResult) -> dict[tuple[str, str, str, str], float]:
+    """Flatten one run's moments and axial forces into a single mapping.
+
+    Args:
+        result: A gravity-load run.
+
+    Returns:
+        Mapping (quantity, floor, member, end) -> value, where quantity is
+        ``"M_end"`` (key from ``beam_end_moments``) or ``"N"`` (axis A or B,
+        the model being symmetric).
+    """
+    out = {("M_end", f, s, e): v for (f, s, e), v in result.moments.items()}
+    for (ax, f, e), v in result.axial.items():
+        if ax in ("A", "B"):
+            out[("N", f, f"{ax}/{'D' if ax == 'A' else 'C'}", e)] = v
+    return out
+
+
+def combination_rows(dead: GravityResult, live: GravityResult,
+                     dead_targets: list[dict], live_targets: list[dict]) -> list[dict]:
+    """Compare the model's 1.3D + 1.5L with the same combination of thesis values.
+
+    The thesis reference is 1.3 x (thesis dead value) + 1.5 x (thesis live
+    value) for each target, computed from the typed tables, so the % difference
+    shows how the dead and live differences carry into the design combination.
+    The column ``thesis_as_computed`` is 1.0 x dead + 1.5 x live, which is what
+    Table 8-13 actually printed under "1.3D + 1.5L" (see
+    ``combinations.THESIS_AS_COMPUTED_GRAVITY``).
+
+    Args:
+        dead: Primary dead-load run.
+        live: Primary live-load run.
+        dead_targets: Dead-load targets from ``read_thesis_targets``.
+        live_targets: Live-load targets, same keys as the dead ones.
+
+    Returns:
+        One dict per target pair.
+    """
+    from shellbench import combinations as cb
+
+    combo = cb.THESIS_COMBINATIONS[0]
+    model = cb.combine({"D": effects(dead), "L": effects(live)}, combo)
+    key = lambda t: (t["quantity"], t["floor"], t["member"], t["end"])  # noqa: E731
+    live_by_key = {key(t): t for t in live_targets}
+    rows = []
+    for td in dead_targets:
+        tl = live_by_key[key(td)]
+        mk = key(td) if td["quantity"] == "N" else ("M_end", td["floor"], td["member"], td["end"])
+        thesis = combo.factors["D"] * td["thesis"] + combo.factors["L"] * tl["thesis"]
+        as_computed = (cb.THESIS_AS_COMPUTED_GRAVITY.factors["D"] * td["thesis"]
+                       + cb.THESIS_AS_COMPUTED_GRAVITY.factors["L"] * tl["thesis"])
+        m = model[mk]
+        flags = "; ".join(f for f in (td["flag"], tl["flag"]) if f and f != "none") or "none"
+        rows.append({
+            "combination [text]": combo.name,
+            "quantity [text]": td["quantity"],
+            "floor [text]": td["floor"],
+            "member [text]": td["member"],
+            "end [text]": td["end"],
+            "unit [text]": td["unit"],
+            "thesis_combined [mixed]": round(thesis, 2),
+            "model_combined [mixed]": round(m, 2),
+            "difference_pct [%]": round(percent_difference(m, thesis), 1),
+            "thesis_as_computed_1.0D+1.5L [mixed]": round(as_computed, 2),
+            "thesis_flags [text]": flags,
+        })
     return rows
 
 
+#: Beam member ends of the thesis distribution tables -> (span, end) in the
+#: model's ``beam_end_moments`` keys.
+TABLE_BEAM_ENDS: dict[tuple[str, str], tuple[str, str]] = {
+    ("A", "right beam"): ("AB", "left"),
+    ("B", "left beam"): ("AB", "right"),
+    ("B", "right beam"): ("BC", "left"),
+    ("C", "left beam"): ("BC", "right"),
+    ("C", "right beam"): ("CD", "left"),
+    ("D", "left beam"): ("CD", "right"),
+}
+
+
+def live_column_sum_rows(live: dict[str, GravityResult], root: Path) -> list[dict]:
+    """Set the model's live beam-end moments beside the table-7.2 column sums.
+
+    Uses ``shellbench.thesis_checks.column_sums`` on the typed table. For beam
+    ends, the primary and axially rigid model values are compared with both
+    the printed final value and the column sum.
+
+    Args:
+        live: Live-load runs keyed by variant (needs ``primary`` and
+            ``rigid_column_axial``).
+        root: Repository root.
+
+    Returns:
+        One dict per member end of table "7.2".
+    """
+    from shellbench import thesis_checks as tc
+
+    cells = tc.read_distribution_table(
+        root / "validation" / "thesis_values" / "live_distribution_table_7_2.csv")
+    rows = []
+    for r in tc.column_sums(cells):
+        row = {
+            "floor [text]": r["floor"], "joint [text]": r["joint"],
+            "member_end [text]": r["member_end"],
+            "printed_final [kN*m]": r["printed_final"],
+            "column_sum [kN*m]": r["column_sum"],
+            "printed_minus_sum [kN*m]": r["printed_minus_sum"],
+        }
+        beam = TABLE_BEAM_ENDS.get((r["joint"], r["member_end"]))
+        for name in ("primary", "rigid_column_axial"):
+            if beam is None:
+                row[f"model_{name} [kN*m]"] = "n/a"
+                row[f"pct_{name}_vs_sum [%]"] = "n/a"
+                continue
+            m = live[name].moments[(r["floor"], beam[0], beam[1])]
+            row[f"model_{name} [kN*m]"] = round(m, 2)
+            row[f"pct_{name}_vs_sum [%]"] = (round(percent_difference(m, r["column_sum"]), 1)
+                                             if r["column_sum"] else "n/a")
+        rows.append(row)
+    return rows
+
+
+def live_joint_rows(root: Path) -> list[dict]:
+    """Joint-balance rows of table "7.2" in result-file form.
+
+    Args:
+        root: Repository root.
+
+    Returns:
+        One dict per joint (see ``thesis_checks.joint_balance``).
+    """
+    from shellbench import thesis_checks as tc
+
+    cells = tc.read_distribution_table(
+        root / "validation" / "thesis_values" / "live_distribution_table_7_2.csv")
+    return [{
+        "floor [text]": r["floor"], "joint [text]": r["joint"],
+        "sum_printed_finals [kN*m]": r["sum_printed_finals"],
+        "sum_column_sums [kN*m]": r["sum_column_sums"],
+        "external_moment_printed [kN*m]": r["external_moment_printed"],
+    } for r in tc.joint_balance(cells)]
+
+
+def main(repo_root: Path | None = None) -> dict[str, list[dict]]:
+    """Run every dead and live variant, combine, compare with the thesis, save.
+
+    Writes to ``results/``:
+    ``anchor_gravity_dead.csv`` and ``anchor_gravity_dead_runs.csv`` (Day 5),
+    ``anchor_gravity_live.csv`` and ``anchor_gravity_live_runs.csv`` (Day 6),
+    ``anchor_gravity_combination.csv`` (1.3D + 1.5L, Day 6),
+    ``thesis_table_7_2_check.csv`` and ``thesis_table_7_2_joints.csv``
+    (arithmetic checks of the thesis live-load table, Day 6).
+
+    Args:
+        repo_root: Repository root; defaults to two levels above this file's
+            package folder.
+
+    Returns:
+        The rows written, keyed ``"dead"``, ``"live"`` and ``"combination"``.
+    """
+    root = repo_root or Path(__file__).resolve().parents[2]
+    out = root / "results"
+
+    dead = {name: run_dead_load(variant=name, **kw) for name, kw in VARIANTS.items()}
+    dead_targets = read_thesis_targets(root, "dead")
+    dead_rows = comparison_rows(dead, dead_targets)
+    write_csv(dead_rows, out / "anchor_gravity_dead.csv")
+    write_csv(runs_table(dead, VARIANTS, LOAD_MODELS), out / "anchor_gravity_dead_runs.csv")
+
+    live = {name: run_live_load(variant=name, **kw) for name, kw in LIVE_VARIANTS.items()}
+    live_targets = read_thesis_targets(root, "live")
+    live_rows = comparison_rows(live, live_targets)
+    write_csv(live_rows, out / "anchor_gravity_live.csv")
+    write_csv(runs_table(live, LIVE_VARIANTS, LIVE_LOAD_MODELS), out / "anchor_gravity_live_runs.csv")
+
+    combo_rows = combination_rows(dead["primary"], live["primary"], dead_targets, live_targets)
+    write_csv(combo_rows, out / "anchor_gravity_combination.csv")
+    write_csv(live_column_sum_rows(live, root), out / "thesis_table_7_2_check.csv")
+    write_csv(live_joint_rows(root), out / "thesis_table_7_2_joints.csv")
+    return {"dead": dead_rows, "live": live_rows, "combination": combo_rows}
+
+
 if __name__ == "__main__":
-    for r in main():
-        print(f"{r['quantity [text]']:5s} fl{r['floor [text]']} {r['member [text]']:3s} "
-              f"{r['end [text]']:6s} thesis {r['thesis_value [mixed]']:9.2f} "
-              f"model {r['model_value [mixed]']:9.2f} {r['difference_pct [%]']:6.1f} %")
+    tables = main()
+    for case in ("dead", "live"):
+        print(f"--- {case} ---")
+        for r in tables[case]:
+            print(f"{r['quantity [text]']:5s} fl{r['floor [text]']} {r['member [text]']:3s} "
+                  f"{r['end [text]']:6s} thesis {r['thesis_value [mixed]']:9.2f} "
+                  f"model {r['model_value [mixed]']:9.2f} {r['difference_pct [%]']:6.1f} %")
