@@ -2,6 +2,16 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 24 Oct 2026, Claude in the app (Day 6)
+
+**Done:** live load and load combinations in `src/shellbench/anchor_frame.py`; new `src/shellbench/combinations.py` (thesis combinations as data; 1.3D+1.5L evaluated, wind and seismic pending) and `src/shellbench/thesis_checks.py` (column sums and joint balance of thesis table 7.2; factor check of Table 8-13). New validation files `live_distribution_table_7_2.csv` and `combination_beam_roof.csv`. New results: `anchor_gravity_live.csv`, `_live_runs.csv`, `anchor_gravity_combination.csv`, `thesis_table_7_2_check.csv`, `thesis_table_7_2_joints.csv`. Dead-load results byte-identical to Day 5. `docs/anchor_notes.md` has live-load and combination sections. pytest 64 passed. Package version set to 0.0.1 (pyproject, `__init__`, CITATION.cff) and release v0.0.1 "Baseline spec and gravity check" published. Run with `python -m shellbench.anchor_frame`; `main()` now returns a dict (`dead`, `live`, `combination`).
+
+**Decisions by the author today:** none new yet. Claude applied the Day 5 rules to live load (fixed-end-moment loads as primary; eccentric moments at A and D only) [J].
+
+**Open:** the author to confirm proposed flags D16-D20 (anchor_notes, validation README); to name the code clause for 1.3/1.5 and check the garbled seismic combination (1.2/1.3 [?]) before Day 9.
+
+**Next:** Day 7, weekly review (half day).
+
 ## 23 Oct 2026, Claude Code in VS Code (attribution clean-up)
 
 **Done:** Claude attribution removed from git history and GitHub. Every branch was rewritten: `Co-Authored-By: Claude`, `Claude-Session:` and "Generated with Claude Code" lines were stripped, and commits authored as "Claude <noreply@anthropic.com>" were re-authored to the author. File contents are unchanged, but **all commit IDs changed**, and `main` was force-pushed. The "Generated with Claude Code" footer was removed from PRs #9-#27. Branches `claude/fixes-2026-10-20` and `claude/landing-2026-10-20` (PRs #9 and #10, closed without merging) were deleted. The same was done in pavement-digital-twin (tag v1.0 moved to the cleaned commit) and lateral-load-capacity-design-rc-frame.

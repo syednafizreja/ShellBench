@@ -1,0 +1,41 @@
+combination [text],quantity [text],floor [text],member [text],end [text],unit [text],thesis_combined [mixed],model_combined [mixed],difference_pct [%],thesis_as_computed_1.0D+1.5L [mixed],thesis_flags [text]
+1.3D+1.5L,M_end,4,AB,left,kN*m,-94.91,-112.19,-18.2,-74.59,none
+1.3D+1.5L,M_end,4,AB,right,kN*m,101.37,94.07,-7.2,80.74,D15: joint out of balance in table 6.3
+1.3D+1.5L,M_end,4,BC,left,kN*m,-90.09,-60.48,32.9,-69.77,D15: joint out of balance in table 6.3
+1.3D+1.5L,M_end,4,BC,right,kN*m,90.09,60.48,-32.9,69.77,D15: joint out of balance in table 6.3
+1.3D+1.5L,M_end,4,CD,left,kN*m,-101.37,-94.07,7.2,-80.74,D15: joint out of balance in table 6.3
+1.3D+1.5L,M_end,4,CD,right,kN*m,94.91,112.19,18.2,74.59,none
+1.3D+1.5L,M_end,3,AB,left,kN*m,-160.58,-184.36,-14.8,-131.73,none
+1.3D+1.5L,M_end,3,AB,right,kN*m,159.95,142.77,-10.7,132.7,D15: joint out of balance in table 6.3
+1.3D+1.5L,M_end,3,BC,left,kN*m,-68.28,-61.52,9.9,-54.22,D15: joint out of balance in table 6.3
+1.3D+1.5L,M_end,3,BC,right,kN*m,68.28,61.52,-9.9,54.22,D15: joint out of balance in table 6.3
+1.3D+1.5L,M_end,3,CD,left,kN*m,-159.95,-142.77,10.7,-132.7,D15: joint out of balance in table 6.3
+1.3D+1.5L,M_end,3,CD,right,kN*m,162.51,184.36,13.4,133.22,D1: 97.64 breaks symmetry with AB left -96.15; mid-span table s6.2.1 uses 96.15/90.82 for CD
+1.3D+1.5L,M_end,2,AB,left,kN*m,-161.81,-180.24,-11.4,-132.51,none
+1.3D+1.5L,M_end,2,AB,right,kN*m,155.21,148.43,-4.4,129.06,"D15: joint out of balance in table 6.3; D3: Table 7-1 and Table 7-2 use 27.58 for this end, not 27.92"
+1.3D+1.5L,M_end,2,BC,left,kN*m,-62.58,-61.09,2.4,-49.31,D15: joint out of balance in table 6.3
+1.3D+1.5L,M_end,2,BC,right,kN*m,62.58,61.09,-2.4,49.31,D15: joint out of balance in table 6.3
+1.3D+1.5L,M_end,2,CD,left,kN*m,-118.4,-148.43,-25.4,-92.25,D15: joint out of balance in table 6.3; D2: -3.38 breaks symmetry with AB right 27.92 (BC value repeated)
+1.3D+1.5L,M_end,2,CD,right,kN*m,161.81,180.24,11.4,132.51,D3: Table 7-1 uses 27.58 at the support next to CD; check the pair
+1.3D+1.5L,M_end,1,AB,left,kN*m,-167.1,-168.53,-0.9,-137.97,D15: joint out of balance in table 6.3
+1.3D+1.5L,M_end,1,AB,right,kN*m,142.33,152.28,7.0,115.57,D15: joint out of balance in table 6.3
+1.3D+1.5L,M_end,1,BC,left,kN*m,-78.52,-63.69,18.9,-63.12,D15: joint out of balance in table 6.3
+1.3D+1.5L,M_end,1,BC,right,kN*m,78.52,63.69,-18.9,63.12,D15: joint out of balance in table 6.3
+1.3D+1.5L,M_end,1,CD,left,kN*m,-142.33,-152.28,-7.0,-115.57,D15: joint out of balance in table 6.3
+1.3D+1.5L,M_end,1,CD,right,kN*m,167.1,168.53,0.9,137.97,D15: joint out of balance in table 6.3
+1.3D+1.5L,N,4,A/D,top,kN,278.35,288.02,3.5,219.34,none
+1.3D+1.5L,N,4,A/D,bottom,kN,324.96,334.63,3.0,255.2,none
+1.3D+1.5L,N,3,A/D,top,kN,763.96,770.34,0.8,618.35,none
+1.3D+1.5L,N,3,A/D,bottom,kN,810.58,816.95,0.8,654.2,none
+1.3D+1.5L,N,2,A/D,top,kN,1250.49,1251.29,0.1,1018.04,none
+1.3D+1.5L,N,2,A/D,bottom,kN,1297.11,1297.9,0.1,1053.9,none
+1.3D+1.5L,N,1,A/D,top,kN,1751.75,1730.08,-1.2,1429.74,D14: ground column weight counted twice (+9.46)
+1.3D+1.5L,N,1,A/D,bottom,kN,1810.67,1789.0,-1.2,1475.07,D14: ground column weight counted twice (+9.46)
+1.3D+1.5L,N,4,B/C,top,kN,404.39,455.25,12.6,321.59,D13: roof BC beam shear 33.75 missing from running sum
+1.3D+1.5L,N,4,B/C,bottom,kN,451.0,501.86,11.3,357.45,D13: roof BC beam shear 33.75 missing from running sum
+1.3D+1.5L,N,3,B/C,top,kN,1504.85,1185.2,-21.2,1299.18,"D13: roof BC beam shear 33.75 missing from running sum; D4: 30.40 + 32.77 + 108.32 = 171.49, not 409.08 (running sum breaks here; floors 2-1 follow from 409.08)"
+1.3D+1.5L,N,3,B/C,bottom,kN,1551.47,1231.81,-20.6,1335.04,"D13: roof BC beam shear 33.75 missing from running sum; D4: 30.40 + 32.77 + 108.32 = 171.49, not 409.08 (running sum breaks here; floors 2-1 follow from 409.08)"
+1.3D+1.5L,N,2,B/C,top,kN,2248.02,1916.51,-14.7,1919.69,D13: roof BC beam shear 33.75 missing from running sum; D4: carries the floor-3 error
+1.3D+1.5L,N,2,B/C,bottom,kN,2294.63,1963.12,-14.4,1955.55,D13: roof BC beam shear 33.75 missing from running sum; D4: carries the floor-3 error
+1.3D+1.5L,N,1,B/C,top,kN,3001.03,2649.98,-11.7,2547.1,D13: roof BC beam shear 33.75 missing from running sum; D14: ground column weight counted twice (+9.46); D4: carries the floor-3 error
+1.3D+1.5L,N,1,B/C,bottom,kN,3059.94,2708.89,-11.5,2592.42,D13: roof BC beam shear 33.75 missing from running sum; D14: ground column weight counted twice (+9.46); D4: carries the floor-3 error
