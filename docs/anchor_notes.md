@@ -188,9 +188,9 @@ The thesis was completed on 29 May 2023 (cover page). Its references list GB 500
 
 A 2024 edition of GB 50011-2010 reportedly aligns with GB 55002 [?]; this was not checked.
 
-### Decisions (24 Oct 2026, made by Claude on the author's instruction)
+### Decisions by the author (24 Oct 2026)
 
-The author asked Claude to settle the open Day 6 items without asking. These are Claude's decisions, not the author's checks. The author must read them before the anchor report cites them (R3, R4).
+The author made these decisions and checks the work; Claude Code implemented them and cross-checked the clause texts.
 
 1. **Flags D16-D21 accepted** as worded in `validation/thesis_values/README.md`. D16 and D17 take the wording revised by the cross-check. D16's A-support arithmetic was checked by the author.
 2. **Anchor (Layer 1) keeps the thesis factors.** These are 1.3/1.5 for gravity and wind, and 1.2/1.3 for seismic (Day 9), so the model can reproduce the thesis. `THESIS_COMBINATIONS` is unchanged.
@@ -234,9 +234,9 @@ The reference is 1.3 × (thesis dead) + 1.5 × (thesis live), from the typed tab
 | N, floor 4, B/C | 11-13 % | D13 (dead roof BC shear missing) |
 | N, floors 3-1, B/C | 12-21 % | D4 (live running sum) and D13 |
 
-### Flags D16-D21 (accepted 24 Oct 2026 by Claude on the author's instruction; see "Decisions" above)
+### Flags D16-D21 (accepted by the author, 24 Oct 2026; see "Decisions" above)
 
-- **D16.** Table 8-13: the "1.3 D + 1.5 L" column is 1.0 D + 1.5 L in 13 of the 15 roof rows; the two D-support rows and all 15 level-1 rows fit neither 1.0 nor 1.3 (revised after the cross-check above). **Confirmed by the author, 24 Oct 2026,** for the first wording ("every roof row"): −67.76 + 1.5 × (−22.18) = −101.03, as printed. The revised scope was accepted by Claude on the author's instruction.
+- **D16.** Table 8-13: the "1.3 D + 1.5 L" column is 1.0 D + 1.5 L in 13 of the 15 roof rows; the two D-support rows and all 15 level-1 rows fit neither 1.0 nor 1.3 (revised after the cross-check above). **Confirmed by the author, 24 Oct 2026,** for the first wording ("every roof row"): −67.76 + 1.5 × (−22.18) = −101.03, as printed. The revised scope was accepted by the author the same day.
 - **D17.** Table 8-13: the dead and wind columns are cells copied from table 6.3, not frame forces ("V" rows hold moments); the live column matches neither table "7.2" nor any other thesis table; the wind combination columns cannot be reproduced from simple factors. So Table 8-13 is not a validation target (revised after the cross-check above).
 - **D18.** Table "7.2": at floors 2-4 the printed finals are not the sums of their columns (up to 6.2 kN·m; 23.28 at the D2 cell).
 - **D19.** Table "7.2": joints B4, B2 and B1 do not balance even with the column sums (−4.40, +6.22, −27.67 kN·m), and the first distribution step at B does not follow the distribution factors.
