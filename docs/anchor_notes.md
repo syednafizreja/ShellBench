@@ -198,7 +198,7 @@ The reference is 1.3 × (thesis dead) + 1.5 × (thesis live), from the typed tab
 
 ### Proposed flags (for the author to confirm)
 
-- **D16.** Table 8-13: the "1.3 D + 1.5 L" column is 1.0 D + 1.5 L in every roof row.
+- **D16.** Table 8-13: the "1.3 D + 1.5 L" column is 1.0 D + 1.5 L in every roof row. **Confirmed by the author, 24 Oct 2026:** −67.76 + 1.5 × (−22.18) = −101.03, as printed.
 - **D17.** Table 8-13: the live column does not match table "7.2", and the wind columns cannot be reproduced from simple factors.
 - **D18.** Table "7.2": at floors 2-4 the printed finals are not the sums of their columns (up to 6.2 kN·m; 23.28 at the D2 cell).
 - **D19.** Table "7.2": joints B4, B2 and B1 do not balance even with the column sums (−4.40, +6.22, −27.67 kN·m), and the first distribution step at B does not follow the distribution factors.
