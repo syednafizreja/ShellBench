@@ -43,10 +43,14 @@ def test_factors_match_thesis_headers():
     assert c3["D"] == 1.3 and c3["L"] == pytest.approx(1.05) and c3["W_right"] == 1.5
 
 
-def test_seismic_combinations_marked_unverified():
-    """The seismic factors come from garbled text, so they carry status 'unverified'."""
-    for c in cb.THESIS_COMBINATIONS:
-        assert c.status == ("unverified" if "E_" in c.name else "thesis")
+def test_seismic_factors_thesis_and_code():
+    """Thesis seismic pair is GB 50011-2010 cl. 5.4.1 (1.2, 1.3); current GB 55002-2021 cl. 4.3.2 is (1.3, 1.4)."""
+    assert all(c.status == "thesis" for c in cb.THESIS_COMBINATIONS)
+    assert by_name("1.2GE+1.3E_left").factors == {"GE": 1.2, "E_left": 1.3}
+    code = {c.name: c for c in cb.CODE_SEISMIC_COMBINATIONS}
+    assert code["1.3GE+1.4E_left"].factors == {"GE": 1.3, "E_left": 1.4}
+    assert code["1.3GE+1.4E_right"].factors == {"GE": 1.3, "E_right": 1.4}
+    assert all(c.status == "code" for c in code.values())
 
 
 def test_combine_is_linear():

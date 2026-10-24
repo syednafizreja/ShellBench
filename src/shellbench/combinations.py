@@ -28,13 +28,22 @@ Sources and their status
 ------------------------
 - Partial factors 1.3 (dead) and 1.5 (live, wind) and the combination values
   0.6 (wind accompanying live) and 0.7 (live accompanying wind): Th §8.7 and
-  the printed headers of Tables 8-13 and 8-15. The author should confirm in
-  their own copy which code clause gives them (GB 55001-2021 or the revised
-  GB 50009 [?]); this module does not supply a clause.
+  the printed headers of Tables 8-13 and 8-15. The 1.3 and 1.5 equal the
+  minimum values of GB 55001-2021 cl. 3.1.13 items 1 and 4 (checked 24 Oct
+  2026 against the online text; the author to confirm in their copy). The
+  thesis does not cite GB 55001. The 0.6 and 0.7 are not traced to a clause.
 - Seismic combination 1.2 x gravity + 1.3 x earthquake: Th §8.7 text, which is
-  garbled ("multiplied by1.21.3 times") [?]. To be checked against GB 50011
-  in the author's copy before Day 9 uses it. The definition of ``GE`` is not
-  made here.
+  garbled ("multiplied by1.21.3 times"). The reading equals GB 50011-2010
+  cl. 5.4.1 and Table 5.4.1 (gamma_G = 1.2, gamma_Eh = 1.3), the code the
+  thesis cites (checked 24 Oct 2026 against the 2010 text). The definition of
+  ``GE`` is not made here.
+- Current seismic factors for Layer 2: GB 55002-2021 cl. 4.3.2, Tables
+  4.3.2-1 and 4.3.2-2: gamma_G >= 1.3, gamma_Eh >= 1.4 when only horizontal
+  earthquake is computed (checked 24 Oct 2026 against the online text; the
+  author to confirm in their copy). In force from 1 Jan 2022, so it applied
+  when the thesis was completed (29 May 2023); the thesis values are lower
+  (flag D21). ``CODE_SEISMIC_COMBINATIONS`` holds these; the anchor keeps
+  the thesis values so that it can reproduce the thesis.
 
 Units: whatever the case results carry (kN, kN*m); factors are dimensionless.
 """
@@ -63,12 +72,22 @@ PSI_WIND: float = 0.6
 PSI_LIVE: float = 0.7
 
 #: Partial factor on the gravity representative value in the seismic
-#: combination [-]. Th §8.7 text (garbled) [?].
+#: combination, as the thesis used it [-]. Th §8.7 text (garbled);
+#: equals GB 50011-2010 cl. 5.4.1.
 GAMMA_EG: float = 1.2
 
-#: Partial factor on the horizontal earthquake action [-]. Th §8.7 text
-#: (garbled) [?].
+#: Partial factor on the horizontal earthquake action, as the thesis used
+#: it [-]. Th §8.7 text (garbled); equals GB 50011-2010 Table 5.4.1.
 GAMMA_EH: float = 1.3
+
+#: Minimum partial factor on the gravity load in the seismic combination
+#: under the current code [-]. GB 55002-2021 cl. 4.3.2, Table 4.3.2-1.
+GAMMA_EG_CODE: float = 1.3
+
+#: Minimum partial factor on the horizontal earthquake action, horizontal
+#: earthquake only, under the current code [-]. GB 55002-2021 cl. 4.3.2,
+#: Table 4.3.2-2.
+GAMMA_EH_CODE: float = 1.4
 
 
 @dataclass(frozen=True)
@@ -79,8 +98,8 @@ class Combination:
         name: Short label as the thesis writes it.
         factors: Load-case name -> factor applied to that case's effects.
         source: Where the combination comes from.
-        status: ``"thesis"`` for factors printed in the thesis, ``"unverified"``
-            for factors read from garbled text [?].
+        status: ``"thesis"`` for factors the thesis used, ``"code"`` for the
+            current code minimum values used by Layer 2.
     """
 
     name: str
@@ -98,6 +117,8 @@ class Combination:
 
 
 _TABLE_SRC = "Th s8.7; Table 8-13 and 8-15 headers; baseline_spec S13"
+_SEISMIC_SRC = "Th s8.7 text (garbled), read as GB 50011-2010 cl. 5.4.1"
+_CODE_SEISMIC_SRC = "GB 55002-2021 cl. 4.3.2, Tables 4.3.2-1 and 4.3.2-2"
 
 #: The combinations of Th §8.7, in the order of Table 8-13.
 THESIS_COMBINATIONS: tuple[Combination, ...] = (
@@ -111,9 +132,18 @@ THESIS_COMBINATIONS: tuple[Combination, ...] = (
     Combination("1.3D+1.5(0.7L+W_right)",
                 {"D": GAMMA_G, "L": GAMMA_W * PSI_LIVE, "W_right": GAMMA_W}, _TABLE_SRC),
     Combination("1.2GE+1.3E_left", {"GE": GAMMA_EG, "E_left": GAMMA_EH},
-                "Th s8.7 text (garbled)", "unverified"),
+                _SEISMIC_SRC),
     Combination("1.2GE+1.3E_right", {"GE": GAMMA_EG, "E_right": GAMMA_EH},
-                "Th s8.7 text (garbled)", "unverified"),
+                _SEISMIC_SRC),
+)
+
+#: Seismic combinations with the current code minimum factors, for the
+#: generator (Layer 2). Not used by the anchor, which reproduces the thesis.
+CODE_SEISMIC_COMBINATIONS: tuple[Combination, ...] = (
+    Combination("1.3GE+1.4E_left", {"GE": GAMMA_EG_CODE, "E_left": GAMMA_EH_CODE},
+                _CODE_SEISMIC_SRC, "code"),
+    Combination("1.3GE+1.4E_right", {"GE": GAMMA_EG_CODE, "E_right": GAMMA_EH_CODE},
+                _CODE_SEISMIC_SRC, "code"),
 )
 
 #: What Table 8-13 actually computed in its "1.3 Dead load + 1.5 x live"
