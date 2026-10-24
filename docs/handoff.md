@@ -2,6 +2,16 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 24 Oct 2026, Claude Code in VS Code (Day 6 sync)
+
+**Done:** `/sync` after PRs #33 and #34. `pip install -e . --no-deps`; pytest 64 passed; `python -m shellbench.anchor_frame` rewrote all 7 results files byte-identical to the committed blobs (raw bytes). No local step was requested. No code or results changed.
+
+**Decisions by the author today:** none new.
+
+**Open:** as in the cross-check entry below (re-confirm D16 with its revised scope; confirm D17-D20; code clauses for 1.3/1.5 and 1.2/1.3).
+
+**Next:** Day 7, weekly review.
+
 ## 24 Oct 2026, Claude in the app (Day 6 close: routine changes)
 
 **Done:** release v0.0.1 published by the new `.github/workflows/release.yml` (PR #31): merging a PR that adds `docs/releases/v<version>.md` (first line "# Title"), with that version in pyproject.toml, creates the tag and release. Cloud sessions cannot create releases directly (HTTP 403). New project command `.claude/commands/sync.md` (PR #33): in VS Code, `/sync` pulls, reinstalls, runs pytest and the anchor model, checks results are byte-identical, writes the handoff entry and merges a `dayNN-sync` PR.
