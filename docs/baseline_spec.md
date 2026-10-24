@@ -105,7 +105,7 @@ Units: SI throughout (m, mm, kN, kN/m, kN/m², N/mm²).
 | S10 | Storey shears used | T 8-12 (5 levels: 363.06 … 98.29 kN) | Th T 8-12 | Validation target with B4 caveat (B9) |
 | S11 | Elastic drift limit | 1/550 | Th §8.2, §8.4 | §8.2 also prints 1/5500 (typo [J]) |
 | S12 | γRE | 0.75 beam flexure, 0.85 shear, 0.80 column | Th §9.1, §9.3 | Values as printed; text is garbled, author to confirm |
-| S13 | Load combinations used | 1.3D + 1.5L; 1.3D + 1.5(L + 0.6W); 1.3D + 1.5(0.7L + W) | Th §8.7, T 8-13, T 8-15 | No seismic combination table found in the text [J] |
+| S13 | Load combinations used | 1.3D + 1.5L; 1.3D + 1.5(L + 0.6W); 1.3D + 1.5(0.7L + W) | Th §8.7, T 8-13, T 8-15 | No seismic combination table found in the text [J]. Added 24 Oct 2026: §8.7 text gives 1.2 G_E ± 1.3 E_h (GB 50011-2010 cl. 5.4.1); 1.3/1.5 match GB 55001-2021 cl. 3.1.13; current seismic minimum is 1.3/1.4 (GB 55002-2021 cl. 4.3.2), used by Layer 2 (flag D21; docs/anchor_notes.md) |
 | S14 | Preliminary gravity load for column sizing | 14 kN/m² per floor, × 5 floors | Th §2.4 | B4: "× 5" is an error; building has 4 storeys |
 
 ### A7 Foundation and site
