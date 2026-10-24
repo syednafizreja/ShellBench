@@ -59,20 +59,24 @@ corrections.
 - D14. Dead, Table 4-9, floor 1: N_top exceeds the running sum by 9.46 kN (A/D: 810.69 + 167.77 + 85.44 = 1063.90, printed 1073.36) and 9.15 kN (B/C). 9.46 = 45.32 - 35.86, so the ground-column weight is counted twice [J]. Confirmed by the author 23 Oct 2026.
 - D15. Dead, s6.2.1 table 6.3: final member-end moments do not balance at joints A1 and B1-B4 (out by 39-80 kN*m; e.g. B4: 68.77 - 52.84 - 67.74 = -51.81, should be 0). Beam ends at those joints are arithmetic errors in the hand distribution, not model targets to match. Confirmed by the author 23 Oct 2026 (B4 checked by hand). Details in docs/anchor_notes.md.
 
-Proposed on Day 6 (24 Oct 2026). D16 confirmed by the author the same day; D17-D20 **await the author's confirmation**.
-Details and arithmetic in docs/anchor_notes.md (live-load and combination
-sections); the checks are coded in `src/shellbench/thesis_checks.py`.
+Found on Day 6 (24 Oct 2026). **Accepted on 24 Oct 2026 by Claude on the
+author's instruction** (the author asked Claude to settle them without
+asking). The author has not checked D17-D21 or the revised D16 scope, and
+must do so before the anchor report cites them (R3, R4). Details and
+arithmetic in docs/anchor_notes.md (live-load and combination sections);
+the checks are coded in `src/shellbench/thesis_checks.py`.
 
-- D16. Table 8-13: the column headed "1.3 Dead load + 1.5 x live" equals 1.0 x dead + 1.5 x live in 13 of the 15 roof rows (e.g. -67.76 + 1.5 x -22.18 = -101.03). The two D-support rows (-44.495, 54.755) and all 15 level-1 rows fit neither 1.0 nor 1.3. **Confirmed by the author 24 Oct 2026** (A support checked by hand) for the first wording ("all 13 rows"); the revised scope awaits the author's re-confirmation.
+- D16. Table 8-13: the column headed "1.3 Dead load + 1.5 x live" equals 1.0 x dead + 1.5 x live in 13 of the 15 roof rows (e.g. -67.76 + 1.5 x -22.18 = -101.03). The two D-support rows (-44.495, 54.755) and all 15 level-1 rows fit neither 1.0 nor 1.3. The author checked the A-support arithmetic by hand on 24 Oct 2026.
 - D17. Table 8-13: the dead and wind columns are cells of table 6.3, not frame forces (roof A support "V" 68.77 is the B4 left-beam final moment; the roof AB shear is 61.88, Table 4-9); the live column matches neither table 7.2 (roof A support -22.18 against -4.55) nor any other thesis table; the wind combination columns cannot be reproduced from simple factors a x D + b x L + c x W. Table 8-13 is therefore not a validation target.
+- D18. Table 7.2, floors 2-4: printed finals are not the sums of their columns (up to 6.20 kN*m; 23.28 at floor 2, C right beam, which is D2).
+- D19. Table 7.2: joints B4, B2, B1 do not balance even with the column sums (-4.40, +6.22, -27.67 kN*m), and the first distribution step at B is not factor x unbalanced moment.
+- D20. Live load sets disagree: fixed-end moments imply AB 6.41 and BC 0.97 kN/m (6.41 = 2.0 kN/m2 office load x 3.6 x 0.8906 [J]); shears use 8.08 and 12.37; the text says BC carries no live load; the B/C axial sums use the roof BC shear 3.10 at every floor instead of 40.82 (Table 7-3).
+- D21. Th s8.7 seismic combination: 1.2 x gravity + 1.3 x earthquake follows GB 50011-2010 cl. 5.4.1 and Table 5.4.1, but GB 55002-2021 cl. 4.3.2 (Tables 4.3.2-1 and 4.3.2-2; in force from 1 Jan 2022; thesis completed 29 May 2023) requires at least 1.3 and 1.4. Clause texts checked by Claude Code; the author to confirm them in their copies.
 
 D16 and D17 were revised on 24 Oct 2026 after Claude Code cross-checked
 Table 8-13 against the thesis .docx (docs/anchor_notes.md, "Cross-check of
 Table 8-13"). The same check found all 296 typed cells of table 7.2 equal
 to the thesis.
-- D18. Table 7.2, floors 2-4: printed finals are not the sums of their columns (up to 6.20 kN*m; 23.28 at floor 2, C right beam, which is D2).
-- D19. Table 7.2: joints B4, B2, B1 do not balance even with the column sums (-4.40, +6.22, -27.67 kN*m), and the first distribution step at B is not factor x unbalanced moment.
-- D20. Live load sets disagree: fixed-end moments imply AB 6.41 and BC 0.97 kN/m (6.41 = 2.0 kN/m2 office load x 3.6 x 0.8906 [J]); shears use 8.08 and 12.37; the text says BC carries no live load; the B/C axial sums use the roof BC shear 3.10 at every floor instead of 40.82 (Table 7-3).
 
 ## Hand checks (Day 3)
 

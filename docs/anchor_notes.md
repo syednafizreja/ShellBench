@@ -170,9 +170,32 @@ Numbers come from `results/anchor_gravity_combination.csv` and `validation/thesi
 1. 1.3 D + 1.5 L
 2. 1.3 D + 1.5 (L ± 0.6 W)
 3. 1.3 D + 1.5 (0.7 L ± W)
-4. A seismic combination. The text is garbled ("Gravitational freight multiplied by1.21.3 times"); it reads as 1.2 × gravity representative value + 1.3 × earthquake [?]. The author should check it in GB 50011 before Day 9.
+4. A seismic combination. The text is garbled ("Gravitational freight multiplied by1.21.3 times"); it reads as 1.2 × gravity representative value ± 1.3 × earthquake. This equals GB 50011-2010 cl. 5.4.1 and Table 5.4.1 (γG = 1.2, γEh = 1.3), the seismic code the thesis cites.
 
-These are coded as data in `src/shellbench/combinations.py`. The author should confirm which code clause gives 1.3 / 1.5 in their copy (GB 55001-2021 or GB 50009 [?]); the code does not name one. Combinations 2-4 need the wind (Day 8) and seismic (Day 9) cases, so they are reported as pending.
+These are coded as data in `src/shellbench/combinations.py`. Combinations 2-4 need the wind (Day 8) and seismic (Day 9) cases, so they are reported as pending.
+
+**Code clauses (checked by Claude Code, 24 Oct 2026).** Only the clause text was used; the author should still confirm it in their own copies.
+
+| Factor set | Clause | Source text used |
+|---|---|---|
+| 1.3 dead, 1.5 live and wind | GB 55001-2021 cl. 3.1.13: permanent action "不应小于1.3" (item 1); other variable actions "不应小于1.5" (item 4) | Online text of GB 55001-2021 (gb55001.readthedocs.io, chapter 3) |
+| 1.2 gravity, 1.3 horizontal earthquake (thesis) | GB 50011-2010 cl. 5.4.1: γG "一般情况应采用 1.2"; Table 5.4.1, horizontal only: γEh = 1.3 (γw = 1.4) | GB 50011-2010 text, PDF page 37 (csdp.edu.cn copy) |
+| 1.3 gravity, 1.4 horizontal earthquake (current) | GB 55002-2021 cl. 4.3.2: Table 4.3.2-1 γG ≥ 1.3; Table 4.3.2-2, horizontal only: γEh = 1.4 (minimum, "不应低于") | Online text of GB 55002-2021 (gb55002.readthedocs.io, chapter 4) |
+
+The thesis was completed on 29 May 2023 (cover page). Its references list GB 50009-2012, GB 50011-2010 and GB 50068-2001, not GB 55001 or GB 55002. Both general codes have been in force since 1 Jan 2022. So:
+- The gravity factors 1.3/1.5 match GB 55001-2021, which the thesis does not cite.
+- The seismic factors 1.2/1.3 come from GB 50011-2010. The mandatory GB 55002-2021, in force at thesis time, requires at least 1.3/1.4. This is flag D21.
+
+A 2024 edition of GB 50011-2010 reportedly aligns with GB 55002 [?]; this was not checked.
+
+### Decisions (24 Oct 2026, made by Claude on the author's instruction)
+
+The author asked Claude to settle the open Day 6 items without asking. These are Claude's decisions, not the author's checks. The author must read them before the anchor report cites them (R3, R4).
+
+1. **Flags D16-D21 accepted** as worded in `validation/thesis_values/README.md`. D16 and D17 take the wording revised by the cross-check. D16's A-support arithmetic was checked by the author.
+2. **Anchor (Layer 1) keeps the thesis factors.** These are 1.3/1.5 for gravity and wind, and 1.2/1.3 for seismic (Day 9), so the model can reproduce the thesis. `THESIS_COMBINATIONS` is unchanged.
+3. **Generator (Layer 2) uses the current codes.** Gravity uses GB 55001-2021 cl. 3.1.13 (1.3/1.5). Seismic uses GB 55002-2021 cl. 4.3.2 (1.3/1.4), held in `CODE_SEISMIC_COMBINATIONS`. This is the code-compliant baseline the charter asks for [J].
+4. **Table 8-13 is not used as a validation target** (D17). Later checks compare the model with tables 6.3 and "7.2" and with Table 4-9, and name their flags.
 
 ### A check on Table 8-13
 
@@ -195,7 +218,7 @@ What follows [J]: Table 8-13 cannot be a validation target for combined forces. 
 
 Typed table "7.2" was checked in the same way: all 296 cells in `live_distribution_table_7_2.csv` equal the thesis cells, in reading order. Two D18/D19 numbers were redone by hand from those cells. Floor 2, C right beam: −27.70 + 2.31 − 2.18 + 0.91 = −26.66 (printed −3.38). Joint B1: 17.64 − 26.89 − 10.56 − 7.86 = −27.67.
 
-**Seismic wording (§8.7).** Items i to v write "1.31.5" for "1.3 D + 1.5", and mark right-hand wind with a minus ("primary freight-0.6 right wind"). Read the same way, item vi ("multiplied by1.21.3 times left of collision") is 1.2 G_E + 1.3 E_h with the earthquake from the left. Item vii ("multiplied by1.2-1.3 times") is 1.2 G_E − 1.3 E_h, from the right [J]. This is what `combinations.py` holds. It still needs the author's check against the code before Day 9.
+**Seismic wording (§8.7).** Items i to v write "1.31.5" for "1.3 D + 1.5", and mark right-hand wind with a minus ("primary freight-0.6 right wind"). Read the same way, item vi ("multiplied by1.21.3 times left of collision") is 1.2 G_E + 1.3 E_h with the earthquake from the left. Item vii ("multiplied by1.2-1.3 times") is 1.2 G_E − 1.3 E_h, from the right [J]. This is what `combinations.py` holds. It matches GB 50011-2010 cl. 5.4.1 (see "Code clauses" above).
 
 ### Differences above 10 % (1.3 D + 1.5 L)
 
@@ -211,12 +234,13 @@ The reference is 1.3 × (thesis dead) + 1.5 × (thesis live), from the typed tab
 | N, floor 4, B/C | 11-13 % | D13 (dead roof BC shear missing) |
 | N, floors 3-1, B/C | 12-21 % | D4 (live running sum) and D13 |
 
-### Proposed flags (for the author to confirm)
+### Flags D16-D21 (accepted 24 Oct 2026 by Claude on the author's instruction; see "Decisions" above)
 
-- **D16.** Table 8-13: the "1.3 D + 1.5 L" column is 1.0 D + 1.5 L in 13 of the 15 roof rows; the two D-support rows and all 15 level-1 rows fit neither 1.0 nor 1.3 (revised after the cross-check above). **Confirmed by the author, 24 Oct 2026,** for the first wording ("every roof row"): −67.76 + 1.5 × (−22.18) = −101.03, as printed. The revised scope awaits the author's re-confirmation.
+- **D16.** Table 8-13: the "1.3 D + 1.5 L" column is 1.0 D + 1.5 L in 13 of the 15 roof rows; the two D-support rows and all 15 level-1 rows fit neither 1.0 nor 1.3 (revised after the cross-check above). **Confirmed by the author, 24 Oct 2026,** for the first wording ("every roof row"): −67.76 + 1.5 × (−22.18) = −101.03, as printed. The revised scope was accepted by Claude on the author's instruction.
 - **D17.** Table 8-13: the dead and wind columns are cells copied from table 6.3, not frame forces ("V" rows hold moments); the live column matches neither table "7.2" nor any other thesis table; the wind combination columns cannot be reproduced from simple factors. So Table 8-13 is not a validation target (revised after the cross-check above).
 - **D18.** Table "7.2": at floors 2-4 the printed finals are not the sums of their columns (up to 6.2 kN·m; 23.28 at the D2 cell).
 - **D19.** Table "7.2": joints B4, B2 and B1 do not balance even with the column sums (−4.40, +6.22, −27.67 kN·m), and the first distribution step at B does not follow the distribution factors.
 - **D20.** Live load sets: the fixed-end moments use 6.41 / 0.97 kN/m, the shears 8.08 / 12.37 kN/m, the text says BC carries no live load, and the B/C axial sums use the roof BC shear (3.10) at every floor.
+- **D21.** §8.7 seismic combination: 1.2 gravity + 1.3 earthquake follows GB 50011-2010 cl. 5.4.1, but GB 55002-2021 cl. 4.3.2 (in force from 1 Jan 2022; thesis completed 29 May 2023) requires at least 1.3 and 1.4. The thesis seismic design forces are therefore below the code minimum then in force [J].
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
