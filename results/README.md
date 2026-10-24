@@ -8,7 +8,7 @@ Output written by the code in [../src/shellbench/](../src/shellbench/). Do not e
 | anchor_gravity_dead_runs.csv | same | One row per run: load model, switches, applied vertical load and the sum of base reactions (equilibrium check). |
 | anchor_gravity_live.csv | same | Live load (Day 6): the same comparison for the 40 live-load targets, primary run plus four check runs. |
 | anchor_gravity_live_runs.csv | same | Equilibrium totals of the five live-load runs. |
-| anchor_gravity_combination.csv | same | 1.3D + 1.5L from the primary dead and live runs against 1.3 x thesis dead + 1.5 x thesis live; also 1.0D + 1.5L, which is what thesis Table 8-13 printed (proposed flag D16). |
+| anchor_gravity_combination.csv | same | 1.3D + 1.5L from the primary dead and live runs against 1.3 x thesis dead + 1.5 x thesis live; also 1.0D + 1.5L, which is what thesis Table 8-13 printed in 13 of 15 roof rows (proposed flag D16). Table 8-13's own dead and wind inputs are table 6.3 cells (D17), so its printed combinations are not a target. |
 | thesis_table_7_2_check.csv | same | Thesis table 7.2: every printed final moment next to the sum of its column, and, for beam ends, the primary and axially rigid model values. |
 | thesis_table_7_2_joints.csv | same | Thesis table 7.2: sum of final moments at every joint, from the printed finals and from the column sums, with the printed joint moment. |
 
