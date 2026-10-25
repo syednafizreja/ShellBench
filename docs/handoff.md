@@ -2,6 +2,18 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 25 Oct 2026, Claude in the app (Week 1 loose ends)
+
+**Done:** audit of Days 0-7 at the author's request. LOG Day 5 count corrected (11 of 40 dead-load targets above 10 %, not 6). Gap-matrix row 1 now has pages, so every row has one. New docs/preregistration.md with H1-H4 verbatim from the charter (p. 11); the analysis plan part is still empty and due 4 Nov. README badge alt text fixed. pytest 64 passed in the cloud. No code or results changed.
+
+**Decisions by the author today:** none new.
+
+**For both Claudes:** docs/preregistration.md now exists. Never edit the H1-H4 text in it; only Parts 2 and 3 get written. The merged day07-* branches could not be deleted from the cloud; delete them on GitHub or leave them.
+
+**Open (author):** primer [?] values before Day 9; carbon factors by Thu 29 Oct; Zenodo link and ORCID before 31 Oct; analysis plan by 4 Nov.
+
+**Next:** Day 8, wind.
+
 ## 25 Oct 2026, Claude in the app (impact and reuse plan)
 
 **Done:** new docs/impact_strategy.md (what the charter already covers for reuse, additions A1-A10 placed in Weeks 2-8, ideas L1-L5 parked). README "Approach" now calls the thesis building validation case 0 and lists the reuse items per week. LOG.md has a 25 Oct entry and a new "Later" section. No code or results changed.
