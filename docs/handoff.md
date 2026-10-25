@@ -6,7 +6,7 @@ Newest entry first. Each Claude reads this at the start of a session and adds an
 
 **Done:** new docs/impact_strategy.md (what the charter already covers for reuse, additions A1-A10 placed in Weeks 2-8, ideas L1-L5 parked). README "Approach" now calls the thesis building validation case 0 and lists the reuse items per week. LOG.md has a 25 Oct entry and a new "Later" section. No code or results changed.
 
-**Decisions by the author today:** asked for the impact plan to be added to the roadmap. L1-L5 wait for the author's answer.
+**Decisions today:** the author asked for the impact plan and then handed impact decisions to Claude from now on (within the fixed limits: no fees, no moved dates, H1-H4 frozen). L1-L3 not in this project; L4 GitHub Pages site and L5 free talk after 13 Dec; LinkedIn may link the repo once the Paper 1 preprint is public. See docs/impact_strategy.md.
 
 **For both Claudes:** Day 12 stores carbon factors as data files (A4). Week 3 generator reads buildings from definition files, with no thesis numbers in generator code (A2). Week 4 floors follow a written plug-in contract with a conformance test (A3).
 
