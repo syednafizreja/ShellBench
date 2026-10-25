@@ -3,7 +3,7 @@
 [![Tests](https://github.com/syednafizreja/ShellBench/actions/workflows/tests.yml/badge.svg)](https://github.com/syednafizreja/ShellBench/actions/workflows/tests.yml)
 ![Python 3.12](https://img.shields.io/badge/python-3.12-blue)
 ![Licence: MIT](https://img.shields.io/badge/licence-MIT-green)
-![Status: week 1 of 8](https://img.shields.io/badge/status-week%202%20of%208-orange)
+![Status: week 2 of 8](https://img.shields.io/badge/status-week%202%20of%208-orange)
 
 **How much do thin-shell floors cut the whole-building A1–A3 embodied carbon of a GB 50010 / GB 50011 RC frame across 3–8 storeys, and how does the saving change with storey count and seismic intensity once diaphragm, tie and topping needs are met?**
 
