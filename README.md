@@ -3,7 +3,7 @@
 [![Tests](https://github.com/syednafizreja/ShellBench/actions/workflows/tests.yml/badge.svg)](https://github.com/syednafizreja/ShellBench/actions/workflows/tests.yml)
 ![Python 3.12](https://img.shields.io/badge/python-3.12-blue)
 ![Licence: MIT](https://img.shields.io/badge/licence-MIT-green)
-![Status: week 1 of 8](https://img.shields.io/badge/status-week%201%20of%208-orange)
+![Status: week 1 of 8](https://img.shields.io/badge/status-week%202%20of%208-orange)
 
 **How much do thin-shell floors cut the whole-building A1–A3 embodied carbon of a GB 50010 / GB 50011 RC frame across 3–8 storeys, and how does the saving change with storey count and seismic intensity once diaphragm, tie and topping needs are met?**
 
@@ -11,7 +11,7 @@
 
 A thinner floor weighs less. Less weight means smaller seismic forces, which can mean smaller beams, columns and footings. ShellBench follows that chain through the whole building, using real design codes, rather than comparing floors on their own.
 
-> **Status.** Week 1 of an 8-week plan. The thesis building has been audited and its published results typed in as validation targets. The thesis frame runs in OpenSeesPy under dead load (Day 5), live load and the thesis gravity combination (Day 6), and every difference above 10 % from the thesis has a written reason. First release: [v0.0.1](https://github.com/syednafizreja/ShellBench/releases/tag/v0.0.1), "Baseline spec and gravity check". Daily progress is in [LOG.md](LOG.md).
+> **Status.** Week 1 of an 8-week plan is complete (review in [docs/week01_review.md](docs/week01_review.md)); Week 2 finishes the anchor. The thesis building has been audited and its published results typed in as validation targets. The thesis frame runs in OpenSeesPy under dead load (Day 5), live load and the thesis gravity combination (Day 6), and every difference above 10 % from the thesis has a written reason. First release: [v0.0.1](https://github.com/syednafizreja/ShellBench/releases/tag/v0.0.1), "Baseline spec and gravity check". Daily progress is in [LOG.md](LOG.md).
 
 ---
 
@@ -53,7 +53,7 @@ Each week has a GitHub issue with its goals.
 
 | Week | Dates (2026) | Goal | Release | Status |
 |---|---|---|---|---|
-| 1 | 19–25 Oct | [Audit the thesis and model it under gravity](https://github.com/syednafizreja/ShellBench/issues/1) | | In progress |
+| 1 | 19–25 Oct | [Audit the thesis and model it under gravity](https://github.com/syednafizreja/ShellBench/issues/1) | v0.0.1 | Done |
 | 2 | 26 Oct–1 Nov | [Finish the anchor: lateral loads, code checks, carbon](https://github.com/syednafizreja/ShellBench/issues/2) | v0.1 | |
 | 3 | 2–8 Nov | [The generator and the building family](https://github.com/syednafizreja/ShellBench/issues/3) | v0.2 | |
 | 4 | 9–15 Nov | [The thin-shell floor module](https://github.com/syednafizreja/ShellBench/issues/4) | v0.3 | |
@@ -77,6 +77,8 @@ The hypotheses (H1–H4) will be frozen in public in Week 3, before any family r
 | [results/](results/) | Dead-load, live-load and 1.3D + 1.5L comparisons with the thesis (beam-end moments, column axial forces, % differences, check runs), and the thesis-table checks. Causes of every difference above 10 % in [docs/anchor_notes.md](docs/anchor_notes.md). |
 | [docs/gap_matrix.md](docs/gap_matrix.md) | 23 papers from 2020-2026, each with what it studied, whether seismic loads and ties were included, and a section locator; gap statements G1-G4. Sources in [docs/reading_list.md](docs/reading_list.md), all legal open copies. |
 | [docs/goal_stress_test.md](docs/goal_stress_test.md) | Red-team review of the research question (holes H1-H9) and the fixes adopted. |
+| [docs/week01_review.md](docs/week01_review.md) | Week 1 review: every Done-when line checked against a file, and the weak points to handle before the anchor report. |
+| [notes/gb50011_base_shear_primer.md](notes/gb50011_base_shear_primer.md) | Study note on the GB 50011 base-shear method worked on the thesis building, with the clauses to check before Day 9. |
 | [docs/q1_standards.md](docs/q1_standards.md) | Journal and publication-ethics rules (Elsevier, Springer Nature, COPE) that the project follows every day, with a daily compliance check. |
 
 ## The anchor building

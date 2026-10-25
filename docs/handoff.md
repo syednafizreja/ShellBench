@@ -2,6 +2,16 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 25 Oct 2026, Claude in the app (Day 7, weekly review)
+
+**Done:** docs/week01_review.md (Week 1 Done-when audit, flags D1-D21 summary, seven Week 2 weak points); notes/gb50011_base_shear_primer.md (learning note for Day 9, code values marked [?]); README status moved to Week 2; issue #1 closed. pytest 64 passed in the cloud (Python 3.13, OpenSeesPy 3.8.0.0). No code or results changed, so /sync should find results byte-identical.
+
+**Decisions by the author today:** none yet. Open for the author: the wind tolerance (before the Day 8 run) and how Day 9 treats the level-5 force in Table 8-12 (review sections 3.1-3.2).
+
+**For both Claudes:** Day 8 must not run the wind comparison until the author's tolerance is written in docs/anchor_notes.md. Day 9 seismic.py uses only code values the author has confirmed in the primer.
+
+**Next:** Day 8, wind.
+
 ## 24 Oct 2026, Claude Code in VS Code (Day 6 open items settled)
 
 **Done:** the open Day 6 items were settled on the author's command. Claude Code cross-checked the code clauses against code text:
