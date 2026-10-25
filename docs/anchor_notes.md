@@ -243,4 +243,12 @@ The reference is 1.3 × (thesis dead) + 1.5 × (thesis live), from the typed tab
 - **D20.** Live load sets: the fixed-end moments use 6.41 / 0.97 kN/m, the shears 8.08 / 12.37 kN/m, the text says BC carries no live load, and the B/C axial sums use the roof BC shear (3.10) at every floor.
 - **D21.** §8.7 seismic combination: 1.2 gravity + 1.3 earthquake follows GB 50011-2010 cl. 5.4.1, but GB 55002-2021 cl. 4.3.2 (in force from 1 Jan 2022; thesis completed 29 May 2023) requires at least 1.3 and 1.4. The thesis seismic design forces are therefore below the code minimum then in force [J].
 
+## Lateral loads: decisions made before the runs (25 Oct 2026)
+
+The author made these decisions on Day 7, before any wind or seismic result exists, so neither can be tuned to the results.
+
+1. **Wind drift tolerance: 15 %.** The Day 8 test fails if any storey drift differs from thesis Table 8-2 by more than 15 %. Author's reason: the D-value method is itself an approximation, and 15 % is large enough to absorb the known differences in α_c and axial flexibility without masking a real modelling error.
+2. **Seismic comparison (Day 9): storey forces for levels 1-4 only.** Every shear in Table 8-12 includes the 98.29 kN level-5 force, which comes from the row judged spurious (decision B4). Day 9 compares the storey forces F_i = V_i − V_i+1 for levels 1-4 and does not add the level-5 force at the roof. Author's reason: adding it would inflate every shear and spoil the comparison with the four real storeys.
+3. **α_max = 0.08** for frequent earthquakes at 7 degrees (0.10 g), confirmed by the author in GB 50011-2010 Table 5.1.4-1.
+
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
