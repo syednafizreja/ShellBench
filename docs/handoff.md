@@ -2,6 +2,16 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 25 Oct 2026, Claude in the app (impact and reuse plan)
+
+**Done:** new docs/impact_strategy.md (what the charter already covers for reuse, additions A1-A10 placed in Weeks 2-8, ideas L1-L5 parked). README "Approach" now calls the thesis building validation case 0 and lists the reuse items per week. LOG.md has a 25 Oct entry and a new "Later" section. No code or results changed.
+
+**Decisions by the author today:** asked for the impact plan to be added to the roadmap. L1-L5 wait for the author's answer.
+
+**For both Claudes:** Day 12 stores carbon factors as data files (A4). Week 3 generator reads buildings from definition files, with no thesis numbers in generator code (A2). Week 4 floors follow a written plug-in contract with a conformance test (A3).
+
+**Open:** link Zenodo to GitHub before v0.1 (author's hands); author's ORCID iD for CITATION.cff.
+
 ## 25 Oct 2026, Claude Code in VS Code (Day 7 sync)
 
 **Done:** `/sync` after PRs #38 and #39. `pip install -e . --no-deps`; pytest 64 passed (Windows, Python 3.12). `python -m shellbench.anchor_frame` rewrote all 7 results files byte-identical to the committed blobs (raw bytes). `results/README.md` is not written by the model; it differs from its blob only by Windows checkout line endings. No local step was requested. No code or results changed.
