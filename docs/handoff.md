@@ -2,6 +2,16 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 25 Oct 2026, Claude Code in VS Code (Day 7 sync)
+
+**Done:** `/sync` after PRs #38 and #39. `pip install -e . --no-deps`; pytest 64 passed (Windows, Python 3.12). `python -m shellbench.anchor_frame` rewrote all 7 results files byte-identical to the committed blobs (raw bytes). `results/README.md` is not written by the model; it differs from its blob only by Windows checkout line endings. No local step was requested. No code or results changed.
+
+**Decisions by the author today:** none new since the Day 7 app entry.
+
+**Open:** the primer's [?] code values (Tables 5.1.3, 5.2.1, 5.2.5, cl. 5.1.5 curve), read in the author's copy before Day 9; GB/T 51366-2019 and the ICE database to hand by Thu 29 Oct for Day 12; quiz questions 3, 4, 6, 7, 8 to redo in the app.
+
+**Next:** Day 8, wind.
+
 ## 25 Oct 2026, Claude in the app (Day 7, weekly review)
 
 **Done:** docs/week01_review.md (Week 1 Done-when audit, flags D1-D21 summary, seven Week 2 weak points); notes/gb50011_base_shear_primer.md (learning note for Day 9, code values marked [?]); README status moved to Week 2; issue #1 closed. pytest 64 passed in the cloud (Python 3.13, OpenSeesPy 3.8.0.0). No code or results changed, so /sync should find results byte-identical.
