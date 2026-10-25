@@ -55,21 +55,24 @@ Total about 28 h over seven weeks [J], spread inside work each week already does
 
 ## Parked under Later (outside the charter)
 
-These would add reach, but each adds a paper, a code or a week. They are logged in `LOG.md` under "Later" and wait for the author's decision.
+These would add reach, but each adds a paper, a code or a week. The author handed impact decisions to Claude on 25 Oct 2026 ("I let you decide for the best possible impact. From now on."), within the charter's fixed limits: no fees, no moved submission dates, H1-H4 frozen. The decisions are below and in `LOG.md` under "Later".
 
-| # | Idea | Why it is outside | Cost [J] | Would delay |
-|---|---|---|---|---|
-| L1 | Data descriptor paper (for example Data in Brief or Scientific Data) | Adds a third paper; both journals are open access with an article charge [?], which breaks the never-pay rule | About 1 week | Paper 2 (12 Dec) |
-| L2 | Second design code module (Eurocode 8 or ASCE 7) | Second design code is out of scope | 2-3 weeks | Paper 1 (29 Nov) |
-| L3 | More floor systems beyond the baselines (CLT, composite, voided slabs) | Widens the study | About 1 week each | Dataset DOI (20 Nov) |
-| L4 | Documentation website, GUI or web app | Polish beyond v1.0 | 3-5 days | v1.0 (13 Dec) |
-| L5 | Conference talk or webinar on the benchmark | Extra output | 2-3 days | Paper 2 |
+| # | Idea | Why it is outside | Cost [J] | Would delay | Decision (25 Oct 2026) |
+|---|---|---|---|---|---|
+| L1 | Data descriptor paper (for example Data in Brief or Scientific Data) | Adds a third paper; both journals are open access with an article charge [?], which breaks the never-pay rule | About 1 week | Paper 2 (12 Dec) | **Not before 13 Dec.** Revisit in Jan 2027 only if a venue with no author charge is found. The Zenodo record with its datasheet (A6) and the Paper 1 data availability statement already make the dataset citable |
+| L2 | Second design code module (Eurocode 8 or ASCE 7) | Second design code is out of scope | 2-3 weeks | Paper 1 (29 Nov) | **Not in this project.** Keep all GB clauses in one module (A2) so a follow-up study, or another group, can add a code. Named as future work in both papers |
+| L3 | More floor systems beyond the baselines (CLT, composite, voided slabs) | Widens the study | About 1 week each | Dataset DOI (20 Nov) | **Not in this project.** The plug-in contract (A3) and the "add your own floor" tutorial (A10) invite others to add floors, which spreads use faster than adding them ourselves [J] |
+| L4 | Documentation website, GUI or web app | Polish beyond v1.0 | 3-5 days | v1.0 (13 Dec) | **Website only, after 13 Dec and before the JOSS submission (19 Apr 2027):** a free GitHub Pages site built from the existing docs and tutorials. No GUI or web app |
+| L5 | Conference talk or webinar on the benchmark | Extra output | 2-3 days | Paper 2 | **After 13 Dec, free-to-present venues only** (for example a university seminar or an online research group talk), using the Paper 1 preprint. No registration fees |
 
-A2, A3 and A4 keep the door open for L2 and L3 at almost no cost, so nothing is lost by parking them now.
+Why this order [J]: the papers and the dataset DOI bring the first citations, so nothing is allowed to touch them before 13 Dec. After that, the cheapest reach is the website and a talk, because they point people at outputs that already exist. A second code or more floors are new research, so they belong to a follow-up study rather than this one.
+
+## Sharing on LinkedIn (decided 25 Oct 2026, under the same hand-over)
+
+Until the Paper 1 preprint is public, the 25 Oct rule stands: posts show counts and the checking method only. Once the preprint is public, the work is no longer something others could take first, so posts may link the preprint, the repo and the dataset DOI, and may name the floor system and the research question. Hypothesis verdicts are shared only once they are in the preprint.
 
 ## Open questions for the author
 
-- When Paper 1 goes up as a preprint, should the LinkedIn series start linking to the repo and dataset? The current rule (25 Oct) shares no research details. A preprint makes the work public anyway, so the rule could relax then.
 - Do you have an ORCID iD? A7 needs it.
 
 ## Sources

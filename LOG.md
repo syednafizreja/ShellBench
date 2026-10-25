@@ -91,9 +91,11 @@ Compliance: sources - four method references (FAIR, FAIR4RS, datasheets, MacNeal
 
 ## Later (parked, outside the charter)
 
-Each needs my yes before any work starts. Costs are estimates [J].
-- L1 Data descriptor paper (e.g. Data in Brief, Scientific Data): third paper; open-access journals with an article charge [?], against the never-pay rule. About 1 week; delays Paper 2.
-- L2 Second design code module (Eurocode 8 or ASCE 7): out of scope. 2-3 weeks; delays Paper 1.
-- L3 More floor systems beyond the baselines (CLT, composite, voided slabs): about 1 week each; delays the dataset DOI.
-- L4 Documentation website, GUI or web app: 3-5 days; after v1.0.
-- L5 Conference talk or webinar on the benchmark: 2-3 days; delays Paper 2.
+Decided 25 Oct 2026 by Claude under my hand-over ("I let you decide for the best possible impact. From now on."), within the fixed limits: no fees, no moved dates, H1-H4 frozen. Costs are estimates [J]. Details in docs/impact_strategy.md.
+- L1 Data descriptor paper: not before 13 Dec; revisit Jan 2027 only with a no-charge venue. Zenodo record + datasheet carry the dataset meanwhile.
+- L2 Second design code module (Eurocode 8 or ASCE 7): not in this project; GB clauses kept in one module so a follow-up can add one. Future work in both papers.
+- L3 More floor systems (CLT, composite, voided slabs): not in this project; the plug-in contract and tutorial invite others to add them.
+- L4 Documentation website: yes, free GitHub Pages, after 13 Dec and before JOSS (19 Apr 2027). No GUI or web app.
+- L5 Talk or webinar: after 13 Dec, free venues only, using the Paper 1 preprint.
+- LinkedIn: 25 Oct sharing rule holds until the Paper 1 preprint is public; then posts may link the preprint, repo and dataset DOI.
+Compliance: sources - none new. AI use - Claude made these impact decisions under my standing hand-over and recorded them. Numbers - hour estimates only, [J]. Data - nothing confidential. Repo - branch day07-impact-decisions, PR merged.
