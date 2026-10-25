@@ -6,7 +6,7 @@ Learning note for Day 9 (27 Oct 2026), written on Day 7 (25 Oct 2026). It is a s
 
 ## Why this method applies to the anchor
 
-The base-shear method (底部剪力法) replaces the earthquake with one static force at the base, spread up the height. GB 50011 allows it for buildings up to 40 m tall whose deformation is mainly shear and whose mass and stiffness are fairly even over the height (cl. 5.1.2 [?]). The anchor is a regular four-storey frame about 15.35 m tall (4.55 + 3 × 3.6 m, baseline_spec G-rows), so it qualifies. Day 10's response-spectrum run is the independent check.
+The base-shear method (底部剪力法) replaces the earthquake with one static force at the base, spread up the height. GB 50011 allows it for buildings up to 40 m tall whose deformation is mainly shear and whose mass and stiffness are fairly even over the height (cl. 5.1.2). The anchor is a regular four-storey frame about 15.35 m tall (4.55 + 3 × 3.6 m, baseline_spec G-rows), so it qualifies. The clause wording was cross-checked against a web transcription of GB 50011-2010 on 25 Oct 2026; the author should still read it in their copy. Day 10's response-spectrum run is the independent check.
 
 ## The six steps
 
@@ -14,7 +14,7 @@ The base-shear method (底部剪力法) replaces the earthquake with one static 
 
 **2. Fundamental period T1.** The thesis prints no period (baseline_spec S7, decision B9), so Day 9 will report the OpenSeesPy modal period. A bare-frame model leaves out the stiffness of the infill walls, so its period is longer than the real building's. Design practice reduces the computed period for infilled frames by a factor of about 0.6-0.7 (JGJ 3-2010 cl. 4.3.17 [?]). Whether the anchor applies that factor is your decision on Day 9, and it changes α1 directly.
 
-**3. Seismic influence coefficient α1 (cl. 5.1.4 and 5.1.5 [?]).** Read α_max from Table 5.1.4-1 for frequent earthquakes at 7 degrees, 0.10 g; I recall 0.08 [?]. Tg = 0.35 s is fixed by your decision B5 (site class II, group 1). With 5 % damping the curve has four parts: a rise from 0.45 α_max at T = 0 to α_max at 0.1 s; a plateau at α_max up to Tg; a curved fall α = (Tg/T)^0.9 α_max from Tg to 5Tg; and a straight fall after 5Tg [?].
+**3. Seismic influence coefficient α1 (cl. 5.1.4 and 5.1.5 [?]).** Read α_max from Table 5.1.4-1 for frequent earthquakes at 7 degrees, 0.10 g; the value is 0.08 (confirmed by the author in Table 5.1.4-1, 25 Oct 2026). Tg = 0.35 s is fixed by your decision B5 (site class II, group 1). With 5 % damping the curve has four parts: a rise from 0.45 α_max at T = 0 to α_max at 0.1 s; a plateau at α_max up to Tg; a curved fall α = (Tg/T)^0.9 α_max from Tg to 5Tg; and a straight fall after 5Tg [?].
 
 **4. Base shear F_Ek (cl. 5.2.1 [?]).** F_Ek = α1 G_eq, with G_eq = 0.85 ΣG_i for a multi-storey building.
 
@@ -38,7 +38,7 @@ For levels 1-4, F_i/H_i stays between 6.61 and 6.82 kN/m. That is what step 5 gi
 
 ## A sense of scale, before Day 9
 
-Because F_Ek = α1 G_eq, the printed base shear of 363.06 kN implies a G_eq for each trial period. These rows use the step-3 curve with α_max = 0.08 [?] and Tg = 0.35 s. They are illustrations, not results.
+Because F_Ek = α1 G_eq, the printed base shear of 363.06 kN implies a G_eq for each trial period. These rows use the step-3 curve with α_max = 0.08 (confirmed) and Tg = 0.35 s. They are illustrations, not results.
 
 | Trial T1 (s) | α1 | Implied G_eq (kN) | Implied ΣG_i = G_eq/0.85 (kN) |
 |---|---|---|---|
@@ -60,6 +60,6 @@ The 7.2 m strip of one transverse frame covers about 7.2 × 21.0 = 151 m² per f
 6. Cl. 5.2.5 (minimum seismic shear coefficient).
 7. JGJ 3-2010 cl. 4.3.17, or the period-reduction rule in your own course notes, for the infill factor.
 
-Write the confirmed value next to each [?] above. Seismic.py will only use values you have confirmed.
+Still open on 25 Oct 2026: Table 5.1.3 coefficients, the cl. 5.1.5 curve shape, Table 5.2.1 δ_n and Table 5.2.5 λ. The web transcription shows these tables only as images, so they need the author's copy. Write the confirmed value next to each [?] above. Seismic.py will only use values you have confirmed.
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.

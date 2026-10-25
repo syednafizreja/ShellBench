@@ -6,9 +6,9 @@ Newest entry first. Each Claude reads this at the start of a session and adds an
 
 **Done:** docs/week01_review.md (Week 1 Done-when audit, flags D1-D21 summary, seven Week 2 weak points); notes/gb50011_base_shear_primer.md (learning note for Day 9, code values marked [?]); README status moved to Week 2; issue #1 closed. pytest 64 passed in the cloud (Python 3.13, OpenSeesPy 3.8.0.0). No code or results changed, so /sync should find results byte-identical.
 
-**Decisions by the author today:** none yet. Open for the author: the wind tolerance (before the Day 8 run) and how Day 9 treats the level-5 force in Table 8-12 (review sections 3.1-3.2).
+**Decisions by the author today:** wind drift tolerance 15 % (Day 8 test); Day 9 compares Table 8-12 storey forces for levels 1-4 only, without the level-5 force; α_max = 0.08 confirmed in Table 5.1.4-1. Recorded in docs/anchor_notes.md, "Lateral loads: decisions made before the runs". Still open: the primer's other [?] code values (Tables 5.1.3, 5.2.1, 5.2.5 and the cl. 5.1.5 curve), to be read in the author's copy.
 
-**For both Claudes:** Day 8 must not run the wind comparison until the author's tolerance is written in docs/anchor_notes.md. Day 9 seismic.py uses only code values the author has confirmed in the primer.
+**For both Claudes:** Day 8 uses the 15 % tolerance already written in docs/anchor_notes.md. Day 9 seismic.py uses only code values the author has confirmed in the primer.
 
 **Next:** Day 8, wind.
 
