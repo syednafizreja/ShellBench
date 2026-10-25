@@ -17,7 +17,7 @@ A thinner floor weighs less. Less weight means smaller seismic forces, which can
 
 ## Approach
 
-The study is built on one real, fully documented building: the author's own thesis design. Every model is checked against that building before it is trusted on anything else.
+The study is checked against one real, fully documented building: the author's own thesis design. That building is validation case 0. Every model must reproduce it before it is trusted on anything else. The result is the generator, the building family and the floor interface, which anyone can run on their own building or floor (see [docs/impact_strategy.md](docs/impact_strategy.md)).
 
 ```mermaid
 flowchart LR
@@ -64,6 +64,8 @@ Each week has a GitHub issue with its goals.
 
 The hypotheses (H1–H4) will be frozen in public in Week 3, before any family result exists.
 
+Reuse items built into the weeks above (details in [docs/impact_strategy.md](docs/impact_strategy.md)): carbon factors as data files and a Zenodo DOI for every release from v0.1 (Week 2); buildings defined as data, not code (Week 3); a written floor plug-in contract with a conformance test (Week 4); reference problems and a datasheet in the dataset (Week 5); one-command reproduction of each paper's figures (Weeks 6 and 8); JOSS-ready documentation and two tutorials in v1.0 (Week 8).
+
 ## Done so far
 
 | Item | What it holds |
@@ -79,6 +81,7 @@ The hypotheses (H1–H4) will be frozen in public in Week 3, before any family r
 | [docs/goal_stress_test.md](docs/goal_stress_test.md) | Red-team review of the research question (holes H1-H9) and the fixes adopted. |
 | [docs/week01_review.md](docs/week01_review.md) | Week 1 review: every Done-when line checked against a file, and the weak points to handle before the anchor report. |
 | [notes/gb50011_base_shear_primer.md](notes/gb50011_base_shear_primer.md) | Study note on the GB 50011 base-shear method worked on the thesis building, with the clauses to check before Day 9. |
+| [docs/impact_strategy.md](docs/impact_strategy.md) | How others will reuse and cite ShellBench: what the charter already covers, additions A1-A10 placed in Weeks 2-8 without moving a date, and ideas parked under Later. |
 | [docs/q1_standards.md](docs/q1_standards.md) | Journal and publication-ethics rules (Elsevier, Springer Nature, COPE) that the project follows every day, with a daily compliance check. |
 
 ## The anchor building
