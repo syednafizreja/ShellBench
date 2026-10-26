@@ -1,0 +1,5 @@
+variant [text],axially_rigid_columns [text],rigid_floor [text],storey_heights [m],applied_horizontal_load [kN],base_shear_reaction [kN],roof_displacement [mm],max_theta [-],max_theta_over_limit [-]
+primary,False,False,4.55 3.6 3.6 3.6,42.67,42.67,1.169,9.75e-05,0.0536
+rigid_column_axial,True,False,4.55 3.6 3.6 3.6,42.67,42.67,1.155,9.66e-05,0.0531
+rigid_floor,False,True,4.55 3.6 3.6 3.6,42.67,42.67,1.168,9.74e-05,0.0536
+ground_4_05,False,False,4.05 3.6 3.6 3.6,42.67,42.67,1.047,9.36e-05,0.0515
