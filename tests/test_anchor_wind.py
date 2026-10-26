@@ -9,7 +9,8 @@ Validation against closed-form results:
 
 Checks of the thesis values and of the frame model:
 3. The printed storey shears of Table 8-2 are the running sums of the
-   printed W_k, and W_k at levels 1-3 follow from the Table 8-1 inputs.
+   printed W_k, and W_k at levels 1-3 follow from the Table 8-1 inputs;
+   the roof W_k exceeds the parapet rule (flag D23).
 4. Horizontal base reaction and column shears balance the applied wind.
 5. Every model drift ratio meets the 1/550 limit (spec S11).
 6. The author's pre-registered test (every storey drift within 15 % of
@@ -72,6 +73,14 @@ def test_table_8_2_forces_follow_table_8_1_inputs(thesis):
     """W_k at levels 1-3 equals beta_z mu_s mu_z w0 B h_trib within print rounding."""
     for row in aw.wind_force_check_rows(thesis)[:3]:
         assert row["W_k_from_expected [kN]"] == pytest.approx(row["W_k_printed [kN]"], abs=0.02)
+
+
+def test_roof_force_exceeds_parapet_rule(thesis):
+    """Flag D23: printed roof W_k uses hj = 3.6 m, not half storey + 1.2 m parapet."""
+    roof = aw.wind_force_check_rows(thesis)[-1]
+    assert roof["expected_tributary_height [m]"] == pytest.approx(3.0)
+    assert roof["implied_tributary_height [m]"] == pytest.approx(3.6, abs=0.005)
+    assert roof["W_k_from_expected [kN]"] == pytest.approx(9.52, abs=0.01)
 
 
 def test_wind_equilibrium(primary, thesis):
