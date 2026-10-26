@@ -2,6 +2,18 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 26 Oct 2026, Claude Code in VS Code (Day 8 open items)
+
+**Done:** the open roof-storey question from Day 8 is closed. New test `test_roof_storey_stiffness_depends_on_load_pattern`: under the same 42.67 kN, the roof storey goes from +10.6 % against V/ΣD (Table 8-2 pattern) to −15.8 % (roof-only load), and drifts 0.115 mm with no shear under a level-3-only load. Cause: the D-value method's equal-rotation assumption at the top storey [J]. Written up in docs/anchor_notes.md, wind, "Why it fails". pytest 74 passed. Results files unchanged. No GB 50011 copy on this laptop, so the primer [?] values stay open.
+
+**Decisions by the author today:** finish every open item without asking.
+
+**For both Claudes:** /sync should now expect 74 passed.
+
+**Open (author):** GB 50011 primer [?] values (Tables 5.1.3, 5.2.1, 5.2.5, cl. 5.1.5 curve) before Day 9; delete the merged day07-*/day08-* branches on GitHub (blocked by the permission check here); carbon factors by Thu 29 Oct; Zenodo link and ORCID before 31 Oct; quizzes (Day 8 Q2, Day 7 Q3, 4, 6, 7, 8) in the app.
+
+**Next:** Day 9, seismic base-shear method.
+
 ## 26 Oct 2026, Claude Code in VS Code (Day 8 sync)
 
 **Done:** `/sync` after PRs #44 and #45. `pip install -e . --no-deps`; pytest 73 passed (Windows, Python 3.12), as the Day 8 decisions entry expected. `python -m shellbench.anchor_frame` rewrote all 11 model-written results files, including the four new wind files, byte-identical to the committed blobs (raw bytes). `results/README.md` is not written by the model; it differs from its blob only by Windows checkout line endings. No local step was requested. No code or results changed.
