@@ -2,6 +2,18 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 26 Oct 2026, Claude in the app (Day 8 decisions)
+
+**Done:** the author's Day 8 decisions recorded (docs/anchor_notes.md, wind section, "Decisions by the author"). The roof wind check in `anchor_wind.py` now uses the 1.2 m parapet of Th §4.2 (new constant `PARAPET_HEIGHT_M`) and a test pins D23. `results/thesis_table_8_2_forces_check.csv` changed (roof row filled in); the other results are byte-identical. pytest 73 passed.
+
+**Decisions by the author today:** wind test kept as written (verdict pinned); D22 accepted; D23 accepted (roof value confirmed from Table 8-1 and §4.2).
+
+**For both Claudes:** /sync should expect 73 passed.
+
+**Open (author):** primer [?] values before Day 9; carbon factors by Thu 29 Oct; Zenodo link and ORCID before 31 Oct.
+
+**Next:** Day 9, seismic base-shear method.
+
 ## 26 Oct 2026, Claude in the app (Day 8, wind)
 
 **Done:** new `src/shellbench/anchor_wind.py` (printed Table 8-2 forces on the axis (2) frame; four runs; D-value method redone from the model's sections; W_k check against Table 8-1). `anchor_frame.main()` now calls it, so `python -m shellbench.anchor_frame` also writes `results/anchor_wind.csv`, `anchor_wind_runs.csv`, `anchor_wind_d_values.csv`, `thesis_table_8_2_forces_check.csv`. `build_frame` and `level_y_coordinates` take optional storey heights and beam I factor (defaults unchanged; gravity results byte-identical). New `tests/test_anchor_wind.py`. pytest: 72 passed (Linux, Python 3.13, OpenSeesPy 3.8.0.0).

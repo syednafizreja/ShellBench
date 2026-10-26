@@ -264,7 +264,7 @@ Claude wrote these reading rules down before any wind result existed [J]. They a
 
 ## Wind (Day 8, 26 Oct 2026)
 
-Status: **draft, Day 8, for the author to review.** Every explanation here is [J] until then. Numbers come from `results/anchor_wind.csv`, `anchor_wind_runs.csv`, `anchor_wind_d_values.csv` and `thesis_table_8_2_forces_check.csv`, written by `src/shellbench/anchor_wind.py` (run by `python -m shellbench.anchor_frame`), or are arithmetic on printed Table 8-2 values.
+Status: **reviewed by the author on 26 Oct 2026** (decisions at the end of this section). Explanations still marked [J] or [?] are Claude's and unverified. Numbers come from `results/anchor_wind.csv`, `anchor_wind_runs.csv`, `anchor_wind_d_values.csv` and `thesis_table_8_2_forces_check.csv`, written by `src/shellbench/anchor_wind.py` (run by `python -m shellbench.anchor_frame`), or are arithmetic on printed Table 8-2 values.
 
 ### What the model does
 
@@ -306,11 +306,18 @@ Every model drift ratio meets 1/550 (spec S11) by a wide margin. The largest is 
 
 ### A check on the printed wind forces
 
-`thesis_table_8_2_forces_check.csv` recomputes W_k = β_z μ_s μ_z w₀ B h from the Table 8-1 inputs (spec W1-W6). The printed shears are exact running sums of the printed forces. Levels 1-3 reproduce to 0.01 kN with tributary heights of 3.825 m ((4.05 + 3.6)/2) and 3.60 m. The roof force 11.42 kN implies a tributary height of 3.60 m, which is the same as a typical floor. Half the top storey is 1.80 m, so 3.60 m would need a 1.80 m parapet [J]. The parapet height is not in docs/baseline_spec.md, so this is proposed flag D23 [?], for the author to read in Table 8-1 or the drawings.
+`thesis_table_8_2_forces_check.csv` recomputes W_k = β_z μ_s μ_z w₀ B h from the Table 8-1 inputs (spec W1-W6). The printed shears are exact running sums of the printed forces. Levels 1-3 reproduce to 0.01 kN with tributary heights of 3.825 m ((4.05 + 3.6)/2) and 3.60 m. The roof force 11.42 kN implies a tributary height of 3.60 m, the same as a typical floor. Table 8-1 confirms it: the roof row has h_i = 3.6 m and h_j = 3.6 m. The parapet is 1.2 m high (Th §4.2, parapet wall 1.2 × 0.24 × 5.5), so half the top storey plus the parapet gives 1.8 + 1.2 = 3.0 m and W_k = 3.173 × 3.0 = 9.52 kN [J]. The printed roof force is 20 % higher than that, and the base shear 42.67 kN is about 4.5 % higher than 40.77 kN. This is flag D23. It errs on the safe side and does not change the drift verdict.
 
 ### Proposed flags (for the author)
 
 - **D22.** Table 8-2 Δu implies storey stiffnesses V/Δu of 54 705, 35 088, 42 804 and 10 106 N/mm; storeys 2-4 are identical, so the printed Δu cannot come from one frame. Extends D7. Effect: the pre-registered wind test fails on the thesis side; the anchor report names it.
-- **D23 [?].** Roof W_k = 11.42 kN implies a 3.60 m tributary height, which needs a 1.80 m parapet. Effect: if the parapet is lower, the thesis roof wind force is on the high side. Small for the frame, since wind is 5 % of the drift limit.
+- **D23.** Roof W_k = 11.42 kN uses h_j = 3.6 m (Table 8-1) where half the top storey plus the 1.2 m parapet (Th §4.2) gives 3.0 m, so 9.52 kN [J]. Effect: the thesis roof wind force is 20 % high and the base shear 4.5 % high, on the safe side. The anchor keeps the printed forces.
+
+### Decisions by the author (26 Oct 2026)
+
+- Author's check: Table 8-2 in the thesis prints Δu = 0.91 mm (storey 2) and 1.13 mm (storey 4), so D22 is not a Day 3 typing error.
+- The wind test stays as written: the 15 % rule applied unchanged, with today's verdict (fail at all four storeys) asserted. Author's reason: the tolerance was fixed before any result existed, and the test records that the printed drifts cannot come from any single set of storey stiffnesses.
+- D22 accepted.
+- D23 accepted, on condition that Table 8-1 or the drawings confirm the roof value. Confirmed the same day from the thesis text: Table 8-1 roof row h_j = 3.6 m, parapet 1.2 m in §4.2. D23 is now a permanent flag.
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
