@@ -70,6 +70,8 @@ the checks are coded in `src/shellbench/thesis_checks.py`.
 - D19. Table 7.2: joints B4, B2, B1 do not balance even with the column sums (-4.40, +6.22, -27.67 kN*m), and the first distribution step at B is not factor x unbalanced moment.
 - D20. Live load sets disagree: fixed-end moments imply AB 6.41 and BC 0.97 kN/m (6.41 = 2.0 kN/m2 office load x 3.6 x 0.8906 [J]); shears use 8.08 and 12.37; the text says BC carries no live load; the B/C axial sums use the roof BC shear 3.10 at every floor instead of 40.82 (Table 7-3).
 - D21. Th s8.7 seismic combination: 1.2 x gravity + 1.3 x earthquake follows GB 50011-2010 cl. 5.4.1 and Table 5.4.1, but GB 55002-2021 cl. 4.3.2 (Tables 4.3.2-1 and 4.3.2-2; in force from 1 Jan 2022; thesis completed 29 May 2023) requires at least 1.3 and 1.4. Clause texts checked by Claude Code; the author to confirm them in their copies.
+- D22 (proposed, Day 8). Table 8-2 du implies storey stiffnesses V / du of 54 705, 35 088, 42 804 and 10 106 N/mm at levels 1-4. Storeys 2-4 are identical, so the printed du cannot come from one elastic frame. Extends D7. The pre-registered wind test fails on this (docs/anchor_notes.md, wind section).
+- D23 (proposed, Day 8) [?]. Roof W_k = 11.42 kN in Table 8-2 implies a tributary height of 3.60 m (W_k / (beta_z mu_s mu_z w0 B)), which needs a 1.80 m parapet above half the top storey. Parapet height to be read in Table 8-1 or the drawings.
 
 D16 and D17 were revised on 24 Oct 2026 after Claude Code cross-checked
 Table 8-13 against the thesis .docx (docs/anchor_notes.md, "Cross-check of

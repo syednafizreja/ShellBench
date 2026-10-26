@@ -262,4 +262,55 @@ Claude wrote these reading rules down before any wind result existed [J]. They a
 5. Check runs change one thing each: columns axially rigid; floors rigid in their own plane; ground storey 4.05 m as in Tables 8-1 and 8-2. None of them can replace the primary run in the pass/fail test.
 6. If the pass/fail test fails, the tolerance and the target stay as they are. The failure is written into this file and the LOG, and the author decides how the test is kept.
 
+## Wind (Day 8, 26 Oct 2026)
+
+Status: **draft, Day 8, for the author to review.** Every explanation here is [J] until then. Numbers come from `results/anchor_wind.csv`, `anchor_wind_runs.csv`, `anchor_wind_d_values.csv` and `thesis_table_8_2_forces_check.csv`, written by `src/shellbench/anchor_wind.py` (run by `python -m shellbench.anchor_frame`), or are arithmetic on printed Table 8-2 values.
+
+### What the model does
+
+The printed W_k of Table 8-2 (10.74, 10.10, 10.41, 11.42 kN, levels 1-4) act from the left at the axis-A joint of each level. Nothing in the gravity model changes; the gravity results files are byte-identical to Day 7. Wind from the right is the mirror image, because the frame is symmetric.
+
+### Verdict of the pre-registered test: fail at all four storeys
+
+| Level | Δu Table 8-2 [mm] | Δu model [mm] | Difference | Within 15 %? |
+|---|---|---|---|---|
+| 1 | 0.78 | 0.425 | −45.5 % | no |
+| 2 | 0.91 | 0.351 | −61.4 % | no |
+| 3 | 0.51 | 0.250 | −51.1 % | no |
+| 4 | 1.13 | 0.143 | −87.4 % | no |
+
+The tolerance and the target were not changed after the run (reading rule 6). The pytest that encodes decision 1 is kept as a strict expected failure, so the suite stays green while the failure stays on record; if anything makes it pass, the suite turns red and the verdict has to be read again. Whether to keep it this way is the author's call.
+
+### Why it fails: the target, not the model
+
+The model and the thesis carry the same storey shears (column shears 42.67, 31.93, 21.83, 11.42 kN, equal to the printed V). So the gap sits in the drifts the thesis printed, and three things point at the thesis arithmetic:
+
+1. The printed Δu is not V/ΣD of the thesis's own V and ΣD (flag D7). It is 1.70, 3.06, 2.51 and 10.6 times that value at levels 1-4.
+2. Read backwards, the printed Δu implies storey stiffnesses V/Δu of 54 705, 35 088, 42 804 and 10 106 N/mm. Storeys 2-4 have identical columns, beams and heights, yet the implied stiffness changes by more than four times between them. No single elastic frame can do that, so no choice of modelling assumption (cracked sections, a different E, joint flexibility) can bring the model within 15 % of all four rows.
+3. Against V/ΣD with the thesis numbers, the model is −7.5, +18.1, +22.9 and +34.5 % off. Against V/ΣD with D-values recomputed from the model's own sections by the same formulas as Table 7-6, it is −16.7, −2.8, +1.1 and +10.6 % off.
+
+Item 3 splits the difference into its parts. The recomputed ΣD (83 633 N/mm ground, 88 416 N/mm above) is lower than the printed 92 842 and 107 488 N/mm, which is flag D6 again: the printed K and α_c in Table 7-6 cannot be reproduced from the §2.6 stiffnesses. Once the D-values are recomputed, the finite-element frame and the D-value method agree within 3 % at levels 2-3. The ground storey is 16.7 % stiffer in the model than the D-value formula gives, because the fixed-base α_c = (0.5 + K)/(2 + K) ignores the restraint the storey above gives to the column tops [J]. At the roof the model is 10.6 % more flexible than the D-value estimate. I have not explained that yet [?]: the D-value method assumes equal joint rotations above and below each storey, and that assumption is weakest at the top, but this is not checked.
+
+### Check runs (one change each, Δu difference from Table 8-2)
+
+| Run | Level 1 | Level 2 | Level 3 | Level 4 | What it shows |
+|---|---|---|---|---|---|
+| primary | −45.5 % | −61.4 % | −51.1 % | −87.4 % | |
+| rigid_column_axial | −45.7 % | −61.8 % | −51.9 % | −87.8 % | Column axial shortening adds about 1 % to the roof displacement (1.169 against 1.155 mm). |
+| rigid_floor | −45.5 % | −61.5 % | −51.1 % | −87.4 % | Beam axial strain does not matter for wind. |
+| ground_4_05 | −58.8 % | −63.0 % | −51.6 % | −87.4 % | A 4.05 m ground storey (Tables 8-1, 8-2) makes level 1 stiffer and the gap wider, so B4's 4.55 m is not the cause. |
+
+### Drift limit
+
+Every model drift ratio meets 1/550 (spec S11) by a wide margin. The largest is θ = 9.75 × 10⁻⁵ at storey 2, which is 5.4 % of the limit. The thesis printed θ = u/h for levels 2-4 (flag D8), cumulative displacement over storey height, and that also passes. So under the stated assumptions wind does not govern the frame's drift; the seismic check on Day 9 will.
+
+### A check on the printed wind forces
+
+`thesis_table_8_2_forces_check.csv` recomputes W_k = β_z μ_s μ_z w₀ B h from the Table 8-1 inputs (spec W1-W6). The printed shears are exact running sums of the printed forces. Levels 1-3 reproduce to 0.01 kN with tributary heights of 3.825 m ((4.05 + 3.6)/2) and 3.60 m. The roof force 11.42 kN implies a tributary height of 3.60 m, which is the same as a typical floor. Half the top storey is 1.80 m, so 3.60 m would need a 1.80 m parapet [J]. The parapet height is not in docs/baseline_spec.md, so this is proposed flag D23 [?], for the author to read in Table 8-1 or the drawings.
+
+### Proposed flags (for the author)
+
+- **D22.** Table 8-2 Δu implies storey stiffnesses V/Δu of 54 705, 35 088, 42 804 and 10 106 N/mm; storeys 2-4 are identical, so the printed Δu cannot come from one frame. Extends D7. Effect: the pre-registered wind test fails on the thesis side; the anchor report names it.
+- **D23 [?].** Roof W_k = 11.42 kN implies a 3.60 m tributary height, which needs a 1.80 m parapet. Effect: if the parapet is lower, the thesis roof wind force is on the high side. Small for the frame, since wind is 5 % of the drift limit.
+
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
