@@ -54,13 +54,15 @@ Each week has a GitHub issue with its goals.
 | Week | Dates (2026) | Goal | Release | Status |
 |---|---|---|---|---|
 | 1 | 19–25 Oct | [Audit the thesis and model it under gravity](https://github.com/syednafizreja/ShellBench/issues/1) | v0.0.1 | Done |
-| 2 | 26 Oct–1 Nov | [Finish the anchor: lateral loads, code checks, carbon](https://github.com/syednafizreja/ShellBench/issues/2) | v0.1 | |
-| 3 | 2–8 Nov | [The generator and the building family](https://github.com/syednafizreja/ShellBench/issues/3) | v0.2 | |
-| 4 | 9–15 Nov | [The thin-shell floor module](https://github.com/syednafizreja/ShellBench/issues/4) | v0.3 | |
-| 5 | 16–22 Nov | [Whole-building results](https://github.com/syednafizreja/ShellBench/issues/5) | dataset | |
-| 6 | 23–29 Nov | [Write and submit Paper 1](https://github.com/syednafizreja/ShellBench/issues/6) | preprint | |
-| 7 | 30 Nov–6 Dec | [The AI surrogate study](https://github.com/syednafizreja/ShellBench/issues/7) | | |
-| 8 | 7–13 Dec | [Paper 2 and the public package](https://github.com/syednafizreja/ShellBench/issues/8) | v1.0 | |
+| 2 | 26 Oct–1 Nov | [Finish the anchor: lateral loads, code checks, carbon](https://github.com/syednafizreja/ShellBench/issues/2) | v0.1 (31 Oct) | |
+| 3 | 1–6 Nov | [The generator and the building family](https://github.com/syednafizreja/ShellBench/issues/3) | v0.2 | |
+| 4 | 7–13 Nov | [The thin-shell floor module](https://github.com/syednafizreja/ShellBench/issues/4) | v0.3 | |
+| 5 | 13–21 Nov | [Whole-building results](https://github.com/syednafizreja/ShellBench/issues/5) | dataset DOI (17 Nov) | |
+| 6 | 22–29 Nov | [Write and submit Paper 1](https://github.com/syednafizreja/ShellBench/issues/6) | preprint (29 Nov) | |
+| 7 | 21 Nov–3 Dec | [The AI surrogate study](https://github.com/syednafizreja/ShellBench/issues/7) | v0.5 | |
+| 8 | 4–8 Dec (profile to 13 Dec) | [Paper 2 and the public package](https://github.com/syednafizreja/ShellBench/issues/8) | v1.0 (8 Dec) | |
+
+Dates moved on 26 Oct 2026 with the author's approval (finish earlier, no check dropped). The day-by-day map is [docs/schedule.md](docs/schedule.md).
 
 The hypotheses (H1–H4) will be frozen in public in Week 3, before any family result exists.
 
