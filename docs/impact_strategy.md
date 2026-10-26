@@ -19,8 +19,8 @@ The thesis building is actually the strongest part of the reuse story [J]. Most 
 | Open code anyone can run | MIT licence, public repo, tests in CI | `LICENSE`, `.github/workflows/tests.yml` |
 | Other floor systems can be added | Floor type is a plug-in | Charter, Layer 3 |
 | Results beyond one building | Family of about 2,000 code-designed buildings, 3-8 storeys, PGA sweep 0.05-0.40 g | Charter, `docs/research_question.md` |
-| Citable data | Zenodo dataset with DOI by 20 Nov, CC BY 4.0 | Charter |
-| Citable software | v1.0 software DOI by 13 Dec; JOSS from 19 Apr 2027 | Charter |
+| Citable data | Zenodo dataset with DOI by 17 Nov (was 20 Nov; moved 26 Oct), CC BY 4.0 | Charter |
+| Citable software | v1.0 software DOI by 8 Dec (was 13 Dec; moved 26 Oct); JOSS from 19 Apr 2027 | Charter |
 | Fair comparison | Best code-compliant conventional floor as the baseline | `docs/goal_stress_test.md`, H2 fix |
 | Carbon factor sensitivity | Chinese factors primary, ICE as sensitivity | `docs/goal_stress_test.md`, H6 fix |
 | Early visibility | Paper 1 preprint at submission | README roadmap, Week 6 |
@@ -59,10 +59,10 @@ These would add reach, but each adds a paper, a code or a week. The author hande
 
 | # | Idea | Why it is outside | Cost [J] | Would delay | Decision (25 Oct 2026) |
 |---|---|---|---|---|---|
-| L1 | Data descriptor paper (for example Data in Brief or Scientific Data) | Adds a third paper; both journals are open access with an article charge [?], which breaks the never-pay rule | About 1 week | Paper 2 (12 Dec) | **Not before 13 Dec.** Revisit in Jan 2027 only if a venue with no author charge is found. The Zenodo record with its datasheet (A6) and the Paper 1 data availability statement already make the dataset citable |
+| L1 | Data descriptor paper (for example Data in Brief or Scientific Data) | Adds a third paper; both journals are open access with an article charge [?], which breaks the never-pay rule | About 1 week | Paper 2 (8 Dec) | **Not before 13 Dec.** Revisit in Jan 2027 only if a venue with no author charge is found. The Zenodo record with its datasheet (A6) and the Paper 1 data availability statement already make the dataset citable |
 | L2 | Second design code module (Eurocode 8 or ASCE 7) | Second design code is out of scope | 2-3 weeks | Paper 1 (29 Nov) | **Not in this project.** Keep all GB clauses in one module (A2) so a follow-up study, or another group, can add a code. Named as future work in both papers |
-| L3 | More floor systems beyond the baselines (CLT, composite, voided slabs) | Widens the study | About 1 week each | Dataset DOI (20 Nov) | **Not in this project.** The plug-in contract (A3) and the "add your own floor" tutorial (A10) invite others to add floors, which spreads use faster than adding them ourselves [J] |
-| L4 | Documentation website, GUI or web app | Polish beyond v1.0 | 3-5 days | v1.0 (13 Dec) | **Website only, after 13 Dec and before the JOSS submission (19 Apr 2027):** a free GitHub Pages site built from the existing docs and tutorials. No GUI or web app |
+| L3 | More floor systems beyond the baselines (CLT, composite, voided slabs) | Widens the study | About 1 week each | Dataset DOI (17 Nov) | **Not in this project.** The plug-in contract (A3) and the "add your own floor" tutorial (A10) invite others to add floors, which spreads use faster than adding them ourselves [J] |
+| L4 | Documentation website, GUI or web app | Polish beyond v1.0 | 3-5 days | v1.0 (8 Dec) | **Website only, after 13 Dec and before the JOSS submission (19 Apr 2027):** a free GitHub Pages site built from the existing docs and tutorials. No GUI or web app |
 | L5 | Conference talk or webinar on the benchmark | Extra output | 2-3 days | Paper 2 | **After 13 Dec, free-to-present venues only** (for example a university seminar or an online research group talk), using the Paper 1 preprint. No registration fees |
 
 Why this order [J]: the papers and the dataset DOI bring the first citations, so nothing is allowed to touch them before 13 Dec. After that, the cheapest reach is the website and a talk, because they point people at outputs that already exist. A second code or more floors are new research, so they belong to a follow-up study rather than this one.
