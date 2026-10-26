@@ -364,19 +364,25 @@ def axis_x_coordinates() -> list[float]:
     return xs
 
 
-def level_y_coordinates() -> list[float]:
+def level_y_coordinates(storey_heights_m: tuple[float, ...] | None = None) -> list[float]:
     """Return the y coordinate [m] of the base and each floor level.
 
+    Args:
+        storey_heights_m: Storey heights, ground storey first [m]; defaults to
+            ``STOREY_HEIGHTS_M``.
+
     Returns:
-        Cumulative sums of ``STOREY_HEIGHTS_M`` starting at 0 (top of footing).
+        Cumulative sums of the storey heights starting at 0 (top of footing).
     """
     ys = [0.0]
-    for h in STOREY_HEIGHTS_M:
+    for h in storey_heights_m or STOREY_HEIGHTS_M:
         ys.append(ys[-1] + h)
     return ys
 
 
-def build_frame(axially_rigid_columns: bool = False) -> FrameModel:
+def build_frame(axially_rigid_columns: bool = False,
+                storey_heights_m: tuple[float, ...] | None = None,
+                beam_inertia_factor: float | None = None) -> FrameModel:
     """Build the 2D elastic frame in a fresh OpenSees domain.
 
     Columns are one element per storey, fixed at the base. Each beam is split
@@ -388,6 +394,12 @@ def build_frame(axially_rigid_columns: bool = False) -> FrameModel:
         axially_rigid_columns: If True, column area is multiplied by
             ``RIGID_AXIAL_AREA_FACTOR`` to remove axial shortening (a check of
             how much the hand method's neglect of it matters).
+        storey_heights_m: Storey heights, ground storey first [m]; defaults
+            to ``STOREY_HEIGHTS_M``. Used by the wind check run with the
+            4.05 m ground storey of Tables 8-1 and 8-2 (Day 8).
+        beam_inertia_factor: Factor on the beam I0; defaults to
+            ``BEAM_INERTIA_FACTOR``. Tests set it very large to get the
+            closed-form rigid-beam storey stiffness.
 
     Returns:
         A FrameModel holding the tags of all nodes and elements.
@@ -397,7 +409,8 @@ def build_frame(axially_rigid_columns: bool = False) -> FrameModel:
     ops.geomTransf("Linear", 1)
 
     fm = FrameModel()
-    xs, ys = axis_x_coordinates(), level_y_coordinates()
+    xs, ys = axis_x_coordinates(), level_y_coordinates(storey_heights_m)
+    i_factor = BEAM_INERTIA_FACTOR if beam_inertia_factor is None else beam_inertia_factor
     tag = 1
     for lvl, y in enumerate(ys):
         for ax, x in zip(AXES, xs):
@@ -421,7 +434,7 @@ def build_frame(axially_rigid_columns: bool = False) -> FrameModel:
     for lvl in range(1, len(ys)):
         for i, span in enumerate(SPAN_LABELS):
             bb, hb = BEAM_BH_M[span]
-            a_b, i_b = bb * hb, BEAM_INERTIA_FACTOR * bb * hb**3 / 12.0
+            a_b, i_b = bb * hb, i_factor * bb * hb**3 / 12.0
             n_sub = round(SPANS_M[i] * BEAM_SUBELEMENTS_PER_M)
             left, right = fm.node[(AXES[i], lvl)], fm.node[(AXES[i + 1], lvl)]
             chain = [left]
@@ -994,15 +1007,20 @@ def main(repo_root: Path | None = None) -> dict[str, list[dict]]:
     ``anchor_gravity_live.csv`` and ``anchor_gravity_live_runs.csv`` (Day 6),
     ``anchor_gravity_combination.csv`` (1.3D + 1.5L, Day 6),
     ``thesis_table_7_2_check.csv`` and ``thesis_table_7_2_joints.csv``
-    (arithmetic checks of the thesis live-load table, Day 6).
+    (arithmetic checks of the thesis live-load table, Day 6), and the wind
+    tables of ``shellbench.anchor_wind.main`` (Day 8).
 
     Args:
         repo_root: Repository root; defaults to two levels above this file's
             package folder.
 
     Returns:
-        The rows written, keyed ``"dead"``, ``"live"`` and ``"combination"``.
+        The rows written, keyed ``"dead"``, ``"live"``, ``"combination"`` and
+        ``"wind"``.
     """
+    # Imported here because anchor_wind builds on this module.
+    from shellbench import anchor_wind
+
     root = repo_root or Path(__file__).resolve().parents[2]
     out = root / "results"
 
@@ -1022,7 +1040,8 @@ def main(repo_root: Path | None = None) -> dict[str, list[dict]]:
     write_csv(combo_rows, out / "anchor_gravity_combination.csv")
     write_csv(live_column_sum_rows(live, root), out / "thesis_table_7_2_check.csv")
     write_csv(live_joint_rows(root), out / "thesis_table_7_2_joints.csv")
-    return {"dead": dead_rows, "live": live_rows, "combination": combo_rows}
+    wind_rows = anchor_wind.main(root)["wind"]
+    return {"dead": dead_rows, "live": live_rows, "combination": combo_rows, "wind": wind_rows}
 
 
 if __name__ == "__main__":
