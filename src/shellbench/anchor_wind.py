@@ -77,12 +77,16 @@ BETA_Z: float = 1.00
 #: Loaded width of the frame on axis (2) [m]. Spec W6 (Th Table 8-1, B10).
 LOADED_WIDTH_M: float = 7.2
 
+#: Parapet height [m]. Th §4.2, parapet wall "1.2 x 0.24 x 5.5" (240 mm wall,
+#: 1.2 m high).
+PARAPET_HEIGHT_M: float = 1.2
+
 #: Tributary height of each level implied by the wind-table storey heights
 #: (spec W7: 4.05 m ground, 3.6 m above): half the storey below plus half the
-#: storey above [m]. The roof value needs the parapet height, which the spec
-#: does not hold, so it is None [?].
-EXPECTED_TRIBUTARY_M: tuple[float | None, ...] = (
-    (THESIS_WIND_GROUND_STOREY_M + 3.6) / 2.0, 3.6, 3.6, None)
+#: storey above, and at the roof half the top storey plus the parapet [m] [J].
+#: Th Table 8-1 uses hj = 3.6 m at the roof instead (flag D23).
+EXPECTED_TRIBUTARY_M: tuple[float, ...] = (
+    (THESIS_WIND_GROUND_STOREY_M + 3.6) / 2.0, 3.6, 3.6, 3.6 / 2.0 + PARAPET_HEIGHT_M)
 
 # ---------------------------------------------------------------------------
 # Thesis values
@@ -162,12 +166,13 @@ def wind_force_check_rows(thesis: list[ThesisWindRow]) -> list[dict]:
             "W_k_printed [kN]": t.w_kn,
             "wind_per_m_height [kN/m]": round(per_m, 4),
             "implied_tributary_height [m]": round(implied, 3),
-            "expected_tributary_height [m]": "" if expected is None else round(expected, 3),
-            "W_k_from_expected [kN]": "" if expected is None else round(per_m * expected, 2),
+            "expected_tributary_height [m]": round(expected, 3),
+            "W_k_from_expected [kN]": round(per_m * expected, 2),
             "V_printed [kN]": t.v_kn,
             "sum_W_above [kN]": round(shear_sum, 2),
-            "note [text]": ("roof: expected height needs the parapet height in Table 8-1 [?]"
-                            if expected is None else ""),
+            "note [text]": ("roof: Table 8-1 uses hj = 3.6 m; half the top storey plus the "
+                            "1.2 m parapet (Th s4.2) gives 3.0 m (flag D23)"
+                            if i == len(thesis) - 1 else ""),
         })
     return rows
 
