@@ -2,6 +2,16 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 26 Oct 2026, Claude Code in VS Code (Day 8 sync)
+
+**Done:** `/sync` after PRs #44 and #45. `pip install -e . --no-deps`; pytest 73 passed (Windows, Python 3.12), as the Day 8 decisions entry expected. `python -m shellbench.anchor_frame` rewrote all 11 model-written results files, including the four new wind files, byte-identical to the committed blobs (raw bytes). `results/README.md` is not written by the model; it differs from its blob only by Windows checkout line endings. No local step was requested. No code or results changed.
+
+**Decisions by the author today:** none new since the Day 8 decisions entry.
+
+**Open (author):** primer [?] values before Day 9; carbon factors by Thu 29 Oct; Zenodo link and ORCID before 31 Oct; quiz Q2 from Day 8 to redo in the app.
+
+**Next:** Day 9, seismic base-shear method.
+
 ## 26 Oct 2026, Claude in the app (Day 8 decisions)
 
 **Done:** the author's Day 8 decisions recorded (docs/anchor_notes.md, wind section, "Decisions by the author"). The roof wind check in `anchor_wind.py` now uses the 1.2 m parapet of Th §4.2 (new constant `PARAPET_HEIGHT_M`) and a test pins D23. `results/thesis_table_8_2_forces_check.csv` changed (roof row filled in); the other results are byte-identical. pytest 73 passed.
