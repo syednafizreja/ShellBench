@@ -16,7 +16,9 @@ Checks of the thesis values and of the frame model:
 6. The author's pre-registered test (every storey drift within 15 % of
    Table 8-2; docs/anchor_notes.md, decision 1 of 25 Oct 2026), applied
    unchanged; its verdict (fail at all four storeys) is pinned.
-7. main() writes the four wind tables.
+7. The roof storey's stiffness against the D-value estimate changes with the
+   load pattern (the equal-rotation assumption of the D-value method).
+8. main() writes the four wind tables.
 """
 
 import csv
@@ -114,6 +116,32 @@ def test_preregistered_tolerance_verdict(primary, thesis):
         verdict.append(abs(pct) <= aw.WIND_DRIFT_TOLERANCE_PCT)
     assert aw.WIND_DRIFT_TOLERANCE_PCT == 15.0
     assert verdict == [False, False, False, False]
+
+
+def test_roof_storey_stiffness_depends_on_load_pattern(primary, thesis):
+    """The roof gap against V/sum_D comes from the D-value method, not the frame.
+
+    The D-value method assumes equal joint rotations at both ends of a column,
+    so its storey stiffness is fixed. The model's roof storey is 10.6 % more
+    flexible under the Table 8-2 forces, because storey 3 carries about twice
+    the roof shear and rotates the level-3 joints more. With the same base
+    shear at the roof only (equal shear in every storey) the roof storey is
+    15.8 % stiffer, and with it at level 3 only the roof storey drifts with
+    no shear at all. Same frame, same sections; only the load pattern changes.
+    """
+    sum_d_roof = aw.d_value_method()[-1]["sum_D [N/mm]"]
+
+    def roof_pct(res):
+        """Roof drift against V/sum_D [%]."""
+        return aw.percent_difference(res.du_mm[-1], 1000.0 * res.column_shear_kn[-1] / sum_d_roof)
+
+    total = sum(t.w_kn for t in thesis)
+    roof_only = aw.run_wind([0.0, 0.0, 0.0, total], variant="roof_only")
+    level3_only = aw.run_wind([0.0, 0.0, total, 0.0], variant="level3_only")
+    assert roof_pct(primary) == pytest.approx(10.6, abs=0.1)
+    assert roof_pct(roof_only) == pytest.approx(-15.8, abs=0.1)
+    assert level3_only.column_shear_kn[-1] == pytest.approx(0.0, abs=1e-9)
+    assert level3_only.du_mm[-1] == pytest.approx(0.115, abs=0.001)
 
 
 def test_wind_tables_written(tmp_path):
