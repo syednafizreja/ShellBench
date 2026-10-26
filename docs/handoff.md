@@ -2,6 +2,16 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 26 Oct 2026, Claude Code in VS Code (GB 50011 primer values)
+
+**Done:** the four primer [?] values were read from the author's downloaded GB 50011-2010 (English translation, 2010 issue) and written into notes/gb50011_base_shear_primer.md with page numbers. Table 5.1.3 floor live 0.5 (civil, equivalent uniform), roof live not considered (p. 29-30); cl. 5.1.5 curve γ = 0.9, η1 = 0.02, η2 = 1.0, linear fall 5Tg-6 s (p. 30-31); Table 5.2.1 δ_n = 0.08 T1 + 0.07 for Tg ≤ 0.35 s and T1 > 1.4 Tg, else 0 (p. 33); Table 5.2.5 λ = 0.016 at 7 degrees, 0.10 g, T1 < 3.5 s (p. 36). All match the primer's memory values. No code changed.
+
+**Decisions by the author today:** never ask questions; finish every task and report. Work in the most token-efficient way.
+
+**For both Claudes:** Day 9 may use these four values. The author still checks them against the Chinese 2016 copy; it is unknown whether the 2016 revision changed them. The infill period factor is still the author's Day 9 decision.
+
+**Open (author):** the check against the Chinese copy (above); delete merged day07-*/day08-* branches on GitHub; carbon factors by Thu 29 Oct; Zenodo and ORCID before 31 Oct; quizzes in the app.
+
 ## 26 Oct 2026, Claude Code in VS Code (Day 8 open items)
 
 **Done:** the open roof-storey question from Day 8 is closed. New test `test_roof_storey_stiffness_depends_on_load_pattern`: under the same 42.67 kN, the roof storey goes from +10.6 % against V/ΣD (Table 8-2 pattern) to −15.8 % (roof-only load), and drifts 0.115 mm with no shear under a level-3-only load. Cause: the D-value method's equal-rotation assumption at the top storey [J]. Written up in docs/anchor_notes.md, wind, "Why it fails". pytest 74 passed. Results files unchanged. No GB 50011 copy on this laptop, so the primer [?] values stay open.
