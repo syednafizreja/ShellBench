@@ -2,6 +2,18 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 26 Oct 2026, Claude in the app (schedule change)
+
+**Done:** new dates written into docs/research_question.md ("Dates"), README roadmap and docs/impact_strategy.md. New docs/schedule.md maps every Playbook day from Day 9 to a latest date, with gates and the author's items. LOG.md has the entry. No code or results changed.
+
+**Decisions by the author today:** finish earlier without dropping any check. Dataset DOI 17 Nov; Paper 2 and v1.0 8 Dec; all other dates unchanged.
+
+**For both Claudes:** from 27 Oct follow docs/schedule.md, not the Playbook's calendar dates. A day's date is the latest it may finish; work ahead when Done-when is met; never start a gated day early. /sync should still expect 74 passed.
+
+**Open (author):** infill period factor (27 Oct); primer values against the Chinese copy (28 Oct); carbon factors (29 Oct); Zenodo link and ORCID (30 Oct). Full list with dates in docs/schedule.md.
+
+**Next:** Day 9 (Tue 27 Oct), seismic base-shear method.
+
 ## 26 Oct 2026, Claude Code (Day 8 close)
 
 **Done:** LOG.md now records the primer values (it was only in the handoff). The merged day07-*/day08-* branches are gone on GitHub; only main is left. No code or results changed.
