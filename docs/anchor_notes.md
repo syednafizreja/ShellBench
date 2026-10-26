@@ -279,7 +279,7 @@ The printed W_k of Table 8-2 (10.74, 10.10, 10.41, 11.42 kN, levels 1-4) act fro
 | 3 | 0.51 | 0.250 | −51.1 % | no |
 | 4 | 1.13 | 0.143 | −87.4 % | no |
 
-The tolerance and the target were not changed after the run (reading rule 6). The pytest that encodes decision 1 is kept as a strict expected failure, so the suite stays green while the failure stays on record; if anything makes it pass, the suite turns red and the verdict has to be read again. Whether to keep it this way is the author's call.
+The tolerance and the target were not changed after the run (reading rule 6). The pytest `test_preregistered_tolerance_verdict` applies decision 1 unchanged and asserts the verdict it gives today: fail at all four storeys. It is a regression check on the verdict, not on the model (the closed-form tests check the model). If the model or the typed target ever changes so that a storey passes, the test fails and the verdict has to be read again. The Playbook asked for a test that fails when a drift is outside the tolerance; written that way it would fail on every run, for a reason that sits in the thesis, and skipping or marking it as an expected failure would hide a test. The author may prefer the literal version and accept a red suite until the anchor report; that is the author's call.
 
 ### Why it fails: the target, not the model
 

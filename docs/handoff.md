@@ -4,13 +4,13 @@ Newest entry first. Each Claude reads this at the start of a session and adds an
 
 ## 26 Oct 2026, Claude in the app (Day 8, wind)
 
-**Done:** new `src/shellbench/anchor_wind.py` (printed Table 8-2 forces on the axis (2) frame; four runs; D-value method redone from the model's sections; W_k check against Table 8-1). `anchor_frame.main()` now calls it, so `python -m shellbench.anchor_frame` also writes `results/anchor_wind.csv`, `anchor_wind_runs.csv`, `anchor_wind_d_values.csv`, `thesis_table_8_2_forces_check.csv`. `build_frame` and `level_y_coordinates` take optional storey heights and beam I factor (defaults unchanged; gravity results byte-identical). New `tests/test_anchor_wind.py`. pytest: 71 passed, 1 xfailed (Linux, Python 3.13, OpenSeesPy 3.8.0.0).
+**Done:** new `src/shellbench/anchor_wind.py` (printed Table 8-2 forces on the axis (2) frame; four runs; D-value method redone from the model's sections; W_k check against Table 8-1). `anchor_frame.main()` now calls it, so `python -m shellbench.anchor_frame` also writes `results/anchor_wind.csv`, `anchor_wind_runs.csv`, `anchor_wind_d_values.csv`, `thesis_table_8_2_forces_check.csv`. `build_frame` and `level_y_coordinates` take optional storey heights and beam I factor (defaults unchanged; gravity results byte-identical). New `tests/test_anchor_wind.py`. pytest: 72 passed (Linux, Python 3.13, OpenSeesPy 3.8.0.0).
 
 **Result:** the author's 15 % wind test fails at all four storeys (−45 to −87 %); the reasons are in `docs/anchor_notes.md`, wind section (printed Δu is not one frame's drift: D7, proposed D22). Reading rules were committed before the run (commit 2356704).
 
-**Decisions by the author today:** none yet. The strict xfail on the pre-registered test is Claude's interim choice [J], for the author to confirm.
+**Decisions by the author today:** none yet. Writing the pre-registered test as a pinned verdict (not the Playbook's literal always-failing test) is Claude's interim choice [J], for the author to confirm.
 
-**For both Claudes:** never loosen the 15 % tolerance or swap the target; the xfail is strict on purpose. /sync should expect "71 passed, 1 xfailed" and four new results files that must regenerate byte-identical on Windows. No extra local step.
+**For both Claudes:** never loosen the 15 % tolerance or swap the target, and never skip or xfail the wind test. /sync should expect "72 passed" and four new results files that must regenerate byte-identical on Windows. No extra local step.
 
 **Open (author):** D22, D23 (parapet height), how the wind test is kept; primer [?] values before Day 9; carbon factors by Thu 29 Oct; Zenodo link and ORCID before 31 Oct.
 

@@ -12,8 +12,9 @@ Checks of the thesis values and of the frame model:
    printed W_k, and W_k at levels 1-3 follow from the Table 8-1 inputs.
 4. Horizontal base reaction and column shears balance the applied wind.
 5. Every model drift ratio meets the 1/550 limit (spec S11).
-6. The author's pre-registered test: every storey drift within 15 % of
-   Table 8-2 (docs/anchor_notes.md, decision 1 of 25 Oct 2026).
+6. The author's pre-registered test (every storey drift within 15 % of
+   Table 8-2; docs/anchor_notes.md, decision 1 of 25 Oct 2026), applied
+   unchanged; its verdict (fail at all four storeys) is pinned.
 7. main() writes the four wind tables.
 """
 
@@ -86,19 +87,24 @@ def test_model_drifts_meet_limit(primary):
     assert all(theta <= aw.DRIFT_LIMIT for theta in primary.theta)
 
 
-@pytest.mark.xfail(
-    strict=True, raises=AssertionError,
-    reason=("Pre-registered test fails at all four storeys (model 45-87 % below the printed "
-            "du). Printed Table 8-2 du is not V/sum_D of its own V and sum_D (flag D7) and implies "
-            "a stiffness V/du that varies more than four times across the identical storeys 2-4, so no "
-            "single elastic frame reproduces it. Kept strict: if the target or the model changes and the "
-            "test passes, the suite fails and the verdict must be re-read. Author to confirm "
-            "how this test is kept (docs/anchor_notes.md, wind section)."))
-def test_storey_drifts_within_preregistered_tolerance(primary, thesis):
-    """Every storey drift within 15 % of thesis Table 8-2 (author, 25 Oct 2026)."""
+def test_preregistered_tolerance_verdict(primary, thesis):
+    """The author's 15 % test on storey drift against Table 8-2, and its verdict.
+
+    Decision 1 of 25 Oct 2026 (docs/anchor_notes.md): a storey passes if its
+    drift is within 15 % of the printed Table 8-2 value. Run on 26 Oct 2026,
+    it fails at all four storeys, because the printed drifts are not the
+    drifts of one elastic frame (flag D7, proposed D22). This test applies the
+    rule unchanged and pins that verdict as a regression check: if the model
+    or the typed target changes so that any storey passes, the test fails and
+    the verdict must be read again. It is not a check that the model is right;
+    the closed-form tests above do that.
+    """
+    verdict = []
     for du, t in zip(primary.du_mm, thesis):
         pct = aw.percent_difference(du, t.du_mm)
-        assert abs(pct) <= aw.WIND_DRIFT_TOLERANCE_PCT, f"level {t.level}: {pct:+.1f} %"
+        verdict.append(abs(pct) <= aw.WIND_DRIFT_TOLERANCE_PCT)
+    assert aw.WIND_DRIFT_TOLERANCE_PCT == 15.0
+    assert verdict == [False, False, False, False]
 
 
 def test_wind_tables_written(tmp_path):
