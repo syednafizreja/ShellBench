@@ -2,4 +2,4 @@ level [text],W_k_printed [kN],wind_per_m_height [kN/m],implied_tributary_height 
 1,10.74,2.808,3.825,3.825,10.74,42.67,42.67,
 2,10.1,2.808,3.597,3.6,10.11,31.93,31.93,
 3,10.41,2.8922,3.599,3.6,10.41,21.83,21.83,
-4,11.42,3.173,3.599,,,11.42,11.42,roof: expected height needs the parapet height in Table 8-1 [?]
+4,11.42,3.173,3.599,3.0,9.52,11.42,11.42,roof: Table 8-1 uses hj = 3.6 m; half the top storey plus the 1.2 m parapet (Th s4.2) gives 3.0 m (flag D23)
