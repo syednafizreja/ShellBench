@@ -251,4 +251,15 @@ The author made these decisions on Day 7, before any wind or seismic result exis
 2. **Seismic comparison (Day 9): storey forces for levels 1-4 only.** Every shear in Table 8-12 includes the 98.29 kN level-5 force, which comes from the row judged spurious (decision B4). Day 9 compares the storey forces F_i = V_i − V_i+1 for levels 1-4 and does not add the level-5 force at the roof. Author's reason: adding it would inflate every shear and spoil the comparison with the four real storeys.
 3. **α_max = 0.08** for frequent earthquakes at 7 degrees (0.10 g), confirmed by the author in GB 50011-2010 Table 5.1.4-1.
 
+### How the wind comparison is read (written 26 Oct 2026, 03:55 UTC, before the first wind run)
+
+Claude wrote these reading rules down before any wind result existed [J]. They apply the author's decision 1 above; they do not change it.
+
+1. "Storey drift" in decision 1 is read as the inter-storey displacement Δu [mm] of Table 8-2, storey by storey. That is the pass/fail test, with the 15 % tolerance, and it is reported whatever it shows.
+2. Two more references are reported next to it as diagnostics, never as pass/fail: (a) V/ΣD from the shears and ΣD printed in Table 8-2 (the thesis method with its own numbers, see D7); (b) V/ΣD with D-values recomputed from the model's own section stiffnesses by the same D-value formulas. Together they split any difference into thesis arithmetic, D-value method, and finite-element model.
+3. The wind storey forces are the printed W_k of Table 8-2; they are not recomputed. A separate check recomputes them from the Table 8-1 inputs (baseline_spec W1-W7) only to test the typing and the thesis arithmetic.
+4. Model storey displacement is the mean horizontal displacement of the four column-line nodes at each level. The drift ratio checked against 1/550 (spec S11) is Δu / h with the model storey heights (ground 4.55 m, decision B4).
+5. Check runs change one thing each: columns axially rigid; floors rigid in their own plane; ground storey 4.05 m as in Tables 8-1 and 8-2. None of them can replace the primary run in the pass/fail test.
+6. If the pass/fail test fails, the tolerance and the target stay as they are. The failure is written into this file and the LOG, and the author decides how the test is kept.
+
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
