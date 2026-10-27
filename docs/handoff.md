@@ -4,11 +4,21 @@ Newest entry first. Each Claude reads this at the start of a session and adds an
 
 ## 27 Oct 2026, Claude in the app (figure rule)
 
-**Done:** #52, #53 and #55 merged (the author squash-merged them with clean messages). On merged main, pytest passed 101; the VS Code sync found every file in `results/` byte-identical, but the PNG differed on Windows.
+**Done:** answered the figure question from the VS Code sync entry below.
 
 **Decision (Claude, under the author's standing delegation):** only `results/` must be byte-identical across platforms; figure bytes are not compared. Figures are committed from the Linux run. Written into `figures/README.md`, and `/sync` step 3 now restores `figures/` without reporting it.
 
 **For both Claudes:** do not commit a PNG whose only change is from a local Windows rebuild.
+
+## 27 Oct 2026, Claude Code in VS Code (merges and sync)
+
+**Done:** squash-merged #52 (Day 9), #53 (Day 10) and #55 (GB 50010 notes) at the author's request, each with a clean message in the author's name and no Claude trailers. #53 conflicted after #52 was squashed; resolved by keeping the Day 10 side (it already held Day 9; tree identical to the branch tip). Added a cross-check to notes/gb50010_design_values.md: Table 11.4.12-1 (0.75 %), cl. 6.2.6 (α1, β1), cl. 4.1.5 (G_c) and formula 6.2.7-1 match the Chinese 2015 edition (read from its OCR text; author to confirm on the page). `/sync`: pytest 101 passed (Windows, Python 3.12). `python -m shellbench.anchor_frame` left every `results/` file byte-identical. It did rewrite `figures/anchor_seismic_compare.png` with different bytes, even with the same matplotlib 3.11.2 as CI; probably Windows font rendering [J]. Restored, not committed.
+
+**Decisions by the author today:** merge all three PRs.
+
+**Open (author):** confirm the 2015 cross-check lines on the page; JGJ 3-2010 cl. 4.3.17; GB 50011 cl. 5.2.2 [?]; carbon factors (29 Oct); Zenodo and ORCID (30 Oct). Decide whether the figure needs to be byte-identical across platforms, or whether only `results/` does.
+
+**Next:** Day 11, design checks.
 
 ## 27 Oct 2026, Claude in the app (Day 9-10 decisions)
 
