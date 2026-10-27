@@ -405,4 +405,54 @@ Every storey drift meets 1/550. The largest is θ = 5.67 × 10⁻⁴ at storey 2
 
 - **D24.** Table 8-12 base shear (four storeys, 264.77 kN) is 23 % above the model's base-shear method with the bare-frame period (214.75 kN). The thesis prints no T1, α1 or G_i (B9), so the cause cannot be split between the period (an infill factor near 0.8 would close it) and the weights (23 % heavier would close it). The distribution over the height matches within 2 points. Effect: the anchor reports the seismic forces with the author's ψ_T and names D24; the gap is not tuned away.
 
+## Response-spectrum check and 3D periods (Day 10, done ahead on 27 Oct 2026)
+
+Status: **draft for the author's review.** Numbers come from `results/anchor_rsa.csv`, `anchor_rsa_modes.csv`, `anchor_3d_periods.csv` and `figures/anchor_seismic_compare.png`, written by `src/shellbench/rsa.py` and `src/shellbench/anchor_3d.py` (run by `python -m shellbench.anchor_frame`). The reading rules ("How the response-spectrum check is read") were committed before the first run and not changed after it. Inputs are the Day 9 primary run's: same G_i, spectrum and bare-frame period.
+
+### Modes of the 2D frame
+
+| Mode | T [s] | α | Mass share | Cumulative | Modal base shear [kN] |
+|---|---|---|---|---|---|
+| 1 | 0.698 | 0.0430 | 88.9 % | 88.9 % | 224.57 |
+| 2 | 0.215 | 0.0800 | 8.7 % | 97.6 % | 40.95 |
+| 3 | 0.115 | 0.0800 | 2.0 % | 99.6 % | 9.53 |
+
+Three modes carry 99.6 % of the mass, so a fourth would change nothing that matters.
+
+### The two methods side by side
+
+| Storey | V base-shear [kN] | V spectrum [kN] | Diff. | Δu base-shear [mm] | Δu spectrum [mm] | Diff. |
+|---|---|---|---|---|---|---|
+| 1 | 214.75 | 228.47 | +6.4 % | 2.223 | 2.325 | +4.6 % |
+| 2 | 189.94 | 194.28 | +2.3 % | 2.040 | 2.058 | +0.9 % |
+| 3 | 146.01 | 142.57 | −2.4 % | 1.605 | 1.539 | −4.1 % |
+| 4 | 82.67 | 70.06 | −15.3 % | 0.982 | 0.870 | −11.4 % |
+
+The two routes agree within 6.4 % at storeys 1-3. Two things explain the pattern [J]:
+
+1. **The base.** The base-shear method takes G_eq = 0.85 ΣG. The first mode alone has 88.9 % of the mass, so its base shear is 0.889 / 0.85 = 1.046 times larger: 224.57 against 214.75 kN. The higher modes add another 4 kN through SRSS. So the spectrum method is 6.4 % higher at the base.
+2. **The roof.** The base-shear method puts δ_n F_Ek = 27.0 kN on the roof to stand in for higher modes (Table 5.2.1). For this four-storey frame that stand-in is generous: the spectrum method's roof shear is 70.06 kN against 82.67 kN. That is why storey 4 differs by more than 10 %, in shear and in drift. The difference sits on the safe side of the simpler method.
+
+**Which governs.** The spectrum method gives the larger base shear (+6.4 %) and the larger drift at storeys 1 and 2. The base-shear method gives the larger shear and drift at storeys 3 and 4. Neither comes near the drift limit: the largest θ is 5.72 × 10⁻⁴ (spectrum, storey 2), 31 % of 1/550. Against the thesis four-storey shears the spectrum method is 14-31 % lower, for the reasons given in Day 9 (D24) and, at the roof, because it carries less top force still.
+
+### 3D whole-building periods
+
+| Mode | 3D period [s] | Direction | 2D frame, same mode number [s] |
+|---|---|---|---|
+| 1 | 0.622 | transverse (Y, the 2D frame's direction) | 0.698 |
+| 2 | 0.571 | longitudinal (X) | 0.215 (2nd transverse mode) |
+| 3 | 0.518 | torsion | 0.115 (3rd transverse mode) |
+
+The comparison that matters is the transverse T1: 0.622 s in 3D against 0.698 s for the 2D frame, so the 2D model is 12 % longer. That is not a 3D effect as such. Each 2D-frame storey carries the mass of a 7.2 m strip (decision B10, the thesis calculation width), while the seven drawn transverse frames share 38.4 m, 5.49 m each. With mass alone the period would scale by √(5.49 / 7.2) = 0.873. The two edge frames have the 1.5 beam factor instead of 2.0, which makes the average frame a little softer, and the result, 0.891, sits just above 0.873 [J]. So the 2D simplification mainly changes T1 through the tributary width, and the paper should say so: the 7.2 m width is kept for validating against the thesis tables, and the drawn grid is what the whole-building model (and Layer 2) uses.
+
+The plan is symmetric in the model, so the translational modes carry no rotation and torsion comes third. The real building is E-shaped with stair cores (B11 open point), which would add eccentricity; the simple model cannot show that, and the anchor report should say it was left out.
+
+### Code values still marked [?]
+
+GB 50011 cl. 5.2.2 (modal forces and SRSS) and GB 50010 cl. 4.1.8 (G_c = 0.4 E_c) are cited from general knowledge and must be checked in the author's copies. The square-section torsion constant (0.1406 a⁴) is a standard textbook result [?]; it only affects member torsion in the 3D model.
+
+### Proposed flag (for the author)
+
+- **D25.** The 2D anchor frame's T1 (0.698 s) is 12 % longer than the whole-building transverse T1 on the drawn grid (0.622 s), because the 2D frame carries a 7.2 m strip of mass (B10) where the drawn frames carry 5.49 m on average. Effect: the anchor validates against the thesis with 7.2 m, but any period or base shear the papers quote for the real building comes from the drawn grid.
+
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.

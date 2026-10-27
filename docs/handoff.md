@@ -2,6 +2,20 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 27 Oct 2026, Claude in the app (Day 10 done ahead, response spectrum and 3D)
+
+**Done:** new `src/shellbench/rsa.py`, `src/shellbench/anchor_3d.py`, `tests/test_rsa.py`. `anchor_frame.main()` now also calls `rsa.main()`, which writes `results/anchor_rsa.csv`, `anchor_rsa_modes.csv`, `anchor_3d_periods.csv` and `figures/anchor_seismic_compare.png`. Reading rules committed before the first run (commit f555ee6). CI installs matplotlib 3.11.2. pytest 99 passed (Linux, Python 3.13). Earlier results byte-identical.
+
+**Result:** spectrum and base-shear method within 6.4 % at storeys 1-3; base-shear method 15 % higher at the roof (δ_n). 3D transverse T1 0.622 s against 0.698 s in 2D (tributary width, proposed D25).
+
+**Decisions by the author today:** none yet.
+
+**For both Claudes:** /sync should expect 99 passed. The three new CSVs should regenerate byte-identical on Windows; the PNG may not (fonts and the renderer differ between machines), so compare it by eye, not by bytes. This branch sits on top of day09-seismic: merge PR #52 first.
+
+**Open (author):** as in the Day 9 entry, plus D25 and the [?] clauses cl. 5.2.2 (GB 50011) and cl. 4.1.8 (GB 50010).
+
+**Next:** Day 11, design checks (latest Thu 29 Oct).
+
 ## 27 Oct 2026, Claude in the app (Day 9, base-shear method)
 
 **Done:** new `src/shellbench/seismic.py` (GB 50011 base-shear method) and `tests/test_seismic.py`. `anchor_frame.main()` now calls `seismic.main()`, so `python -m shellbench.anchor_frame` also writes `results/anchor_seismic.csv`, `anchor_seismic_runs.csv`, `anchor_seismic_weights.csv`, `anchor_seismic_period_check.csv`. Reading rules committed before the first run (commit 4a40c87). Write-up in docs/anchor_notes.md, seismic section. pytest 87 passed (Linux, Python 3.13, OpenSeesPy from pip). Other results byte-identical.
