@@ -15,5 +15,9 @@ Output written by the code in [../src/shellbench/](../src/shellbench/). Do not e
 | anchor_wind_runs.csv | same | One row per wind run: switches, storey heights, applied load and base shear (equilibrium), roof displacement, largest θ. |
 | anchor_wind_d_values.csv | same | D-value method (Th §7.3 formulas) redone with the model's own section stiffnesses: K, α_c, D for A/D and B/C columns and ΣD per storey. |
 | thesis_table_8_2_forces_check.csv | same | Printed W_k against β_z μ_s μ_z w₀ B h from the Table 8-1 inputs: implied tributary heights, and printed V against the running sum of W_k. |
+| anchor_seismic.csv | same (calls `shellbench.seismic.main`) | Earthquake by the GB 50011 base-shear method (Day 9), levels 1-4: G_i, H_i, model storey forces and shears next to Table 8-12 (F_i = V_i − V_i+1 and four-storey shears V_i − 98.29 kN, lateral-load decision 2); λΣG minimum-shear check; Δu against the printed Δu, against V/ΣD, and under the thesis forces; θ and the 1/550 check. Explanations in the seismic section of [../docs/anchor_notes.md](../docs/anchor_notes.md). |
+| anchor_seismic_runs.csv | same | One row per seismic run (primary, thesis beam-shear weights, trial infill factors ψ_T 0.9-0.6): ΣG, G_eq, T1, α1, δ_n, F_Ek, base reaction, roof displacement, largest θ, and the period implied by the thesis base shear (diagnostic only). |
+| anchor_seismic_weights.csv | same | Storey weights G_i = dead + ψ × live (GB 50011 Table 5.1.3) for the two weight models. |
+| anchor_seismic_period_check.csv | same | The four modal periods of the bare frame and the Rayleigh estimate of T1. |
 
 Units are in each column header. `[mixed]` columns hold kN*m for moments and kN for axial forces; the `unit [text]` column says which.
