@@ -2,6 +2,16 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 27 Oct 2026, Claude Code in VS Code (sync)
+
+**Done:** `/sync` after the schedule change. `pip install -e . --no-deps`; pytest 74 passed (Windows, Python 3.12), as expected. `python -m shellbench.anchor_frame` left `git status` clean, so every results file is byte-identical to the committed version. No local step was requested. No code or results changed.
+
+**Decisions by the author today:** none new.
+
+**Open (author):** infill period factor (27 Oct); primer values against the Chinese copy (28 Oct); carbon factors (29 Oct); Zenodo link and ORCID (30 Oct). See docs/schedule.md.
+
+**Next:** Day 9 (Tue 27 Oct), seismic base-shear method.
+
 ## 26 Oct 2026, Claude in the app (schedule change)
 
 **Done:** new dates written into docs/research_question.md ("Dates"), README roadmap and docs/impact_strategy.md. New docs/schedule.md maps every Playbook day from Day 9 to a latest date, with gates and the author's items. LOG.md has the entry. No code or results changed.
