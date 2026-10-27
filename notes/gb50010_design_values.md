@@ -53,4 +53,15 @@ The thesis columns have 4C22 = 1520 mm² on 600 × 600 mm (spec R1), which is 0.
 
 Correction to an earlier [?]: the shear modulus G_c = 0.4 E_c is cl. 4.1.5, not cl. 4.1.8 as written in `src/shellbench/anchor_3d.py` on Day 10. The value was right; the clause number was wrong (fixed on the Day 10 branch).
 
+## Cross-check against the Chinese 2015 revision
+
+Checked on 27 Oct 2026 by Claude Code against the Chinese GB 50010-2010 (2015 edition) PDF in the author's Downloads folder (not committed). It is read through its OCR text layer, so the author still confirms each line on the page. Page numbers are printed pages.
+
+- Table 11.4.12-1, p. 175: grade three, middle and side columns 0.6 (0.7), corner columns 0.8. Note 1: the bracketed values are for frame-structure columns. Note 2: add 0.05 for 400 MPa bars. So 0.75 % (frame column) and 0.85 % (corner column) hold for 2015.
+- cl. 6.2.6, p. 37: α1 = 1.0 and β1 = 0.80 up to C50. These hold for 2015.
+- cl. 4.1.5, p. 20: G_c is 40 % of E_c and ν_c = 0.2. This holds for 2015. The commentary (p. 287) says E_c, G_c and ν_c are unchanged from the earlier code.
+- Formula 6.2.7-1, p. 38: same form, so ξ_b = 0.518 holds.
+
+The other rows above were not re-checked against the 2015 copy [?].
+
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
