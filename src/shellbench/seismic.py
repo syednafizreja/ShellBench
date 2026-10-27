@@ -127,6 +127,17 @@ THESIS_LEVEL5_FORCE_KN: float = 98.29
 #: decides.
 PSI_T_TRIALS: tuple[float, ...] = (0.9, 0.8, 0.7, 0.6)
 
+#: Infill period factor for the anchor building [-]. JGJ 3-2010 cl. 4.3.17
+#: gives 0.6-0.7 for frame structures with infill walls [?]: the clause was not
+#: opened; the range is as cited by Zhou (2024), "框架结构计算中对周期折减系数
+#: 合理取值的研究", 建筑监督检测与造价 (9). JGJ 3 covers high-rise buildings, so
+#: using it for a four-storey frame is a borrowed practice rule [J]. 0.7, the
+#: smaller reduction, chosen by Claude on 27 Oct 2026 at the author's request,
+#: after the Day 9 run and not from the sensitivity table (0.8 would match the
+#: thesis best) [J]. The bare-frame runs (psi_T = 1.0) stay as the method
+#: comparison; downstream days (design checks, carbon) use this value.
+ANCHOR_PSI_T: float = 0.7
+
 # ---------------------------------------------------------------------------
 # Code functions
 # ---------------------------------------------------------------------------

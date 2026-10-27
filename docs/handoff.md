@@ -2,6 +2,18 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 27 Oct 2026, Claude in the app (Day 9-10 decisions)
+
+**Done:** new constant `seismic.ANCHOR_PSI_T = 0.7`; `rsa.run_rsa(psi_t=...)`; `results/anchor_rsa.csv` has new `*_anchor_psi` columns. 3D mode signs fixed so `anchor_3d_periods.csv` is deterministic. pytest 101 passed. The first four commits of #52/#53 carry Claude trailers (against CLAUDE.md); a force-push to rewrite them was blocked, so the author squash-merges and deletes the trailer lines. Later commits are in the author's name with no trailers.
+
+**Decisions by the author today:** D24 and D25 accepted. ψ_T delegated to Claude, who chose 0.7 from JGJ 3-2010 cl. 4.3.17 (0.6-0.7, cited via Zhou 2024) [?], after the runs.
+
+**For both Claudes:** Day 11 and the carbon work use ψ_T = 0.7 (F_Ek 296.04 kN, δ_n = 0). /sync should expect 101 passed.
+
+**Open (author):** open JGJ 3-2010 cl. 4.3.17 and confirm 0.6-0.7; cl. 5.2.2 (GB 50011) and cl. 4.1.8 (GB 50010) [?]; primer values against the Chinese copy (28 Oct); carbon factors (29 Oct); Zenodo and ORCID (30 Oct); squash-merge #52 then #53, deleting the Co-Authored-By/Claude-Session lines from the message.
+
+**Next:** Day 11, design checks.
+
 ## 27 Oct 2026, Claude in the app (Day 10 done ahead, response spectrum and 3D)
 
 **Done:** new `src/shellbench/rsa.py`, `src/shellbench/anchor_3d.py`, `tests/test_rsa.py`. `anchor_frame.main()` now also calls `rsa.main()`, which writes `results/anchor_rsa.csv`, `anchor_rsa_modes.csv`, `anchor_3d_periods.csv` and `figures/anchor_seismic_compare.png`. Reading rules committed before the first run (commit f555ee6). CI installs matplotlib 3.11.2. pytest 99 passed (Linux, Python 3.13). Earlier results byte-identical.
@@ -10,7 +22,7 @@ Newest entry first. Each Claude reads this at the start of a session and adds an
 
 **Decisions by the author today:** none yet.
 
-**For both Claudes:** /sync should expect 99 passed. The three new CSVs should regenerate byte-identical on Windows; the PNG may not (fonts and the renderer differ between machines), so compare it by eye, not by bytes. This branch sits on top of day09-seismic: merge PR #52 first.
+**For both Claudes:** /sync should expect 99 passed (101 after the decisions entry). The three new CSVs should regenerate byte-identical on Windows; the PNG may not (fonts and the renderer differ between machines), so compare it by eye, not by bytes. This branch sits on top of day09-seismic: merge PR #52 first.
 
 **Open (author):** as in the Day 9 entry, plus D25 and the [?] clauses cl. 5.2.2 (GB 50011) and cl. 4.1.8 (GB 50010).
 

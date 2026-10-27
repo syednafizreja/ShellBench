@@ -1,4 +1,4 @@
 mode [text],T_3d [s],direction_3d [text],roof_X [-],roof_Y [-],roof_r_theta [-],T_2d_frame [s],direction_2d [text]
-1,0.6222,Y (transverse),0.0,1.0,-0.0,0.6981,"Y (transverse), 2D mode of the same number"
-2,0.5713,X (longitudinal),1.0,-0.0,-0.0,0.2145,"Y (transverse), 2D mode of the same number"
+1,0.6222,Y (transverse),0.0,1.0,0.0,0.6981,"Y (transverse), 2D mode of the same number"
+2,0.5713,X (longitudinal),1.0,0.0,0.0,0.2145,"Y (transverse), 2D mode of the same number"
 3,0.5175,torsion,0.0,0.0,1.0,0.1155,"Y (transverse), 2D mode of the same number"

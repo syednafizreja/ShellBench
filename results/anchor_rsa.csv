@@ -1,5 +1,5 @@
-level [text],V_rsa [kN],V_base_shear_method [kN],V_rsa_pct_vs_bsm [%],V_thesis_4storey [kN],V_rsa_pct_vs_thesis_4storey [%],du_rsa [mm],du_base_shear_method [mm],du_rsa_pct_vs_bsm [%],du_thesis_printed [mm],du_rsa_pct_vs_thesis_printed [%],theta_rsa [-],drift_limit_met [text],V_mode1 [kN],V_mode2 [kN],V_mode3 [kN]
-1,228.47,214.75,6.4,264.77,-13.7,2.325,2.223,4.6,4.04,-42.4,0.000511,True,224.57,40.95,9.53
-2,194.28,189.94,2.3,233.74,-16.9,2.058,2.04,0.9,3.19,-35.5,0.0005716,True,193.83,-2.01,-13.07
-3,142.57,146.01,-2.4,179.18,-20.4,1.539,1.605,-4.1,2.67,-42.4,0.0004276,True,136.37,-41.38,-4.28
-4,70.06,82.67,-15.3,101.56,-31.0,0.87,0.982,-11.4,1.93,-54.9,0.0002418,True,59.09,-34.9,14.11
+level [text],V_rsa [kN],V_base_shear_method [kN],V_rsa_pct_vs_bsm [%],V_thesis_4storey [kN],V_rsa_pct_vs_thesis_4storey [%],du_rsa [mm],du_base_shear_method [mm],du_rsa_pct_vs_bsm [%],du_thesis_printed [mm],du_rsa_pct_vs_thesis_printed [%],theta_rsa [-],drift_limit_met [text],V_mode1 [kN],V_mode2 [kN],V_mode3 [kN],V_rsa_anchor_psi [kN],V_bsm_anchor_psi [kN],V_anchor_rsa_pct_vs_bsm [%],du_rsa_anchor_psi [mm],du_bsm_anchor_psi [mm],theta_rsa_anchor_psi [-]
+1,228.47,214.75,6.4,264.77,-13.7,2.325,2.223,4.6,4.04,-42.4,0.000511,True,224.57,40.95,9.53,312.38,296.04,5.5,3.192,3.046,0.0007015
+2,194.28,189.94,2.3,233.74,-16.9,2.058,2.04,0.9,3.19,-35.5,0.0005716,True,193.83,-2.01,-13.07,267.47,256.91,4.1,2.836,2.74,0.0007876
+3,142.57,146.01,-2.4,179.18,-20.4,1.539,1.605,-4.1,2.67,-42.4,0.0004276,True,136.37,-41.38,-4.28,192.52,187.63,2.6,2.099,2.057,0.0005829
+4,70.06,82.67,-15.3,101.56,-31.0,0.87,0.982,-11.4,1.93,-54.9,0.0002418,True,59.09,-34.9,14.11,89.51,87.75,2.0,1.156,1.143,0.0003211

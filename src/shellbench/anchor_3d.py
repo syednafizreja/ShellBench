@@ -206,7 +206,10 @@ def periods_3d(weights_2d_kn: list[float], n_modes: int = N_MODES_3D) -> list[di
         }
         big = max(comp, key=lambda k: abs(comp[k]))
         out.append({"T": 2.0 * math.pi / math.sqrt(lam), "direction": big,
-                    **{k: comp[k] / abs(comp[big]) for k in comp}})
+                    # Divided by the signed dominant component, so the sign
+                    # ARPACK happens to return does not reach the results file;
+                    # "+ 0.0" turns -0.0 into 0.0 for the same reason.
+                    **{k: comp[k] / comp[big] + 0.0 for k in comp}})
     ops.wipe()
     return out
 
@@ -229,9 +232,9 @@ def period_rows(periods_2d_s: list[float]) -> list[dict]:
             "mode [text]": j + 1,
             "T_3d [s]": round(m["T"], 4),
             "direction_3d [text]": m["direction"],
-            "roof_X [-]": round(m["X (longitudinal)"], 3),
-            "roof_Y [-]": round(m["Y (transverse)"], 3),
-            "roof_r_theta [-]": round(m["torsion"], 3),
+            "roof_X [-]": round(m["X (longitudinal)"], 3) + 0.0,
+            "roof_Y [-]": round(m["Y (transverse)"], 3) + 0.0,
+            "roof_r_theta [-]": round(m["torsion"], 3) + 0.0,
             "T_2d_frame [s]": "" if t2 is None else round(t2, 4),
             "direction_2d [text]": "" if t2 is None else "Y (transverse), 2D mode of the same number",
         })

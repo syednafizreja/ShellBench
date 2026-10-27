@@ -123,3 +123,24 @@ def test_main_writes_tables_and_figure(tmp_path):
     assert (tmp_path / "figures" / "anchor_seismic_compare.png").stat().st_size > 0
     assert (tmp_path / "results" / "anchor_3d_periods.csv").exists()
     assert math.isfinite(tables["rsa"][0]["V_rsa [kN]"])
+
+
+def test_anchor_psi_t_runs_pinned():
+    """Anchor infill factor (decision of 27 Oct 2026, after the Day 9/10 runs):
+    psi_T = 0.7 drops T1 to 0.489 s, below 1.4 Tg, so delta_n = 0; the
+    spectrum method is then at or above the base-shear method at every storey."""
+    assert s.ANCHOR_PSI_T == 0.7
+    bsm = s.run_base_shear(psi_t=s.ANCHOR_PSI_T)
+    r = rsa.run_rsa(psi_t=s.ANCHOR_PSI_T)
+    assert bsm.delta_n == 0.0
+    assert bsm.f_ek_kn == pytest.approx(296.04, abs=0.05)
+    assert r.shear_srss_kn[0] == pytest.approx(312.38, abs=0.05)
+    assert all(a >= b for a, b in zip(r.shear_srss_kn, bsm.shears_kn))
+    assert max(r.theta_srss) <= s.DRIFT_LIMIT
+
+
+def test_3d_mode_components_have_a_fixed_sign():
+    """The dominant roof component is +1 whatever sign the eigen solver returns,
+    so results/anchor_3d_periods.csv is byte-identical between runs."""
+    for m in a3.periods_3d(weights(), 3):
+        assert m[m["direction"]] == 1.0

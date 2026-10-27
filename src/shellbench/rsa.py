@@ -141,13 +141,16 @@ class RsaResult:
 
 
 def run_rsa(dead_model: str = "actual_shape", live_model: str = "actual_shape",
-            n_modes: int = N_MODES) -> RsaResult:
+            n_modes: int = N_MODES, psi_t: float = 1.0) -> RsaResult:
     """Run the modal response-spectrum method on the anchor frame (reading rules 1-3).
 
     Args:
         dead_model: Key of ``anchor_frame.LOAD_MODELS`` for the weights.
         live_model: Key of ``anchor_frame.LIVE_LOAD_MODELS`` for the weights.
         n_modes: Number of modes combined.
+        psi_t: Infill period factor applied to every modal period [-]; 1.0 is
+            the bare frame (Day 10 reading rule 1). The anchor value is
+            ``seismic.ANCHOR_PSI_T`` (decision of 27 Oct 2026, after the run).
 
     Returns:
         An RsaResult.
@@ -155,6 +158,8 @@ def run_rsa(dead_model: str = "actual_shape", live_model: str = "actual_shape",
     g = [w.g_kn for w in s.storey_weights(dead_model, live_model)]
     a_max = s.alpha_max_frequent(7, 0.10)
     ms = modes(g, n_modes)
+    for m in ms:
+        m.period_s *= psi_t
     forces, shears, drifts = [], [], []
     for m in ms:
         f = modal_forces(m, g, a_max, s.TG_ANCHOR_S)
@@ -169,13 +174,17 @@ def run_rsa(dead_model: str = "actual_shape", live_model: str = "actual_shape",
 
 
 def comparison_rows(rsa: RsaResult, bsm: s.SeismicResult,
-                    thesis: list[s.ThesisSeismicRow]) -> list[dict]:
+                    thesis: list[s.ThesisSeismicRow],
+                    rsa_anchor: RsaResult | None = None,
+                    bsm_anchor: s.SeismicResult | None = None) -> list[dict]:
     """Build ``results/anchor_rsa.csv``: per level, both methods and the thesis.
 
     Args:
         rsa: The response-spectrum run.
         bsm: The primary base-shear run of Day 9.
         thesis: Rows from ``seismic.read_thesis_seismic``.
+        rsa_anchor: The response-spectrum run with ``seismic.ANCHOR_PSI_T``.
+        bsm_anchor: The base-shear run with ``seismic.ANCHOR_PSI_T``.
 
     Returns:
         One dict per level 1-4.
@@ -200,6 +209,16 @@ def comparison_rows(rsa: RsaResult, bsm: s.SeismicResult,
         }
         for j, m in enumerate(rsa.modes):
             row[f"V_mode{m.number} [kN]"] = round(rsa.shears_kn[j][i], 2)
+        if rsa_anchor is not None and bsm_anchor is not None:
+            row.update({
+                "V_rsa_anchor_psi [kN]": round(rsa_anchor.shear_srss_kn[i], 2),
+                "V_bsm_anchor_psi [kN]": round(bsm_anchor.shears_kn[i], 2),
+                "V_anchor_rsa_pct_vs_bsm [%]": round(s.percent_difference(
+                    rsa_anchor.shear_srss_kn[i], bsm_anchor.shears_kn[i]), 1),
+                "du_rsa_anchor_psi [mm]": round(rsa_anchor.du_srss_mm[i], 3),
+                "du_bsm_anchor_psi [mm]": round(bsm_anchor.lateral.du_mm[i], 3),
+                "theta_rsa_anchor_psi [-]": round(rsa_anchor.theta_srss[i], 7),
+            })
         rows.append(row)
     return rows
 
@@ -312,8 +331,10 @@ def main(repo_root: Path | None = None) -> dict[str, list[dict]]:
     thesis = s.read_thesis_seismic(root)
     rsa = run_rsa()
     bsm = s.run_base_shear()
+    rsa_anchor = run_rsa(psi_t=s.ANCHOR_PSI_T)
+    bsm_anchor = s.run_base_shear(psi_t=s.ANCHOR_PSI_T, variant="anchor")
     tables = {
-        "rsa": comparison_rows(rsa, bsm, thesis),
+        "rsa": comparison_rows(rsa, bsm, thesis, rsa_anchor, bsm_anchor),
         "modes": mode_rows(rsa),
         "periods_3d": anchor_3d.period_rows([m.period_s for m in rsa.modes]),
     }
