@@ -45,9 +45,9 @@ LONGITUDINAL_BEAM_BH_M: tuple[float, float] = (0.3, 0.6)
 #: Beam I factor on edge frames [-]. Spec M7 (Th §2.6: 1.5 I0 edge).
 EDGE_BEAM_INERTIA_FACTOR: float = 1.5
 
-#: Shear modulus as a fraction of E for concrete [-]. GB 50010-2010 cl. 4.1.8
-#: (G_c = 0.4 E_c) [?]: to be checked in the author's copy. It only affects
-#: torsion of members.
+#: Shear modulus as a fraction of E for concrete [-]. GB 50010-2010 cl. 4.1.5
+#: (G_c = 0.4 E_c), p. 19 of the author's English translation, read 27 Oct
+#: 2026 (notes/gb50010_design_values.md). It only affects torsion of members.
 SHEAR_MODULUS_FACTOR: float = 0.4
 
 #: Number of modes reported (Playbook Day 10: "first three periods").

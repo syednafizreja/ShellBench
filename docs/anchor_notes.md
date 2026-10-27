@@ -463,7 +463,7 @@ With every modal period multiplied by 0.7, the spectrum method gives 312.38, 267
 
 ### Code values still marked [?]
 
-GB 50011 cl. 5.2.2 (modal forces and SRSS) and GB 50010 cl. 4.1.8 (G_c = 0.4 E_c) are cited from general knowledge and must be checked in the author's copies. The square-section torsion constant (0.1406 a⁴) is a standard textbook result [?]; it only affects member torsion in the 3D model.
+GB 50011 cl. 5.2.2 (modal forces and SRSS) is cited from general knowledge and must be checked in the author's copy. Update 27 Oct 2026: G_c = 0.4 E_c is GB 50010 cl. 4.1.5 (p. 19 of the author's translation), not cl. 4.1.8 as first written; the value is confirmed. The rest of this paragraph was written before that check: GB 50011 cl. 5.2.2 and GB 50010 cl. 4.1.8 (G_c = 0.4 E_c) are cited from general knowledge and must be checked in the author's copies. The square-section torsion constant (0.1406 a⁴) is a standard textbook result [?]; it only affects member torsion in the 3D model.
 
 ### Proposed flag (for the author)
 

@@ -10,7 +10,7 @@ Newest entry first. Each Claude reads this at the start of a session and adds an
 
 **For both Claudes:** Day 11 and the carbon work use ψ_T = 0.7 (F_Ek 296.04 kN, δ_n = 0). /sync should expect 101 passed.
 
-**Open (author):** open JGJ 3-2010 cl. 4.3.17 and confirm 0.6-0.7; cl. 5.2.2 (GB 50011) and cl. 4.1.8 (GB 50010) [?]; primer values against the Chinese copy (28 Oct); carbon factors (29 Oct); Zenodo and ORCID (30 Oct); squash-merge #52 then #53, deleting the Co-Authored-By/Claude-Session lines from the message.
+**Open (author):** open JGJ 3-2010 cl. 4.3.17 and confirm 0.6-0.7; cl. 5.2.2 (GB 50011) [?] (G_c is GB 50010 cl. 4.1.5, now confirmed); primer values against the Chinese copy (28 Oct); carbon factors (29 Oct); Zenodo and ORCID (30 Oct); squash-merge #52 then #53, deleting the Co-Authored-By/Claude-Session lines from the message.
 
 **Next:** Day 11, design checks.
 
