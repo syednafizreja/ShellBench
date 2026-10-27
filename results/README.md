@@ -19,5 +19,8 @@ Output written by the code in [../src/shellbench/](../src/shellbench/). Do not e
 | anchor_seismic_runs.csv | same | One row per seismic run (primary, thesis beam-shear weights, trial infill factors ψ_T 0.9-0.6): ΣG, G_eq, T1, α1, δ_n, F_Ek, base reaction, roof displacement, largest θ, and the period implied by the thesis base shear (diagnostic only). |
 | anchor_seismic_weights.csv | same | Storey weights G_i = dead + ψ × live (GB 50011 Table 5.1.3) for the two weight models. |
 | anchor_seismic_period_check.csv | same | The four modal periods of the bare frame and the Rayleigh estimate of T1. |
+| anchor_rsa.csv | same (calls `shellbench.rsa.main`) | Response-spectrum check (Day 10), storeys 1-4: SRSS storey shears and drifts of the first three modes next to the Day 9 base-shear run and Table 8-12, % differences, θ and the 1/550 check, and each mode's storey shear. Explanations in the response-spectrum section of [../docs/anchor_notes.md](../docs/anchor_notes.md). |
+| anchor_rsa_modes.csv | same | One row per mode: period, α, participation factor (roof-normalised shape), mass share and cumulative share, modal base shear, mode shape. |
+| anchor_3d_periods.csv | same (calls `shellbench.anchor_3d`) | First three periods of the 3D whole-building model (drawn grid, rigid floors) with each mode's direction, next to the 2D frame's periods of the same mode number. |
 
 Units are in each column header. `[mixed]` columns hold kN*m for moments and kN for axial forces; the `unit [text]` column says which.
