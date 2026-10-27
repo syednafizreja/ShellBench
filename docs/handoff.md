@@ -2,6 +2,20 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 27 Oct 2026, Claude in the app (Day 9, base-shear method)
+
+**Done:** new `src/shellbench/seismic.py` (GB 50011 base-shear method) and `tests/test_seismic.py`. `anchor_frame.main()` now calls `seismic.main()`, so `python -m shellbench.anchor_frame` also writes `results/anchor_seismic.csv`, `anchor_seismic_runs.csv`, `anchor_seismic_weights.csv`, `anchor_seismic_period_check.csv`. Reading rules committed before the first run (commit 4a40c87). Write-up in docs/anchor_notes.md, seismic section. pytest 87 passed (Linux, Python 3.13, OpenSeesPy from pip). Other results byte-identical.
+
+**Result:** T1 = 0.698 s bare frame; F_Ek = 214.75 kN, 18.9 % below the thesis four-storey base shear; distribution over the height matches within 2 points; proposed D24.
+
+**Decisions by the author today:** none yet.
+
+**For both Claudes:** /sync should expect 87 passed and four new seismic results files, byte-identical on Windows. The eigen solver is OpenSees's default (ARPACK); fullGenLapack is far too slow on this model. Never pick ψ_T from the sensitivity table.
+
+**Open (author):** infill period factor ψ_T from a citable source; D24; four GB 50011 values against the Chinese 2016 copy (28 Oct); carbon factors (29 Oct); Zenodo link and ORCID (30 Oct).
+
+**Next:** Day 10, response-spectrum check.
+
 ## 27 Oct 2026, Claude Code in VS Code (sync)
 
 **Done:** `/sync` after the schedule change. `pip install -e . --no-deps`; pytest 74 passed (Windows, Python 3.12), as expected. `python -m shellbench.anchor_frame` left `git status` clean, so every results file is byte-identical to the committed version. No local step was requested. No code or results changed.

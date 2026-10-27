@@ -262,6 +262,20 @@ Claude wrote these reading rules down before any wind result existed [J]. They a
 5. Check runs change one thing each: columns axially rigid; floors rigid in their own plane; ground storey 4.05 m as in Tables 8-1 and 8-2. None of them can replace the primary run in the pass/fail test.
 6. If the pass/fail test fails, the tolerance and the target stay as they are. The failure is written into this file and the LOG, and the author decides how the test is kept.
 
+### How the seismic comparison is read (written 27 Oct 2026, 03:41 UTC, before the first seismic run)
+
+Claude wrote these reading rules before any seismic result existed [J]. They apply the author's decisions 2 and 3 above and change neither. The author has set no pass/fail tolerance for Day 9, so none is invented here: every difference is reported, and every difference above 10 % gets a written reason (Playbook Day 6 rule).
+
+1. **Comparison targets.** The storey forces F_i = V_i − V_(i+1) of Table 8-12 for levels 1-4 (31.03, 54.56, 77.62, 101.56 kN) are the primary targets (decision 2). The level-5 force is not added at the roof. Storey shears are compared with the four-storey shears the same decision implies, V_i − 98.29 kN [J], and also listed next to the printed V_i.
+2. **Storey weights G_i (GB 50011 cl. 5.1.3, Table 5.1.3).** G_i = dead + 0.5 × floor live; roof live load is not included. The loads are those the thesis applied to the axis (2) frame (7.2 m strip, decision B10), summed from the model's own load description. Primary: the actual load shapes of Fig. 4-4 and §6.1, because they carry the true total load; the equivalent uniform loads of §6.2.1 and §7.1 were made to match fixed-end moments, not totals [J]. Each storey's column self-weight goes half to the level above and half to the level below; the lower half of the ground storey goes to the foundation. Check run: the loads the thesis used for beam shears and column axial forces (dead ``thesis_text``, live ``thesis_shear``).
+3. **Period.** The thesis prints no period (B9). The primary T1 is the first-mode period of the bare OpenSeesPy frame, with G_i/g lumped as horizontal mass at the four column-line nodes of each level. A Rayleigh estimate from the static deflection under lateral forces equal to G_i is reported as an arithmetic check of the eigenvalue, not as a separate method.
+4. **Infill period factor ψ_T.** This is the author's decision (docs/schedule.md, Day 9). Until it is made, the primary run uses ψ_T = 1.0, which needs no outside value. Runs with ψ_T = 0.9, 0.8, 0.7 and 0.6 are reported as a sensitivity only. These are trial values spanning the range the primer cites from JGJ 3-2010 cl. 4.3.17 [?]; they are not code values, and none of them becomes the primary run until the author chooses one from a source.
+5. **Implied period.** The period at which the GB 50011 curve, with the model's G_eq, gives the thesis base shear (V_1 − 98.29 kN) is reported as a diagnostic. It must not be used to choose ψ_T, because that would tune the model to the target [J].
+6. **Spectrum and forces.** α_max = 0.08 (decision 3), Tg = 0.35 s (B5), 5 % damping with γ = 0.9, η1 = 0.02, η2 = 1.0 (cl. 5.1.5); F_Ek = α1 × 0.85 ΣG_i (cl. 5.2.1); F_i by G_i H_i with the top additional force δ_n from Table 5.2.1 (H_i measured from the top of the footing, 4.55 m ground storey, B4). Only the four values read from the English translation of GB 50011-2010 on 26 Oct are used; they are still to be checked against the Chinese 2016 copy.
+7. **Drifts.** The model's forces act at the axis-A node of each level, as for wind; storey displacement is the mean of the four column-line nodes. Model Δu is reported against the printed Δu, against V/ΣD with the printed ΣD and four-storey shears, and against the 1/550 limit (S11). A second run applies the thesis F_1-F_4 to the model, so the stiffness comparison does not depend on the forces.
+8. **Minimum shear.** Every storey is checked against λ ΣG_j with λ = 0.016 (cl. 5.2.5, Table 5.2.5, 7 degrees 0.10 g, T1 < 3.5 s).
+9. If a result looks wrong, these rules stay as written. Any change after the run is dated, marked as made after the run, and given a reason.
+
 ## Wind (Day 8, 26 Oct 2026)
 
 Status: **reviewed by the author on 26 Oct 2026** (decisions at the end of this section). Explanations still marked [J] or [?] are Claude's and unverified. Numbers come from `results/anchor_wind.csv`, `anchor_wind_runs.csv`, `anchor_wind_d_values.csv` and `thesis_table_8_2_forces_check.csv`, written by `src/shellbench/anchor_wind.py` (run by `python -m shellbench.anchor_frame`), or are arithmetic on printed Table 8-2 values.
@@ -319,5 +333,64 @@ Every model drift ratio meets 1/550 (spec S11) by a wide margin. The largest is 
 - The wind test stays as written: the 15 % rule applied unchanged, with today's verdict (fail at all four storeys) asserted. Author's reason: the tolerance was fixed before any result existed, and the test records that the printed drifts cannot come from any single set of storey stiffnesses.
 - D22 accepted.
 - D23 accepted, on condition that Table 8-1 or the drawings confirm the roof value. Confirmed the same day from the thesis text: Table 8-1 roof row h_j = 3.6 m, parapet 1.2 m in §4.2. D23 is now a permanent flag.
+
+## Earthquake by the base-shear method (Day 9, 27 Oct 2026)
+
+Status: **draft for the author's review.** Explanations marked [J] are Claude's. Numbers come from `results/anchor_seismic.csv`, `anchor_seismic_runs.csv`, `anchor_seismic_weights.csv` and `anchor_seismic_period_check.csv`, written by `src/shellbench/seismic.py` (run by `python -m shellbench.anchor_frame`), or are arithmetic on printed Table 8-12 values. The reading rules above ("How the seismic comparison is read") were committed before the first run and were not changed after it.
+
+### What the model does
+
+G_i comes from the loads the thesis put on the axis (2) frame, with half the floor live load and no roof live load (Table 5.1.3): 1614.6, 1595.7, 1595.7 and 1073.1 kN, so ΣG = 5879 kN and G_eq = 4997 kN. The bare frame with these masses has T1 = 0.698 s; the Rayleigh estimate gives 0.695 s, so the eigenvalue is right. With α_max = 0.08 and Tg = 0.35 s the curved branch gives α1 = 0.0430, so F_Ek = 214.75 kN. T1 is above 1.4 Tg = 0.49 s, so a top force δ_n F_Ek = 0.126 × 214.75 = 27.0 kN goes on the roof (Table 5.2.1). The forces act at the axis-A joints, as for wind, and the column shears add back to F_Ek exactly.
+
+### Storey forces and shears against Table 8-12 (levels 1-4, decision 2)
+
+| Level | F model [kN] | F thesis [kN] | Diff. | V model [kN] | V thesis, four storeys [kN] | Diff. |
+|---|---|---|---|---|---|---|
+| 1 | 24.82 | 31.03 | −20.0 % | 214.75 | 264.77 | −18.9 % |
+| 2 | 43.93 | 54.56 | −19.5 % | 189.94 | 233.74 | −18.7 % |
+| 3 | 63.34 | 77.62 | −18.4 % | 146.01 | 179.18 | −18.5 % |
+| 4 | 82.67 | 101.56 | −18.6 % | 82.67 | 101.56 | −18.6 % |
+
+Every force is 18-20 % below the thesis, and the spread across the four levels is under 2 points. So the way the base shear is spread up the height matches the thesis; the whole difference is in the size of the base shear, α1 × G_eq. That difference is above 10 %, so it needs a reason. I cannot give one cause, because the thesis prints neither its period nor its weights (B9). Two readings fit the numbers [J]:
+
+1. **Period.** With the model's G_eq, the thesis base shear 264.77 kN needs α1 = 0.0530, which the curve gives at T = 0.553 s (`T_implied_by_thesis_V`). That is 0.79 times the bare-frame period. A period reduction for infill walls would do this, and the thesis building has infill walls (Th §4.2). This number is a diagnostic only (reading rule 5); it must not be used to pick ψ_T.
+2. **Weights.** At the model's own T1, the same base shear needs G_eq = 6160 kN, 23 % more than the model's. The model's ΣG is 9.7 kN/m² over the 7.2 m strip (4 × 151.2 m²), a little below the 12-15 kN/m² the primer gave as a normal range [J]. So heavier thesis weights are possible too. The check run with the loads the thesis used for beam shears (`thesis_shear_weights`) adds only 3 % to ΣG and closes the gap to −17.5 %, so the beam-load model is not the cause.
+
+Most likely both play a part [J]. The anchor report will name this as a stated assumption, not a resolved difference.
+
+### The infill period factor (the author's decision)
+
+| ψ_T | T1 used [s] | α1 | F_Ek [kN] | vs thesis 264.77 kN | δ_n | Largest θ / (1/550) |
+|---|---|---|---|---|---|---|
+| 1.0 (primary) | 0.698 | 0.0430 | 214.75 | −18.9 % | 0.126 | 0.31 |
+| 0.9 | 0.628 | 0.0473 | 236.12 | −10.8 % | 0.120 | 0.34 |
+| 0.8 | 0.559 | 0.0525 | 262.52 | −0.9 % | 0.115 | 0.38 |
+| 0.7 | 0.489 | 0.0592 | 296.04 | +11.8 % | 0 | 0.42 |
+| 0.6 | 0.419 | 0.0681 | 340.10 | +28.5 % | 0 | 0.48 |
+
+These ψ_T are trial values (reading rule 4), not code values. Please choose ψ_T from a source you can cite (JGJ 3-2010 cl. 4.3.17 [?], or your course notes) and not from this table. The ψ_T = 0.8 row lands close to the thesis, and picking it for that reason would be tuning. One thing to know when choosing: at ψ_T ≤ 0.7 the period drops below 1.4 Tg and the top force disappears.
+
+### Drifts
+
+| Level | Δu model [mm] | Δu printed [mm] | Diff. | Δu = V(four storeys)/ΣD printed [mm] | Diff. | Δu model, thesis forces [mm] | Diff. vs V/ΣD |
+|---|---|---|---|---|---|---|---|
+| 1 | 2.223 | 4.04 | −45.0 % | 2.852 | −22.0 % | 2.740 | −3.9 % |
+| 2 | 2.040 | 3.19 | −36.1 % | 2.175 | −6.2 % | 2.510 | +15.4 % |
+| 3 | 1.605 | 2.67 | −39.9 % | 1.667 | −3.7 % | 1.972 | +18.3 % |
+| 4 | 0.982 | 1.93 | −49.1 % | 0.945 | +4.0 % | 1.207 | +27.7 % |
+
+The −36 to −49 % against the printed Δu has three parts, and each is already known [J]:
+
+1. The printed shears include the spurious 98.29 kN level-5 force (B4). Taking it out lowers V by 27 % at level 1 and by 49 % at level 4.
+2. The forces are 19 % lower in the model (above).
+3. Under the thesis forces, the model is more flexible than V/ΣD with the printed ΣD by 4 to 28 %, growing up the height. This is the wind pattern again: the printed ΣD in Table 7-6 cannot be reproduced (D6), and the D-value method's equal-rotation assumption flatters the top storey (wind section, "Why it fails"). The printed Δu are also about 3.3 % above V/ΣD (D9).
+
+### Code checks
+
+Every storey drift meets 1/550. The largest is θ = 5.67 × 10⁻⁴ at storey 2, 31 % of the limit (48 % at ψ_T = 0.6). The thesis also passes (Table 8-12). So, under the stated assumptions, earthquake governs drift over wind by about six times (wind used 5.4 % of the limit), but neither comes close. Every storey shear is above λ ΣG_j with λ = 0.016; the base shear is 2.3 times the minimum.
+
+### Proposed flag (for the author)
+
+- **D24.** Table 8-12 base shear (four storeys, 264.77 kN) is 23 % above the model's base-shear method with the bare-frame period (214.75 kN). The thesis prints no T1, α1 or G_i (B9), so the cause cannot be split between the period (an infill factor near 0.8 would close it) and the weights (23 % heavier would close it). The distribution over the height matches within 2 points. Effect: the anchor reports the seismic forces with the author's ψ_T and names D24; the gap is not tuned away.
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.

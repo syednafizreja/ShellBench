@@ -1007,19 +1007,20 @@ def main(repo_root: Path | None = None) -> dict[str, list[dict]]:
     ``anchor_gravity_live.csv`` and ``anchor_gravity_live_runs.csv`` (Day 6),
     ``anchor_gravity_combination.csv`` (1.3D + 1.5L, Day 6),
     ``thesis_table_7_2_check.csv`` and ``thesis_table_7_2_joints.csv``
-    (arithmetic checks of the thesis live-load table, Day 6), and the wind
-    tables of ``shellbench.anchor_wind.main`` (Day 8).
+    (arithmetic checks of the thesis live-load table, Day 6), the wind
+    tables of ``shellbench.anchor_wind.main`` (Day 8) and the seismic tables
+    of ``shellbench.seismic.main`` (Day 9).
 
     Args:
         repo_root: Repository root; defaults to two levels above this file's
             package folder.
 
     Returns:
-        The rows written, keyed ``"dead"``, ``"live"``, ``"combination"`` and
-        ``"wind"``.
+        The rows written, keyed ``"dead"``, ``"live"``, ``"combination"``,
+        ``"wind"`` and ``"seismic"``.
     """
-    # Imported here because anchor_wind builds on this module.
-    from shellbench import anchor_wind
+    # Imported here because anchor_wind and seismic build on this module.
+    from shellbench import anchor_wind, seismic
 
     root = repo_root or Path(__file__).resolve().parents[2]
     out = root / "results"
@@ -1041,7 +1042,9 @@ def main(repo_root: Path | None = None) -> dict[str, list[dict]]:
     write_csv(live_column_sum_rows(live, root), out / "thesis_table_7_2_check.csv")
     write_csv(live_joint_rows(root), out / "thesis_table_7_2_joints.csv")
     wind_rows = anchor_wind.main(root)["wind"]
-    return {"dead": dead_rows, "live": live_rows, "combination": combo_rows, "wind": wind_rows}
+    seismic_rows = seismic.main(root)["seismic"]
+    return {"dead": dead_rows, "live": live_rows, "combination": combo_rows, "wind": wind_rows,
+            "seismic": seismic_rows}
 
 
 if __name__ == "__main__":
