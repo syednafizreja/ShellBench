@@ -1,0 +1,5 @@
+level [text],G_i [kN],H_i [m],F_model [kN],F_thesis [kN],F_pct_vs_thesis [%],V_model [kN],V_model_columns [kN],V_thesis_4storey [kN],V_pct_vs_thesis_4storey [%],V_thesis_printed [kN],lambda_sum_G [kN],min_shear_met [text],du_model [mm],du_thesis_printed [mm],du_pct_vs_thesis_printed [%],du_thesis_V4_over_sumD [mm],du_pct_vs_V4_over_sumD [%],du_model_thesis_forces [mm],du_thesis_forces_pct_vs_V4_over_sumD [%],theta_model [-],drift_limit_met [text]
+1,1614.58,4.55,24.82,31.03,-20.0,214.75,214.75,264.77,-18.9,363.06,94.06,True,2.223,4.04,-45.0,2.852,-22.0,2.74,-3.9,0.0004886,True
+2,1595.66,8.15,43.93,54.56,-19.5,189.94,189.94,233.74,-18.7,332.03,68.23,True,2.04,3.19,-36.1,2.175,-6.2,2.51,15.4,0.0005665,True
+3,1595.66,11.75,63.34,77.62,-18.4,146.01,146.01,179.18,-18.5,277.47,42.7,True,1.605,2.67,-39.9,1.667,-3.7,1.972,18.3,0.0004458,True
+4,1073.06,15.35,82.67,101.56,-18.6,82.67,82.67,101.56,-18.6,199.85,17.17,True,0.982,1.93,-49.1,0.945,4.0,1.207,27.7,0.0002729,True

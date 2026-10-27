@@ -1,0 +1,7 @@
+variant [text],weights [text],sum_G [kN],G_eq [kN],T1_bare [s],psi_T [-],T1_used [s],alpha1 [-],delta_n [-],F_Ek [kN],F_Ek_pct_vs_thesis_4storey [%],base_shear_reaction [kN],roof_displacement [mm],max_theta [-],max_theta_over_limit [-],base_shear_over_lambda_sum_G [-],T_implied_by_thesis_V [s]
+primary,actual_shape / actual_shape,5878.96,4997.11,0.6981,1.0,0.6981,0.04298,0.1258,214.75,-18.9,214.75,6.85,0.0005665,0.3116,2.283,0.5532
+thesis_shear_weights,thesis_text / thesis_shear,6052.21,5144.38,0.7071,1.0,0.7071,0.04248,0.1266,218.54,-17.5,218.54,6.958,0.000576,0.3168,2.257,0.5714
+psi_t_0.9,actual_shape / actual_shape,5878.96,4997.11,0.6981,0.9,0.6283,0.04725,0.1203,236.12,-10.8,236.12,7.515,0.0006222,0.3422,2.51,0.5532
+psi_t_0.8,actual_shape / actual_shape,5878.96,4997.11,0.6981,0.8,0.5585,0.05253,0.1147,262.52,-0.9,262.52,8.338,0.000691,0.38,2.791,0.5532
+psi_t_0.7,actual_shape / actual_shape,5878.96,4997.11,0.6981,0.7,0.4887,0.05924,0.0,296.04,11.8,296.04,8.986,0.0007612,0.4187,3.147,0.5532
+psi_t_0.6,actual_shape / actual_shape,5878.96,4997.11,0.6981,0.6,0.4189,0.06806,0.0,340.1,28.5,340.1,10.324,0.0008745,0.481,3.616,0.5532
