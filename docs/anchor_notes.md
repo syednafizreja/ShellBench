@@ -334,6 +334,18 @@ Every model drift ratio meets 1/550 (spec S11) by a wide margin. The largest is 
 - D22 accepted.
 - D23 accepted, on condition that Table 8-1 or the drawings confirm the roof value. Confirmed the same day from the thesis text: Table 8-1 roof row h_j = 3.6 m, parapet 1.2 m in §4.2. D23 is now a permanent flag.
 
+### How the response-spectrum check is read (written 27 Oct 2026, 03:49 UTC, before the first response-spectrum or 3D run)
+
+Claude wrote these before any Day 10 result existed [J]. No tolerance is set for Day 10 by the author, so none is invented; every difference above 10 % gets a written reason.
+
+1. **Same inputs as Day 9.** Same G_i, masses, spectrum, α_max, Tg and ψ_T = 1.0 (bare frame) as the primary base-shear run. Nothing is re-chosen for the second method.
+2. **Modes and combination.** First three modes of the 2D frame. For mode j, F_ji = α_j γ_j X_ji G_i with γ_j = Σ X_ji G_i / Σ X_ji² G_i (GB 50011 cl. 5.2.2 [?], to be checked in the author's copy; this is also the standard modal participation factor). Each mode's forces are applied statically; storey shears and inter-storey drifts are combined by SRSS (square root of the sum of squares) storey by storey. Displacements are not combined first and then differenced.
+3. **Mass participation** of each mode = (Σ m φ)² / (Σ m φ² × Σ m), reported with the cumulative sum.
+4. **Comparison.** Base shear, storey shears and drifts of the response-spectrum method against the Day 9 base-shear run, and both against Table 8-12 as read on Day 9 (four-storey shears V_i − 98.29 kN; printed Δu). The figure has storey on the y-axis and three lines per quantity: base-shear method, response spectrum, thesis.
+5. **Which method governs** is read from the larger base shear and the larger drift. It is reported as found, not chosen.
+6. **3D model.** Whole building on the drawing grid (spec G4 and B11: bays 6.0, 6.6, 6.6, 6.6, 6.6, 6.0 m along axes 1-7; 7.2, 6.6, 7.2 m across), same storey heights, 600 × 600 columns at every grid point, transverse beams as the 2D frame, longitudinal beams 300 × 600 (M3). Beam I factor 2.0 for interior lines and 1.5 for edge lines (M7, applied to both directions [J]). Rigid floors (one diaphragm per level). Mass per level = the 2D frame's G_i / g scaled by plan area, 38.4 × 21.0 m against 7.2 × 21.0 m, placed at the plan centre with the rotational inertia of a uniform rectangle [J]. Shear modulus 0.4 E (GB 50010 cl. 4.1.8 [?]). The first three periods are reported next to the 2D frame's first three, with each mode's direction. The E-shaped wings and stair cores are not modelled (B11 open point).
+7. These rules stay as written whatever the results. Any later change is dated and marked as made after the run.
+
 ## Earthquake by the base-shear method (Day 9, 27 Oct 2026)
 
 Status: **draft for the author's review.** Explanations marked [J] are Claude's. Numbers come from `results/anchor_seismic.csv`, `anchor_seismic_runs.csv`, `anchor_seismic_weights.csv` and `anchor_seismic_period_check.csv`, written by `src/shellbench/seismic.py` (run by `python -m shellbench.anchor_frame`), or are arithmetic on printed Table 8-12 values. The reading rules above ("How the seismic comparison is read") were committed before the first run and were not changed after it.
