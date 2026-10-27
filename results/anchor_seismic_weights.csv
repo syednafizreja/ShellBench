@@ -1,0 +1,9 @@
+variant [text],level [text],dead [kN],live_full [kN],live_coeff [-],G_i [kN]
+primary,1,1379.96,469.24,0.5,1614.58
+primary,2,1361.04,469.24,0.5,1595.66
+primary,3,1361.04,469.24,0.5,1595.66
+primary,4,1073.06,92.11,0.0,1073.06
+thesis_shear_weights,1,1416.14,504.69,0.5,1668.48
+thesis_shear_weights,2,1397.21,504.69,0.5,1649.56
+thesis_shear_weights,3,1397.21,504.69,0.5,1649.56
+thesis_shear_weights,4,1084.61,91.02,0.0,1084.61
