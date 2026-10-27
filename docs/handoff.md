@@ -2,6 +2,16 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 27 Oct 2026, Claude Code in VS Code (merges and sync)
+
+**Done:** squash-merged #52 (Day 9), #53 (Day 10) and #55 (GB 50010 notes) at the author's request, each with a clean message in the author's name and no Claude trailers. #53 conflicted after #52 was squashed; resolved by keeping the Day 10 side (it already held Day 9; tree identical to the branch tip). Added a cross-check to notes/gb50010_design_values.md: Table 11.4.12-1 (0.75 %), cl. 6.2.6 (α1, β1), cl. 4.1.5 (G_c) and formula 6.2.7-1 match the Chinese 2015 edition (read from its OCR text; author to confirm on the page). `/sync`: pytest 101 passed (Windows, Python 3.12). `python -m shellbench.anchor_frame` left every `results/` file byte-identical. It did rewrite `figures/anchor_seismic_compare.png` with different bytes, even with the same matplotlib 3.11.2 as CI; probably Windows font rendering [J]. Restored, not committed.
+
+**Decisions by the author today:** merge all three PRs.
+
+**Open (author):** confirm the 2015 cross-check lines on the page; JGJ 3-2010 cl. 4.3.17; GB 50011 cl. 5.2.2 [?]; carbon factors (29 Oct); Zenodo and ORCID (30 Oct). Decide whether the figure needs to be byte-identical across platforms, or whether only `results/` does.
+
+**Next:** Day 11, design checks.
+
 ## 27 Oct 2026, Claude in the app (Day 9-10 decisions)
 
 **Done:** new constant `seismic.ANCHOR_PSI_T = 0.7`; `rsa.run_rsa(psi_t=...)`; `results/anchor_rsa.csv` has new `*_anchor_psi` columns. 3D mode signs fixed so `anchor_3d_periods.csv` is deterministic. pytest 101 passed. The first four commits of #52/#53 carry Claude trailers (against CLAUDE.md); a force-push to rewrite them was blocked, so the author squash-merges and deletes the trailer lines. Later commits are in the author's name with no trailers.
