@@ -11,7 +11,7 @@
 
 A thinner floor weighs less. Less weight means smaller seismic forces, which can mean smaller beams, columns and footings. ShellBench follows that chain through the whole building, using real design codes, rather than comparing floors on their own.
 
-> **Status.** Week 1 of an 8-week plan is complete (review in [docs/week01_review.md](docs/week01_review.md)); Week 2 finishes the anchor. The thesis building has been audited and its published results typed in as validation targets. The thesis frame runs in OpenSeesPy under dead load (Day 5), live load and the thesis gravity combination (Day 6) and the thesis wind forces (Day 8). Every difference above 10 % from the thesis has a written reason; the wind drifts of thesis Table 8-2 fail the 15 % test set before the run, and the notes show why the printed drifts cannot come from one elastic frame. First release: [v0.0.1](https://github.com/syednafizreja/ShellBench/releases/tag/v0.0.1), "Baseline spec and gravity check". Daily progress is in [LOG.md](LOG.md).
+> **Status.** Week 1 of an 8-week plan is complete (review in [docs/week01_review.md](docs/week01_review.md)); Week 2 finishes the anchor. The thesis building has been audited and its published results typed in as validation targets. The thesis frame runs in OpenSeesPy under dead load (Day 5), live load and the thesis gravity combination (Day 6) and the thesis wind forces (Day 8). Every difference above 10 % from the thesis has a written reason; the wind drifts of thesis Table 8-2 fail the 15 % test set before the run, and the notes show why the printed drifts cannot come from one elastic frame. First release: [v0.0.1](https://github.com/syednafizreja/ShellBench/releases/tag/v0.0.1), "Baseline spec and gravity check". pytest passes 74 tests (Day 8 close, [docs/handoff.md](docs/handoff.md)). Next is Day 9, the seismic base-shear method ([docs/schedule.md](docs/schedule.md)). Daily progress is in [LOG.md](LOG.md).
 
 ---
 
@@ -47,6 +47,31 @@ Green: done. Yellow: in progress. Grey: not started.
 4. **Comparison.** Design every building in the family twice, once with a flat slab and once with a shell floor, and explain the saving term by term.
 5. **Surrogate.** Train a fast model on the family and test whether it picks the same floor as the full design.
 
+## Progress
+
+Dates are from the day headings in [LOG.md](LOG.md); planned items are from [docs/schedule.md](docs/schedule.md).
+
+```mermaid
+gantt
+    title Days 0-13 (October 2026)
+    dateFormat YYYY-MM-DD
+    axisFormat %d %b
+    section Done
+    Day 0 Environment             :done, 2026-10-18, 1d
+    Day 1 Package, issues         :done, 2026-10-19, 1d
+    Day 2 Baseline spec           :done, 2026-10-20, 1d
+    Day 3 Validation values       :done, 2026-10-21, 1d
+    Day 4 Literature, gap matrix  :done, 2026-10-22, 1d
+    Day 5 Dead load               :done, 2026-10-23, 1d
+    Day 6 Live load, v0.0.1       :done, 2026-10-24, 1d
+    Day 7 Week 1 review           :done, 2026-10-25, 1d
+    Day 8 Wind                    :done, 2026-10-26, 1d
+    section Planned
+    Day 9 Base-shear method       :active, 2026-10-27, 1d
+    Days 10-12 Spectrum, checks, carbon :2026-10-28, 3d
+    Day 13 Anchor report, v0.1    :2026-10-31, 1d
+```
+
 ## Roadmap
 
 Each week has a GitHub issue with its goals.
@@ -76,9 +101,12 @@ Reuse items built into the weeks above (details in [docs/impact_strategy.md](doc
 | [validation/thesis_values/](validation/thesis_values/) | Eight CSV files of thesis results: beam-end moments, column axial forces, D-values, wind drift, seismic storey shear and drift, beam steel, the full live-load distribution table and the roof rows of the combination table. Every row names its source table. Flags D1–D21 mark values that look wrong; they are left as printed. |
 | [tests/](tests/) | Checks that every validation file has units in its headers, no empty cells and numbers where numbers belong; closed-form and equilibrium tests of the anchor frame. |
 | [src/shellbench/anchor_frame.py](src/shellbench/anchor_frame.py) | The thesis transverse frame as a 2D elastic OpenSeesPy model, loaded with dead and live load the way the thesis distributes them. |
+| [src/shellbench/anchor_wind.py](src/shellbench/anchor_wind.py) | Wind load on the anchor frame: the printed thesis Table 8-2 forces, drift against the author's 15 % tolerance, and the D-value diagnostics. |
 | [src/shellbench/combinations.py](src/shellbench/combinations.py) | The thesis load combinations as data (1.3D + 1.5L now; wind and seismic ones wait for their load cases). |
 | [src/shellbench/thesis_checks.py](src/shellbench/thesis_checks.py) | Arithmetic checks on the thesis tables: column sums and joint balance of the live-load moment distribution, factors of the combination table. |
-| [results/](results/) | Dead-load, live-load and 1.3D + 1.5L comparisons with the thesis (beam-end moments, column axial forces, % differences, check runs), and the thesis-table checks. Causes of every difference above 10 % in [docs/anchor_notes.md](docs/anchor_notes.md). |
+| [results/](results/) | Dead-load, live-load, 1.3D + 1.5L and wind comparisons with the thesis (moments, axial forces, drifts, % differences, check runs), and the thesis-table checks. Causes of every difference above 10 % in [docs/anchor_notes.md](docs/anchor_notes.md). |
+| [docs/preregistration.md](docs/preregistration.md) | Hypotheses H1–H4, frozen (committed 25 Oct 2026). The analysis plan is due by 4 Nov 2026. |
+| [docs/schedule.md](docs/schedule.md) | Day-by-day map from 27 Oct 2026, with gates and the author's items. |
 | [docs/gap_matrix.md](docs/gap_matrix.md) | 23 papers from 2020-2026, each with what it studied, whether seismic loads and ties were included, and a section locator; gap statements G1-G4. Sources in [docs/reading_list.md](docs/reading_list.md), all legal open copies. |
 | [docs/goal_stress_test.md](docs/goal_stress_test.md) | Red-team review of the research question (holes H1-H9) and the fixes adopted. |
 | [docs/week01_review.md](docs/week01_review.md) | Week 1 review: every Done-when line checked against a file, and the weak points to handle before the anchor report. |
@@ -107,18 +135,20 @@ The thesis is kept private and is not in this repository. Only the values typed 
 
 ```
 ShellBench/
-├── src/shellbench/       Python package (anchor frame, load combinations, thesis checks)
+├── src/shellbench/       Python package (anchor frame, wind, load combinations, thesis checks)
 ├── tests/                pytest suite
 ├── docs/                 specifications, literature, charter and journal-rule notes
 ├── validation/
 │   └── thesis_values/    thesis results as CSV validation targets, with flags
 ├── data/                 input data (empty so far)
-├── results/              generated results (anchor frame, gravity)
+├── results/              generated results (anchor frame: gravity and wind)
 ├── figures/              generated figures (empty so far)
 ├── paper/                manuscripts (empty so far)
-├── notes/                working notes (empty so far)
+├── notes/                working notes (GB 50011 base-shear primer)
+├── .github/workflows/    tests.yml (pytest on push and pull request), release.yml
 ├── LOG.md                daily research log
 ├── CLAUDE.md             rules for AI assistance
+├── LICENSE               MIT licence
 ├── environment.yml       conda environment "research"
 ├── pyproject.toml        package and pytest configuration
 └── CITATION.cff          citation metadata
@@ -139,6 +169,14 @@ pytest
 
 The environment includes OpenSeesPy (frame analysis), gmsh (meshing) and CalculiX (shell finite elements), plus the usual numpy, scipy, pandas and matplotlib.
 
+## Running tests
+
+```bash
+pytest
+```
+
+The suite needs pytest and OpenSeesPy. The workflow in [.github/workflows/tests.yml](.github/workflows/tests.yml) runs it on every push to main and every pull request.
+
 ## Working rules
 
 - **SI units everywhere.** Every CSV header states its unit, e.g. `M_end [kN*m]`.
@@ -153,6 +191,8 @@ Code and documents in this repository are drafted with Claude (Anthropic) and ch
 ## How to cite
 
 Citation metadata is in [CITATION.cff](CITATION.cff); GitHub's "Cite this repository" button uses it. A software DOI is planned for v1.0.
+
+Current metadata: Hasib, Syed Nafiz Reja. *ShellBench*, version 0.0.1, released 2026-10-24. <https://github.com/syednafizreja/ShellBench>.
 
 ## Author
 
