@@ -469,4 +469,60 @@ GB 50011 cl. 5.2.2 (modal forces and SRSS) is cited from general knowledge and m
 
 - **D25.** The 2D anchor frame's T1 (0.698 s) is 12 % longer than the whole-building transverse T1 on the drawn grid (0.622 s), because the 2D frame carries a 7.2 m strip of mass (B10) where the drawn frames carry 5.49 m on average. Effect: the anchor validates against the thesis with 7.2 m, but any period or base shear the papers quote for the real building comes from the drawn grid.
 
+## Design checks (Day 11)
+
+### How the design checks are read (written 28 Oct 2026, committed 00:41 UTC in 468df78, before the first design-check run)
+
+Claude wrote these before any Day 11 result existed [J]. Code values come from `notes/gb50010_design_values.md` and from the uploaded GB 50010-2010 English translation (2010 issue; page numbers ±1). The author has set no tolerance for Day 11, so none is invented: a member is flagged when the provided steel is below the required steel, by any amount.
+
+1. **Load cases** come from the anchor frame as it stands. D and L are the primary gravity runs (`thesis_fem`, Days 5-6). W is the printed W_k of Table 8-2 at the axis-A joints (Day 8). E is the base-shear method with ψ_T = 0.7 (Day 9 decision): F_Ek 296.04 kN, δ_n = 0. G_E = D + 0.5 × floor live, with no roof live (GB 50011 Table 5.1.3), run as its own case. Wind and earthquake from the right are the mirror of the left (the frame is symmetric); they are run, not mirrored by hand.
+2. **Combinations** are the thesis set (`combinations.THESIS_COMBINATIONS`): 1.3D + 1.5L; 1.3D + 1.5(L + 0.6W); 1.3D + 1.5(0.7L + W); 1.2G_E + 1.3E, each wind and earthquake both ways. In the seismic combinations the demand is multiplied by γ_RE (GB 50010 cl. 11.1.6, p. 152): 0.75 for beam flexure. That is the same as dividing the capacity by γ_RE.
+3. **Beam design moments** are taken at the column faces, 0.3 m in from each column centre-line (half the 600 mm column). This is the design section the thesis intended (Table 8-13 reduces moments to the column face). No moment redistribution is applied (GB 50010 cl. 5.4.3 allows it but does not require it). Each beam end is designed for the largest hogging moment (top steel) and the largest sagging moment (bottom steel) at that face. Mid-span is designed for the largest sagging moment between the faces.
+4. **Required steel**, rectangular section with b = 300 mm, h0 = h − 50 mm (spec X10, B14), C40 and HRB400: α_s = M / (α1 f_c b h0²), ξ = 1 − √(1 − 2α_s), A_s = α1 f_c b ξ h0 / f_y (GB 50010 cl. 6.2.10, p. 36-37; α1 = 1.0). Singly reinforced. If ξ > ξ_b = 0.518, or ξ > 0.35 at a beam end (cl. 11.3.1, p. 154, grade III), the section is reported as needing compression steel. It is not redesigned.
+5. **Minimum steel.** Beams, grade III: 0.261 % at supports and 0.214 % at mid-span of b × h (Table 11.3.6-1, p. 156). Columns: total 0.75 % (frame column, middle or side, 400 MPa bars), each side ≥ 0.20 % (Table 11.4.12-1, p. 163). Axis (2) is an interior frame, so its A and D columns are side columns, not corner columns [J]. Required steel = max(calculated, minimum).
+6. **Column axial ratio** μ = N / (f_c A), with N the largest axial compression in the two seismic combinations at the bottom of each column, and A = 600 × 600 mm (Table 11.4.16 note 1, p. 164). The limit is 0.85 (decision B16). The largest N under the gravity combinations is reported too, for information.
+7. **Thesis steel.** Beams: the s9.2 table (`validation/thesis_values/beam_steel_areas.csv`). Floor "5" is the roof beam (model level 4; B4) and floor 1 is level 1. "Left end" and "right end" are read as top steel at that face, "middle" as bottom steel at mid-span [J]. Both the printed A_s,prov and the area of the printed bars are checked, because they disagree in 6 rows (D10). Columns: 4C22 in every column (spec R1, decision B6). The KZ-2 4C20 and KZ-3 4C25 entries for floors 2 and 4 on drawing 01 are checked for the ratio only, because the drawing does not say which axis each KZ type sits on.
+8. **Two checks per thesis beam row**, so a flag can be traced to its cause: (a) the model's design moment against the thesis steel; (b) the thesis's own printed design moment (s9.2, column "γRE × M") put through the formula in rule 4, against its own A_s,req and A_s,prov. Check (b) uses no model numbers, so a row that fails (b) is a thesis arithmetic or method problem, whatever the model says.
+9. **Sensitivity**, reported but not used for the flags: centre-line moments instead of face moments, and the GB 55002-2021 seismic factors 1.3 / 1.4 instead of 1.2 / 1.3 (flag D21). A flag that appears only in a sensitivity run is listed as such.
+10. **Not checked on Day 11** (so no claim is made about them): column N-M capacity, strong-column weak-beam and strong-shear weak-bending factors, beam and column shear, crack width and deflection, bar spacing. They belong to the design rules of Day 15.
+11. Each flagged member goes into this file with Claude's proposed judgement (thesis error, simplification, or code-version difference) [J], for the author to accept or change. These rules stay as written whatever the results. Any later change is dated and marked as made after the run.
+
+### Results (28 Oct 2026, read with the rules above)
+
+Status: **draft for the author's review.** The numbers come from `results/anchor_design_beams.csv`, `anchor_design_check.csv`, `anchor_design_columns.csv` and `anchor_design_column_bars.csv`, written by `src/shellbench/checks.py` (run by `python -m shellbench.anchor_frame`). Earlier results are byte-identical. The forces come from seven load-case runs: D, L, G_E, wind both ways and earthquake both ways. G_E was run as one case, and a test shows it equals D + 0.5 × floor live to 1e-9.
+
+**Beams.** All 60 beam locations (12 beams, 5 locations each) can be designed as singly reinforced sections. The largest ξ is 0.147, at the level-1 AB left face, well under 0.35 and ξ_b = 0.518. The earthquake combination 1.2G_E + 1.3E governs every beam end at every level; the roof ends need no bottom steel for strength (no sagging there). At mid-span, gravity with wind governs the side spans of levels 2-4 and the roof BC span, and the earthquake governs level 1 and the BC span of levels 2-3. At the level-1 AB left face, for example, G_E gives −83.34 kN·m and E from the right −165.50 kN·m, so M = 0.75 × (1.2 × 83.34 + 1.3 × 165.50) = 236.37 kN·m and A_s = 1288.6 mm².
+
+**Thesis beam steel, check (a): model moments against the s9.2 steel.** 16 of the 18 rows pass on both the printed A_s,prov and the printed bars. Two rows fail, both at level 1:
+
+| Row | Model A_s,req [mm²] | Printed A_s,prov [mm²] | Printed bars [mm²] | Proposed judgement [J] |
+|---|---|---|---|---|
+| Floor 1, AB left end (top) | 1288.6 | 1472 (passes) | 3C20 = 942 (fails, 73 %) | Thesis error: the bars do not match the printed area (D10). 1472 mm² is 3C25, the bar group printed for the CD ends. |
+| Floor 1, AB right end (top) | 1195.0 | 1472 (passes) | 3C16 = 603 (fails, 50 %) | Same thesis error (D10). The mirrored CD left end has 3C25 and passes. |
+
+Both rows fail only on the bars, and both are rows already flagged D10. The frame is symmetric, and the thesis gives 3C25 at the mirrored CD ends, so I read both as transcription errors in the bar column, not as an under-designed beam [J]. If the drawn beam really had 3C20 and 3C16, it would be under-reinforced for earthquake by 27 % and 50 %.
+
+**Thesis beam steel, check (b): the thesis's own numbers.** No row fails. The printed "γRE × M" (which is 0.3 × M, D12) needs less steel than the thesis provides in every row. But the printed A_s,req cannot be reproduced from the printed γRE × M with the cl. 6.2.10 formula: the ratio of the recomputed to the printed A_s,req runs from 0.04 to 2.30. So the s9.2 table is not internally consistent, and its A_s,req column is not a usable target. One example is D11: at floor 1 CD mid-span the thesis prints A_s,req = 2030.66 mm²; its own γRE × M of 38.48 kN·m needs 197 mm² (the minimum, 385 mm², governs), and 3C16 = 603 mm² is enough. D11 is therefore an arithmetic error in the thesis, not a shortfall. Proposed as flag D26 below.
+
+**Sensitivity (rule 9; not used for the flags).** With centre-line moments, three more rows fall short: the roof AB left and CD right ends, and the floor-1 CD right end, on the printed 603 mm² or 1472 mm². With the GB 55002 seismic factors 1.3 / 1.4, the floor-1 AB and CD mid-spans (603 mm²) fall short, and the floor-1 AB ends stay short. So the margin is thin at level 1: three rows have less than 15 % spare steel in the primary run (floor-1 AB and CD mid-span 1.04, CD right end 1.14), and the flags depend on where the moment is read and on which code edition sets the seismic factors.
+
+**Columns.** Every axial ratio passes: the largest is 0.320 at the ground-storey B and C columns (N = 1.2 × 1787.98 + 1.3 × 43.44 = 2202.04 kN; 0.347 with the 1.3 / 1.4 factors), against the 0.85 limit. The thesis prints ratios of about 0.05-0.07 (Table 9.3, spec note); the model's are about five times larger, which supports the spec note that Table 9.3 used the wrong N. All 16 columns fail the minimum steel: 4C22 is 0.42 % of the section against 0.75 %. One side holds 0.21 % and passes the 0.20 % rule. The drawing's other bar sets fail as well: KZ-2 4C20 is 0.35 % (and 0.17 % per side, below 0.20 %), and KZ-3 4C25 is 0.55 %. A frame column on axis (2) needs at least 2700 mm², for example 4C25 + 4C18 [J, a bar choice for illustration only, not checked for spacing].
+
+| Flagged member | What fails | Proposed judgement [J] |
+|---|---|---|
+| All 16 columns, 4C22 (spec R1) | Total 0.42 % < 0.75 % (Table 11.4.12-1) | Thesis error. The 0.75 % minimum is in GB 50010-2010 and GB 50011-2010 (Table 6.3.7-1, author's reading, B6), the codes the thesis cites, so this is not a code-version difference. 4C22 is also below the non-seismic 0.55 % of Table 8.5.1. This confirms B6. |
+| Dwg 01 KZ-2, floors 2 and 4, 4C20 | Total 0.35 % and one side 0.17 % | Thesis error, as above. The drawing set aside under B6. |
+| Dwg 01 KZ-3, floors 2 and 4, 4C25 | Total 0.55 % < 0.75 % | Thesis error, as above. |
+
+**What this means for the carbon count [J].** The anchor reproduces the thesis as designed (decision B6), so its column steel stays 4C22. A code-compliant column holds about 1.8 times that steel (2700 against 1520 mm²). The generator therefore has to apply the code minimum (the open point under B6), or the baseline frame's steel carbon will be too low and the shell floor's saving will look too large. This is a Day 15 design-rule decision for the author.
+
+### Proposed flag (for the author)
+
+- **D26.** Th s9.2 beam table: the printed A_s,req cannot be reproduced from the printed γRE × M with GB 50010 cl. 6.2.10 (recomputed over printed 0.04-2.30 across the 18 rows), so the column is not a validation target. D11 is an arithmetic error in this column: the row's own moment needs 197 mm² (minimum 385 mm²), and the 603 mm² provided is enough.
+
+### Members to check by hand (playbook Day 11)
+
+1. Column B1 axial ratio: N = 1.2 × 1787.98 + 1.3 × 43.44 = 2202.04 kN (G_E and E_left from the model, `results/anchor_design_columns.csv`); μ = 2202.04 × 10³ / (19.1 × 600 × 600) = 0.320 ≤ 0.85.
+2. Beam, level 1 AB left face (top steel): M = 236.37 kN·m; α_s = 236.37 × 10⁶ / (1.0 × 19.1 × 300 × 550²) = 0.1364; ξ = 1 − √(1 − 2 × 0.1364) = 0.1472; A_s = 19.1 × 300 × 0.1472 × 550 / 360 = 1288.6 mm²; minimum 0.261 % × 300 × 600 = 470 mm².
+
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.

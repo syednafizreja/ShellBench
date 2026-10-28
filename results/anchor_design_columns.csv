@@ -1,0 +1,17 @@
+storey [text],axis [text],N_seismic [kN],seismic_combination [text],axial_ratio [-],axial_ratio_limit [-],axial_ratio_ok [text],axial_ratio_code_seismic [-],N_gravity_max [kN],gravity_combination [text],bars [text],rho_total [%],rho_total_min [%],rho_side [%],rho_side_min [%],As_min_total [mm2],flag [text]
+1,A,1631.28,1.2GE+1.3E_right,0.2372,0.85,yes,0.2569,1803.61,1.3D+1.5(L+0.6W_right),4C22,0.422,0.75,0.211,0.2,2700.0,yes: total steel below minimum
+1,B,2202.04,1.2GE+1.3E_left,0.3203,0.85,yes,0.3469,2713.86,1.3D+1.5(L+0.6W_left),4C22,0.422,0.75,0.211,0.2,2700.0,yes: total steel below minimum
+1,C,2202.04,1.2GE+1.3E_right,0.3203,0.85,yes,0.3469,2713.86,1.3D+1.5(L+0.6W_right),4C22,0.422,0.75,0.211,0.2,2700.0,yes: total steel below minimum
+1,D,1631.28,1.2GE+1.3E_left,0.2372,0.85,yes,0.2569,1803.61,1.3D+1.5(L+0.6W_left),4C22,0.422,0.75,0.211,0.2,2700.0,yes: total steel below minimum
+2,A,1168.94,1.2GE+1.3E_right,0.17,0.85,yes,0.1841,1306.66,1.3D+1.5(L+0.6W_right),4C22,0.422,0.75,0.211,0.2,2700.0,yes: total steel below minimum
+2,B,1595.12,1.2GE+1.3E_left,0.232,0.85,yes,0.2513,1965.89,1.3D+1.5(L+0.6W_left),4C22,0.422,0.75,0.211,0.2,2700.0,yes: total steel below minimum
+2,C,1595.12,1.2GE+1.3E_right,0.232,0.85,yes,0.2513,1965.89,1.3D+1.5(L+0.6W_right),4C22,0.422,0.75,0.211,0.2,2700.0,yes: total steel below minimum
+2,D,1168.94,1.2GE+1.3E_left,0.17,0.85,yes,0.1841,1306.66,1.3D+1.5(L+0.6W_left),4C22,0.422,0.75,0.211,0.2,2700.0,yes: total steel below minimum
+3,A,726.76,1.2GE+1.3E_right,0.1057,0.85,yes,0.1145,821.16,1.3D+1.5(L+0.6W_right),4C22,0.422,0.75,0.211,0.2,2700.0,yes: total steel below minimum
+3,B,1006.65,1.2GE+1.3E_left,0.1464,0.85,yes,0.1586,1233.1,1.3D+1.5(L+0.6W_left),4C22,0.422,0.75,0.211,0.2,2700.0,yes: total steel below minimum
+3,C,1006.65,1.2GE+1.3E_right,0.1464,0.85,yes,0.1586,1233.1,1.3D+1.5(L+0.6W_right),4C22,0.422,0.75,0.211,0.2,2700.0,yes: total steel below minimum
+3,D,726.76,1.2GE+1.3E_left,0.1057,0.85,yes,0.1145,821.16,1.3D+1.5(L+0.6W_left),4C22,0.422,0.75,0.211,0.2,2700.0,yes: total steel below minimum
+4,A,302.26,1.2GE+1.3E_right,0.044,0.85,yes,0.0476,335.98,1.3D+1.5(L+0.6W_right),4C22,0.422,0.75,0.211,0.2,2700.0,yes: total steel below minimum
+4,B,426.7,1.2GE+1.3E_left,0.0621,0.85,yes,0.0672,502.27,1.3D+1.5(L+0.6W_left),4C22,0.422,0.75,0.211,0.2,2700.0,yes: total steel below minimum
+4,C,426.7,1.2GE+1.3E_right,0.0621,0.85,yes,0.0672,502.27,1.3D+1.5(L+0.6W_right),4C22,0.422,0.75,0.211,0.2,2700.0,yes: total steel below minimum
+4,D,302.26,1.2GE+1.3E_left,0.044,0.85,yes,0.0476,335.98,1.3D+1.5(L+0.6W_left),4C22,0.422,0.75,0.211,0.2,2700.0,yes: total steel below minimum
