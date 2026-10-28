@@ -160,3 +160,4 @@ Decided 25 Oct 2026 by Claude under my hand-over ("I let you decide for the best
 - L5 Talk or webinar: after 13 Dec, free venues only, using the Paper 1 preprint.
 - LinkedIn: 25 Oct sharing rule holds until the Paper 1 preprint is public; then posts may link the preprint, repo and dataset DOI.
 Compliance: sources - none new. AI use - Claude made these impact decisions under my standing hand-over and recorded them. Numbers - hour estimates only, [J]. Data - nothing confidential. Repo - branch day07-impact-decisions, PR merged.
+

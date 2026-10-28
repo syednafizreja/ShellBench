@@ -77,6 +77,27 @@ A day's date is the latest it may finish; work ahead is allowed. GATE days never
 
 Every Playbook "Done when" line stands unchanged: 2 % on the benchmarks, a failure rate below 2 % with three hand checks on the pilot, 60 or more library cases with 5 spot checks, the same building IDs in both family files, a leakage test, and every number in Results checked against a file.
 
+## ShellForm data hand-over (added 28 Oct 2026)
+
+The author asked for the ShellForm data earlier, so that ShellForm can also finish by 17 Nov, without losing quality. The published dataset cannot move much before 11 Nov without cutting a gate (pre-registration 3 Nov, benchmark, Day 31 checks). So ShellForm gets **staged pre-release data** and uses the same protocol as the surrogate study above [J]:
+
+1. **The data format is frozen first.** Column names, units and meanings of `family_rc.parquet` and `family_shell.parquet` are written in `docs/data_card.md`, with a 10-row sample, on **Wed 4 Nov** (Day 18). This moves the first half of the data card forward from Day 20. After 4 Nov a column is never renamed or re-unit-ed; columns may only be added.
+2. **ShellForm builds and tests its code on pre-release files.** Each file is checked before release and is labelled "pre-release, not for results".
+3. **ShellForm's results come only from the DOI version.** ShellForm freezes its code before 11 Nov, then runs once on the published data. If a pre-release value changes in the DOI version, only that run is repeated; no ShellForm choice was tuned to the final data.
+
+| Date | ShellForm can have | Status | Checked by |
+|---|---|---|---|
+| Sat 31 Oct | Anchor building: geometry, sections, quantities, carbon (v0.1) | Final | Days 12-13 |
+| Wed 4 Nov | Frozen data format + 10-row sample (`--n 10`) | Format final, rows pre-release | Day 18 Done-when |
+| Thu 5 Nov | Floor library (v0.3); 200-building conventional pilot | Library final; pilot pre-release | Days 26-27; pilot failure rate below 2 %, 3 hand checks |
+| Sat 7 Nov | 2,000-building conventional family (v0.2) | Pre-release | Day 20 failure count |
+| Sun 8 Nov | Anchor building with both floors (slab against shell) | Pre-release | Day 30 hand check |
+| Wed 11 Nov | **Both families, dataset DOI (v0.4)** | **Final: the only data ShellForm reports** | Day 31 checks |
+
+**What I need from the author for this:** a short list of what ShellForm needs from ShellBench (which files and columns, for example storeys, PGA, floor type, quantities, carbon, periods, drifts), by **Mon 2 Nov**. Then the 4 Nov data format includes every column ShellForm needs, and no ShellForm need is discovered after the freeze [?].
+
+**Usage limits.** ShellForm and ShellBench share one Claude Pro allowance. Until 11 Nov the ShellBench GATE days come first; ShellForm work fits around them. From 14 Nov the check window comes first for both projects. ShellForm's own day plan belongs in the ShellForm project; it is not set here.
+
 ## What the author must supply, and by when
 
 This list is the real limit on the plan. A day's delay on any GATE item moves its track by a day.
@@ -89,6 +110,7 @@ This list is the real limit on the plan. A day's delay on any GATE item moves it
 | MacNeal and Harder (1985) reference values copied with page | Sat 31 Oct | Day 24 (GATE) |
 | Approve the floor concept, including the fill material | Sat 31 Oct | Days 22-26 |
 | Approve the design rules | Sun 1 Nov | Day 15 |
+| What ShellForm needs from ShellBench (files and columns) | Mon 2 Nov | Data format frozen 4 Nov |
 | Approve the analysis plan | Tue 3 Nov | Day 17 (GATE) |
 | Pilot hand checks (three) | Thu 5 Nov | Day 19 |
 | Topping rule decision with its source, and 5 library spot checks | Thu 5 Nov | Days 26-27 |
@@ -134,4 +156,4 @@ What ShellForm needs from this list is not known yet [?]. If the floor-level sta
 - **Surrogate developed on part of the family.** The conventional-floor family (from 6 Nov) is enough to build and test the pipeline, but not the decision test, which needs both floors. The decision test code is checked on the anchor and the pilot in both floors (from Day 30), then run once on the published data.
 - **A data bug after 11 Nov.** Zenodo keeps one concept DOI across versions, so a fix becomes version 2 of the dataset, and ShellForm is told. It is reported, never hidden.
 - **Paper 2 without Claude's harsh review.** The numbers are checked in the window. The prose will not get the same review unless Claude Pro renews. That is the author's choice, and nothing in this plan assumes it.
-- **ShellForm on early data.** The 6 Nov floor library is final for floor-level work (v0.3 is tagged). Anything ShellForm needs at whole-building level must wait for the 11 Nov DOI. What ShellForm actually needs is not known yet [?].
+- **ShellForm on early data.** The floor library (5 Nov) is final for floor-level work. At whole-building level ShellForm builds on pre-release files from 4 Nov and reports only on the 11 Nov DOI version (see "ShellForm data hand-over"). The risk is a need found after the 4 Nov format freeze; that is why the list of ShellForm's needs is due on 2 Nov.
