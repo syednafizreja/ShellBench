@@ -2,6 +2,16 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 28 Oct 2026, the AI assistant (ShellForm data hand-over)
+
+**Done:** on the author's request, added "ShellForm data hand-over" to docs/schedule.md: data format frozen with a 10-row sample on 4 Nov (first half of the data card moves forward from Day 20); checked pre-release files on 5, 7 and 8 Nov; ShellForm reports only on the 11 Nov DOI version, with its code frozen before it (the surrogate protocol). Closed my duplicate #65 (superseded by #64). No code or results changed.
+
+**Decisions by the author today:** ShellForm data as early as possible, without losing quality.
+
+**For two separate AI-assisted runs:** Day 18 now also freezes the parquet column names and units in docs/data_card.md. After 4 Nov columns may be added, never renamed.
+
+**Open (author):** what ShellForm needs from ShellBench (files and columns), by 2 Nov; carbon factors (29 Oct, GATE for Day 12).
+
 ## 28 Oct 2026, the AI assistant (17 Nov plan)
 
 **Done:** docs/schedule.md rewritten for a 17 Nov end (the AI-assistance subscription renewal), with three tracks. Dates updated in docs/research_question.md, README, docs/impact_strategy.md and LOG.md. No code or results changed.
