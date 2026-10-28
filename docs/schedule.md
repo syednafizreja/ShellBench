@@ -1,118 +1,116 @@
-# Schedule: the compressed day map (from 27 Oct 2026)
+# Schedule: the 17 Nov plan (approved 28 Oct 2026)
 
-Approved by the author on 26 Oct 2026: finish earlier, but without dropping or weakening any check, test or validation. This file replaces the Playbook's calendar dates from Day 9 onwards. The Playbook's daily tasks and their "Done when" lines are unchanged; only the dates move. The dates in the charter are in [research_question.md](research_question.md), "Dates".
+Approved by the author on 28 Oct 2026 ("you must do it the best quality even under this time constraints"), with the quality-first option: Paper 1 is reviewed and its files are ready by 17 Nov, and it is submitted by 22 Nov. This file replaces the 26 Oct plan (PR #50) from the next daily run.
 
-## How to read this map
+## Why a new plan
 
-- The date next to each Playbook day is the **latest** day it should be finished. Work ahead is allowed: when a day's "Done when" is met and checked, the next day starts in the same run.
-- A day never starts early if it is behind a **gate** (marked GATE below). Gates exist for integrity, not speed.
-- If a day slips past its date, the next days do not shrink to catch up. The slip goes into the next spare day, and if there is none, the review on 15 Nov (or 1 Dec for Paper 2) decides what moves. A check is never cut to save a date.
+On 28 Oct the author asked to finish the project by Tue 17 Nov 2026, the date the author's Claude Pro subscription renews, without losing quality. A second project, ShellForm, needs ShellBench data before it can start, so the plan should hand that data over as early as possible.
 
-## Charter dates
+17 Nov is the end of Claude's help, not a journal deadline. Anything that needs only the author's hands (writing, submission clicks) can still happen after it, and nothing in this plan treats 17 Nov as a reason to drop a check.
 
-| Output | Old date | New date | Changed? |
+## Where we stand on 28 Oct
+
+Days 9, 10 and 11 are done (LOG.md), one day ahead of the 26 Oct plan. pytest 114 passed. Day 12 is waiting on the carbon factors (GATE). That leaves Playbook Days 12-56 in 20 calendar days (29 Oct to 17 Nov).
+
+## The honest answer [J]
+
+Not everything fits, if quality stays where it is. The 26 Oct plan needed 41 calendar days for these 45 Playbook days. Compressing them into 20 without cutting checks needs one real structural change, plus the author answering every reserved item on the day it is asked.
+
+The structural change is that **the shell floor module (Days 22-27) runs in parallel with the generator (Days 15-21)**. It does not depend on the generator. Its only input from the building is the anchor's storey seismic force, which already exists from Day 9. In the Playbook the two run one after the other only because a single person works through them in order. Running them side by side saves about 7 days and costs no check.
+
+What fits by 17 Nov with every check kept:
+
+- the anchor report and v0.1 (31 Oct, unchanged);
+- the pre-registration before any family row (3 Nov, gate unchanged);
+- the floor library and v0.3, which ShellForm can use from **6 Nov**;
+- the family with both floors, and the dataset DOI on **12 Nov**, which is ShellForm's full start;
+- the H1-H3 verdicts, sensitivities and frozen Paper 1 figures (14 Nov);
+- the whole surrogate study with the H4 verdict, frozen Paper 2 figures and v0.5 (17 Nov);
+- v1.0 with a software DOI (17 Nov), meaning the code frozen, tested and archived;
+- Paper 1 drafted, harshly reviewed and fixed, with every submission file ready by 17 Nov. **The author submits it by 22 Nov**, after a last read on their own.
+
+What does not fit without weakening something:
+
+- **Writing Paper 2 with Claude's help.** Every Paper 2 number and figure will exist by 17 Nov, but the drafting, the harsh review and the files take about 5 more days. The author writes it after 17 Nov. Target submission is still 8 Dec, the current charter date.
+- **Polish:** the JOSS-ready documentation and two tutorials, the GitHub Pages site, the profile (Day 54), the statement of purpose and the walkthrough video (Day 56). By the charter's priority order these come last. They move to after 17 Nov and are done by the author. JOSS is not before 19 Apr 2027 anyway.
+
+## Proposed charter dates
+
+| Output | Charter now (26 Oct) | Proposed | Note |
 |---|---|---|---|
-| Anchor report and release v0.1 | 31 Oct | 31 Oct | No |
-| Hypotheses and analysis plan committed | 4 Nov | 4 Nov (planned 3 Nov) | No |
-| Dataset DOI on Zenodo | 20 Nov | **17 Nov** | Yes |
-| Paper 1 submitted | 29 Nov | 29 Nov | No |
-| Paper 2 submitted | 12 Dec | **8 Dec** | Yes |
-| ShellBench v1.0 with software DOI | 13 Dec | **8 Dec** (planned 6 Dec) | Yes |
-| CV, statement of purpose draft, walkthrough video | 13 Dec | 13 Dec | No |
-| JOSS submission | from 19 Apr 2027 | from 19 Apr 2027 | No |
+| Anchor report and v0.1 | 31 Oct | 31 Oct | Unchanged |
+| Hypotheses and analysis plan | 4 Nov | 3 Nov | GATE: before any family row |
+| Floor library and v0.3 (ShellForm early data) | (14 Nov in Playbook) | 5 Nov | New hand-over point |
+| Dataset DOI | 17 Nov | **12 Nov** | ShellForm full start |
+| Paper 1 submitted | 29 Nov | **22 Nov** (files ready 17 Nov) | Quality-first option chosen by the author |
+| ShellBench v1.0 with software DOI | 8 Dec | **17 Nov** | Code freeze; tutorials come later as v1.0.x |
+| Paper 2 submitted | 8 Dec | 8 Dec | All numbers by 17 Nov; author writes after |
+| CV, statement, video | 13 Dec | 13 Dec | Author alone |
+| JOSS | from 19 Apr 2027 | from 19 Apr 2027 | Unchanged |
 
-## Where the days come from
+## Day map, 29 Oct to 17 Nov
 
-Nothing in the research is shortened. The time comes from four places [J]:
+Three tracks. A track's date is the latest the day may finish; work ahead is allowed as before. GATE days never start early.
 
-1. The five half-day weekly reviews (Days 14, 21, 28, 35, 49) share their day with the next task instead of taking a whole day. The review itself keeps its full checklist.
-2. The overnight family run (Day 20) and the full both-floor run (Day 31) run while other work goes on, instead of blocking a day.
-3. The pre-registration (Day 17) is done on 3 Nov, a day before its charter date. It must come before the batch runner produces any family row anyway.
-4. Two surrogate days (Days 43 and 44: splits and the three models) move before Paper 1 week, onto the published dataset, and the Paper 2 methods section is written as each surrogate piece is finished. In the old plan Paper 2 began from nothing on 30 Nov.
+| Date | Track A: anchor and generator | Track B: shell floor | Track C: papers and surrogate |
+|---|---|---|---|
+| Thu 29 Oct | Day 12 quantities and carbon (GATE: carbon factors today) | | |
+| Fri 30 Oct | Day 12 finish | Day 22 floor concept and CalculiX | |
+| Sat 31 Oct | **Day 13 anchor report, v0.1** | Day 23 form-finding | |
+| Sun 1 Nov | Day 14 review (half) + Day 15 design rules | Day 24 shell benchmark (GATE: MacNeal-Harder values) | |
+| Mon 2 Nov | Day 16 generator reproduces the thesis | Day 24 finish (2 % on both benchmarks) | |
+| Tue 3 Nov | **Day 17 pre-registration** (GATE) | Day 25 size one panel | |
+| Wed 4 Nov | Day 18 batch runner | Day 26 floor library (60+ cases) | Paper 1 methods: author starts drafting |
+| Thu 5 Nov | Day 19 200-building pilot | **Day 27 diaphragm, topping rule, v0.3** | Methods continue |
+| Fri 6 Nov | Day 20 v0.2, overnight run | Day 28 review (half). **ShellForm may start on the floor library** | Methods continue |
+| Sat 7 Nov | Day 21 review (half) + Day 29 shell floor in the generator | | |
+| Sun 8 Nov | Day 30 anchor headline number | | Day 36 skeleton and gap paragraph |
+| Mon 9 Nov | Day 31 full family, both floors (overnight) | | Day 37 methods finished |
+| Tue 10 Nov | Day 31 checks + data card | | |
+| Wed 11 Nov | Spare day for Tracks A and B | | |
+| Thu 12 Nov | **Day 33 v0.4 and dataset DOI** (GATE: Day 31 checks). **ShellForm full start** | | Day 43 surrogate splits |
+| Fri 13 Nov | Day 32 H1-H3 verdicts on the published data | | Day 44 three models |
+| Sat 14 Nov | Day 33 sensitivities + Day 34 frozen figures | | Day 38 Paper 1 results; Day 45 conformal |
+| Sun 15 Nov | Day 35 review (half) | | Day 39 discussion and abstract; Day 46 decision test |
+| Mon 16 Nov | | | Day 40 harsh review + Day 41 fixes; Day 47 H4 verdict and leakage test |
+| Tue 17 Nov | | | Day 41 files ready for Paper 1; Day 48 frozen figures, v0.5; **Day 52 v1.0 and software DOI** |
+| After 17 Nov | | | Author: **Day 42 submit Paper 1 by 22 Nov**; Paper 2 writing (Days 50, 51, 53), submit by 8 Dec (Day 55); profile, statement and video by 13 Dec (Days 54, 56); tutorials and JOSS docs |
 
-## Day map
-
-| Date | Playbook day(s) | Notes |
-|---|---|---|
-| Tue 27 Oct | Day 9, seismic base-shear method | Author chooses the infill period factor. Reading rules written before the run, as on Day 8 |
-| Wed 28 Oct | Day 10, response-spectrum check | |
-| Thu 29 Oct | Day 11, design checks | Author's carbon factors due today |
-| Fri 30 Oct | Day 12, quantities and embodied carbon | GATE: needs the author's carbon factors in data/carbon_factors.csv |
-| Sat 31 Oct | Day 13, anchor report and v0.1 | Charter date. Needs Zenodo-GitHub link and ORCID so v0.1 gets a DOI |
-| Sun 1 Nov | Day 14 review (half) + Day 15 design rules | |
-| Mon 2 Nov | Day 16, generator reproduces the thesis | |
-| Tue 3 Nov | Day 17, pre-registration (analysis plan) | GATE: committed before any family row exists. Author approves the plan |
-| Wed 4 Nov | Day 18, design space and batch runner | Charter date for the hypotheses is met the day before |
-| Thu 5 Nov | Day 19, 200-building pilot | Failure rate below 2 % and three hand checks, unchanged |
-| Fri 6 Nov | Day 20 v0.2 + overnight run; Day 21 review (half) | |
-| Sat 7 Nov | Day 22, floor concept and CalculiX | |
-| Sun 8 Nov | Day 23, form-finding | |
-| Mon 9 Nov | Day 24, shell solver benchmark | GATE: needs the author's MacNeal and Harder (1985) reference values. Within 2 %, unchanged |
-| Tue 10 Nov | Day 25, analyse and size one panel | |
-| Wed 11 Nov | Day 26, floor library | At least 60 cases and 5 spot checks, unchanged |
-| Thu 12 Nov | Day 27, diaphragm check and v0.3 | Topping rule needs a source; author decides it |
-| Fri 13 Nov | Day 28 review (half) + Day 29 shell floor in the generator | |
-| Sat 14 Nov | Day 30, anchor headline number | |
-| Sun 15 Nov | Day 31, full family with both floors | Runs overnight. **Date review with the coordinator** (is the lead real?) |
-| Mon 16 Nov | Day 31 checks + Day 33 data card | Same building IDs in both parquet files; data card finished |
-| Tue 17 Nov | Day 33 dataset part: v0.4 and Zenodo DOI | Charter date. GATE: Day 31 checks passed. Author publishes on Zenodo |
-| Wed 18 Nov | Day 32, trends and H1-H3 verdicts | Verdicts are written on the published (frozen) data |
-| Thu 19 Nov | Day 33 sensitivities | Tornado figure and results/sensitivities.csv, unchanged |
-| Fri 20 Nov | Day 34, freeze the Paper 1 figures | |
-| Sat 21 Nov | Day 35 review (half) + Day 43 surrogate splits | Splits built on the DOI version of the dataset |
-| Sun 22 Nov | Day 36, Paper 1 skeleton and gap paragraph | Paper 1 starts a day earlier than the Playbook |
-| Mon 23 Nov | Day 37, methods | |
-| Tue 24 Nov | Day 38, results | |
-| Wed 25 Nov | Day 39, discussion, conclusions, abstract | |
-| Thu 26 Nov | Day 40, harsh review | |
-| Fri 27 Nov | Day 41, fixes, references, files | |
-| Sat 28 Nov | **Spare day for Paper 1** | Also Day 44 model training runs in the background (no Paper 2 writing this week) |
-| Sun 29 Nov | Day 42, submit Paper 1 | Charter date |
-| Mon 30 Nov | Day 44 checks + Day 45 calibrated uncertainty | Accuracy table for 3 models x 3 splits x 4 targets checked |
-| Tue 1 Dec | Day 46, decision test | **Go/no-go for 8 Dec** (see below) |
-| Wed 2 Dec | Day 47, H4 verdict and leakage test | |
-| Thu 3 Dec | Day 48 figures and v0.5; Day 49 review (half) | |
-| Fri 4 Dec | Day 50, Paper 2 methods and results | Methods already drafted during Days 43-47 |
-| Sat 5 Dec | Day 51, discussion, abstract, harsh review | |
-| Sun 6 Dec | Day 52, v1.0 and software DOI | Author publishes the Zenodo release |
-| Mon 7 Dec | Day 53, finish Paper 2 files | Spare half day |
-| Tue 8 Dec | Day 55, submit Paper 2 | New charter date |
-| 9-13 Dec | Day 54 profile; Day 56 statement of purpose and video | Charter date 13 Dec unchanged |
-
-## The go/no-go check on 1 Dec
-
-8 Dec holds only if, on 1 Dec, all three are true:
-
-1. The accuracy table (Day 44) and the conformal coverage results (Day 45) exist and have been checked.
-2. Paper 1 was submitted on 29 Nov without using the spare day for anything other than Paper 1 fixes.
-3. No data bug has been found since the dataset DOI that needs a new dataset version.
-
-If any is false, Paper 2 and v1.0 go back to 12 and 13 Dec. That is a return to the original plan, not a failure, and it is logged in LOG.md with the reason.
+Every Playbook "Done when" line stands unchanged: 2 % on the benchmarks, a failure rate below 2 % with three hand checks on the pilot, 60 or more library cases with 5 spot checks, the same building IDs in both family files, a leakage test, and every number in Results checked against a file.
 
 ## What the author must supply, and by when
 
-These are reserved for the author by the charter. Claude cannot supply them.
+This list is the real limit on the plan. In the 26 Oct plan these items were spread over six weeks; here they come in under three. A day's delay on any GATE item moves its track by a day.
 
 | Item | Needed by | For |
 |---|---|---|
-| Infill period factor decision | Tue 27 Oct | Day 9 |
-| GB 50011 primer values checked against the Chinese 2016 copy | Wed 28 Oct | Days 9-10 |
-| Carbon factors C30, C35, C40, HRB400 from GB/T 51366 and ICE, copied into data/carbon_factors.csv | Thu 29 Oct | Day 12 |
-| Zenodo-GitHub link and ORCID in CITATION.cff | Fri 30 Oct | v0.1 DOI on 31 Oct |
-| Approval of the design rules | Sun 1 Nov | Day 15 |
-| Approval of the analysis plan | Tue 3 Nov | Day 17 |
-| MacNeal and Harder (1985) benchmark reference values, copied from the paper with page | Sun 8 Nov | Day 24 |
-| Carbon factors for any floor material the floor concept adds (fill, tie steel recycled-content high and low) [?] | Wed 11 Nov | Days 26 and 33 |
-| Topping rule decision with its source | Thu 12 Nov | Day 27 |
-| Zenodo dataset publish click | Tue 17 Nov | Dataset DOI |
-| Journal account and submission for Paper 1 | Sun 29 Nov | Day 42 |
-| Zenodo v1.0 release and Paper 2 submission | Sun 6 Dec and Tue 8 Dec | Days 52 and 55 |
+| Carbon factors C30, C35, C40, HRB400 (GB/T 51366 and ICE) in data/carbon_factors.csv | Thu 29 Oct | Day 12 (GATE) |
+| Zenodo-GitHub link and ORCID | Fri 30 Oct | v0.1 DOI |
+| D26, D27 and the Day 11 hand checks | Fri 30 Oct | Anchor report |
+| MacNeal and Harder (1985) reference values copied with page | Sat 31 Oct | Day 24 (GATE) |
+| Approve the floor concept, including the fill material | Sat 31 Oct | Days 22-26 |
+| Approve the design rules | Sun 1 Nov | Day 15 |
+| Approve the analysis plan | Tue 3 Nov | Day 17 (GATE) |
+| Pilot hand checks (three) | Thu 5 Nov | Day 19 |
+| Topping rule decision with its source, and 5 library spot checks | Thu 5 Nov | Days 26-27 |
+| Carbon factors for floor-only materials (fill, tie steel recycled-content high and low) [?] | Fri 6 Nov | Days 29 and 33 |
+| Zenodo dataset publish click | Thu 12 Nov | Dataset DOI |
+| Paper 1 methods draft (author's own words) | Mon 9 Nov | Day 37 |
+| Paper 1 results and discussion drafts | Sun 15 Nov | Days 38-39 |
+| Paper 1 submission | Sun 22 Nov | Day 42 |
+| Zenodo v1.0 release click | Tue 17 Nov | Day 52 |
 
-The bottleneck is this list, not the code [J]. Each item answered a day early gives a day of lead.
+## Fallback rules
 
-## Risks in this plan [J]
+- **Check on 6 Nov.** If v0.2 or v0.3 has slipped more than one day, the spare day on 11 Nov absorbs it. If it slips more than two days, the dataset DOI moves day for day, up to 17 Nov, and Paper 1 still goes in by 22 Nov only if its harsh review happened before 17 Nov; otherwise 29 Nov.
+- **Check on 14 Nov.** If the H1-H3 verdicts or the frozen figures are not done, the harsh review is not skipped. It is done on whatever is ready by 17 Nov, and the author finishes from there. Paper 1 then moves to 29 Nov (the old charter date) rather than going in unreviewed.
+- **Surrogate.** If Day 47 (the H4 verdict and the leakage test) is not done by 17 Nov, it is not run without its checks. The surrogate code and splits are archived in v1.0, and Paper 2 moves to after Claude Pro renews, or is finished by the author.
+- A slipped day never shrinks the next one. A check is never cut to save a date.
 
-- **Paper 2 writing is thin.** Five days (4-8 Dec) for discussion, harsh review and files, against six in the Playbook. The mitigation is writing the methods during Days 43-47, so the last week is results and discussion only. If the harsh review on 5 Dec finds a real problem, the 1 Dec rule is applied again and 12 Dec comes back.
-- **The 17 Nov DOI needs the floor module to go to plan.** Week 4 has two gates (benchmark values, topping rule). A failed benchmark at 2 % cannot be rushed. If Day 24 slips, the DOI moves day for day, up to the old 20 Nov.
-- **A bug found after the DOI.** Zenodo keeps one concept DOI across versions, so a fix becomes version 2 of the dataset. It is reported, never hidden.
-- **Background training during Paper 1 week** must not take the author's attention. Claude runs and checks it; the author looks at it on 30 Nov.
+## Risks [J]
+
+- **The author is the bottleneck, not the code.** Two build tracks mean twice the approvals per day for the first ten days. If the reserved items arrive late, the plan slips; it does not get rushed.
+- **Paper 1 in parallel with the analysis.** Drafting the methods while the family runs is normal practice and safe, because the methods do not depend on results. The results and discussion get only two days (14-15 Nov). That is why submission is on 22 Nov, giving the author five more days on their own.
+- **A data bug after 12 Nov.** Zenodo keeps one concept DOI across versions, so a fix becomes version 2 of the dataset, and ShellForm is told. It is reported, never hidden.
+- **Paper 2 without Claude's harsh review.** The numbers will be checked. The prose will not get the same review unless Claude Pro renews for one more month. Renewing would be the cheapest way to protect Paper 2's quality, but that is the author's choice, and nothing in this plan assumes it.
+- **ShellForm on early data.** The 6 Nov floor library is final for floor-level work (v0.3 is tagged). Anything ShellForm needs at whole-building level must wait for the 12 Nov DOI. What ShellForm actually needs is not known yet [?].

@@ -28,22 +28,23 @@ Decided by the author on 22 Oct 2026 after the stress test in [goal_stress_test.
 
 Smaller holes H4-H9 (vertical seismic action, one building, Chinese carbon factors, shell validation, storey height, buildability) are handled as sensitivity cases or in the discussion. They do not widen the scope.
 
-## Dates (amended 26 Oct 2026)
+## Dates (amended 28 Oct 2026)
 
-The author approved finishing earlier on 26 Oct 2026, on the condition that no check, test or validation is dropped or weakened. Day-by-day plan in [schedule.md](schedule.md).
+On 28 Oct 2026 the author set a hard end of 17 Nov 2026 for Claude's help (Claude Pro renewal) and asked for the best quality within it. A second project, ShellForm, starts from ShellBench data. Day-by-day plan in [schedule.md](schedule.md). This replaces the 26 Oct amendment.
 
 | Output | Date |
 |---|---|
 | Anchor report and release v0.1 | 31 Oct 2026 (unchanged) |
-| Hypotheses and analysis plan committed | 4 Nov 2026 (unchanged; planned 3 Nov) |
-| Dataset DOI on Zenodo | 17 Nov 2026 (was 20 Nov) |
-| Paper 1 submitted, Journal of Building Engineering or Engineering Structures | 29 Nov 2026 (unchanged) |
-| Paper 2 submitted, Automation in Construction | 8 Dec 2026 (was 12 Dec) |
-| ShellBench v1.0 with software DOI | 8 Dec 2026 (was 13 Dec) |
+| Hypotheses and analysis plan committed | 3 Nov 2026 (was 4 Nov) |
+| Floor library and v0.3 (first data for ShellForm) | 5 Nov 2026 |
+| Dataset DOI on Zenodo | 12 Nov 2026 (was 17 Nov) |
+| ShellBench v1.0 with software DOI | 17 Nov 2026 (was 8 Dec); tutorials follow as v1.0.x |
+| Paper 1 submitted, Journal of Building Engineering or Engineering Structures | 22 Nov 2026 (was 29 Nov); files ready 17 Nov |
+| Paper 2 submitted, Automation in Construction | 8 Dec 2026 (unchanged); all results by 17 Nov, written by the author |
 | CV, statement of purpose draft, walkthrough video | 13 Dec 2026 (unchanged) |
 | JOSS submission | from 19 Apr 2027 (unchanged) |
 
-Why: the slack was in the gaps between outputs, not in the research. An earlier dataset DOI gives Paper 2 more time on fixed data, and v1.0 can be released with Paper 2 rather than a day after. 1 Dec was judged too tight, because it would mean cutting checks. If the go/no-go check in schedule.md fails on 1 Dec, Paper 2 and v1.0 return to 12 and 13 Dec. H1-H4 stay frozen.
+Why: the shell floor module needs only the anchor's storey seismic force, so it can be built alongside the generator instead of after it. That is where the time comes from. No check, test or validation is dropped or weakened. H1-H4 stay frozen. If a check slips, the date moves (fallback rules in schedule.md), never the check.
 
 ## Unchanged
 
