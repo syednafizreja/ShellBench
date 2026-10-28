@@ -108,9 +108,9 @@ The author's next project, ShellForm, starts from ShellBench data and should fin
 | Date (latest) | What ShellForm gets | Validated by | Tag |
 |---|---|---|---|
 | Sat 31 Oct | The anchor building: geometry, loads, storey seismic and wind forces, member sizes, quantities and carbon | Anchor report (Days 5-13) | v0.1 |
-| Sat 31 Oct | Force density form-finding code (vault geometry for any bay, span and rise) | Parabola and thrust tests within 1 % (Day 23) | in v0.1.x |
-| Mon 2 Nov | CalculiX shell analysis wrapper | Scordelis-Lo roof and pinched hemisphere within 2 % (Day 24) | v0.2.0-shell |
-| Tue 3 Nov | One sized panel at the thesis span: thickness, tie, buckling factor, quantities | Tie force within 10 % of the closed form (Day 25) | v0.2.1-shell |
+| Sat 31 Oct | Force density form-finding code (vault geometry for any bay, span and rise) | Parabola and thrust tests within 1 % (Day 23) | floor-r1 |
+| Mon 2 Nov | CalculiX shell analysis wrapper | Scordelis-Lo roof and pinched hemisphere within 2 % (Day 24) | floor-r2 |
+| Tue 3 Nov | One sized panel at the thesis span: thickness, tie, buckling factor, quantities | Tie force within 10 % of the closed form (Day 25) | floor-r3 |
 | Thu 5 Nov | Floor library (60+ cases) and the topping rule | 5 spot checks; topping rule with a source (Days 26-27) | v0.3 |
 | Wed 11 Nov | The full building family with both floors | Day 31 checks, data card | Dataset DOI |
 
