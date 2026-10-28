@@ -6,7 +6,7 @@ Newest entry first. Each Claude reads this at the start of a session and adds an
 
 **Done:** docs/schedule.md rewritten for a 17 Nov end (Claude Pro renewal), with three tracks. Dates updated in docs/research_question.md, README, docs/impact_strategy.md and LOG.md. No code or results changed.
 
-**Decisions by the author today:** finish by 17 Nov at the best quality; quality-first option (Paper 1 files ready 17 Nov, submitted by 22 Nov).
+**Decisions by the author today:** finish by 17 Nov at the best quality; quality-first option (Paper 1 files ready 17 Nov, submitted by 22 Nov). Then: build ends 13 Nov, 14-17 Nov is the author's check window; surrogate code frozen before the 11 Nov DOI.
 
 **For both Claudes:** from the next run follow the new docs/schedule.md. Track B (floor module, Days 22-27) starts 30 Oct alongside Track A. GATES unchanged. /sync should still expect 114 passed.
 

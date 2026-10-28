@@ -30,21 +30,23 @@ Smaller holes H4-H9 (vertical seismic action, one building, Chinese carbon facto
 
 ## Dates (amended 28 Oct 2026)
 
-On 28 Oct 2026 the author set a hard end of 17 Nov 2026 for Claude's help (Claude Pro renewal) and asked for the best quality within it. A second project, ShellForm, starts from ShellBench data. Day-by-day plan in [schedule.md](schedule.md). This replaces the 26 Oct amendment.
+On 28 Oct 2026 the author set a hard end of 17 Nov 2026 for Claude's help (Claude Pro renewal) and asked for the best quality within it. The same day the author asked to finish a few days earlier, so the build ends on 13 Nov and 14-17 Nov is the author's check window. A second project, ShellForm, starts from ShellBench data. Day-by-day plan in [schedule.md](schedule.md). This replaces the 26 Oct amendment.
 
 | Output | Date |
 |---|---|
 | Anchor report and release v0.1 | 31 Oct 2026 (unchanged) |
 | Hypotheses and analysis plan committed | 3 Nov 2026 (was 4 Nov) |
 | Floor library and v0.3 (first data for ShellForm) | 5 Nov 2026 |
-| Dataset DOI on Zenodo | 12 Nov 2026 (was 17 Nov) |
-| ShellBench v1.0 with software DOI | 17 Nov 2026 (was 8 Dec); tutorials follow as v1.0.x |
+| Dataset DOI on Zenodo | 11 Nov 2026 (was 17 Nov) |
+| All results and frozen figures, both papers | 13 Nov 2026 (end of build) |
+| Author's check window | 14-17 Nov 2026 |
+| ShellBench v1.0 with software DOI | 17 Nov 2026 (was 8 Dec), after the checks; tutorials follow as v1.0.x |
 | Paper 1 submitted, Journal of Building Engineering or Engineering Structures | 22 Nov 2026 (was 29 Nov); files ready 17 Nov |
-| Paper 2 submitted, Automation in Construction | 8 Dec 2026 (unchanged); all results by 17 Nov, written by the author |
+| Paper 2 submitted, Automation in Construction | 8 Dec 2026 (unchanged); all results by 13 Nov, written by the author |
 | CV, statement of purpose draft, walkthrough video | 13 Dec 2026 (unchanged) |
 | JOSS submission | from 19 Apr 2027 (unchanged) |
 
-Why: the shell floor module needs only the anchor's storey seismic force, so it can be built alongside the generator instead of after it. That is where the time comes from. No check, test or validation is dropped or weakened. H1-H4 stay frozen. If a check slips, the date moves (fallback rules in schedule.md), never the check.
+Why: the shell floor module needs only the anchor's storey seismic force, so it can be built alongside the generator instead of after it, and the surrogate code is built and frozen before the dataset is published. That is where the time comes from. No check, test or validation is dropped or weakened. H1-H4 stay frozen. If a check slips, the date moves (fallback rules in schedule.md), never the check.
 
 ## Unchanged
 
