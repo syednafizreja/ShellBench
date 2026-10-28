@@ -101,6 +101,23 @@ This list is the real limit on the plan. A day's delay on any GATE item moves it
 | Zenodo v1.0 release click | Tue 17 Nov | Day 52 |
 | Paper 1 submission | Sun 22 Nov | Day 42 |
 
+## ShellForm hand-over points (added 28 Oct 2026)
+
+The author's next project, ShellForm, starts from ShellBench data and should finish in the same window. So ShellBench hands data over in stages, each one as soon as its layer has passed its own checks. Nothing is handed over before its validation, because ShellForm would then inherit an unchecked number [J]. Each stage is a tagged release, so ShellForm can cite exactly what it used.
+
+| Date (latest) | What ShellForm gets | Validated by | Tag |
+|---|---|---|---|
+| Sat 31 Oct | The anchor building: geometry, loads, storey seismic and wind forces, member sizes, quantities and carbon | Anchor report (Days 5-13) | v0.1 |
+| Sat 31 Oct | Force density form-finding code (vault geometry for any bay, span and rise) | Parabola and thrust tests within 1 % (Day 23) | in v0.1.x |
+| Mon 2 Nov | CalculiX shell analysis wrapper | Scordelis-Lo roof and pinched hemisphere within 2 % (Day 24) | v0.2.0-shell |
+| Tue 3 Nov | One sized panel at the thesis span: thickness, tie, buckling factor, quantities | Tie force within 10 % of the closed form (Day 25) | v0.2.1-shell |
+| Thu 5 Nov | Floor library (60+ cases) and the topping rule | 5 spot checks; topping rule with a source (Days 26-27) | v0.3 |
+| Wed 11 Nov | The full building family with both floors | Day 31 checks, data card | Dataset DOI |
+
+Each stage can come a day earlier if the GATE item behind it (MacNeal-Harder values, floor concept approval) arrives a day early. That is the only way to bring the dates forward without cutting a check.
+
+What ShellForm needs from this list is not known yet [?]. If the floor-level stages are enough, ShellForm can start on 31 Oct.
+
 ## Fallback rules
 
 - **The check window is protected.** At least 15-17 Nov stays for checking and fixing, whatever slips. The build may run into Sat 14 Nov, but no further.
