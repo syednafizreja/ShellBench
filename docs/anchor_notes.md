@@ -525,4 +525,16 @@ Both rows fail only on the bars, and both are rows already flagged D10. The fram
 1. Column B1 axial ratio: N = 1.2 × 1787.98 + 1.3 × 43.44 = 2202.04 kN (G_E and E_left from the model, `results/anchor_design_columns.csv`); μ = 2202.04 × 10³ / (19.1 × 600 × 600) = 0.320 ≤ 0.85.
 2. Beam, level 1 AB left face (top steel): M = 236.37 kN·m; α_s = 236.37 × 10⁶ / (1.0 × 19.1 × 300 × 550²) = 0.1364; ξ = 1 − √(1 − 2 × 0.1364) = 0.1472; A_s = 19.1 × 300 × 0.1472 × 550 / 360 = 1288.6 mm²; minimum 0.261 % × 300 × 600 = 470 mm².
 
+### Independent cross-check (Claude Code in VS Code, 28 Oct 2026)
+
+Claude Code, working from the Playbook and without knowing that this branch existed, wrote a second implementation of Day 11 (its own reading rules, committed before its own run, and its own code). It differed in one choice: it designed at the column centre-lines, and read the face moments only as a diagnostic. It was not merged, because this one came first. Its results agree with `results/anchor_design_*.csv`:
+
+- Face moments and steel at the five sensitive rows: 92.27 / 479.1 (roof CD right), 236.37 / 1288.6 (level 1 AB left), 220.46 / 1195.0 (level 1 AB right) and 122.65 / 802.0 (level 1 BC) kN·m / mm², identical to the digit.
+- Axial ratios: the same at every column (0.3203 at B1).
+- Flags: at the faces, the same two level-1 AB bar rows. At the centre-lines it flagged the same five rows as `sens_flag_centreline` here (roof AB left and CD right, level 1 AB left, AB right and CD right).
+
+Two pieces of code built separately give the same numbers, so a coding error in either is unlikely [J]. The cross-check found one more thing in the typed thesis values:
+
+- **D27 (proposed).** Th s9.2, roof rows: the printed M for CD (44.51, 28.11, 19.22 kN·m) is not the mirror of AB (119.78, 151.85, 96.15 kN·m), although the frame and its loads are symmetric. The level-1 rows are symmetric (358.20, 128.28, 308.0 both ways). This adds to D26: the roof M column of §9.2 is not a usable target either.
+
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
