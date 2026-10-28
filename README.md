@@ -57,12 +57,12 @@ Each week has a GitHub issue with its goals.
 | 2 | 26 Oct–1 Nov | [Finish the anchor: lateral loads, code checks, carbon](https://github.com/syednafizreja/ShellBench/issues/2) | v0.1 (31 Oct) | |
 | 3 | 1–7 Nov | [The generator and the building family](https://github.com/syednafizreja/ShellBench/issues/3) | v0.2 | |
 | 4 | 30 Oct–6 Nov (alongside week 3) | [The thin-shell floor module](https://github.com/syednafizreja/ShellBench/issues/4) | v0.3 (5 Nov) | |
-| 5 | 7–15 Nov | [Whole-building results](https://github.com/syednafizreja/ShellBench/issues/5) | dataset DOI (12 Nov) | |
-| 6 | 4–22 Nov | [Write and submit Paper 1](https://github.com/syednafizreja/ShellBench/issues/6) | submitted by 22 Nov | |
-| 7 | 12–17 Nov | [The AI surrogate study](https://github.com/syednafizreja/ShellBench/issues/7) | v0.5 | |
-| 8 | 17 Nov–13 Dec | [Paper 2 and the public package](https://github.com/syednafizreja/ShellBench/issues/8) | v1.0 (17 Nov) | |
+| 5 | 7–14 Nov | [Whole-building results](https://github.com/syednafizreja/ShellBench/issues/5) | dataset DOI (11 Nov) | |
+| 6 | 4–22 Nov | [Write and submit Paper 1](https://github.com/syednafizreja/ShellBench/issues/6) | v0.5 (14 Nov); author checks 15–17 Nov; submitted by 22 Nov | |
+| 7 | after 17 Nov | [The AI surrogate study](https://github.com/syednafizreja/ShellBench/issues/7) | | |
+| 8 | after 17 Nov | [Paper 2 and the public package](https://github.com/syednafizreja/ShellBench/issues/8) | v1.0 with Paper 2 | |
 
-Dates moved on 28 Oct 2026 with the author's approval: Claude's help ends 17 Nov, and no check is dropped. The day-by-day map is [docs/schedule.md](docs/schedule.md).
+Dates moved on 28 Oct 2026 with the author's approval: Claude's help ends 17 Nov, building ends 14 Nov so that 15–17 Nov are the author's check days, and no check is dropped. The day-by-day map is [docs/schedule.md](docs/schedule.md).
 
 The hypotheses (H1–H4) will be frozen in public in Week 3, before any family result exists.
 

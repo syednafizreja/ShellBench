@@ -2,6 +2,18 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 28 Oct 2026, Claude Code in VS Code (check days added to the 17 Nov plan)
+
+**Done:** docs/schedule.md revised on the author's instruction: building ends Sat 14 Nov; 15-17 Nov are the author's check days (Claude fixes only, no new work). Dataset DOI 11 Nov (uses the spare day; ShellForm full start); v0.5 "Paper 1 release" with software DOI 14 Nov; surrogate study, v1.0 and Paper 2 after 17 Nov. Dates updated in research_question.md, README, impact_strategy.md and LOG.md. No code or results changed.
+
+**Decisions by the author today:** finish a few days before 17 Nov, keeping days to check.
+
+**For both Claudes:** follow this docs/schedule.md from the next run. The check days are never given back to building; if the build slips, Paper 1 moves to 29 Nov instead. Check `gh pr list` at session start, so work is not done twice.
+
+**Open (author):** carbon factors (29 Oct, GATE for Day 12); then the list in docs/schedule.md. What ShellForm needs from ShellBench is not yet written down.
+
+**Next:** Day 12, quantities and embodied carbon.
+
 ## 28 Oct 2026, Claude in the app (17 Nov plan)
 
 **Done:** docs/schedule.md rewritten for a 17 Nov end (Claude Pro renewal), with three tracks. Dates updated in docs/research_question.md, README, docs/impact_strategy.md and LOG.md. No code or results changed.

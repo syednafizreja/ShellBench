@@ -30,17 +30,18 @@ Smaller holes H4-H9 (vertical seismic action, one building, Chinese carbon facto
 
 ## Dates (amended 28 Oct 2026)
 
-On 28 Oct 2026 the author set a hard end of 17 Nov 2026 for Claude's help (Claude Pro renewal) and asked for the best quality within it. A second project, ShellForm, starts from ShellBench data. Day-by-day plan in [schedule.md](schedule.md). This replaces the 26 Oct amendment.
+On 28 Oct 2026 the author set a hard end of 17 Nov 2026 for Claude's help (Claude Pro renewal) and asked for the best quality within it. The same day the author asked to finish a few days early, so that 15-17 Nov are the author's check days. A second project, ShellForm, starts from ShellBench data. Day-by-day plan in [schedule.md](schedule.md). This replaces the 26 Oct amendment.
 
 | Output | Date |
 |---|---|
 | Anchor report and release v0.1 | 31 Oct 2026 (unchanged) |
 | Hypotheses and analysis plan committed | 3 Nov 2026 (was 4 Nov) |
 | Floor library and v0.3 (first data for ShellForm) | 5 Nov 2026 |
-| Dataset DOI on Zenodo | 12 Nov 2026 (was 17 Nov) |
-| ShellBench v1.0 with software DOI | 17 Nov 2026 (was 8 Dec); tutorials follow as v1.0.x |
+| Dataset DOI on Zenodo | 11 Nov 2026 (was 17 Nov) |
+| Release v0.5 "Paper 1 release" with software DOI | 14 Nov 2026; v1.0 follows with Paper 2 |
+| Author check days | 15-17 Nov 2026 |
 | Paper 1 submitted, Journal of Building Engineering or Engineering Structures | 22 Nov 2026 (was 29 Nov); files ready 17 Nov |
-| Paper 2 submitted, Automation in Construction | 8 Dec 2026 (unchanged); all results by 17 Nov, written by the author |
+| Surrogate study, Paper 2 submitted (Automation in Construction), v1.0 | after 17 Nov: 8 Dec if Claude Pro renews, otherwise January 2027 |
 | CV, statement of purpose draft, walkthrough video | 13 Dec 2026 (unchanged) |
 | JOSS submission | from 19 Apr 2027 (unchanged) |
 

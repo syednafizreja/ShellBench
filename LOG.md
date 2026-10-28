@@ -148,6 +148,8 @@ New dates: pre-registration 3 Nov; floor library and v0.3 5 Nov (ShellForm can s
 How: the shell floor module (Days 22-27) runs alongside the generator (Days 15-21). It needs only the anchor's storey seismic force from Day 9, so no layer uses an unvalidated input. No check, test or Done-when line changes; H1-H4 frozen. If a check slips, the date moves, never the check (fallback rules in docs/schedule.md). Moved to me after 17 Nov: Paper 2 writing, tutorials, JOSS docs, profile, statement, video.
 Main risk: about 15 approvals and inputs from me fall in the next ten days, starting with the carbon factors on 29 Oct.
 Compliance: sources - none new. AI use - Claude drafted the plan and the date changes on my approval. Numbers - dates only. Data - nothing confidential. Repo - branch schedule-17nov-proposal, PR #63 merged.
+Later, 28 Oct: I asked to finish a few days before 17 Nov so I have days to check. Building now ends Sat 14 Nov, and 15-17 Nov are my check days, when Claude only fixes what I find. To make room without cutting a check: the dataset DOI uses the 11 Nov spare day (11 Nov, ShellForm full start a day earlier); a v0.5 "Paper 1 release" gets the software DOI on 14 Nov; the surrogate study, v1.0 and Paper 2 move after 17 Nov (8 Dec if Claude Pro renews, otherwise January 2027, as the Playbook cut order allows). Paper 1 files ready 17 Nov, submitted by me by 22 Nov, unchanged. Fallback: if the build slips, the check days are not given back; Paper 1 moves to 29 Nov instead. Details in docs/schedule.md.
+Compliance: sources - none new. AI use - Claude Code revised the plan on my instruction. Numbers - dates only. Data - nothing confidential. Repo - branch schedule-check-days.
 
 ## Later (parked, outside the charter)
 
