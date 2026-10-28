@@ -471,7 +471,7 @@ GB 50011 cl. 5.2.2 (modal forces and SRSS) is cited from general knowledge and m
 
 ## Design checks (Day 11)
 
-### How the design checks are read (written 28 Oct 2026, 00:45 UTC, before the first design-check run)
+### How the design checks are read (written 28 Oct 2026, committed 00:41 UTC in 468df78, before the first design-check run)
 
 Claude wrote these before any Day 11 result existed [J]. Code values come from `notes/gb50010_design_values.md` and from the uploaded GB 50010-2010 English translation (2010 issue; page numbers ±1). The author has set no tolerance for Day 11, so none is invented: a member is flagged when the provided steel is below the required steel, by any amount.
 
