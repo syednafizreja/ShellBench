@@ -12,6 +12,16 @@ Newest entry first. Each Claude reads this at the start of a session and adds an
 
 **Open (author):** the Day 11 judgements and D26; the two hand checks in the notes; carbon factors (29 Oct); Zenodo and ORCID (30 Oct); JGJ 3 cl. 4.3.17; GB 50011 cl. 5.2.2.
 
+## 28 Oct 2026, Claude Code in VS Code (sync)
+
+**Done:** `/sync` after #58. Run in the Linux cloud container (Python 3.13, pinned pip versions from environment.yml; no conda there). pytest 101 passed. `python -m shellbench.anchor_frame` left every `results/` file byte-identical, and `figures/` unchanged too. No local step was requested. No code or results changed.
+
+**Decisions by the author today:** none.
+
+**Open (author):** confirm the GB 50010 2015 cross-check lines on the page; JGJ 3-2010 cl. 4.3.17; GB 50011 cl. 5.2.2 [?]; carbon factors (29 Oct); Zenodo and ORCID (30 Oct).
+
+**Next:** Day 11, design checks.
+
 ## 27 Oct 2026, Claude in the app (figure rule)
 
 **Done:** answered the figure question from the VS Code sync entry below.
