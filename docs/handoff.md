@@ -2,6 +2,18 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 28 Oct 2026, Claude Code in VS Code (Day 11 cross-check and merge)
+
+**Done:** I did not see PR #59 at the start, so I wrote a second Day 11 implementation (centre-line moments primary). It was not merged. Its numbers match #59 exactly (face moments, A_s, axial ratios, flags); the record is in anchor_notes.md, "Independent cross-check". I resolved #59's handoff conflict with #60, removed the "Generated with Claude Code" line from its PR body, and squash-merged it (6af452a). Windows: pytest 114 passed, `results/` byte-identical.
+
+**Decisions by the author today:** none.
+
+**For both Claudes:** check `gh pr list` at session start as well as handoff.md, so work is not done twice. /sync expects 114 passed.
+
+**Open (author):** D26, D27 (new: §9.2 roof M not symmetric); the Day 11 judgements and hand checks; carbon factors (29 Oct, GATE for Day 12); Zenodo and ORCID (30 Oct).
+
+**Next:** Day 12, after `data/carbon_factors.csv` exists.
+
 ## 28 Oct 2026, Claude in the app (Day 11, design checks)
 
 **Done:** new `src/shellbench/checks.py` and `tests/test_checks.py`; `anchor_frame.main()` now also writes `results/anchor_design_beams.csv`, `anchor_design_check.csv`, `anchor_design_columns.csv` and `anchor_design_column_bars.csv`. Reading rules committed before the first run (468df78). pytest 114 passed (Linux). Earlier results byte-identical.
