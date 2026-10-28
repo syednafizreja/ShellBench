@@ -2,6 +2,16 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 28 Oct 2026, Claude Code in VS Code (sync after #61)
+
+**Done:** `/sync` on main at f2e06b9. pytest 114 passed (Windows, Python 3.12). `python -m shellbench.anchor_frame` left every `results/` file byte-identical, including the four `anchor_design_*` files from #59. No local step was requested. No code or results changed.
+
+**Decisions by the author today:** none.
+
+**Open (author):** D26, D27; the Day 11 judgements and hand checks; carbon factors (29 Oct, GATE for Day 12); Zenodo and ORCID (30 Oct).
+
+**Next:** Day 12, after `data/carbon_factors.csv` exists.
+
 ## 28 Oct 2026, Claude Code in VS Code (Day 11 cross-check and merge)
 
 **Done:** I did not see PR #59 at the start, so I wrote a second Day 11 implementation (centre-line moments primary). It was not merged. Its numbers match #59 exactly (face moments, A_s, axial ratios, flags); the record is in anchor_notes.md, "Independent cross-check". I resolved #59's handoff conflict with #60, removed the "Generated with Claude Code" line from its PR body, and squash-merged it (6af452a). Windows: pytest 114 passed, `results/` byte-identical.
