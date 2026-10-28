@@ -1,6 +1,6 @@
-# Schedule: the 17 Nov plan (PROPOSED 28 Oct 2026, awaiting the author's approval)
+# Schedule: the 17 Nov plan (approved 28 Oct 2026)
 
-Status: **proposal**. Until the author approves it, the daily routine keeps following the 26 Oct plan (PR #50, dates to 8 Dec). On approval, this file replaces it from the next run.
+Approved by the author on 28 Oct 2026 ("you must do it the best quality even under this time constraints"), with the quality-first option: Paper 1 is reviewed and its files are ready by 17 Nov, and it is submitted by 22 Nov. This file replaces the 26 Oct plan (PR #50) from the next daily run.
 
 ## Why a new plan
 
@@ -27,7 +27,7 @@ What fits by 17 Nov with every check kept:
 - the H1-H3 verdicts, sensitivities and frozen Paper 1 figures (14 Nov);
 - the whole surrogate study with the H4 verdict, frozen Paper 2 figures and v0.5 (17 Nov);
 - v1.0 with a software DOI (17 Nov), meaning the code frozen, tested and archived;
-- Paper 1 drafted, harshly reviewed and fixed, with **submission targeted for 17 Nov**.
+- Paper 1 drafted, harshly reviewed and fixed, with every submission file ready by 17 Nov. **The author submits it by 22 Nov**, after a last read on their own.
 
 What does not fit without weakening something:
 
@@ -42,7 +42,7 @@ What does not fit without weakening something:
 | Hypotheses and analysis plan | 4 Nov | 3 Nov | GATE: before any family row |
 | Floor library and v0.3 (ShellForm early data) | (14 Nov in Playbook) | 5 Nov | New hand-over point |
 | Dataset DOI | 17 Nov | **12 Nov** | ShellForm full start |
-| Paper 1 submitted | 29 Nov | **17 Nov** target, **22 Nov** latest | Fallback is still a week early |
+| Paper 1 submitted | 29 Nov | **22 Nov** (files ready 17 Nov) | Quality-first option chosen by the author |
 | ShellBench v1.0 with software DOI | 8 Dec | **17 Nov** | Code freeze; tutorials come later as v1.0.x |
 | Paper 2 submitted | 8 Dec | 8 Dec | All numbers by 17 Nov; author writes after |
 | CV, statement, video | 13 Dec | 13 Dec | Author alone |
@@ -73,8 +73,8 @@ Three tracks. A track's date is the latest the day may finish; work ahead is all
 | Sat 14 Nov | Day 33 sensitivities + Day 34 frozen figures | | Day 38 Paper 1 results; Day 45 conformal |
 | Sun 15 Nov | Day 35 review (half) | | Day 39 discussion and abstract; Day 46 decision test |
 | Mon 16 Nov | | | Day 40 harsh review + Day 41 fixes; Day 47 H4 verdict and leakage test |
-| Tue 17 Nov | | | **Day 42 submit Paper 1** (or by 22 Nov); Day 48 frozen figures, v0.5; **Day 52 v1.0 and software DOI** |
-| After 17 Nov | | | Author: Paper 2 writing (Days 50, 51, 53), submit by 8 Dec (Day 55); profile, statement and video by 13 Dec (Days 54, 56); tutorials and JOSS docs |
+| Tue 17 Nov | | | Day 41 files ready for Paper 1; Day 48 frozen figures, v0.5; **Day 52 v1.0 and software DOI** |
+| After 17 Nov | | | Author: **Day 42 submit Paper 1 by 22 Nov**; Paper 2 writing (Days 50, 51, 53), submit by 8 Dec (Day 55); profile, statement and video by 13 Dec (Days 54, 56); tutorials and JOSS docs |
 
 Every Playbook "Done when" line stands unchanged: 2 % on the benchmarks, a failure rate below 2 % with three hand checks on the pilot, 60 or more library cases with 5 spot checks, the same building IDs in both family files, a leakage test, and every number in Results checked against a file.
 
@@ -97,20 +97,20 @@ This list is the real limit on the plan. In the 26 Oct plan these items were spr
 | Zenodo dataset publish click | Thu 12 Nov | Dataset DOI |
 | Paper 1 methods draft (author's own words) | Mon 9 Nov | Day 37 |
 | Paper 1 results and discussion drafts | Sun 15 Nov | Days 38-39 |
-| Paper 1 submission | Tue 17 Nov (latest 22 Nov) | Day 42 |
+| Paper 1 submission | Sun 22 Nov | Day 42 |
 | Zenodo v1.0 release click | Tue 17 Nov | Day 52 |
 
 ## Fallback rules
 
-- **Check on 6 Nov.** If v0.2 or v0.3 has slipped more than one day, the spare day on 11 Nov absorbs it. If it slips more than two days, the dataset DOI moves day for day, up to 17 Nov, and Paper 1 submission moves to 22 Nov.
-- **Check on 14 Nov.** If the H1-H3 verdicts or the frozen figures are not done, Paper 1 submits by 22 Nov rather than 17 Nov. The author finishes it alone from complete, checked files.
+- **Check on 6 Nov.** If v0.2 or v0.3 has slipped more than one day, the spare day on 11 Nov absorbs it. If it slips more than two days, the dataset DOI moves day for day, up to 17 Nov, and Paper 1 still goes in by 22 Nov only if its harsh review happened before 17 Nov; otherwise 29 Nov.
+- **Check on 14 Nov.** If the H1-H3 verdicts or the frozen figures are not done, the harsh review is not skipped. It is done on whatever is ready by 17 Nov, and the author finishes from there. Paper 1 then moves to 29 Nov (the old charter date) rather than going in unreviewed.
 - **Surrogate.** If Day 47 (the H4 verdict and the leakage test) is not done by 17 Nov, it is not run without its checks. The surrogate code and splits are archived in v1.0, and Paper 2 moves to after Claude Pro renews, or is finished by the author.
 - A slipped day never shrinks the next one. A check is never cut to save a date.
 
 ## Risks [J]
 
 - **The author is the bottleneck, not the code.** Two build tracks mean twice the approvals per day for the first ten days. If the reserved items arrive late, the plan slips; it does not get rushed.
-- **Paper 1 in parallel with the analysis.** Drafting the methods while the family runs is normal practice and safe, because the methods do not depend on results. The results and discussion get only two days (14-15 Nov). That is why the 22 Nov fallback exists.
+- **Paper 1 in parallel with the analysis.** Drafting the methods while the family runs is normal practice and safe, because the methods do not depend on results. The results and discussion get only two days (14-15 Nov). That is why submission is on 22 Nov, giving the author five more days on their own.
 - **A data bug after 12 Nov.** Zenodo keeps one concept DOI across versions, so a fix becomes version 2 of the dataset, and ShellForm is told. It is reported, never hidden.
 - **Paper 2 without Claude's harsh review.** The numbers will be checked. The prose will not get the same review unless Claude Pro renews for one more month. Renewing would be the cheapest way to protect Paper 2's quality, but that is the author's choice, and nothing in this plan assumes it.
 - **ShellForm on early data.** The 6 Nov floor library is final for floor-level work (v0.3 is tagged). Anything ShellForm needs at whole-building level must wait for the 12 Nov DOI. What ShellForm actually needs is not known yet [?].

@@ -2,6 +2,16 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 28 Oct 2026, Claude in the app (17 Nov plan)
+
+**Done:** docs/schedule.md rewritten for a 17 Nov end (Claude Pro renewal), with three tracks. Dates updated in docs/research_question.md, README, docs/impact_strategy.md and LOG.md. No code or results changed.
+
+**Decisions by the author today:** finish by 17 Nov at the best quality; quality-first option (Paper 1 files ready 17 Nov, submitted by 22 Nov).
+
+**For both Claudes:** from the next run follow the new docs/schedule.md. Track B (floor module, Days 22-27) starts 30 Oct alongside Track A. GATES unchanged. /sync should still expect 114 passed.
+
+**Open (author):** carbon factors (29 Oct); Zenodo and ORCID, D26, D27, Day 11 hand checks (30 Oct); MacNeal-Harder values and floor concept approval (31 Oct). Full list in docs/schedule.md.
+
 ## 28 Oct 2026, Claude Code in VS Code (sync after #61)
 
 **Done:** `/sync` on main at f2e06b9. pytest 114 passed (Windows, Python 3.12). `python -m shellbench.anchor_frame` left every `results/` file byte-identical, including the four `anchor_design_*` files from #59. No local step was requested. No code or results changed.

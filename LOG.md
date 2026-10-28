@@ -142,6 +142,13 @@ Safeguards: a go/no-go check on 1 Dec (accuracy and coverage results checked, Pa
 From 27 Oct the daily routine follows docs/schedule.md: a day's date is the latest it may finish, the next day starts in the same run once Done-when is met, and gated days wait for my inputs.
 Compliance: sources - none new. AI use - Claude drafted the schedule and the date changes on my approval. Numbers - dates only. Data - nothing confidential. Repo - branch schedule-finish-earlier, PR merged.
 
+## Schedule change - 28 Oct 2026
+I set a hard end of 17 Nov 2026 for Claude's help (my Claude Pro renews that day) and asked for the best quality within it. ShellForm, my next project, needs ShellBench data first. Claude red-teamed it: not everything fits without weakening checks. I chose the quality-first option on 28 Oct.
+New dates: pre-registration 3 Nov; floor library and v0.3 5 Nov (ShellForm can start on floor data on 6 Nov); dataset DOI 12 Nov (ShellForm full start); v1.0 and software DOI 17 Nov; Paper 1 files ready 17 Nov and submitted by me by 22 Nov. Unchanged: anchor 31 Oct, Paper 2 8 Dec (all results by 17 Nov; I write it), profile items 13 Dec, JOSS 19 Apr 2027.
+How: the shell floor module (Days 22-27) runs alongside the generator (Days 15-21). It needs only the anchor's storey seismic force from Day 9, so no layer uses an unvalidated input. No check, test or Done-when line changes; H1-H4 frozen. If a check slips, the date moves, never the check (fallback rules in docs/schedule.md). Moved to me after 17 Nov: Paper 2 writing, tutorials, JOSS docs, profile, statement, video.
+Main risk: about 15 approvals and inputs from me fall in the next ten days, starting with the carbon factors on 29 Oct.
+Compliance: sources - none new. AI use - Claude drafted the plan and the date changes on my approval. Numbers - dates only. Data - nothing confidential. Repo - branch schedule-17nov-proposal, PR #63 merged.
+
 ## Later (parked, outside the charter)
 
 Decided 25 Oct 2026 by Claude under my hand-over ("I let you decide for the best possible impact. From now on."), within the fixed limits: no fees, no moved dates, H1-H4 frozen. Costs are estimates [J]. Details in docs/impact_strategy.md.
