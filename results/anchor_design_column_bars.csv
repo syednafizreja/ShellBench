@@ -1,0 +1,4 @@
+source [text],bars [text],As [mm2],rho_total [%],rho_side [%],meets_total_min_0.75 [text],meets_side_min_0.20 [text]
+"Th s9.3, spec R1 (all columns, decision B6)",4C22,1520.5,0.422,0.211,no,yes
+"Dwg 01, KZ-2, floors 2 and 4",4C20,1256.6,0.349,0.175,no,no
+"Dwg 01, KZ-3, floors 2 and 4",4C25,1963.5,0.545,0.273,no,yes
