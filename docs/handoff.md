@@ -2,6 +2,16 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 28 Oct 2026, Claude in the app (Day 11, design checks)
+
+**Done:** new `src/shellbench/checks.py` and `tests/test_checks.py`; `anchor_frame.main()` now also writes `results/anchor_design_beams.csv`, `anchor_design_check.csv`, `anchor_design_columns.csv` and `anchor_design_column_bars.csv`. Reading rules committed before the first run (468df78). pytest 114 passed (Linux). Earlier results byte-identical.
+
+**Result:** two level-1 beam rows short on their printed bars (D10 rows), all 16 columns below the 0.75 % minimum (B6), every axial ratio passes (max 0.320). Proposed D26: the s9.2 A_s,req column is not reproducible.
+
+**For both Claudes:** /sync should expect 114 passed. Day 12 is a GATE: it waits for the author's carbon factors in `data/carbon_factors.csv`; do not start it, and never supply the factors.
+
+**Open (author):** the Day 11 judgements and D26; the two hand checks in the notes; carbon factors (29 Oct); Zenodo and ORCID (30 Oct); JGJ 3 cl. 4.3.17; GB 50011 cl. 5.2.2.
+
 ## 27 Oct 2026, Claude in the app (figure rule)
 
 **Done:** answered the figure question from the VS Code sync entry below.
