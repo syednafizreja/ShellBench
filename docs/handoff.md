@@ -2,6 +2,14 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 29 Oct 2026, the AI assistant (hand checks closed)
+
+**Done:** read f_c = 19.1, f_y = 360 and the Table 11.3.6-1 beam minimum in the author's 2015 GB 50010 PDF (PDF pp. 35, 39, 184). The f_t row is missing from its OCR layer [?]. The three hand checks are recorded as done by the AI assistant and accepted by the author (docs/anchor_notes.md, "Status (29 Oct 2026)"). No code or results changed.
+
+**Decisions by the author today:** accepted the hand checks without working them by hand.
+
+**Open (author):** the six carbon factor lines (GATE for the rest of Day 12; never filled in by the AI assistant); Zenodo and ORCID (30 Oct); PR #51.
+
 ## 29 Oct 2026, the AI assistant (D26, D27, D28 decided)
 
 **Done:** recorded the author's decisions in docs/anchor_notes.md ("Author decisions (29 Oct 2026)") and LOG.md. No code or results changed.
