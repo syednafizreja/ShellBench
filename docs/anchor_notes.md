@@ -608,7 +608,12 @@ Total steel is 17.9 kg/m² with the thesis steel and 18.6 kg/m² with the code s
 
 The printed page of Table D.0.1 was not read [?].
 
-The ICE set is not in the file. The only legal copy of ICE v3.0 comes through Circular Ecology's download form, which the author fills in.
+**D29: ICE is not used (decided by Claude on 29 Oct 2026, under the author's 25 Oct hand-over; the author may reverse it).** H6 had planned ICE v3 as the sensitivity set. It cannot be used here:
+- Circular Ecology no longer supplies or supports ICE v3.0. The current version is v4.0.
+- The ICE FAQ (circularecology.com/ice-database-faqs.html, read 29 Oct 2026) says the free version is "intended for educational purposes only", and that "Distribution of the ICE Database – in whole, or in part – is not permitted". ShellBench publishes its factor file in an open repository and an open dataset, so it would distribute part of ICE.
+- The candidate Chinese database, CPCD (lca.cityghg.com), states no licence ("All rights reserved"), so it cannot be used either.
+
+So for now GB/T 51366 is the only factor set. The planned sensitivity on the factors is carried by the H6 Monte Carlo band instead. An openly licensed second set can be added later if one is found [J].
 
 **A1-A3 per m² of floor area** (`results/anchor_carbon.csv`):
 

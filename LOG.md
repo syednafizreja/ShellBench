@@ -156,6 +156,13 @@ Carbon, 29 Oct. I gave Claude permission to fill in the carbon factors.
 - pytest 124 passed, 1 skipped (the "no factor file yet" test now skips).
 - Day 12 Done-when is met for the GB/T 51366 set. The ICE set is open: its only legal copy comes through Circular Ecology's form, which I fill in.
 Compliance: sources - GB/T 51366-2019 Table D.0.1 (third-party copy, official copy to confirm). AI use - Claude read and entered the factors with my permission, waiving the Day 12 GATE for this set. Numbers - every factor traces to Table D.0.1, and C40 is marked [J]. Data - nothing confidential. Repo - branch day12-carbon.
+D29, 29 Oct. ICE is not used.
+- Its licence forbids distribution "in whole, or in part" and limits the free version to education. v3.0 is no longer supplied.
+- CPCD has no open licence either.
+- GB/T 51366 stays the only factor set. The factor sensitivity planned in H6 comes from the Monte Carlo band.
+- Claude decided this under my 25 Oct hand-over; I may reverse it.
+- Day 12 is closed.
+Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - Claude decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
 ## Schedule change - 26 Oct 2026
 I asked whether the project could finish a bit earlier without losing quality, and approved the plan on 26 Oct: "adjust everything to the new plan, from tomorrow we go". New dates: dataset DOI 17 Nov (was 20 Nov); Paper 2 and v1.0 software DOI 8 Dec (were 12 and 13 Dec). Unchanged: anchor report and v0.1 31 Oct, hypotheses 4 Nov, Paper 1 29 Nov, CV/statement/video 13 Dec, JOSS from 19 Apr 2027. 1 Dec was judged too tight, because it would mean cutting checks.
