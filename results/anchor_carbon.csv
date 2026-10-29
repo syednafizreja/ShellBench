@@ -1,0 +1,25 @@
+factor_set [text],plan [text],steel_source [text],element [text],A1-A3 [kgCO2e],A1-A3 per floor area [kgCO2e/m2]
+GBT51366,grid,thesis,slabs,172721.7,53.55
+GBT51366,grid,thesis,frame beams,45184.3,14.01
+GBT51366,grid,thesis,longitudinal beams,49529.3,15.36
+GBT51366,grid,thesis,secondary beams,12031.7,3.73
+GBT51366,grid,thesis,columns,89980.5,27.9
+GBT51366,grid,thesis,footings,43942.2,13.62
+GBT51366,grid,code,slabs,172721.7,53.55
+GBT51366,grid,code,frame beams,41053.3,12.73
+GBT51366,grid,code,longitudinal beams,49529.3,15.36
+GBT51366,grid,code,secondary beams,12031.7,3.73
+GBT51366,grid,code,columns,99292.4,30.78
+GBT51366,grid,code,footings,43942.2,13.62
+GBT51366,drawn,thesis,slabs,152595.2,53.63
+GBT51366,drawn,thesis,frame beams,42869.4,15.07
+GBT51366,drawn,thesis,longitudinal beams,45260.1,15.91
+GBT51366,drawn,thesis,secondary beams,12031.7,4.23
+GBT51366,drawn,thesis,columns,86766.9,30.49
+GBT51366,drawn,thesis,footings,38802.7,13.64
+GBT51366,drawn,code,slabs,152595.2,53.63
+GBT51366,drawn,code,frame beams,38892.2,13.67
+GBT51366,drawn,code,longitudinal beams,45260.1,15.91
+GBT51366,drawn,code,secondary beams,12031.7,4.23
+GBT51366,drawn,code,columns,95746.3,33.65
+GBT51366,drawn,code,footings,38802.7,13.64
