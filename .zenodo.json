@@ -1,0 +1,27 @@
+{
+  "title": "ShellBench",
+  "upload_type": "software",
+  "description": "Quantifying the whole-building embodied-carbon savings of thin-shell floors in code-designed reinforced-concrete frames in seismic zones.",
+  "creators": [
+    {
+      "name": "Hasib, Syed Nafiz Reja",
+      "orcid": "0009-0002-7162-7890"
+    }
+  ],
+  "license": "MIT",
+  "access_right": "open",
+  "keywords": [
+    "embodied carbon",
+    "thin-shell floor",
+    "reinforced concrete",
+    "seismic design",
+    "structural engineering"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/syednafizreja/ShellBench",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
+}
