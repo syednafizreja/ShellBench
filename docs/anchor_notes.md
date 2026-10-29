@@ -535,7 +535,7 @@ Claude Code, working from the Playbook and without knowing that this branch exis
 
 Two pieces of code built separately give the same numbers, so a coding error in either is unlikely [J]. The cross-check found one more thing in the typed thesis values:
 
-- **D27 (proposed).** Th s9.2, roof rows: the printed M for CD (44.51, 28.11, 19.22 kN·m) is not the mirror of AB (119.78, 151.85, 96.15 kN·m), although the frame and its loads are symmetric. The level-1 rows are symmetric (358.20, 128.28, 308.0 both ways). This adds to D26: the roof M column of §9.2 is not a usable target either.
+- **D27 (accepted by the author, 29 Oct 2026).** Th s9.2, roof rows: the printed M for CD (44.51, 28.11, 19.22 kN·m) is not the mirror of AB (119.78, 151.85, 96.15 kN·m), although the frame and its loads are symmetric. The level-1 rows are symmetric (358.20, 128.28, 308.0 both ways). This adds to D26: the roof M column of §9.2 is not a usable target either.
 
 ## Quantities and embodied carbon (Day 12)
 
@@ -593,5 +593,12 @@ Grid plan, axis 3, line B. The axis-2 frame gives D + L = 1 588.00 + 429.66 = 2 
 ### Proposed decision (for the author)
 
 - **D28.** The take-off assumptions marked [J] and [?] in rules 2 and 4-9. Before Paper 1, the author confirms or changes: (a) whether the grid plan (B11) or the drawn plan is primary, and the reading of drawing 03 (no A4 column, the notch, the six secondary beams); (b) the footing rule (fak without correction, 0.6 m pads, 20 kN/m³, 1.35, 0.15 % minimum, and the GB 50007 clause numbers); (c) the column stirrup length (full height, or @100 in the confined zones only, with what spacing elsewhere); (d) the 2C14 continuous top bars (GB 50011 cl. 6.3.4) and the l_n / 3 top bar length; (e) one factor for HPB300 stirrups, or the HRB400 factor for both. None of these changes the frame analysis; they change only the quantities.
+
+### Author decisions (29 Oct 2026)
+
+- **D26 accepted.** The s9.2 A_s,req column is not a validation target.
+- **D27 accepted.** The s9.2 roof M column is not a validation target either.
+- **D28 decided:** (a) the grid plan (B11) stays primary; the drawn plan stays a sensitivity. (b) The footing rule of rule 8 is accepted as written. (c) Column stirrups φ10@100(4) stay over the full height, because no drawing gives the spacing outside the confined zones; the column stirrup mass is therefore an upper bound. (d) The 2C14 continuous top bars and the l_n / 3 top bar length are kept. (e) HPB300 gets its own factor row; where a source gives no separate HPB300 value, the HRB400 value is used and the source says so.
+- None of these changes a number in `results/`: the code already runs these choices.
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
