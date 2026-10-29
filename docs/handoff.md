@@ -2,6 +2,12 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 29 Oct 2026, the AI assistant (ORCID and Zenodo metadata)
+
+**Done:** added the author's ORCID iD (0009-0002-7162-7890) to CITATION.cff. New .zenodo.json: software, MIT, creator with ORCID. Zenodo reads it when a GitHub release is published. No code or results changed.
+
+**Open (author):** switch on syednafizreja/ShellBench at zenodo.org/account/settings/github (needs the author's login). Then the v0.1 release on 31 Oct (Day 13) mints the DOI.
+
 ## 29 Oct 2026, the AI assistant (D29: no ICE; Day 12 closed)
 
 **Done:**
