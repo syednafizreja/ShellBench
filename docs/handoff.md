@@ -2,6 +2,19 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 29 Oct 2026, the AI assistant (D29: no ICE; Day 12 closed)
+
+**Done:**
+- D29 (docs/anchor_notes.md): ICE is not used. Its licence forbids distribution in part and limits the free version to education. CPCD states no licence either. GB/T 51366 is the only factor set, and the H6 Monte Carlo carries the factor sensitivity. Day 12 is closed.
+- Tried to close PR #51 (stale, `` branch name). The permission system blocked it; the author closes it.
+
+**For two separate AI-assisted runs:** never commit ICE values. Day 13 (anchor report, v0.1) is next, due 31 Oct.
+
+**Open (author):**
+- Confirm Table D.0.1 in an official GB/T 51366 copy.
+- Zenodo-GitHub link and ORCID (30 Oct; needs the author's login).
+- Close PR #51.
+
 ## 29 Oct 2026, the AI assistant (Day 12 carbon, GB/T 51366 set)
 
 **Done:** with the author's permission, wrote data/carbon_factors.csv. It holds the GB/T 51366 set only, from Table D.0.1:
