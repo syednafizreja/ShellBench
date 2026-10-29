@@ -1,26 +1,5 @@
 # Anchor notes: why the model and the thesis differ
 
-## Quantities and embodied carbon (Day 12)
-
-### How the take-off is read (written 29 Oct 2026, before the first take-off run)
-
-Claude wrote these rules before any Day 12 number existed [J]. The carbon factors are the author's: no factor value is written by Claude, in code or in data. Until `data/carbon_factors.csv` exists, the carbon columns stay empty and say "pending".
-
-1. **Boundary.** Structure only: suspended slabs, frame beams, longitudinal and secondary beams, columns and column footings. Not counted: the ground-floor slab on grade, blinding, stairs, parapets, infill walls, finishes, formwork, laps, anchorages and wastage [J]. The same boundary is used for every floor option later, so what is left out is left out on both sides of the comparison [J].
-2. **Plan.** The primary take-off uses the drawing grid of decision B11: a full 38.4 × 21.0 m rectangle, axes 1-7 at 6.0 / 6.6 / 6.6 / 6.6 / 6.6 / 6.0 m and axes A-D at 7.2 / 6.6 / 7.2 m (spec G3, G4), 28 columns. A second run, "drawn", follows my reading of drawing 03: no column at A4, and no slab, A-line beam or axis-4 AB beam between axes 3 and 5 on A-B (a 13.2 × 7.2 m notch). The drawn run is a sensitivity until the author confirms the reading [J]. Openings marked on drawing 03 are not deducted in either run, because their sizes are not dimensioned [J].
-3. **Floor area** for the functional unit is 4 storeys × the plan area of the run (B11: 38.4 × 21.0 × 4 = 3 225.6 m² for the grid run). Suspended slabs are at levels 1, 2, 3 and the roof (4 slabs) [J].
-4. **Concrete volumes.** Slab: plan area × 0.12 m (G10), less the column footprints. Beams: b × (h − 0.12) × clear length between column faces, so the slab depth is counted once. Frame beams: AB and CD 300 × 600, BC 300 × 500 (M1, M2) on all 7 transverse axes. Longitudinal beams 300 × 600 (M3) on axes A-D. Secondary beams 300 × 500 (M4) at mid-span of the 7.2 m spans, in the bays drawn on drawing 03 (A-B in bays 1-2, 2-3, 5-6 and 6-7; C-D in bays 2-3 and 5-6), at every level [J]. Their clear length is the bay less one 300 mm beam width. Columns: 0.6 × 0.6 m × storey height, 4.55 m at storey 1 and 3.60 m above (G6, G7), joints included. Concrete grade C40 everywhere (X1); footings are also taken as C40 [J], and the grade is a column in the output so the author can map a different factor.
-5. **Slab steel** (both runs, both steel sources): C8@200 = 251 mm²/m each way, bottom over the whole slab (Th Table 3.1; floor and roof slab drawings). Top bars C8@200 across every beam line, 1.2 m each side of an interior beam and 1.2 m in from an edge beam [J]. The drawings give 0.8 to 1.6 m for these lengths, so 1.2 m is a mid value, not a measured one.
-6. **Beam and column steel, two sources** (the playbook flag):
-   - "thesis": the s9.2 printed A_s,prov for frame beams (floor "5" for the roof, floor 1 for levels 1-3 [J]; the printed areas, not the printed bars, per the D10 judgement); columns 4C22 (R1, B6). Longitudinal beams 4C16 top and bottom and secondary beams 3C20 top and bottom, from the drawing 03 notes [J].
-   - "code": frame beams from `checks.py` (`results/anchor_design_beams.csv`, axis 2, used for all 7 axes [J]); columns at the GB 50010 minimum, 0.75 % of 600 × 600 = 2 700 mm² (Table 11.4.12-1, p. 163), since the Day 11 run found that every column is governed by it. Longitudinal and secondary beams as in the thesis source, because no design for them exists yet [J].
-   Beam bar lengths: bottom steel over the full clear span (the larger of mid-span and end bottom steel); top end steel over one third of the clear span from each face [J]; 2C14 continuous top steel over the middle third (GB 50011 cl. 6.3.4 [?], author to confirm). Column bars run the full column height.
-7. **Stirrups.** Beams φ10@200, 2 legs (drawing 03 note) [J for the leg count]. Columns φ10@100, 4 legs, full height (drawing 01, "φ10@100(4)"). Leg lengths are the section perimeter less the cover, taken as 50 mm all round [J]. Stirrups are HPB300 (X6); they are reported as a separate steel row so the author can give them their own factor.
-8. **Footings** (no thesis calculation exists, B8): one square pad under each column, sized so the characteristic pressure is within fak = 220 kPa (B8) with no width or depth correction [J]: B = √(N_k / (fak − 20 × d)), rounded up to 0.1 m, with 20 kN/m³ for footing plus fill (GB 50007 cl. 5.2.1 [?]) and d = 0.5 m (G9) + the pad thickness. Pad thickness 0.6 m for every footing [J]. N_k = D + L at the base of the axis-2 column of the same line (A or B; C and D mirror), times the column's tributary length along the building over 7.2 m [J]. Bottom steel each way from M = (B − 0.6)² (2B + 0.6) p_j / 24 with p_j = 1.35 N_k / B² (GB 50007 eq. 8.2.11 and cl. 3.0.6 [?]), A_s = M / (0.9 f_y h_0), h_0 = thickness − 0.05 m, and at least 0.15 % of the section (GB 50007 cl. 8.2.1 [?]). The footing rule is a [J] model for the author to accept, change or replace (proposed D28).
-9. **Steel mass** uses 7 850 kg/m³ [J; confirm against GB 50009 Appendix A [?]]. Concrete is reported as volume, because concrete factors are usually per m³ [J]; the carbon step converts with the unit given in each factor row.
-10. **Carbon.** A1-A3 = Σ quantity × factor, for each factor set in `data/carbon_factors.csv`, per element type, then over the floor area of rule 3. A factor row must give set, material, value, unit, source and page; a missing material stops the run with an error rather than a silent zero.
-11. **Checks before any number is reported:** the slab volume equals plan area × 0.12 less the column footprints; the column count is 28 (grid) or 27 (drawn); the hand check of one footing (rule 8) is in this file. These rules stay as written whatever the results; any later change is dated and marked as made after the run.
-
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
 
 One line of explanation for every difference above 10 % between the anchor model and the thesis (Playbook Day 6). Dead load was added on Day 5 (23 Oct 2026); live load and the load combinations on Day 6 (24 Oct 2026).
@@ -560,7 +539,7 @@ Two pieces of code built separately give the same numbers, so a coding error in 
 
 ## Quantities and embodied carbon (Day 12)
 
-### How the take-off is read (written 29 Oct 2026, before the first take-off run)
+### How the take-off is read (written 29 Oct 2026, committed 00:46 UTC in f38e731, before the first take-off run)
 
 Claude wrote these rules before any Day 12 number existed [J]. The carbon factors are the author's: no factor value is written by Claude, in code or in data. Until `data/carbon_factors.csv` exists, the carbon columns stay empty and say "pending".
 
@@ -578,5 +557,41 @@ Claude wrote these rules before any Day 12 number existed [J]. The carbon factor
 9. **Steel mass** uses 7 850 kg/m³ [J; confirm against GB 50009 Appendix A [?]]. Concrete is reported as volume, because concrete factors are usually per m³ [J]; the carbon step converts with the unit given in each factor row.
 10. **Carbon.** A1-A3 = Σ quantity × factor, for each factor set in `data/carbon_factors.csv`, per element type, then over the floor area of rule 3. A factor row must give set, material, value, unit, source and page; a missing material stops the run with an error rather than a silent zero.
 11. **Checks before any number is reported:** the slab volume equals plan area × 0.12 less the column footprints; the column count is 28 (grid) or 27 (drawn); the hand check of one footing (rule 8) is in this file. These rules stay as written whatever the results; any later change is dated and marked as made after the run.
+
+### Results (29 Oct 2026, read with the rules above)
+
+Status: **quantities done; carbon pending** until the author's `data/carbon_factors.csv` exists. The numbers come from `results/anchor_quantities.csv` and `results/anchor_footings.csv`, written by `src/shellbench/carbon.py` (run by `python -m shellbench.anchor_frame`). All earlier results are byte-identical. Figure: `figures/anchor_quantities.png` (grid plan).
+
+**Rule-11 checks.** Grid plan: 28 columns, floor area 4 × 806.4 = 3 225.6 m². Slab concrete 383.96 m³ = 4 × (806.4 − 6.48) × 0.12, where 6.48 m² is the part of the 28 column footprints that lies inside the slab (a quarter at the 4 corners, a half at the 14 edge columns, all of the 10 interior ones), checked in `tests/test_carbon.py`. Drawn plan: 27 columns, floor area 4 × 711.36 = 2 845.44 m².
+
+**Grid plan, per m² of floor area.**
+
+| Element | Concrete [m³/m²] | Bars, thesis [kg/m²] | Bars, code [kg/m²] | Stirrups [kg/m²] |
+|---|---|---|---|---|
+| Slabs | 0.119 | 5.59 | 5.59 | n/a |
+| Frame beams | 0.022 | 2.02 | 1.47 | 0.71 |
+| Longitudinal beams | 0.025 | 2.18 | 2.18 | 0.77 |
+| Secondary beams | 0.005 | 0.67 | 0.67 | 0.17 |
+| Columns | 0.048 | 1.59 | 2.82 | 3.36 |
+| Footings | 0.034 | 0.81 | 0.81 | n/a |
+| **Total** | **0.254** (819.2 m³) | **12.86** | **13.55** | **5.01** |
+
+Total steel is 17.9 kg/m² with the thesis steel and 18.6 kg/m² with the code steel. The drawn plan gives 0.262 m³/m² and 18.8 / 19.5 kg/m²: per m² it is slightly heavier, because it loses slab but keeps most of the frame [J].
+
+**What carries the most.** The slabs hold 47 % of the concrete and the most bar steel. Concrete usually dominates the carbon of an RC frame [J], so the slabs will probably carry the most carbon, as the playbook expects, but that is not shown until the factors are in. With the code column steel, the columns hold more total steel than the slabs (6.2 against 5.6 kg/m²), so the ranking of steel depends on the steel source.
+
+**After the run (29 Oct 2026; the rules above are unchanged).**
+
+- Column stirrups are two thirds of the column steel (3.36 of 4.95 kg/m², thesis source). Drawing 01 labels φ10@100(4) as the stirrup "in encrypted area", that is, the confined zones at the column ends. Rule 7 runs it over the full height, so the column stirrup mass is an upper bound [J]. The spacing outside the confined zones is not drawn. This is part of D28.
+- The frame beam bars are lower with the code steel (1.47 against 2.02 kg/m²), because rule 6 gives levels 2 and 3 the floor-1 thesis steel, while the model designs each level for its own forces.
+- In every footing the minimum steel (0.15 % [?]) governs, not bending.
+
+### Footing to check by hand (rule 11)
+
+Grid plan, axis 3, line B. The axis-2 frame gives D + L = 1 588.00 + 429.66 = 2 017.66 kN at the base of column B1. The tributary areas are 6.6 × 6.9 m² (axis 3) against 7.2 × 6.9 m² (the 2D frame), so N_k = 2 017.66 × 6.6 / 7.2 = 1 849.52 kN. With d = 0.5 + 0.6 = 1.1 m, B = √(1 849.52 / (220 − 20 × 1.1)) = 3.056 m, rounded up to 3.1 m. p_j = 1.35 × 1 849.52 / 3.1² = 259.82 kPa; M = (3.1 − 0.6)² × (2 × 3.1 + 0.6) × 259.82 / 24 = 460.1 kN·m; A_s = 460.1 × 10⁶ / (0.9 × 360 × 550) = 2 581.9 mm², less than the minimum 0.0015 × 3 100 × 600 = 2 790 mm², which governs.
+
+### Proposed decision (for the author)
+
+- **D28.** The take-off assumptions marked [J] and [?] in rules 2 and 4-9. Before Paper 1, the author confirms or changes: (a) whether the grid plan (B11) or the drawn plan is primary, and the reading of drawing 03 (no A4 column, the notch, the six secondary beams); (b) the footing rule (fak without correction, 0.6 m pads, 20 kN/m³, 1.35, 0.15 % minimum, and the GB 50007 clause numbers); (c) the column stirrup length (full height, or @100 in the confined zones only, with what spacing elsewhere); (d) the 2C14 continuous top bars (GB 50011 cl. 6.3.4) and the l_n / 3 top bar length; (e) one factor for HPB300 stirrups, or the HRB400 factor for both. None of these changes the frame analysis; they change only the quantities.
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
