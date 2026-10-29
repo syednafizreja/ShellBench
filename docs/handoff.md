@@ -2,6 +2,16 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 29 Oct 2026, Claude in the app (Day 12 part 1: quantities)
+
+**Done:** quantity take-off of the whole anchor building (src/shellbench/carbon.py), reading rules committed first (f38e731). New results/anchor_quantities.csv, results/anchor_footings.csv, figures/anchor_quantities.png, data/carbon_factors_template.csv. The carbon step is wired in but writes nothing until data/carbon_factors.csv exists. The pre-run commit f38e731 put the rules in twice by mistake (also at the top of anchor_notes.md); the next commit removed the top copy. The text of the rules did not change.
+
+**Decisions by the author today:** none yet.
+
+**For both Claudes:** /sync should expect 125 passed and two new results files (anchor_quantities.csv, anchor_footings.csv). When the author adds data/carbon_factors.csv, run `python -m shellbench.anchor_frame`: it then writes results/anchor_carbon.csv and figures/anchor_carbon.png. Never write a factor value.
+
+**Open (author):** carbon factors (GATE for the rest of Day 12); D28 (take-off assumptions); the footing hand check; plus everything open on 28 Oct.
+
 ## 28 Oct 2026, Claude Code in VS Code (ShellForm data hand-over)
 
 **Done:** on the author's request, added "ShellForm data hand-over" to docs/schedule.md: data format frozen with a 10-row sample on 4 Nov (first half of the data card moves forward from Day 20); checked pre-release files on 5, 7 and 8 Nov; ShellForm reports only on the 11 Nov DOI version, with its code frozen before it (the surrogate protocol). Closed my duplicate #65 (superseded by #64). No code or results changed.
