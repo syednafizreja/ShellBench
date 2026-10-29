@@ -595,6 +595,43 @@ Total steel is 17.9 kg/m² with the thesis steel and 18.6 kg/m² with the code s
 - The frame beam bars are lower with the code steel (1.47 against 2.02 kg/m²), because rule 6 gives levels 2 and 3 the floor-1 thesis steel, while the model designs each level for its own forces.
 - In every footing the minimum steel (0.15 % [?]) governs, not bending.
 
+### Carbon results (29 Oct 2026, GB/T 51366 set only)
+
+**Where the factors came from.** The author gave Claude permission to fill in the factors. Claude read them from GB/T 51366-2019 Table D.0.1. The official copy on mohurd.gov.cn did not resolve, so the copy read is a third-party one. The author confirms the values in an official copy.
+
+| Material | Factor | Source |
+|---|---|---|
+| C30 | 295 kgCO₂e/m³ | Table D.0.1 |
+| C40 | 340 kgCO₂e/m³ | The table has no C40 row. 340 is the mean of its C30 (295) and C50 (385) rows, a linear interpolation [J]. |
+| HRB400 | 2 340 kgCO₂e/t | Row 热轧碳钢钢筋 (hot-rolled carbon steel bar) |
+| HPB300 | 2 340 kgCO₂e/t | The same row: the table has no separate HPB300 row (D28 (e)) |
+
+The printed page of Table D.0.1 was not read [?].
+
+The ICE set is not in the file. The only legal copy of ICE v3.0 comes through Circular Ecology's download form, which the author fills in.
+
+**A1-A3 per m² of floor area** (`results/anchor_carbon.csv`):
+
+| Plan | Thesis steel | Code steel |
+|---|---|---|
+| Grid | 128.2 kgCO₂e/m² | 129.8 kgCO₂e/m² |
+| Drawn | 133.0 kgCO₂e/m² | 134.7 kgCO₂e/m² |
+
+Check by hand, grid plan with the thesis steel: 0.254 m³/m² × 340 + 17.9 kg/m² × 2.34 = 86.4 + 41.9 = 128.3 kgCO₂e/m², against 128.2 from the code (the inputs are rounded).
+
+**By element** (grid plan, thesis steel):
+
+| Element | kgCO₂e/m² | Share |
+|---|---|---|
+| Slabs | 53.55 | 42 % |
+| Columns | 27.90 | |
+| Longitudinal beams | 15.36 | |
+| Frame beams | 14.01 | |
+| Footings | 13.62 | |
+| Secondary beams | 3.73 | |
+
+So the slabs carry the most carbon, as the playbook expected. Concrete is about two thirds of the total.
+
 ### Footing to check by hand (rule 11)
 
 Grid plan, axis 3, line B. The axis-2 frame gives D + L = 1 588.00 + 429.66 = 2 017.66 kN at the base of column B1. The tributary areas are 6.6 × 6.9 m² (axis 3) against 7.2 × 6.9 m² (the 2D frame), so N_k = 2 017.66 × 6.6 / 7.2 = 1 849.52 kN. With d = 0.5 + 0.6 = 1.1 m, B = √(1 849.52 / (220 − 20 × 1.1)) = 3.056 m, rounded up to 3.1 m. p_j = 1.35 × 1 849.52 / 3.1² = 259.82 kPa; M = (3.1 − 0.6)² × (2 × 3.1 + 0.6) × 259.82 / 24 = 460.1 kN·m; A_s = 460.1 × 10⁶ / (0.9 × 360 × 550) = 2 581.9 mm², less than the minimum 0.0015 × 3 100 × 600 = 2 790 mm², which governs.

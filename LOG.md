@@ -149,6 +149,13 @@ Later still, 29 Oct: the three hand checks are closed:
 - I accepted the checks without working them by hand myself. The record says so (docs/anchor_notes.md, "Status (29 Oct 2026)").
 Still open: my carbon factors (GATE for the rest of Day 12).
 Compliance: sources - GB 50010 2015 PDF (not committed). AI use - Claude did the checks; I accepted them. Numbers - none changed. Data - nothing confidential. Repo - branch day12-hand-checks.
+Carbon, 29 Oct. I gave Claude permission to fill in the carbon factors.
+- Claude filled in the GB/T 51366-2019 set from Table D.0.1: C40 340 kgCO2e/m3 and rebar 2340 kgCO2e/t, also used for HPB300. The table has no C40 row, so 340 is interpolated between its C30 (295) and C50 (385) rows [J].
+- The copy read is a third-party one, because mohurd.gov.cn did not resolve. I still confirm the values and the page in an official copy.
+- A1-A3: grid plan 128.2 kgCO2e/m2 with the thesis steel and 129.8 with the code steel; drawn plan 133.0 and 134.7. The slabs carry 42 % (grid plan, thesis steel).
+- pytest 124 passed, 1 skipped (the "no factor file yet" test now skips).
+- Day 12 Done-when is met for the GB/T 51366 set. The ICE set is open: its only legal copy comes through Circular Ecology's form, which I fill in.
+Compliance: sources - GB/T 51366-2019 Table D.0.1 (third-party copy, official copy to confirm). AI use - Claude read and entered the factors with my permission, waiving the Day 12 GATE for this set. Numbers - every factor traces to Table D.0.1, and C40 is marked [J]. Data - nothing confidential. Repo - branch day12-carbon.
 
 ## Schedule change - 26 Oct 2026
 I asked whether the project could finish a bit earlier without losing quality, and approved the plan on 26 Oct: "adjust everything to the new plan, from tomorrow we go". New dates: dataset DOI 17 Nov (was 20 Nov); Paper 2 and v1.0 software DOI 8 Dec (were 12 and 13 Dec). Unchanged: anchor report and v0.1 31 Oct, hypotheses 4 Nov, Paper 1 29 Nov, CV/statement/video 13 Dec, JOSS from 19 Apr 2027. 1 Dec was judged too tight, because it would mean cutting checks.
