@@ -2,6 +2,16 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 29 Oct 2026, Claude Code in VS Code (repo public, Zenodo synced)
+
+**Decision by the author:** the repo is public, and the Zenodo-GitHub sync is on. This replaces the "private until release" note below.
+
+**For both Claudes:** every GitHub release now mints a Zenodo DOI from `.zenodo.json`. The v0.1 release (Day 13, 31 Oct) is the first; publish it only when the anchor report is final.
+
+**Checked on going public:** thesis_source/ is not tracked; no PDFs are tracked; no secrets found; main has no Claude attribution; the only contributor is the author. Claude-authored commits remain only in the closed PRs #52 and #53 (refs/pull), which only GitHub Support can remove.
+
+**Open (author):** close PR #51 and delete its `claude/` branch (the permission system blocks Claude); optionally, ask GitHub Support to purge the PR refs of #52 and #53.
+
 ## 29 Oct 2026, Claude Code in VS Code (ORCID and Zenodo metadata)
 
 **Done:** added the author's ORCID iD (0009-0002-7162-7890) to CITATION.cff. New .zenodo.json: software, MIT, creator with ORCID. Zenodo reads it when a GitHub release is published. No code or results changed.
