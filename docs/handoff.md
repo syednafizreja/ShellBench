@@ -1,4 +1,4 @@
-﻿# Handoff between Claude in the app and Claude Code in VS Code
+# Handoff between Claude in the app and Claude Code in VS Code
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
