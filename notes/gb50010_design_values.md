@@ -62,6 +62,12 @@ Checked on 27 Oct 2026 by Claude Code against the Chinese GB 50010-2010 (2015 ed
 - cl. 4.1.5, p. 20: G_c is 40 % of E_c and ν_c = 0.2. This holds for 2015. The commentary (p. 287) says E_c, G_c and ν_c are unchanged from the earlier code.
 - Formula 6.2.7-1, p. 38: same form, so ξ_b = 0.518 holds.
 
+Added 29 Oct 2026 (PDF page numbers):
+- Table 4.1.4-1, PDF p. 35: f_c = 19.1 N/mm² for C40. This holds for 2015.
+- Table 4.2.3-1, PDF p. 39: f_y = f'_y = 360 N/mm² for HRB400 (270 for HPB300). This holds for 2015.
+- Table 11.3.6-1, PDF p. 184: grades three and four, support, "0.25 和 55 f_t/f_y 中的较大值". This holds for 2015.
+- Table 4.1.4-2, PDF p. 35: the f_t row is missing from the OCR text layer, so f_t = 1.71 is not re-checked [?].
+
 The other rows above were not re-checked against the 2015 copy [?].
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.

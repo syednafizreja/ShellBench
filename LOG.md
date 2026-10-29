@@ -142,6 +142,13 @@ Carried forward: my carbon factors (C40, HRB400, HPB300; both sets) to finish Da
 Compliance: sources - thesis Table 3.1, s9.2, s9.3; drawings 01 and 03 and the slab drawings; GB 50010 Table 11.4.12-1; GB 50007 and GB 50011 clause numbers marked [?] for me to confirm. AI use - Claude wrote carbon.py, its tests, the reading rules, the template and the draft notes; I review them before the anchor report cites them. Numbers - rules fixed before the run; no carbon factor written by Claude. Data - nothing confidential; thesis_source/ not tracked. Repo - branch day12-quantities.
 Later, 29 Oct: I accepted D26 and D27 and decided D28: grid plan primary, footing rule as written, column stirrups full height (no drawing gives the spacing outside the confined zones, so an upper bound), 2C14 top bars at l_n / 3 kept, HPB300 its own factor (HRB400 value where a source has none). Recorded in docs/anchor_notes.md, "Author decisions (29 Oct 2026)". No result changes. Still open: my carbon factors (GATE); the three hand checks (Day 11 column B1 and beam AB, Day 12 footing), which wait for me to confirm f_c and the beam minimum in my copy of GB 50010.
 Compliance: sources - none new. AI use - Claude recorded my decisions. Numbers - none changed. Data - nothing confidential. Repo - branch day12-author-decisions.
+Later still, 29 Oct: the three hand checks are closed:
+- Both Claudes recomputed the arithmetic, and it matches: column B1 μ = 0.320; beam level-1 AB left A_s = 1288.6 mm²; footing axis 3 / line B, B = 3.1 m, 214.5 ≤ 220 kPa.
+- Claude Code read f_c = 19.1, f_y = 360 and the 0.261 % beam minimum (Table 11.3.6-1) in the 2015 Chinese GB 50010 PDF (PDF pp. 35, 39, 184).
+- f_t = 1.71 rests on the 2010 translation only [?].
+- I accepted the checks without working them by hand myself. The record says so (docs/anchor_notes.md, "Status (29 Oct 2026)").
+Still open: my carbon factors (GATE for the rest of Day 12).
+Compliance: sources - GB 50010 2015 PDF (not committed). AI use - Claude did the checks; I accepted them. Numbers - none changed. Data - nothing confidential. Repo - branch day12-hand-checks.
 
 ## Schedule change - 26 Oct 2026
 I asked whether the project could finish a bit earlier without losing quality, and approved the plan on 26 Oct: "adjust everything to the new plan, from tomorrow we go". New dates: dataset DOI 17 Nov (was 20 Nov); Paper 2 and v1.0 software DOI 8 Dec (were 12 and 13 Dec). Unchanged: anchor report and v0.1 31 Oct, hypotheses 4 Nov, Paper 1 29 Nov, CV/statement/video 13 Dec, JOSS from 19 Apr 2027. 1 Dec was judged too tight, because it would mean cutting checks.

@@ -525,6 +525,15 @@ Both rows fail only on the bars, and both are rows already flagged D10. The fram
 1. Column B1 axial ratio: N = 1.2 × 1787.98 + 1.3 × 43.44 = 2202.04 kN (G_E and E_left from the model, `results/anchor_design_columns.csv`); μ = 2202.04 × 10³ / (19.1 × 600 × 600) = 0.320 ≤ 0.85.
 2. Beam, level 1 AB left face (top steel): M = 236.37 kN·m; α_s = 236.37 × 10⁶ / (1.0 × 19.1 × 300 × 550²) = 0.1364; ξ = 1 − √(1 − 2 × 0.1364) = 0.1472; A_s = 19.1 × 300 × 0.1472 × 550 / 360 = 1288.6 mm²; minimum 0.261 % × 300 × 600 = 470 mm².
 
+**Status (29 Oct 2026).** Who did what:
+- **Arithmetic:** both Claudes recomputed both checks separately, and every number above matches.
+- **Code values:** Claude Code read three of them in the Chinese GB 50010-2010 (2015 edition) PDF, through its OCR text layer:
+  - f_c = 19.1 N/mm² for C40: Table 4.1.4-1, PDF p. 35.
+  - f_y = 360 N/mm² for HRB400: Table 4.2.3-1, PDF p. 39.
+  - The beam minimum at the support, grade III: "0.25 和 55 f_t/f_y 中的较大值", Table 11.3.6-1, PDF p. 184.
+- **f_t = 1.71 N/mm²:** its row in Table 4.1.4-2 is missing from the OCR layer of the 2015 PDF, so this value rests on the 2010 English translation only (notes/gb50010_design_values.md) [?].
+- **The author:** accepted these checks on 29 Oct 2026 without opening the pages again.
+
 ### Independent cross-check (Claude Code in VS Code, 28 Oct 2026)
 
 Claude Code, working from the Playbook and without knowing that this branch existed, wrote a second implementation of Day 11 (its own reading rules, committed before its own run, and its own code). It differed in one choice: it designed at the column centre-lines, and read the face moments only as a diagnostic. It was not merged, because this one came first. Its results agree with `results/anchor_design_*.csv`:
@@ -589,6 +598,11 @@ Total steel is 17.9 kg/m² with the thesis steel and 18.6 kg/m² with the code s
 ### Footing to check by hand (rule 11)
 
 Grid plan, axis 3, line B. The axis-2 frame gives D + L = 1 588.00 + 429.66 = 2 017.66 kN at the base of column B1. The tributary areas are 6.6 × 6.9 m² (axis 3) against 7.2 × 6.9 m² (the 2D frame), so N_k = 2 017.66 × 6.6 / 7.2 = 1 849.52 kN. With d = 0.5 + 0.6 = 1.1 m, B = √(1 849.52 / (220 − 20 × 1.1)) = 3.056 m, rounded up to 3.1 m. p_j = 1.35 × 1 849.52 / 3.1² = 259.82 kPa; M = (3.1 − 0.6)² × (2 × 3.1 + 0.6) × 259.82 / 24 = 460.1 kN·m; A_s = 460.1 × 10⁶ / (0.9 × 360 × 550) = 2 581.9 mm², less than the minimum 0.0015 × 3 100 × 600 = 2 790 mm², which governs.
+
+**Status (29 Oct 2026).**
+- **Arithmetic:** both Claudes recomputed this check separately, and every number matches. The bearing pressure is 1 849.52 / 3.1² + 20 × 1.1 = 214.5 kPa ≤ 220 kPa.
+- **Inputs:** they follow rule 8, which the author accepted as D28 (b). The GB 50007 clause numbers are still marked [?].
+- **The author:** accepted the check on 29 Oct 2026 without working it by hand.
 
 ### Proposed decision (for the author)
 
