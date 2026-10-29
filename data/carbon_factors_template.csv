@@ -1,0 +1,11 @@
+set [text],material [text],value,unit [text],source [text],page [text]
+GBT51366,C30,,,,
+GBT51366,C35,,,,
+GBT51366,C40,,,,
+GBT51366,HRB400,,,,
+GBT51366,HPB300,,,,
+ICE,C30,,,,
+ICE,C35,,,,
+ICE,C40,,,,
+ICE,HRB400,,,,
+ICE,HPB300,,,,
