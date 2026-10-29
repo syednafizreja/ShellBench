@@ -26,5 +26,8 @@ Output written by the code in [../src/shellbench/](../src/shellbench/). Do not e
 | anchor_design_check.csv | same | The 18 rows of the thesis s9.2 beam table: printed moments and steel next to the model's requirement; flag (a) on the printed A_s,prov and the printed bars; check (b) with the thesis's own γRE × M; sensitivity flags. |
 | anchor_design_columns.csv | same | Every column: largest seismic and gravity axial force, axial compression ratio against 0.85 (Table 11.4.16), and the 4C22 steel ratio against the 0.75 % / 0.20 % minimum (Table 11.4.12-1). |
 | anchor_design_column_bars.csv | same | The column bar sets of Th s9.3 and drawing 01 against the column minimum steel. |
+| anchor_quantities.csv | same (calls `shellbench.carbon.main`) | Quantity take-off of the whole building (Day 12): concrete [m3] and steel [kg] by element (slabs, frame, longitudinal and secondary beams, columns, footings), for the grid plan (B11) and the drawn plan, with the thesis or the code beam and column steel; also per m² of floor area. Rules in the Day 12 section of [../docs/anchor_notes.md](../docs/anchor_notes.md). |
+| anchor_footings.csv | same | One pad footing per column and plan: N_k (D + L), side B, thickness, bottom steel each way, concrete and steel (rule 8, proposed D28). |
+| anchor_carbon.csv | same, only once `data/carbon_factors.csv` exists | A1-A3 carbon by factor set, plan, steel source and element, and per m² of floor area. Not written yet: the factors are the author's. |
 
 Units are in each column header. `[mixed]` columns hold kN*m for moments and kN for axial forces; the `unit [text]` column says which.

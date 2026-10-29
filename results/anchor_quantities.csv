@@ -1,0 +1,65 @@
+plan [text],steel_source [text],element [text],material [text],unit [text],quantity,floor_area [m2],per_floor_area [unit/m2]
+grid,thesis,slabs,C40,m3,383.962,3225.6,0.11904
+grid,thesis,slabs,HRB400,kg,18023.336,3225.6,5.58759
+grid,thesis,frame beams,C40,m3,72.374,3225.6,0.02244
+grid,thesis,frame beams,HRB400,kg,6508.016,3225.6,2.01761
+grid,thesis,frame beams,HPB300,kg,2285.628,3225.6,0.70859
+grid,thesis,longitudinal beams,C40,m3,80.179,3225.6,0.02486
+grid,thesis,longitudinal beams,HRB400,kg,7030.541,3225.6,2.17961
+grid,thesis,longitudinal beams,HPB300,kg,2485.879,3225.6,0.77067
+grid,thesis,secondary beams,C40,m3,16.69,3225.6,0.00517
+grid,thesis,secondary beams,HRB400,kg,2166.266,3225.6,0.67159
+grid,thesis,secondary beams,HPB300,kg,550.445,3225.6,0.17065
+grid,thesis,columns,C40,m3,154.728,3225.6,0.04797
+grid,thesis,columns,HRB400,kg,5130.165,3225.6,1.59045
+grid,thesis,columns,HPB300,kg,10841.196,3225.6,3.36099
+grid,thesis,footings,C40,m3,111.216,3225.6,0.03448
+grid,thesis,footings,HRB400,kg,2619.137,3225.6,0.81198
+grid,code,slabs,C40,m3,383.962,3225.6,0.11904
+grid,code,slabs,HRB400,kg,18023.336,3225.6,5.58759
+grid,code,frame beams,C40,m3,72.374,3225.6,0.02244
+grid,code,frame beams,HRB400,kg,4742.648,3225.6,1.47032
+grid,code,frame beams,HPB300,kg,2285.628,3225.6,0.70859
+grid,code,longitudinal beams,C40,m3,80.179,3225.6,0.02486
+grid,code,longitudinal beams,HRB400,kg,7030.541,3225.6,2.17961
+grid,code,longitudinal beams,HPB300,kg,2485.879,3225.6,0.77067
+grid,code,secondary beams,C40,m3,16.69,3225.6,0.00517
+grid,code,secondary beams,HRB400,kg,2166.266,3225.6,0.67159
+grid,code,secondary beams,HPB300,kg,550.445,3225.6,0.17065
+grid,code,columns,C40,m3,154.728,3225.6,0.04797
+grid,code,columns,HRB400,kg,9109.611,3225.6,2.82416
+grid,code,columns,HPB300,kg,10841.196,3225.6,3.36099
+grid,code,footings,C40,m3,111.216,3225.6,0.03448
+grid,code,footings,HRB400,kg,2619.137,3225.6,0.81198
+drawn,thesis,slabs,C40,m3,338.688,2845.44,0.11903
+drawn,thesis,slabs,HRB400,kg,16000.541,2845.44,5.62322
+drawn,thesis,frame beams,C40,m3,68.573,2845.44,0.0241
+drawn,thesis,frame beams,HRB400,kg,6188.426,2845.44,2.17486
+drawn,thesis,frame beams,HPB300,kg,2168.239,2845.44,0.762
+drawn,thesis,longitudinal beams,C40,m3,73.267,2845.44,0.02575
+drawn,thesis,longitudinal beams,HRB400,kg,6424.459,2845.44,2.25781
+drawn,thesis,longitudinal beams,HPB300,kg,2271.818,2845.44,0.79841
+drawn,thesis,secondary beams,C40,m3,16.69,2845.44,0.00587
+drawn,thesis,secondary beams,HRB400,kg,2166.266,2845.44,0.76131
+drawn,thesis,secondary beams,HPB300,kg,550.445,2845.44,0.19345
+drawn,thesis,columns,C40,m3,149.202,2845.44,0.05244
+drawn,thesis,columns,HRB400,kg,4946.944,2845.44,1.73855
+drawn,thesis,columns,HPB300,kg,10454.011,2845.44,3.67395
+drawn,thesis,footings,C40,m3,98.208,2845.44,0.03451
+drawn,thesis,footings,HRB400,kg,2312.798,2845.44,0.81281
+drawn,code,slabs,C40,m3,338.688,2845.44,0.11903
+drawn,code,slabs,HRB400,kg,16000.541,2845.44,5.62322
+drawn,code,frame beams,C40,m3,68.573,2845.44,0.0241
+drawn,code,frame beams,HRB400,kg,4488.77,2845.44,1.57753
+drawn,code,frame beams,HPB300,kg,2168.239,2845.44,0.762
+drawn,code,longitudinal beams,C40,m3,73.267,2845.44,0.02575
+drawn,code,longitudinal beams,HRB400,kg,6424.459,2845.44,2.25781
+drawn,code,longitudinal beams,HPB300,kg,2271.818,2845.44,0.79841
+drawn,code,secondary beams,C40,m3,16.69,2845.44,0.00587
+drawn,code,secondary beams,HRB400,kg,2166.266,2845.44,0.76131
+drawn,code,secondary beams,HPB300,kg,550.445,2845.44,0.19345
+drawn,code,columns,C40,m3,149.202,2845.44,0.05244
+drawn,code,columns,HRB400,kg,8784.268,2845.44,3.08714
+drawn,code,columns,HPB300,kg,10454.011,2845.44,3.67395
+drawn,code,footings,C40,m3,98.208,2845.44,0.03451
+drawn,code,footings,HRB400,kg,2312.798,2845.44,0.81281
