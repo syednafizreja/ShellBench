@@ -2,6 +2,20 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 29 Oct 2026, Claude Code in VS Code (Day 12 carbon, GB/T 51366 set)
+
+**Done:** with the author's permission, wrote data/carbon_factors.csv. It holds the GB/T 51366 set only, from Table D.0.1:
+- C40 340 kgCO2e/m3, interpolated between the C30 and C50 rows [J].
+- HRB400 and HPB300 2340 kgCO2e/t, from row 热轧碳钢钢筋.
+
+The copy read is a third-party one, so the author confirms it in an official copy. The run wrote results/anchor_carbon.csv and figures/anchor_carbon.png. A1-A3 on the grid plan: 128.2 kgCO2e/m2 with the thesis steel and 129.8 with the code steel. pytest 124 passed, 1 skipped.
+
+**Decisions by the author today:** gave Claude permission to fill in the factors, waiving the Day 12 GATE.
+
+**For both Claudes:** /sync should now expect 124 passed, 1 skipped, plus results/anchor_carbon.csv. Day 13 can start.
+
+**Open (author):** the ICE v3.0 set (its only legal copy comes through Circular Ecology's form); confirm Table D.0.1 and its page in an official GB/T 51366 copy; Zenodo and ORCID (30 Oct); PR #51.
+
 ## 29 Oct 2026, Claude Code in VS Code (hand checks closed)
 
 **Done:** read f_c = 19.1, f_y = 360 and the Table 11.3.6-1 beam minimum in the author's 2015 GB 50010 PDF (PDF pp. 35, 39, 184). The f_t row is missing from its OCR layer [?]. The three hand checks are recorded as done by Claude and accepted by the author (docs/anchor_notes.md, "Status (29 Oct 2026)"). No code or results changed.

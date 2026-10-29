@@ -4,7 +4,9 @@ Input data for the models. Every file here must name its source: a thesis sectio
 
 The thesis results used for validation live in [../validation/thesis_values/](../validation/thesis_values/).
 
-## carbon_factors.csv (the author's, not yet here)
+## carbon_factors.csv
+
+On 29 Oct 2026, with the author's permission, Claude filled in the GB/T 51366 set from Table D.0.1. Each row's source column says how its value was read; the author confirms them in an official copy. The ICE set is not in the file yet.
 
 The carbon step of `shellbench.carbon` (Day 12) reads `data/carbon_factors.csv`. The author copies every value from the primary source; Claude writes none (charter, playbook Day 12). Start from [carbon_factors_template.csv](carbon_factors_template.csv): fill each empty cell, delete any row you have no value for, and save it as `carbon_factors.csv`.
 
