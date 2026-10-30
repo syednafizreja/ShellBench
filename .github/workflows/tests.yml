@@ -1,7 +1,9 @@
 # Run the pytest suite on every push and pull request.
 # The tests need pytest, OpenSeesPy (anchor frame, from Day 5) and the package
 # itself, so this installs those rather than the full conda environment
-# (gmsh, CalculiX). Versions match environment.yml.
+# (gmsh). CalculiX comes from Ubuntu's package (2.21; environment.yml pins
+# 2.23 from conda-forge) so the Day 22 smoke test runs here too.
+# Versions match environment.yml otherwise.
 
 name: Tests
 
@@ -19,6 +21,9 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+
+      - name: Install CalculiX
+        run: sudo apt-get update && sudo apt-get install -y calculix-ccx
 
       - name: Install package and pytest
         run: |
