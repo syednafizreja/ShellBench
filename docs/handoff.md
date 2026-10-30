@@ -2,6 +2,12 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 30 Oct 2026, Claude Code in VS Code (repo refresh)
+
+- Refreshed the repo: README status table, badge, roadmap statuses, repository map and DOI sentence; notes/README.md and data/README.md brought up to date (ICE not used, D29).
+- docs/preregistration.md: "4 Nov" changed to "3 Nov" to match docs/schedule.md and the 28 Oct LOG entry.
+- Open: GitHub issue titles #2-#8 still carry the older dates; the README uses the 28 Oct revised dates. Author to decide whether to rename them.
+
 ## 30 Oct 2026, Claude Code in VS Code (Day 22 sync)
 
 **Done:** pulled main (PR #77 content present). pytest 126 passed, 1 skipped (as expected without `ccx` on PATH). anchor_frame ran; results/ byte-identical (only figures/ differed, restored). CalculiX in env `research`: Version 2.23 (CI uses 2.21). `python -m shellbench.calculix` smoke test: tip 1.333400e-02 m, closed form 1.333333e-02 m, difference 0.005 %. Added the `/today` command (.claude/commands/today.md): one run does the whole day.
