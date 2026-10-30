@@ -52,7 +52,13 @@ The thinner shells in these papers use textile reinforcement or ultra-high stren
 
 ### 4.2 Shell reinforcement
 
-Lightly reinforced: one layer of mesh at mid-thickness, to control shrinkage cracks, to carry the bending from pattern load and to hold the shell together if it cracks [J]. The minimum ratio and the cover come from GB 50010 (minimum steel cl. 8.5.1 [?]; cover Table 8.2.1 [?]). An unreinforced option exists in GB 50010 Appendix D (plain concrete members) [?], but an unreinforced shell has no ductility and no tie-back if a support moves, which a seismic frame cannot accept without a test programme [J]. I propose to drop it.
+Lightly reinforced: one layer of mesh at mid-thickness, to control shrinkage cracks, to carry the bending from pattern load and to hold the shell together if it cracks [J]. Checked on 30 Oct 2026 in the author's English translation of GB 50010-2010 (page numbers of the translation, ±1):
+
+- **Cover.** Table 8.2.1 (cl. 8.2.1, p. 95-96) gives a separate row for "slab, wall and shell": 15 mm in environment category I and 20 mm in II-a. A dry indoor floor is category I [J], so 15 mm, with at least one bar diameter (cl. 8.2.1 item 1). One mesh at mid-thickness therefore needs t ≥ 2 × 15 mm + the mesh bars, which a 50 mm shell meets [J].
+- **Minimum steel.** Table 8.5.1 (cl. 8.5.1, p. 101-102), note 2: for the tension steel of a flexural slab with 400 MPa bars, the larger of 0.15 % and 45 f_t / f_y. For C40 and HRB400 that is 45 × 1.71 / 360 = 0.214 %. The shell is mostly in compression, so applying the slab rule to it is my reading, not a clause written for shells [J]; Day 25 checks whether bending anywhere needs more.
+- **Plain concrete.** Appendix D, cl. D.1.1: "Plain concrete flexural members are only allowed to be used when horizontally located on the base and not carrying any live loads." A floor vault carries live load, so an unreinforced shell is outside GB 50010. This settles decision 5 below on code grounds as well as robustness.
+
+Textile reinforcement (the author's alternative) is not covered by GB 50010. It stays out of the family unless a design basis outside the code is chosen and stated [J].
 
 ### 4.3 Levelling: fill or raised floor
 
@@ -72,7 +78,7 @@ Topping thickness t_top is a variable of the family: 0, 40, 50 or 60 mm (playboo
 
 Steel ties, HRB400 bars anchored into the beam at the springing [J]. Hawkins (2018) and Hawkins et al. (2020) prestress threaded rods to control the shell's bending (Hawkins 2018 §2.1; Hawkins 2020 Table 3, pre-strain 0.94 to 1.10 mm/m, AAM p. 15). Oval et al. (2023) use "M20 S520 stainless steel tie-bars with mid-span turnbuckles" (§4.1); their Table 6 counts 4.2 kg of ties per m² (AAM p. 19). I start without prestress, because unstressed bars need no special site work, and let Day 25 show whether the shell needs it [J].
 
-For a parabolic vault under a uniform load w per m² (all of the shell, fill, topping, finishes and live load above it), the thrust per metre of vault is H = w L² / (8 f), and the tie area per metre is A_t = H / f_y, with f_y = 360 N/mm² for HRB400 (GB 50010 Table 4.2.3-1 [?]; spec X5). This is statics for a three-hinged parabolic arch, not a design rule from a paper; Day 25 replaces it with the shell analysis.
+For a parabolic vault under a uniform load w per m² (all of the shell, fill, topping, finishes and live load above it), the thrust per metre of vault is H = w L² / (8 f), and the tie area per metre is A_t = H / f_y, with f_y = 360 N/mm² for HRB400 (GB 50010 Table 4.2.3-1, p. 21-22 of the translation, checked 30 Oct 2026; spec X5). This is statics for a three-hinged parabolic arch, not a design rule from a paper; Day 25 replaces it with the shell analysis.
 
 ## 5. How each component enters the whole-building model
 
@@ -116,15 +122,24 @@ Two ways to give the shell a fair chance, both within the charter [J]: a low ris
 
 The frame beams are 600 mm deep (spec M1). If the vault springs 100 mm above the beam soffit and its crown sits at the beam top, the rise available inside the beam depth is about 0.6 − 0.1 − t ≈ 0.44 m for t = 60 mm, or f / L ≈ 1/15 at 6.6 m [J]. A flatter vault needs no extra height. A steeper one (1/8 to 1/12) rises above the beam top by f − 0.44 m, and the storey height grows by that amount plus any topping and raised-floor depth above the anchor's 120 mm slab. A taller storey makes the columns longer and adds façade area (outside the boundary, but a reviewer will ask) [J]. In the model the extra height changes the column length, the period and the wind load; the generator takes it as Δh = max(0, f + t − 0.5 m) + t_top + h_raised − 0.12 m [J].
 
-## 8. Decisions for the author
+## 8. Decisions by the author (30 Oct 2026)
 
-1. Approve the concept: a lightly reinforced barrel vault between beams, with ties at every vault, keeping the frame and longitudinal beams.
-2. Layout A (span along the building, 6.0 / 6.6 m) or layout B (span across, 7.2 / 6.6 m).
-3. The levelling options to carry into the family: foamed fill, recycled aggregate fill, raised floor.
-4. The rise-to-span range for Day 23 (proposed 1/8 to 1/20).
-5. Drop the unreinforced shell (section 4.2).
-6. Confirm the [?] code clauses: GB 50010 cl. 8.5.1 and Table 8.2.1 (shell mesh and cover), GB 50010 Appendix D, GB 50010 Table 4.2.3-1, and the topping rule in GB 50011 / JGJ 3.
-7. Note the red-team finding in section 6 for Paper 1's framing.
+1. **Concept approved**, and PR #77 to be merged.
+2. **Layout A**: vaults span along the building between the transverse frame beams, 6.0 / 6.6 m. The author's reason: shorter spans keep the thrust and the required rise smaller, reduce the fill volume, and match the drawn bay widths more cleanly than the 7.2 m direction.
+3. **All three levelling options stay in the family**: foamed-concrete fill, recycled-aggregate fill, and a raised floor with no structural fill.
+4. **Rise-to-span 1/8 to 1/20**, and the low-rise end (about 1/15 to 1/20) must be included, so that H1 and H2 are not failed by the weight of the fill alone.
+5. **Unreinforced shell dropped.** Light reinforcement is required for handling, crack control and robustness. GB 50010 Appendix D cl. D.1.1 also rules it out (section 4.2).
+6. **Code clauses.** The author could not confirm them, so Claude checked the four GB 50010 items in the author's uploaded English translation:
+
+| Item | Status |
+|---|---|
+| GB 50010 Table 4.2.3-1, f_y = 360 N/mm² for HRB400 | ✓ Checked, p. 21-22 |
+| GB 50010 Table 8.2.1, cover for shells | ✓ Checked: 15 mm (category I), 20 mm (II-a), p. 95-96 |
+| GB 50010 cl. 8.5.1, minimum steel | ✓ Checked: Table 8.5.1 note 2, max(0.15 %, 45 f_t / f_y) = 0.214 %, p. 101-102; applied to the shell as a slab [J] |
+| GB 50010 Appendix D, plain concrete | ✓ Checked: cl. D.1.1 forbids plain flexural members that carry live load |
+| GB 50011 / JGJ 3, topping for a rigid diaphragm | Still [?]. Neither code is in the project files. Needed before Day 27 |
+
+7. **Red-team point accepted.** The family must contain the no-fill and raised-floor cases.
 
 ## CalculiX
 
