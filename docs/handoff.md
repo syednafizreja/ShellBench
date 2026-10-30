@@ -2,6 +2,12 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 30 Oct 2026, Claude Code in VS Code (Day 22 sync)
+
+**Done:** pulled main (PR #77 content present). pytest 126 passed, 1 skipped (as expected without `ccx` on PATH). anchor_frame ran; results/ byte-identical (only figures/ differed, restored). CalculiX in env `research`: Version 2.23 (CI uses 2.21). `python -m shellbench.calculix` smoke test: tip 1.333400e-02 m, closed form 1.333333e-02 m, difference 0.005 %. Added the `/today` command (.claude/commands/today.md): one run does the whole day.
+
+**Open (author):** GB 50011 / JGJ 3 topping rule for a rigid diaphragm, still [?], needed before Day 27.
+
 ## 30 Oct 2026, Claude in the app (Day 22: floor concept and CalculiX)
 
 **Done:** docs/floor_concept.md (draft for approval), src/shellbench/calculix.py with a smoke test, CI now installs CalculiX (Ubuntu 2.21). pytest 126 passed, 1 skipped. No results changed.
