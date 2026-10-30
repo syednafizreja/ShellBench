@@ -2,6 +2,16 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 30 Oct 2026, Claude in the app (Day 22: floor concept and CalculiX)
+
+**Done:** docs/floor_concept.md (draft for approval), src/shellbench/calculix.py with a smoke test, CI now installs CalculiX (Ubuntu 2.21). pytest 126 passed, 1 skipped. No results changed.
+
+**Decisions by the author today:** none yet.
+
+**For both Claudes:** /sync should expect 126 passed, 1 skipped on a laptop without `ccx` on PATH, or 127 passed with it. On the laptop, run `C:\Users\ASUS\miniconda3\Scripts\conda.exe run -n research ccx -v` and `python -m shellbench.calculix`, and record the version and the smoke-test difference here. If `ccx` is missing from the env, report it; do not install anything else without the author.
+
+**Open (author):** approve the floor concept and pick layout A or B (by 31 Oct, before Day 23); the levelling options and f/L range; the [?] clauses listed in section 8 of the note.
+
 ## 29 Oct 2026, Claude Code in VS Code (repo public, Zenodo synced)
 
 **Decision by the author:** the repo is public, and the Zenodo-GitHub sync is on. This replaces the "private until release" note below.
