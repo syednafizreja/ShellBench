@@ -2,6 +2,16 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 30 Oct 2026, Claude in the app (Day 22: floor concept and CalculiX)
+
+**Done:** docs/floor_concept.md (draft for approval), src/shellbench/calculix.py with a smoke test, CI now installs CalculiX (Ubuntu 2.21). pytest 126 passed, 1 skipped. No results changed.
+
+**Decisions by the author today (10:22 UTC):** concept approved; layout A; all three levelling options; f/L 1/8 to 1/20 with 1/15-1/20 included; unreinforced shell dropped; no-fill / raised-floor cases must be in the family. GB 50010 clauses checked by Claude in the author's translation (section 4.2 and 8 of the note). PR #77 to be merged.
+
+**For both Claudes:** /sync should expect 126 passed, 1 skipped on a laptop without `ccx` on PATH, or 127 passed with it. On the laptop, run `C:\Users\ASUS\miniconda3\Scripts\conda.exe run -n research ccx -v` and `python -m shellbench.calculix`, and record the version and the smoke-test difference here. If `ccx` is missing from the env, report it; do not install anything else without the author.
+
+**Open (author):** the GB 50011 / JGJ 3 topping rule for a rigid diaphragm is still [?]; needed before Day 27.
+
 ## 29 Oct 2026, Claude Code in VS Code (repo public, Zenodo synced)
 
 **Decision by the author:** the repo is public, and the Zenodo-GitHub sync is on. This replaces the "private until release" note below.
