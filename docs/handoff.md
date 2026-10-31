@@ -2,6 +2,12 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 31 Oct 2026, Claude Code in VS Code (end of day)
+
+**Done:** re-checked main: clean, CI green on #82 and #83. Week issues #2, #3 and #4 have their close comments.
+
+**Open:** PR #84 (Release v0.1.0) is open and left unmerged. It is mergeable with checks passing, but merging it publishes the release and mints a DOI, so it waits for the author's explicit go. Attribution lines on PR and issue bodies and comments are not yet stripped; the automated attempt was blocked by a permission check.
+
 ## 31 Oct 2026, Claude Code in VS Code (Day 15 close)
 
 **Done:** the author said "finish all". Removed test_no_factor_file_in_repo_yet (stale since PR #72), so /sync should now expect 132 passed with `ccx` and no skips. README test line and LOG brought up to date. The LOG.md formatter stash is dropped. Week issues #2, #3 and #4 have their close comments. No results changed. v0.1 not published.
