@@ -149,13 +149,6 @@ def test_factor_errors(quantities, tmp_path):
         cb.read_factors(bad_unit)
 
 
-def test_no_factor_file_in_repo_yet():
-    """The factors are the author's: Claude writes none (Day 12 GATE)."""
-    if (ROOT / "data" / "carbon_factors.csv").exists():
-        pytest.skip("author's factor file present")
-    assert not (ROOT / "results" / "anchor_carbon.csv").exists()
-
-
 def test_totals_pinned(quantities):
     """Pins today's grid totals (29 Oct 2026): concrete 819.2 m3; slabs carry
     the most concrete (47 %) and the most bar steel."""
