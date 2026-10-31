@@ -19,7 +19,7 @@ A thinner floor weighs less. Less weight means smaller seismic forces, which can
 | Anchor frame (OpenSeesPy) | Dead, live and combined gravity load, wind, the GB 50011 base-shear method and a response-spectrum check with a 3D model are in `src/shellbench/`. Every difference above 10 % from the thesis has a written reason ([docs/anchor_notes.md](docs/anchor_notes.md)). |
 | Design checks and quantities | GB 50010 / GB 50011 checks of the beams and columns, a quantity take-off and an A1–A3 carbon step are in the package. |
 | Shell floor | Concept approved (layout A, Day 22; [docs/floor_concept.md](docs/floor_concept.md)). A CalculiX smoke test differs from the closed form by 0.005 %. |
-| Tests | pytest: 126 passed, 1 skipped (30 Oct 2026). |
+| Tests | pytest: 132 passed (31 Oct 2026). |
 | Open | The GB 50011 / JGJ 3 topping rule is still [?] and is needed before Day 27. |
 
 Plan: the build ends 13 Nov, the author checks 14–17 Nov, v1.0 follows on 17 Nov, and Paper 1 is submitted by 22 Nov.
