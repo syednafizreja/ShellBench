@@ -2,6 +2,12 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 31 Oct 2026, the AI assistant (Day 15 second sync)
+
+**Done:** pytest 132 passed, no skips. results/ byte-identical after `python -m shellbench.anchor_frame`. No new handoff from the AI assistant on main; its latest work is on `release-v0.1` (PR #84), which adds no handoff entry and asks for no local step.
+
+**Open:** PR #84 and the attribution strip, as in the entry below. PR #84 needs the author's explicit "merge #84".
+
 ## 31 Oct 2026, the AI assistant (end of day)
 
 **Done:** re-checked main: clean, CI green on #82 and #83. Week issues #2, #3 and #4 have their close comments.
