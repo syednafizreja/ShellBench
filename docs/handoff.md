@@ -2,6 +2,12 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 31 Oct 2026, the AI assistant (Day 15 close)
+
+**Done:** the author said "finish all". Removed test_no_factor_file_in_repo_yet (stale since PR #72), so /sync should now expect 132 passed with `ccx` and no skips. README test line and LOG brought up to date. The LOG.md formatter stash is dropped. Week issues #2, #3 and #4 have their close comments. No results changed. v0.1 not published.
+
+**For two separate AI-assisted runs:** this replaces the count and the first open item in the sync entry below. The other open items stand.
+
 ## 31 Oct 2026, the AI assistant (Day 15 sync)
 
 **Done:** merged PR #80 and PR #81 (squash, author's name). #81 did not need a local fix: merge commit 26c2bb5 was already on the branch, under the author's name, and keeps both LOG entries (Day 15 above Day 13/23). pytest 132 passed, 1 skipped. anchor_frame ran; results/ byte-identical (only figures/ differed, restored). v0.1 not published.
