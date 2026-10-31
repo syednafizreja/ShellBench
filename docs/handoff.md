@@ -2,6 +2,14 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 31 Oct 2026, Claude in the app (Day 13 anchor report; Day 23 form-finding)
+
+**Done:** docs/anchor_report.md (draft for the author's read); src/shellbench/formfind.py + tests/test_formfind.py (6 tests). GitHub issues #3-#8 renamed to the 28 Oct dates (author asked, 30 Oct). No results changed.
+
+**For both Claudes:** /sync should expect 132 passed, 1 skipped without `ccx`, or 133 with it. Release v0.1 is NOT made yet: it needs docs/releases/v0.1.0.md and the version bump in pyproject.toml, merged only after the author has read the report, because the release mints a permanent Zenodo DOI. floor-r1 tag (ShellForm hand-over) can follow once the author has seen Day 23.
+
+**Open (author):** read docs/anchor_report.md and say go for v0.1; send the referee email (project files, day13/referee_email.md); GB 50011 / JGJ 3 topping rule before Day 27; MacNeal-Harder values for Day 24 (GATE).
+
 ## 30 Oct 2026, Claude Code in VS Code (repo refresh)
 
 - Refreshed the repo: README status table, badge, roadmap statuses, repository map and DOI sentence; notes/README.md and data/README.md brought up to date (ICE not used, D29).
