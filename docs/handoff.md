@@ -2,6 +2,14 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 31 Oct 2026, Claude Code in VS Code (Day 15 sync)
+
+**Done:** merged PR #80 and PR #81 (squash, author's name). #81 did not need a local fix: merge commit 26c2bb5 was already on the branch, under the author's name, and keeps both LOG entries (Day 15 above Day 13/23). pytest 132 passed, 1 skipped. anchor_frame ran; results/ byte-identical (only figures/ differed, restored). v0.1 not published.
+
+**Correction to the 31 Oct expected count:** the skip is not `ccx`. `ccx` is present in env `research` and the CalculiX test ran. The skip is `test_no_factor_file_in_repo_yet` (tests/test_carbon.py:152), because data/carbon_factors.csv has been tracked since PR #72. So 133 passed cannot happen while that file exists. Expect 132 passed, 1 skipped with `ccx`. Without it the count should be 131 passed, 2 skipped (worked out from the tests, not run). The same applies to the 30 Oct note "as expected without `ccx` on PATH".
+
+**Open (author):** decide whether to retire the stale carbon test. The formatter edit to LOG.md (blank lines only, plus `and _runs.csv` damaged to `and_runs.csv`) is held in a local git stash, not committed; it can be dropped. Items in the 31 Oct app entry below stand: read the report and say go for v0.1, referee email, GB 50011 / JGJ 3 topping rule, MacNeal-Harder values.
+
 ## 31 Oct 2026, Claude in the app (Day 13 anchor report; Day 23 form-finding)
 
 **Done:** docs/anchor_report.md (draft for the author's read); src/shellbench/formfind.py + tests/test_formfind.py (6 tests). GitHub issues #3-#8 renamed to the 28 Oct dates (author asked, 30 Oct). No results changed.
