@@ -2,6 +2,12 @@
 
 Newest entry first. Each session reads this at the start of a session and adds an entry at the end (see "Sync with cloud the assistant" in CONTRIBUTING.md).
 
+## 31 Oct 2026, laptop session (Day 15 second sync)
+
+**Done:** pytest 132 passed, no skips. results/ byte-identical after `python -m shellbench.anchor_frame`. No new handoff from the cloud session on main; its latest work is on `release-v0.1` (PR #84), which adds no handoff entry and asks for no local step.
+
+**Open:** PR #84 and the attribution strip, as in the entry below. PR #84 needs the author's explicit "merge #84".
+
 ## 31 Oct 2026, laptop session (end of day)
 
 **Done:** re-checked main: clean, CI green on #82 and #83. Week issues #2, #3 and #4 have their close comments.
