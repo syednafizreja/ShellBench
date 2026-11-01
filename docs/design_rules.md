@@ -56,13 +56,13 @@ R15. **Sizes** in steps of 50 mm (playbook). **Bars** from the standard diameter
 
 R16. **Stirrups** φ10@100 four legs in columns over the full height, φ10@200 two legs in beams (drawings 01 and 03; D28 (c)). Confinement rules by grade (GB 50011 cl. 6.3.3, 6.3.7 [?]) replace these when R14 is added.
 
-## 6. Decisions the author needs to make before Day 16
+## 6. Decisions (taken by Claude on 31 Oct 2026 under the author's hand-over; the author may change any)
 
-1. R3: a 120 mm practical minimum for floor slabs, or accept that the generator gives 90 mm for 3.6 m panels.
-2. R5: preliminary column sizing with the thesis habit (five floors, 0.75), which gives 600 × 600, or with the code values (four storeys, 0.85), which gives 500 × 500.
-3. R4: a separate rule for the corridor beam, or accept 300 × 550 for BC.
-4. R11: the drift stopping rule.
-5. R14: add shear and strong-column checks before the family run, or state them as a limitation.
-6. R1, R2, R6, R7, R11: open GB 50011 Tables 6.1.2, 5.1.4-1 (other intensities), 6.3.6 (grades I and II), cl. 6.3.5 and Table 5.5.1, or tell me where a copy can be read.
+1. R3: **120 mm practical minimum** for floor slabs [J]. It reproduces B1, and a 90 mm floor slab would carry less than the thesis building, which would make the shell floor's saving look smaller than it is.
+2. R5: **code values** (number of storeys, μ_lim from R6) [J]. The thesis habit (five floors, 0.75) has no code basis. Day 16 reports the column size the rules give, and drift (R11) decides whether it grows.
+3. R4: **one rule, h = L/12** for all main beams [J]. Day 16 reports BC (550 against the thesis 500) as an explained difference rather than adding a rule written to match one beam.
+4. R11: the drift stopping rule **as written** [J].
+5. R14: **add the shear and strong-column checks** before the family run (Day 20) [J], because at 8-9 degrees they can set the column size and so the carbon.
+6. R1, R2, R6, R7, R11: still [?]. Two public copies of GB 50011 were found on 31 Oct 2026 but could not be read from the cloud. Until they are read, the generator runs 0.10 g only.
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
