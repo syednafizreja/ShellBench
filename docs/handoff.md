@@ -2,6 +2,18 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 1 Nov 2026, the AI assistant (note from ShellForm, data contract section 6)
+
+**What ShellForm needs from ShellBench (author, 1 Nov 2026):**
+
+1. Floor-level code only: floor-r1 (force density), floor-r2 (CalculiX shell wrapper), floor-r3 (sizing, tie, buckling and quantity functions), with their public function signatures kept stable after each tag. ShellForm pins to the tags.
+2. `data/carbon_factors.csv` and the material and code values in `notes/`, read in place, not copied.
+3. `shellbench.seismic.alpha_spectrum()` and the site values from `docs/baseline_spec.md` (B5).
+4. **No columns from the building family dataset.** The 4 Nov format freeze does not need to include anything for ShellForm.
+5. Request: export the force density solver and the CalculiX wrapper as public functions with docstrings, so ShellForm can import them without reaching into private code.
+
+**Added 1 Nov from ShellForm's Day 4:** ShellForm is pinned to `v0.1.0`, where `shellbench.__version__` still says 0.0.1 although `pyproject.toml` says 0.1.0. Please bump it at the next tag. Poisson's ratio exists only as a row in `notes/gb50010_design_values.md`, with no module constant. No ShellBench code or results changed in this entry.
+
 ## 1 Nov 2026, the AI assistant (autocompact recovery)
 
 **Done:** added `.hooks/resume_context.py`, a SessionStart script for the `clear` and `compact` sources. It prints the branch, uncommitted files, last 3 commits and the newest handoff entry, so a one-word "continue" resumes the work. Tested by running it by hand only, not through a real `/clear`. No research files or results changed.
