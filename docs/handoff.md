@@ -8,7 +8,7 @@ Newest entry first. Each the AI assistant reads this at the start of a session a
 
 **Decisions:** the AI assistant cannot run `/clear` or submit "continue" in the VS Code panel; the hooks documentation offers no way to do either. A SendKeys watcher was rejected as fragile [J].
 
-**Open:** the hook is not active. Adding it to `.settings.local.json` (git-ignored) was refused by the permission check on self-modification, so the author must add it. `LOG.md` has an uncommitted formatting change from 11:45 on 1 Nov (blank lines, one underscore dropped in the 23 Oct entry) that is not from this session; it was left uncommitted. The PR #84 item below is closed: `17cf9e3` on main merged it. Other open items in the entries below still stand.
+**Open:** the hook is not active. Adding it to `.settings.local.json` (git-ignored) was refused by the permission check on self-modification, so the author must add it. `LOG.md` had a formatting change from 11:45 on 1 Nov that was not from this session (blank lines, one space lost in the 23 Oct entry). The space is restored and the blank lines are committed. The PR #84 item below is closed: `17cf9e3` on main merged it. Other open items in the entries below still stand.
 
 ## 31 Oct 2026, the AI assistant (Day 15 second sync)
 
