@@ -180,6 +180,21 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 16 - 2 Nov 2026 (generator)
+
+Done: src/shellbench/generator.py sizes a regular RC frame from building inputs, following docs/design_rules.md R3-R16: preliminary sizes, a 2D OpenSeesPy frame, D, L, G_E and base-shear E cases (psi_T 0.7), drift loop, axial ratio, beam steel at the ends and mid-span with the GB 55001/55002 factors, bars and frame quantities, with a log of each sizing pass. tests/test_generator_anchor.py (6 tests); pytest 138 passed. `shellbench.__version__` set to 0.1.0 to match pyproject (ShellForm's request).
+Thesis inputs give: slab 120 mm; beams 300x600 (AB, CD) and 300x550 (BC); columns 500x500, not the thesis 600x600. One pass, no resize: drift max 1/1163 (limit 1/550), axial ratio 0.438 (limit 0.85), T1 0.548 s after psi_T. Why the columns differ: R5 uses 4 storeys and mu 0.85 (decision 2, 31 Oct); the thesis used 5 floors and 0.75. Why BC differs: one rule h = L/12 (decision 3). Columns carry 8C18 at the 0.75 % minimum (R12). Done-when met by docs/anchor_notes.md, "Generator against the thesis".
+Corrected the same day: the first version left out walls, parapet, longitudinal and secondary beams (R8), so sum G at the anchor's sizes was 3 832 kN against 5 879 kN in results/ (35 % low), and it logged T1 0.468 s, drift 1/1412 and axial ratio 0.340. Those are now inputs, with the Th s5.2 slab shares left out so the slab is not counted twice. Sizes did not change. At the anchor's sizes sum G is now 10.1 % low and bare T1 5.2 % low; the residual is itemised in the notes, not tuned.
+Choices [J]: bars by least area, then fewest bars (literal "fewest bars" gave 2C28 for 1000 mm^2, 23 % spare); face moments as |M| - |V| a; bar steel in quantities uses the chosen bars (R15), top + mid-bottom, stirrups left to carbon.py; secondary beam spread on the frame beam.
+Day 24 not done: GATE. validation/benchmarks.csv needs the MacNeal-Harder geometry, loads and reference answers copied by me from the paper with page numbers. No value was taken from memory. floor-r2 slips until then; Day 25 and floor-r3 depend on it.
+Carried forward: to Day 18, PGA and concrete grade as inputs and whole-building quantities; R7 and the R14 shear and strong-column checks before Day 20; GB 50011 tables still [?], so 0.10 g only; `fullGenLapack` warns it is slow, which matters for the batch run. Tomorrow: Day 17 pre-registration (GATE: my approval), Day 25 if the benchmark values arrive.
+Compliance: sources - design_rules.md, baseline_spec.md, anchor_frame.py, Th s5.2, results/ anchor CSVs. AI use - The AI assistant implemented the code and tests and cross-checked the weights against the anchor. Numbers - from the code run of 2 Nov; the residual table is arithmetic from cited values [J]. Data - nothing confidential; thesis_source/ not tracked. Repo - branch day16-generator, PR #88.
+
+## Day 14 - 1 Nov 2026 (review; v0.1.0)
+
+Done: anchor report and design rules reviewed; v0.1.0 released (PR #84), Zenodo DOI minted (author confirmed). No other PR that day.
+Compliance: sources - none new. AI use - none beyond the release steps. Numbers - no new values. Data - nothing confidential. Repo - PR #84.
+
 ## Day 15 - 31 Oct 2026 (worked ahead of 1 Nov; draft for the author)
 
 New docs/design_rules.md: R1-R16, the procedure the generator (Day 16) will follow, each rule tagged Th section, checked clause, [?] or [J]. Three findings: with code values (4 storeys, mu 0.85) the thesis column formula gives 500 x 500, not 600 x 600; no single span ratio gives both the 600 and 500 mm thesis beams; the l/40 slab rule gives 90 mm, not 120 (B1). Six author decisions listed in section 6. GB 50011 Tables 6.1.2 and 6.3.6 (grades I-II) are [?] and block the PGA sweep beyond 0.10 g.
