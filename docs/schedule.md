@@ -107,7 +107,7 @@ This list is the real limit on the plan. A day's delay on any GATE item moves it
 | Carbon factors C30, C35, C40, HRB400 (GB/T 51366 and ICE) in data/carbon_factors.csv | Thu 29 Oct | Day 12 (GATE) |
 | Zenodo-GitHub link and ORCID | Fri 30 Oct | v0.1 DOI |
 | D26, D27 and the Day 11 hand checks | Fri 30 Oct | Anchor report |
-| MacNeal and Harder (1985) reference values copied with page | Sat 31 Oct | Day 24 (GATE) |
+| MacNeal and Harder (1985) reference values copied with page (done 2 Nov, validation/benchmarks.csv) | Sat 31 Oct | Day 24 (GATE) |
 | Approve the floor concept, including the fill material | Sat 31 Oct | Days 22-26 |
 | Approve the design rules | Sun 1 Nov | Day 15 |
 | What ShellForm needs from ShellBench (files and columns) | Mon 2 Nov | Data format frozen 4 Nov |

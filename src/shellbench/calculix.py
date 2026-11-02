@@ -11,9 +11,9 @@ cantilever plate of S8R shell elements under a tip line load, compared with
 the Euler-Bernoulli tip deflection P L^3 / (3 E I). Poisson's ratio is 0 so
 that plate action does not stiffen the strip.
 
-This is not the shell benchmark of Day 24 (MacNeal-Harder, with the
-author's values); it only shows that the solver is installed and that the
-deck, run and read-back chain works.
+This is not the shell benchmark of Day 24 (MacNeal-Harder, in shellfe.py);
+it only shows that the solver is installed and that the deck, run and
+read-back chain works.
 
 Units: N, m, Pa.
 """
