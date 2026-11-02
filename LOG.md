@@ -180,6 +180,18 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - Claude decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 16 - 2 Nov 2026 (generator)
+
+Done: src/shellbench/generator.py sizes a regular RC frame from building inputs, following docs/design_rules.md R3-R16: preliminary sizes, a 2D OpenSeesPy frame, D, L, G_E and base-shear E cases (psi_T 0.7), drift loop, axial ratio, beam steel at the ends and mid-span with the GB 55001/55002 factors, bars and frame quantities. tests/test_generator.py (4 tests); pytest 136 passed. `shellbench.__version__` set to 0.1.0 to match pyproject (ShellForm's request).
+Thesis inputs give: slab 120 mm; beams 300x600 (AB, CD) and 300x550 (BC); columns 500x500, not the thesis 600x600. No resize was needed: drift max 1/1412 (limit 1/550), axial ratio 0.340 (limit 0.85), T1 0.468 s after psi_T. Why the columns differ: R5 uses 4 storeys and mu 0.85 (decision 2, 31 Oct); the thesis used 5 floors and 0.75. Why BC differs: one rule h = L/12 (decision 3). Columns carry 8C18 at the 0.75 % minimum (R12).
+Choices [J]: bars by least area, then fewest bars (literal "fewest bars" gave 2C28 for 1000 mm^2, 23 % spare); face moments as |M| - |V| a; bar steel in quantities uses required areas (top + mid-bottom), stirrups left to carbon.py.
+Open: shear and strong-column checks (R14) before Day 20; GB 50011 tables still [?], so 0.10 g only.
+Compliance: sources - design_rules.md, baseline_spec.md, anchor_frame.py. AI use - Claude wrote the code and tests. Numbers - from the code run of 2 Nov. Data - nothing confidential. Repo - branch day16-generator.
+
+## Day 14 - 1 Nov 2026 (review; v0.1.0)
+
+Done: anchor report and design rules reviewed; v0.1.0 released (PR #84), Zenodo DOI minted (author confirmed). No other PR that day.
+
 ## Day 15 - 31 Oct 2026 (worked ahead of 1 Nov; draft for the author)
 
 New docs/design_rules.md: R1-R16, the procedure the generator (Day 16) will follow, each rule tagged Th section, checked clause, [?] or [J]. Three findings: with code values (4 storeys, mu 0.85) the thesis column formula gives 500 x 500, not 600 x 600; no single span ratio gives both the 600 and 500 mm thesis beams; the l/40 slab rule gives 90 mm, not 120 (B1). Six author decisions listed in section 6. GB 50011 Tables 6.1.2 and 6.3.6 (grades I-II) are [?] and block the PGA sweep beyond 0.10 g.
