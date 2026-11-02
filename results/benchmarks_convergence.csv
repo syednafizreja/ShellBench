@@ -1,0 +1,7 @@
+problem [text],elements_per_side [-],displacement [consistent],reference [consistent],normalised [-]
+scordelis_lo,4,0.303253,0.3024,1.0028
+scordelis_lo,8,0.301957,0.3024,0.9985
+scordelis_lo,16,0.301921,0.3024,0.9984
+hemisphere,4,0.073032,0.094,0.7769
+hemisphere,8,0.093116,0.094,0.9906
+hemisphere,16,0.093675,0.094,0.9965

@@ -143,12 +143,31 @@ The frame beams are 600 mm deep (spec M1). If the vault springs 100 mm above the
 
 ## CalculiX
 
-CalculiX 2.21 runs in the cloud container (`ccx -v`: "This is Version 2.21"). `src/shellbench/calculix.py` writes a deck, runs it and reads the displacements back. Its smoke test is a 1.0 m cantilever strip of 20 × 2 S8R shell elements (t = 10 mm, E = 30 GPa, ν = 0) under a 10 N tip load: CalculiX gives 13.334 mm against P L³ / (3 E I) = 13.333 mm, a difference of 0.005 %. The test (`tests/test_calculix.py`) now also runs in CI. The author's environment pins CalculiX 2.23 (environment.yml); /sync confirms that version runs on the laptop. The shell benchmark proper, with the author's MacNeal-Harder values, is Day 24.
+CalculiX 2.21 runs in the cloud container (`ccx -v`: "This is Version 2.21"). `src/shellbench/calculix.py` writes a deck, runs it and reads the displacements back. Its smoke test is a 1.0 m cantilever strip of 20 × 2 S8R shell elements (t = 10 mm, E = 30 GPa, ν = 0) under a 10 N tip load: CalculiX gives 13.334 mm against P L³ / (3 E I) = 13.333 mm, a difference of 0.005 %. The test (`tests/test_calculix.py`) now also runs in CI. The author's environment pins CalculiX 2.23 (environment.yml); /sync confirms that version runs on the laptop. The shell benchmark proper is Day 24, below.
+
+## Shell benchmarks (Day 24, 2 Nov 2026)
+
+`src/shellbench/shellfe.py` writes the S8R deck, runs ccx and reads displacements, stresses and buckling factors. `tests/test_benchmarks.py` runs both problems of MacNeal and Harder (1985) from `validation/benchmarks.csv`, where every value carries its page. CalculiX 2.23 on the laptop gives:
+
+| Elements per side of the patch | Roof, u / 0.3024 | Hemisphere, u / 0.0940 |
+|---|---|---|
+| 4 | 1.0028 | 0.7769 |
+| 8 | 0.9985 | 0.9906 |
+| 16 | 0.9984 | 0.9965 |
+
+Both finest meshes are within the 2 % Done-when. The figure is `figures/benchmarks_convergence.png`; the numbers are in `results/benchmarks_convergence.csv`.
+
+1. **Where the values came from.** On 2 Nov the author waived the copy-by-hand step and told Claude Code to find the values. They were read from a third-party copy of the paper on a University of Modena server. The licence of that copy was not verified, so neither the file nor its link is in this repo. Pages are the paper's own (PDF page + 2). The 40° half-angle, the 18° hole and F = 2.0 were read from the drawings in Figs 8 and 9. COMSOL's and Altair's verification pages agree on the roof data. Pages should be checked against the publisher's version before Paper 1 cites them [?].
+2. **Reference values.** The test normalises by the values the paper itself normalises by: 0.3024 and 0.0940. Table 5 also quotes 0.3086 for the roof (reference [5]) and 0.0924 for the hemisphere with the hole closed (reference [7]). The roof result is 2.2 % below 0.3086 by arithmetic, so the choice of reference matters and Paper 1 should state it.
+3. **F = 2.0 "(on quadrant)".** Fig. 9 prints this label. It is taken as the force at each of the four points of the whole shell [J]. That gives 0.0937 on the finest mesh. Taking 2.0 as a quadrant's half share of each point would double the force and give about 0.187, which contradicts Table 5(b).
+4. **Whole models, no rotational supports.** CalculiX expands S8R shells to solids. Rotational supports on symmetry lines made the shell far too stiff: the quarter roof settled at 0.13 of the reference and the hemisphere at about 0.024, however fine the mesh. Both problems are therefore modelled whole, with translational supports that carry no reaction. Elements per side still counts the patch the paper meshes, so 16 means 32 × 32 on the roof and 16 × 64 on the sphere. **This matters for Day 25:** a floor panel must not rely on rotational restraint along a symmetry line in S8R [J].
+5. **Read-back.** A flat strip checks the other two outputs against closed forms: stress in tension against F / (b t), buckling against π² E I / L² within 2 %. The strip's values are chosen for the test, not taken from a source.
 
 ## Sources read for this note
 
 The texts came from open copies. The papers' own page numbers are given where the copy shows them. The direct PDF download failed today, so I read text extracted from each PDF; the author should check each page number against the PDF before Paper 1 cites it [?].
 
+- MacNeal RH, Harder RL (1985). A proposed standard set of problems to test finite element accuracy. *Finite Elements in Analysis and Design* 1(1), 3-20. https://doi.org/10.1016/0168-874X(85)90003-4. Paywalled; read as described under Shell benchmarks, item 1.
 - Hawkins W, Orr J, Shepherd P, Ibell T (2019, online 2018). Design, construction and testing of a low carbon thin-shell concrete flooring system. *Structures* 18, 60-71. https://doi.org/10.1016/j.istruc.2018.10.006. Accepted manuscript, University of Bath: https://purehost.bath.ac.uk/ws/files/187512150/Author_Accepted.pdf. Cited by section; the extracted text had no page numbers.
 - Hawkins W, Orr J, Ibell T, Shepherd P (2020). A design methodology to reduce the embodied carbon of concrete buildings using thin-shell floors. *Engineering Structures* 207, 110195. https://doi.org/10.1016/j.engstruct.2020.110195. Accepted manuscript: https://researchportal.bath.ac.uk/files/203056865/Accepted_manuscript.pdf. Pages are AAM pages.
 - Oval R, Nuh M, Costa E, et al. (2023). A prototype low-carbon segmented concrete shell building floor system. *Structures* 49. https://doi.org/10.1016/j.istruc.2023.01.063. Accepted manuscript: https://purehost.bath.ac.uk/ws/files/266267594/AuthorAccepted_small.pdf. Pages as in docs/gap_matrix.md (AAM).
