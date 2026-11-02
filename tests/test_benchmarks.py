@@ -28,6 +28,10 @@ STRIP_E_PA = 30e9
 STRIP_ELEMENTS = (20, 2)
 STRIP_FORCE_N = 1000.0
 
+# Tolerances of these tests, chosen for them [J].
+MESH_CHANGE_TOLERANCE = 0.01  # between the two finest meshes
+STRESS_TOLERANCE = 1e-3
+
 
 def strip() -> tuple[sf.ShellModel, dict[tuple[int, int], int]]:
     """Flat strip along x, pinned at both ends, with no end force yet."""
@@ -86,7 +90,7 @@ def test_finest_mesh_is_within_tolerance(problem, tmp_path):
     rows = [sf.benchmark_row(problem, n, tmp_path, p) for n in sf.MESH_ELEMENTS]
     print(problem, [round(r["normalised"], 4) for r in rows])
     assert abs(rows[-1]["normalised"] - 1.0) <= sf.TOLERANCE
-    assert abs(rows[-1]["normalised"] / rows[-2]["normalised"] - 1.0) <= 0.01
+    assert abs(rows[-1]["normalised"] / rows[-2]["normalised"] - 1.0) <= MESH_CHANGE_TOLERANCE
 
 
 @needs_ccx
@@ -98,7 +102,7 @@ def test_stress_read_back_is_force_over_area(tmp_path):
     assert len(result.stresses) > 0
     expected = STRIP_FORCE_N / (STRIP_WIDTH_M * STRIP_THICKNESS_M)
     for s in result.stresses.values():
-        assert s[0] == pytest.approx(expected, rel=1e-3)
+        assert s[0] == pytest.approx(expected, rel=STRESS_TOLERANCE)
     assert result.buckling_factors == []
 
 
@@ -111,4 +115,4 @@ def test_buckling_read_back_is_euler(tmp_path):
     i = STRIP_WIDTH_M * STRIP_THICKNESS_M ** 3 / 12
     euler = math.pi ** 2 * STRIP_E_PA * i / STRIP_LENGTH_M ** 2
     assert len(result.buckling_factors) == 2
-    assert result.buckling_factors[0] * STRIP_FORCE_N == pytest.approx(euler, rel=0.02)
+    assert result.buckling_factors[0] * STRIP_FORCE_N == pytest.approx(euler, rel=sf.TOLERANCE)

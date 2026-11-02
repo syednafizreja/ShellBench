@@ -50,6 +50,10 @@ TOLERANCE: float = 0.02
 #: works, because the density is set from it (``scordelis_lo``).
 LOAD_GRAVITY: float = 1.0
 CCX_TIMEOUT_S: int = 900
+SET_ITEMS_PER_LINE: int = 12  # node numbers on one line of a set in the deck
+STRESS_COMPONENTS: int = 6  # sxx, syy, szz, sxy, sxz, syz in the .dat file
+FIGURE_SIZE_IN: tuple[float, float] = (5.5, 3.8)
+FIGURE_DPI: int = 200
 
 Surface = Callable[[float, float], tuple[float, float, float]]
 
@@ -146,7 +150,8 @@ def deck(model: ShellModel, buckling_modes: int = 0) -> str:
     lines += [f"{k}," + ",".join(map(str, e)) for k, e in enumerate(model.elements, start=1)]
     lines += ["*NSET,NSET=OUT"]  # ccx prints nothing for its own NALL with shells
     numbers = list(model.nodes)
-    lines += [",".join(map(str, numbers[k:k + 12])) for k in range(0, len(numbers), 12)]
+    lines += [",".join(map(str, numbers[k:k + SET_ITEMS_PER_LINE]))
+                  for k in range(0, len(numbers), SET_ITEMS_PER_LINE)]
     lines += ["*MATERIAL,NAME=MAT", "*ELASTIC", f"{model.e},{model.nu}"]
     if model.density:
         lines += ["*DENSITY", f"{model.density}"]
@@ -175,8 +180,9 @@ def read_stresses(dat: Path) -> dict[tuple[int, int], tuple[float, ...]]:
             reading = True
             continue
         parts = line.split()
-        if reading and len(parts) >= 8:  # shell rows end with an element-set name
-            out[(int(parts[0]), int(parts[1]))] = tuple(float(x) for x in parts[2:8])
+        last = 2 + STRESS_COMPONENTS
+        if reading and len(parts) >= last:  # shell rows end with an element-set name
+            out[(int(parts[0]), int(parts[1]))] = tuple(float(x) for x in parts[2:last])
     return out
 
 
@@ -250,6 +256,7 @@ def scordelis_lo(p: dict[str, float], n: int) -> tuple[ShellModel, int]:
     r, half_angle = p["radius"], math.radians(p["half_angle"])
 
     def surface(u: float, v: float) -> tuple[float, float, float]:
+        """Point of the roof: u along the axis, v across the arc."""
         a = (2.0 * v - 1.0) * half_angle
         return r * math.sin(a), (u - 0.5) * p["length"], r * math.cos(a)
 
@@ -286,6 +293,7 @@ def pinched_hemisphere(p: dict[str, float], n: int, force: float) -> tuple[Shell
     r, hole = p["radius"], math.radians(p["hole_angle"])
 
     def surface(u: float, v: float) -> tuple[float, float, float]:
+        """Point of the sphere: u from hole to equator, v round the axis."""
         polar = hole + u * (math.pi / 2.0 - hole)
         azimuth = v * 2.0 * math.pi
         return (r * math.sin(polar) * math.cos(azimuth), r * math.sin(polar) * math.sin(azimuth),
@@ -340,7 +348,7 @@ def plot_convergence(rows: list[dict], path: Path = CONVERGENCE_PNG) -> None:
     import matplotlib.pyplot as plt
 
     labels = {"scordelis_lo": "Scordelis-Lo roof", "hemisphere": "Pinched hemisphere"}
-    fig, ax = plt.subplots(figsize=(5.5, 3.8))
+    fig, ax = plt.subplots(figsize=FIGURE_SIZE_IN)
     ax.axhspan(1.0 - TOLERANCE, 1.0 + TOLERANCE, color="0.9", label="Within 2 %")
     ax.axhline(1.0, color="0.4", lw=0.8)
     for (problem, label), marker in zip(labels.items(), ("o", "s")):
@@ -355,7 +363,7 @@ def plot_convergence(rows: list[dict], path: Path = CONVERGENCE_PNG) -> None:
     ax.legend(frameon=False)
     fig.tight_layout()
     path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path, dpi=200)
+    fig.savefig(path, dpi=FIGURE_DPI)
     plt.close(fig)
 
 
