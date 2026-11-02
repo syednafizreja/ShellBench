@@ -2,6 +2,12 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 2 Nov 2026, Claude Code in VS Code (sync)
+
+**Done:** checked PR #88 against the anchor, fixed the missing loads in the generator, merged it. After the merge, on main: pytest 138 passed; `python -m shellbench.anchor_frame` run; `results/` byte-identical (figures restored).
+**Decisions:** the Day 16 Done-when is met by the rule-against-thesis section in `docs/anchor_notes.md`: columns 500 and BC 550 follow R5 and R4 (design_rules section 6, items 2 and 3). The rest are carried from LOG Day 16.
+**Open:** Day 24 is gated: the author copies the MacNeal-Harder values with page numbers into `validation/benchmarks.csv`, so floor-r2 slips. No value from memory. Day 17 pre-registration next (GATE). To Day 18: PGA and concrete-grade inputs, whole-building quantities. R7 and R14 before Day 20. ShellForm: `__version__` done; docstrings on the public force density and CalculiX functions still to review. DOI string still to add to README and CITATION.cff.
+
 ## 2 Nov 2026, Claude in the app (Day 16)
 
 **Done:** `src/shellbench/generator.py` + tests; `__version__` 0.1.0. Thesis inputs give 500x500 columns and 300x550 BC (explained in LOG Day 16); drift and axial pass with no resize.
