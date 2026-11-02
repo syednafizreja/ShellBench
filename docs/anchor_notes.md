@@ -657,4 +657,34 @@ Grid plan, axis 3, line B. The axis-2 frame gives D + L = 1 588.00 + 429.66 = 2 
 - **D28 decided:** (a) the grid plan (B11) stays primary; the drawn plan stays a sensitivity. (b) The footing rule of rule 8 is accepted as written. (c) Column stirrups φ10@100(4) stay over the full height, because no drawing gives the spacing outside the confined zones; the column stirrup mass is therefore an upper bound. (d) The 2C14 continuous top bars and the l_n / 3 top bar length are kept. (e) HPB300 gets its own factor row; where a source gives no separate HPB300 value, the HRB400 value is used and the source says so.
 - None of these changes a number in `results/`: the code already runs these choices.
 
+## Generator against the thesis (Day 16, 2 Nov 2026)
+
+The playbook test asks for 600 × 600 columns and 300 × 600 main beams from the thesis inputs, or an exact reason why not. `src/shellbench/generator.py` with those inputs gives (`tests/test_generator_anchor.py`):
+
+| Member | Thesis | Generator | Rule that causes it | Which is right |
+|---|---|---|---|---|
+| Main beams AB, CD | 300 × 600 | 300 × 600 | R4, h = L/12 | Match |
+| Slab | 120 mm | 120 mm | R3, 120 mm practical minimum | Match |
+| Corridor beam BC | 300 × 500 | 300 × 550 | R4: one ratio for all main beams | The rule (design_rules section 6, item 3) |
+| Columns | 600 × 600 | 500 × 500 | R5: n = 4 and μ_lim = 0.85, against the thesis n = 5 and 0.75 | The rule (section 6, item 2) |
+
+The thesis's n = 5 has no basis in a four-storey building (B4) and 0.75 is not the grade III limit (R6), so the rule stands. Drift does not push the column back up: one pass, no resize, T1 0.548 s after ψ_T, drift 1/1163 (limit 1/550), axial ratio 0.438 (limit 0.85).
+
+**Correction made the same day.** The first version loaded the frame with the slab and the beam webs only. At the anchor's sizes its ΣG was 3 832 kN against 5 879 kN in `results/anchor_seismic_weights.csv`, 35 % low, and it reported T1 0.468 s, drift 1/1412 and axial ratio 0.340. R8 asks for the build-up of each element, so walls, parapet, longitudinal beams and secondary beams are now inputs. Sizes did not change; the check values above replace the first ones.
+
+**What is left at the anchor's sizes.** ΣG is 5 288 kN, 10.1 % below the anchor, and bare T1 is 0.662 s against 0.698 s (5.2 % below). The gap at a typical floor is 159.8 kN, and it is the generator's choice, not a lost load [J]:
+
+| Item | kN per floor | Why the generator differs |
+|---|---|---|
+| Slab and secondary beams | 85.9 | The anchor's frame slab load (201.6 kN) plus what remains of its printed joint totals after walls and longitudinal beams (550.0 kN) is 751.6 kN; the generator has 612.4 + 53.3 = 665.7 kN |
+| Half the live load | 33.7 | The anchor carries 469.2 kN; the generator's area load gives 401.8 kN |
+| Frame beams | 22.0 | Printed L3 and L4 with plaster (L3 uses h = 0.7 m, B13), 92.7 kN, against the web of the actual section, 70.7 kN |
+| Columns | 13.8 | 9.96 kN/m with plaster (L5) against 9.0 kN/m concrete only |
+| Interior wall | 4.3 | Printed 44.11 kN per node against 6.36 × 6.6 = 41.98 kN |
+| Sum | 159.8 | |
+
+The eccentricity moments of Th §6.2.1 are not applied, so exterior beam-end moments are a little different from the anchor's [J].
+
+**Carried to Day 18 from the playbook's Day 16 list:** PGA and concrete grade are not inputs yet (`alpha_max` and the C40 values of `checks.py` are), and quantities are for one frame strip, not the whole plan. R7 and R14 are not coded.
+
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
