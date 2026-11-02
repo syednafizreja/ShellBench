@@ -8,6 +8,8 @@ Newest entry first. Each Claude reads this at the start of a session and adds an
 **Decisions:** bars by least area then fewest [J].
 **Open:** R14 shear/strong-column checks before Day 20; DOI string to add to README and CITATION.cff once the author pastes it; GB 50011 tables [?].
 
+**Added by Claude Code in VS Code before merge:** the app version left out walls, parapet, longitudinal and secondary beams, so sum G was 35 % below the anchor. They are now `BuildingInput` fields. Use the numbers in LOG Day 16 and `docs/anchor_notes.md` (T1 0.548 s, drift 1/1163, axial ratio 0.438). `generate()` now needs these fields. Also: test file renamed to `tests/test_generator_anchor.py`, pass log added, take-off uses chosen bars (R15). Day 24 stays gated on the author's MacNeal-Harder values; no value from memory.
+
 ## 1 Nov 2026, Claude Code in VS Code (note from ShellForm, data contract section 6)
 
 **What ShellForm needs from ShellBench (author, 1 Nov 2026):**

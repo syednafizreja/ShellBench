@@ -60,6 +60,13 @@ class BuildingInput:
         roof_dead_kn_m2: Roof build-up + slab [kN/m^2].
         live_kn_m2: Floor live load for each span [kN/m^2].
         roof_live_kn_m2: Roof live load [kN/m^2].
+        floor_secondary_kn_m: Secondary beam self-weight per span, floors [kN/m].
+        roof_secondary_kn_m: Secondary beam self-weight per span, roof [kN/m].
+        floor_beam_wall_kn_m: Wall standing on the frame beam, per span [kN/m].
+        exterior_wall_kn_m: Wall on the longitudinal beams of the edge lines [kN/m].
+        interior_wall_kn_m: Wall on the longitudinal beams of the inner lines [kN/m].
+        longitudinal_beam_kn_m: Longitudinal beam self-weight, every line [kN/m].
+        parapet_kn_m: Roof parapet on the edge lines [kN/m].
         alpha_max: Frequent-earthquake alpha_max (GB 50011 Table 5.1.4-1).
         tg_s: Site characteristic period [s].
         psi_t: Period reduction factor for infill (R8).
@@ -76,6 +83,13 @@ class BuildingInput:
     roof_dead_kn_m2: float
     live_kn_m2: tuple[float, ...]
     roof_live_kn_m2: float
+    floor_secondary_kn_m: tuple[float, ...]
+    roof_secondary_kn_m: tuple[float, ...]
+    floor_beam_wall_kn_m: tuple[float, ...]
+    exterior_wall_kn_m: float
+    interior_wall_kn_m: float
+    longitudinal_beam_kn_m: float
+    parapet_kn_m: float
     alpha_max: float
     tg_s: float
     psi_t: float
@@ -100,7 +114,7 @@ class GeneratorResult:
     Attributes:
         preliminary: Sizes from R3-R5, before any check.
         final: Sizes after the R11-R13 loop.
-        history: One line per resize, saying which rule moved which member.
+        history: One line per sizing pass, plus one per resize naming the rule.
         period_s: T1 of the final frame, after psi_t [s].
         drift_ratios: Largest elastic storey drift ratio per storey [-].
         axial_ratio: Largest column axial ratio [-].
@@ -222,13 +236,15 @@ def beam_line_loads(b: BuildingInput, z: Sizes, level: int, case: str) -> list[f
 
     The slab load is the area load times the tributary width (the
     equivalent-uniform route of the anchor [J]); beam self-weight is the web
-    below the slab.
+    below the slab. The secondary beam of the bay is spread the same way [J],
+    and the wall standing on the frame beam is added on floors (R8).
     """
     roof = level == len(b.storey_heights_m)
     out = []
     for k, (bw, h) in enumerate(z.beams_mm):
         dead = (b.roof_dead_kn_m2 if roof else b.floor_dead_kn_m2) * b.tributary_width_m
         dead += CONCRETE_UNIT_WEIGHT_KN_M3 * bw / 1000.0 * (h - z.slab_mm) / 1000.0
+        dead += b.roof_secondary_kn_m[k] if roof else b.floor_secondary_kn_m[k] + b.floor_beam_wall_kn_m[k]
         live = (b.roof_live_kn_m2 if roof else b.live_kn_m2[k]) * b.tributary_width_m
         if case == "D":
             out.append(dead)
@@ -244,8 +260,29 @@ def column_weight_kn(z: Sizes, height_m: float) -> float:
     return CONCRETE_UNIT_WEIGHT_KN_M3 * (z.column_mm / 1000.0) ** 2 * height_m
 
 
+def joint_dead_kn(b: BuildingInput, z: Sizes, level: int) -> list[float]:
+    """Dead load carried to each column line by the longitudinal members (R8) [kN].
+
+    Clear length is the frame spacing less one column, and the parapet runs the
+    full spacing (both as Th s5.2). The slab shares printed in Th s5.2 are left
+    out, because ``beam_line_loads`` already puts the whole slab on the frame.
+    """
+    clear_m = b.tributary_width_m - z.column_mm / 1000.0
+    roof = level == len(b.storey_heights_m)
+    out = []
+    for i in range(len(b.spans_m) + 1):
+        edge = i in (0, len(b.spans_m))
+        load = b.longitudinal_beam_kn_m * clear_m
+        if roof:
+            load += b.parapet_kn_m * b.tributary_width_m if edge else 0.0
+        else:
+            load += (b.exterior_wall_kn_m if edge else b.interior_wall_kn_m) * clear_m
+        out.append(load)
+    return out
+
+
 def apply_gravity(fm: Frame, b: BuildingInput, z: Sizes, case: str) -> None:
-    """Beam line loads, plus column self-weight at the top node of each storey (D, G_E)."""
+    """Beam line loads, plus column weight and longitudinal loads at the joints (D, G_E)."""
     ops.timeSeries("Linear", 1)
     ops.pattern("Plain", 1, 1)
     for j in range(1, len(fm.ys)):
@@ -253,8 +290,8 @@ def apply_gravity(fm: Frame, b: BuildingInput, z: Sizes, case: str) -> None:
             ops.eleLoad("-ele", fm.beams[(j, k)], "-type", "-beamUniform", -w)
         if case in ("D", "GE"):
             wc = column_weight_kn(z, b.storey_heights_m[j - 1])
-            for i in range(len(fm.xs)):
-                ops.load(fm.node[(j, i)], 0.0, -wc, 0.0)
+            for i, joint in enumerate(joint_dead_kn(b, z, j)):
+                ops.load(fm.node[(j, i)], 0.0, -(wc + joint), 0.0)
 
 
 def solve() -> None:
@@ -270,11 +307,12 @@ def solve() -> None:
 
 
 def storey_weights_kn(b: BuildingInput, z: Sizes) -> list[float]:
-    """G_i per level: beam G_E loads plus half the columns above and below."""
+    """G_i per level: beam G_E loads, joint dead loads, half the columns above and below."""
     out = []
     n = len(b.storey_heights_m)
     for j in range(1, n + 1):
         g = sum(w * L for w, L in zip(beam_line_loads(b, z, j, "GE"), b.spans_m))
+        g += sum(joint_dead_kn(b, z, j))
         cols = len(b.spans_m) + 1
         g += cols * column_weight_kn(z, b.storey_heights_m[j - 1]) / 2.0
         if j < n:
@@ -426,21 +464,32 @@ def column_bars(column_mm: int) -> tuple[float, str]:
     return as_req, "more than 8C32"
 
 
-def generate(b: BuildingInput) -> GeneratorResult:
+def bars_area_mm2(label: str, as_req_mm2: float) -> float:
+    """Area of a bar label such as "5C16"; ``as_req_mm2`` if no single layer fits (R15)."""
+    n, sep, d = label.partition("C")
+    if not (sep and n.isdigit() and d.isdigit()):
+        return as_req_mm2
+    return int(n) * math.pi * int(d) ** 2 / 4.0
+
+
+def generate(b: BuildingInput, verbose: bool = False) -> GeneratorResult:
     """Size the frame: preliminary sizes, then check and resize until all pass.
 
     Order of the loop (R11-R13): drift first (columns, then beams once the
     columns reach 1.5 times their preliminary size), then the axial ratio
-    (columns), then xi at the beam ends (that beam's depth).
+    (columns), then xi at the beam ends (that beam's depth). With ``verbose``,
+    the log of each pass is printed.
     """
     pre = preliminary_sizes(b)
     z = Sizes(pre.column_mm, list(pre.beams_mm), pre.slab_mm)
     history = []
-    for _ in range(MAX_ITERATIONS):
+    for n_pass in range(1, MAX_ITERATIONS + 1):
         t1, forces = seismic_forces(b, z)
         cases = {name: run_case(b, z, name) for name in ("D", "L", "GE")}
         cases["E"] = run_case(b, z, "E", forces)
         drifts = drift_ratios(b, cases["E"])
+        history.append(f"pass {n_pass}: columns {z.column_mm}, beams {z.beams_mm}, "
+                       f"T1 {t1:.3f} s, drift 1/{1.0 / max(drifts):.0f}")
         if max(drifts) > DRIFT_LIMIT:
             if z.column_mm + SIZE_STEP_MM <= COLUMN_GROWTH_LIMIT * pre.column_mm:
                 z.column_mm += SIZE_STEP_MM
@@ -478,6 +527,8 @@ def generate(b: BuildingInput) -> GeneratorResult:
                 beam_steel[(k, loc)] = (as_req, choose_bars(as_req))
         res = GeneratorResult(pre, z, history, t1, drifts, mu, beam_steel, column_bars(z.column_mm))
         res.quantities = quantities(b, z, res)
+        if verbose:
+            print("\n".join(history))
         return res
     raise RuntimeError("generator did not converge in MAX_ITERATIONS resizes")
 
@@ -486,7 +537,7 @@ def quantities(b: BuildingInput, z: Sizes, res: GeneratorResult) -> dict[str, fl
     """Concrete [m^3/m^2] and longitudinal bar steel [kg/m^2] of the frame strip [J].
 
     Slab over the strip, beam webs below the slab, columns full height. Bars
-    run the full beam or column length; stirrups and footings are left to
+    run the full beam or column length at the chosen bar areas (R15); stirrups and footings are left to
     the take-off module (carbon.py), which already handles them.
     """
     n = len(b.storey_heights_m)
@@ -495,8 +546,12 @@ def quantities(b: BuildingInput, z: Sizes, res: GeneratorResult) -> dict[str, fl
     slab = n * width * b.tributary_width_m * z.slab_mm / 1000.0
     beams = n * sum(bw / 1000.0 * (h - z.slab_mm) / 1000.0 * L for (bw, h), L in zip(z.beams_mm, b.spans_m))
     cols = (len(b.spans_m) + 1) * sum(b.storey_heights_m) * (z.column_mm / 1000.0) ** 2
-    steel_m3 = n * sum((res.beam_steel[(k, "left top")][0] + res.beam_steel[(k, "mid bottom")][0]) / 1e6 * L
+
+    def chosen(entry: tuple[float, str]) -> float:
+        return bars_area_mm2(entry[1], entry[0]) / 1e6
+
+    steel_m3 = n * sum((chosen(res.beam_steel[(k, "left top")]) + chosen(res.beam_steel[(k, "mid bottom")])) * L
                        for k, L in enumerate(b.spans_m))
-    steel_m3 += (len(b.spans_m) + 1) * sum(b.storey_heights_m) * res.column_steel[0] / 1e6
+    steel_m3 += (len(b.spans_m) + 1) * sum(b.storey_heights_m) * chosen(res.column_steel)
     return {"concrete_m3_per_m2": (slab + beams + cols) / area,
             "bar_steel_kg_per_m2": steel_m3 * 7850.0 / area}
