@@ -2,6 +2,13 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 2 Nov 2026, the AI assistant (Day 24 sync)
+
+**Done:** Day 24 merged in PR #90, which replaces the "Day 24 is gated" notes below. Finest mesh: Scordelis-Lo roof 0.9984, pinched hemisphere 0.9965, both within 2 %; `figures/benchmarks_convergence.png` saved for Paper 1. After the merge, on main: pytest 145 passed; `python -m shellbench.anchor_frame` run; `results/` byte-identical (figures restored). CI ran all 145 with none skipped on CalculiX 2.21; the laptop runs 2.23.
+**Decisions:** the author waived the copy-by-hand step on 2 Nov and told the AI assistant to find the values. Reasons for the reference values and the F = 2.0 reading are in `docs/floor_concept.md`, "Shell benchmarks".
+**Finding for Day 25:** rotational supports on S8R symmetry lines make the shell far too stiff, so model panels without them.
+**Open:** Day 17 pre-registration (GATE: author's approval), then Day 25 (floor-r3). Check the benchmark pages against the publisher's version before Paper 1 cites them; the copy read is third-party and is not in the repo. There are no floor-rN git tags (floor-r1 has none either), so none was added. For ShellForm, the floor-r2 surface is `ShellModel`, `ShellResult`, `mapped_mesh`, `deck`, `run` and the readers in `shellfe.py`, all with docstrings; keep those signatures stable. DOI string still to add to README and CITATION.cff.
+
 ## 2 Nov 2026, the AI assistant (sync)
 
 **Done:** checked PR #88 against the anchor, fixed the missing loads in the generator, merged it. After the merge, on main: pytest 138 passed; `python -m shellbench.anchor_frame` run; `results/` byte-identical (figures restored).
