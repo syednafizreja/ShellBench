@@ -180,6 +180,15 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - Claude decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 24 - 2 Nov 2026 (shell benchmarks; floor-r2)
+
+Done: src/shellbench/shellfe.py writes the S8R deck, runs ccx and reads displacements, stresses and buckling factors. validation/benchmarks.csv holds the geometry, loads and reference answers of both problems, each with its page. tests/test_benchmarks.py (7 tests); pytest 145 passed. Done-when met: finest mesh 0.9984 on the Scordelis-Lo roof and 0.9965 on the pinched hemisphere, and figures/benchmarks_convergence.png saved for Paper 1. This closes the gate noted in Day 16.
+My decision: I waived the copy-by-hand step on 2 Nov and told Claude Code to find the values. Claude Code read and entered them from a copy of the paper on a University of Modena server, named in docs/floor_concept.md. The copy is not committed; its licence was not verified. Check the pages against the publisher's version before Paper 1 cites them.
+Finding: rotational supports on S8R symmetry lines made the shell far too stiff (quarter roof 0.13 of reference, hemisphere about 0.024). Both problems are modelled whole, with translational supports that carry no reaction. Day 25 panels must not rely on rotational restraint along a symmetry line [J].
+Choices [J]: normalised by the paper's own 0.3024 and 0.0940 (the roof is 2.2 % below the 0.3086 also quoted in Table 5(a)); F = 2.0 "(on quadrant)" read as the force at each point of the whole shell, because doubling it contradicts Table 5(b). Reasons in docs/floor_concept.md, "Shell benchmarks".
+Tomorrow: Day 17 pre-registration (GATE: my approval), Day 25.
+Compliance: sources - MacNeal and Harder (1985) pp. 8, 9, 11; COMSOL and Altair pages as a cross-check on the roof data. AI use - Claude implemented the code and tests and read the values with my permission. Numbers - benchmark values from the paper; results from the code run of 2 Nov. Data - nothing confidential; thesis_source/ not tracked; the paper copy not committed. Repo - branch day24-benchmarks.
+
 ## Day 16 - 2 Nov 2026 (generator)
 
 Done: src/shellbench/generator.py sizes a regular RC frame from building inputs, following docs/design_rules.md R3-R16: preliminary sizes, a 2D OpenSeesPy frame, D, L, G_E and base-shear E cases (psi_T 0.7), drift loop, axial ratio, beam steel at the ends and mid-span with the GB 55001/55002 factors, bars and frame quantities, with a log of each sizing pass. tests/test_generator_anchor.py (6 tests); pytest 138 passed. `shellbench.__version__` set to 0.1.0 to match pyproject (ShellForm's request).
