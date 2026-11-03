@@ -40,12 +40,13 @@ true depth (f - z) is a refinement left for Day 26 [J].
 
 Section check
 -------------
-One mesh layer at mid-depth (floor_concept 4.2). Rectangular stress block
-alpha_1 f_c over depth x, with C = N + A_s f_y when the mesh yields
-(x <= xi_b d, d = t / 2), else C = N and the mesh is ignored. Moment capacity
-about mid-depth: M_R = C (t - x) / 2. This is mechanics, not the GB 50010
-eccentric-compression procedure; the additional eccentricity and slenderness
-rules of that code are not applied (author item) [J].
+One mesh layer at mid-depth (floor_concept 4.2). JGJ 22-2012 3.2.1 sends the
+resistance of shell sections to GB 50010, so the check is GB 50010-2010 6.2.17
+for a rectangular eccentric-compression section with A_s' = 0 and the bar at
+mid-depth (h_0 = a = t / 2, so e = e_i). The additional eccentricity e_a of 6.2.5
+is added, and the first-order moment is amplified by 1 / (1 - 1 / lambda) for
+second-order effects (6.2.3 does not allow them to be ignored) [J]. Each clause
+was read in a third-party copy of the code; confirm it in your own copy.
 
 Units: N, m, Pa throughout.
 """
@@ -73,25 +74,31 @@ RESULTS_CSV = ROOT / "results" / "panel_day25.csv"
 SPAN_M: float = 6.6  # spec G4, layout A (floor_concept decision 2)
 RISE_RATIO: float = 1.0 / 15.0  # [J] floor_concept section 7 and decision 4
 TIE_SPACING_M: float = 1.2  # [J] floor_concept 4.1; the modelled strip width
-TRIAL_THICKNESSES_M: tuple[float, ...] = (0.050, 0.060, 0.070, 0.080)  # floor_concept 4.1 range
+TRIAL_THICKNESSES_M: tuple[float, ...] = (0.050, 0.060, 0.070, 0.080, 0.090, 0.100, 0.120)  # floor_concept 4.1 range, widened [J]
 
 # Materials
 E_CONCRETE_PA: float = 3.25e10  # spec X4, C40
-NU_CONCRETE: float = 0.2  # [J] no source in the repo yet (author item)
+NU_CONCRETE: float = 0.2  # GB 50010-2010 4.1.5
 CONCRETE_N_M3: float = 25.0e3  # spec X7
 FC_PA: float = 19.1e6  # spec X2
 FT_PA: float = 1.71e6  # spec X3
 FY_PA: float = 360.0e6  # spec X5, HRB400; GB 50010 Table 4.2.3-1
-E_STEEL_PA: float = 2.0e11  # [J] no source in the repo yet (author item)
-ALPHA_1: float = 1.0  # [J] stress-block factor for C40 (author item)
-XI_B: float = 0.518  # [J] balanced depth ratio for HRB400 (author item)
+FCU_K_PA: float = 40.0e6  # C40: cube strength grade, GB 50010-2010 4.1.1
+E_STEEL_PA: float = 2.0e11  # GB 50010-2010 Table 4.2.5, HRB400
+ALPHA_1: float = 1.0  # GB 50010-2010 6.2.6, grade not above C50
+BETA_1: float = 0.8  # GB 50010-2010 6.2.6, grade not above C50
+EPS_CU_MAX: float = 0.0033  # GB 50010-2010 6.2.1-5 and its cap
+EPS_CU_SLOPE: float = 1.0e-5 / 1.0e6  # 6.2.1-5: (f_cu,k - 50 N/mm^2) x 10^-5, per Pa
+EPS_CU_REF_PA: float = 50.0e6  # 6.2.1-5
+EA_MIN_M: float = 0.020  # GB 50010-2010 6.2.5: e_a = max(20 mm, h / 30)
+EA_DEPTH_DIVISOR: float = 30.0  # same clause
 MIN_STEEL_FLOOR: float = 0.0015  # GB 50010 Table 8.5.1 note 2 (floor_concept 4.2)
 MIN_STEEL_FT_FACTOR: float = 45.0  # same note: 45 f_t / f_y, in per cent
 COVER_M: float = 0.015  # GB 50010 Table 8.2.1, shells, category I (floor_concept 4.2)
 MESH_BAR_M: float = 0.006  # [J] mesh bar diameter, for the cover check only
 
 # Loads [Pa] or densities [kg/m^3]
-G_ACCEL: float = 9.81  # [J] no source in the repo yet (author item)
+G_ACCEL: float = 9.81  # standard gravity 9.80665 (3rd CGPM 1901, Declaration 2), rounded [J]
 FINISHES_PA: float = 1.05e3  # Th s4.1 via floor_concept section 5
 LIVE_PA: float = 2.5e3  # spec L9, office floor
 LEVELLING: dict[str, tuple[str, float]] = {
@@ -326,20 +333,47 @@ def arch_forces(p_plan: np.ndarray, h: float) -> tuple[np.ndarray, np.ndarray, n
     return x, m0 - h * z, h * np.cos(theta) + v0 * np.sin(theta)
 
 
+def xi_b() -> float:
+    """Relative balanced depth, GB 50010-2010 formula 6.2.7-1 with eps_cu from 6.2.1-5."""
+    eps_cu = min(EPS_CU_MAX, EPS_CU_MAX - (FCU_K_PA - EPS_CU_REF_PA) * EPS_CU_SLOPE)
+    return BETA_1 / (1.0 + FY_PA / (E_STEEL_PA * eps_cu))
+
+
+def additional_eccentricity(t: float) -> float:
+    """e_a = max(20 mm, t / 30), GB 50010-2010 6.2.5 [m]."""
+    return max(EA_MIN_M, t / EA_DEPTH_DIVISOR)
+
+
 def moment_capacity(n: float, t: float, as_m2_m: float) -> float:
-    """M_R of a 1 m strip with one mesh layer at mid-depth (see module note) [N m/m]."""
+    """N e capacity of a 1 m strip with one mesh layer at mid-depth [N m/m].
+
+    GB 50010-2010 6.2.17 with A_s' = 0 and the bar at mid-depth, so
+    h_0 = a = t / 2 and e = e_i. Large eccentricity (x <= xi_b h_0): sigma_s = f_y,
+    alpha_1 f_c x = N + f_y A_s (6.2.17-1), N e <= alpha_1 f_c x (h_0 - x / 2)
+    (6.2.17-2). Otherwise the mesh is ignored (sigma_s A_s = 0) [J].
+    """
     c = n + as_m2_m * FY_PA
     x = c / (ALPHA_1 * FC_PA)
-    if x > XI_B * t / 2.0:  # mesh does not yield: ignore it
+    if x > xi_b() * t / 2.0:
         c = n
         x = c / (ALPHA_1 * FC_PA)
     return max(c * (t - x) / 2.0, 0.0)
 
 
-def utilisation(p_plan: np.ndarray, h: float, t: float, as_m2_m: float) -> float:
-    """Largest |M| / M_R along the arch."""
+def utilisation(p_plan: np.ndarray, h: float, t: float, as_m2_m: float, buckle: float) -> float:
+    """Largest N e_i / capacity along the arch.
+
+    e_i = e_0 + e_a (6.2.17-4, 6.2.5). e_0 = M_2 / N, where M_2 is the first-order
+    moment times 1 / (1 - 1 / lambda), with lambda the FE buckling factor. GB 50010
+    6.2.3 does not let second-order moments be ignored here (l_c / i is far above
+    34 - 12 M_1 / M_2). The amplifier stands in for 6.2.4, which is written for
+    straight members [J].
+    """
     _, m, n = arch_forces(p_plan, h)
-    return float(max(abs(mi) / max(moment_capacity(ni, t, as_m2_m), 1e-9) for mi, ni in zip(m, n)))
+    amp = 1.0 / (1.0 - 1.0 / buckle) if buckle > 1.0 else math.inf
+    ea = additional_eccentricity(t)
+    return float(max((abs(mi) * amp + ni * ea) / max(moment_capacity(ni, t, as_m2_m), 1e-9)
+                     for mi, ni in zip(m, n)))
 
 
 # --- one panel -------------------------------------------------------------
@@ -385,8 +419,8 @@ def size_row(t: float, levelling: str, fl: Flexibility, buckle: float,
         c_tie = SPAN_M / (E_STEEL_PA * bar_area_m2(d))
         h_el_uniform = (d_fixed / fl.unit_force + (d_uniform - d_fixed) / (fl.unit_force + c_tie)) / b
         h_el_pattern = (d_fixed / fl.unit_force + (d_pattern - d_fixed) / (fl.unit_force + c_tie)) / b
-        u_uni = utilisation(p_uniform, h_el_uniform, t, as_m)
-        u_pat = utilisation(p_pattern, h_el_pattern, t, as_m)
+        u_uni = utilisation(p_uniform, h_el_uniform, t, as_m, buckle)
+        u_pat = utilisation(p_pattern, h_el_pattern, t, as_m, buckle)
         bar = d
         if max(u_uni, u_pat) <= 1.0:
             break
