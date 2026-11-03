@@ -421,6 +421,7 @@ def beam_design_moments(b: BuildingInput, z: Sizes, cases: dict[str, CaseForces]
         span = b.spans_m[k]
         for end in (0, 1):
             def fm(case: str) -> float:
+                """Return the face moment of load case ``case`` at beam end ``end`` [kN*m]."""
                 return face_moment(cases[case].beam_m[key][end], cases[case].beam_v[key][end], a)
             grav = GAMMA_D * fm("D") + GAMMA_L * fm("L")
             seis = [c.GAMMA_RE_BEAM_FLEXURE * (GAMMA_G_SEISMIC * fm("GE") + sign * GAMMA_EH * fm("E"))
@@ -548,6 +549,7 @@ def quantities(b: BuildingInput, z: Sizes, res: GeneratorResult) -> dict[str, fl
     cols = (len(b.spans_m) + 1) * sum(b.storey_heights_m) * (z.column_mm / 1000.0) ** 2
 
     def chosen(entry: tuple[float, str]) -> float:
+        """Return the steel area of a chosen bar entry (bars label, required area) [m^2]."""
         return bars_area_mm2(entry[1], entry[0]) / 1e6
 
     steel_m3 = n * sum((chosen(res.beam_steel[(k, "left top")]) + chosen(res.beam_steel[(k, "mid bottom")])) * L
