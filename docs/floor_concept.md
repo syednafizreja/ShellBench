@@ -163,6 +163,23 @@ Both finest meshes are within the 2 % Done-when. The figure is `figures/benchmar
 4. **Whole models, no rotational supports.** CalculiX expands S8R shells to solids. Rotational supports on symmetry lines made the shell far too stiff: the quarter roof settled at 0.13 of the reference and the hemisphere at about 0.024, however fine the mesh. Both problems are therefore modelled whole, with translational supports that carry no reaction. Elements per side still counts the patch the paper meshes, so 16 means 32 × 32 on the roof and 16 × 64 on the sphere. **This matters for Day 25:** a floor panel must not rely on rotational restraint along a symmetry line in S8R [J].
 5. **Read-back.** A flat strip checks the other two outputs against closed forms: stress in tension against F / (b t), buckling against π² E I / L² within 2 %. The strip's values are chosen for the test, not taken from a source.
 
+## Panel sizing (Day 25, 3 Nov 2026)
+
+`src/shellbench/panel.py` sizes one vault panel: a 6.6 m span, f/L = 1/15 and one 1.2 m tie bay, modelled in S8R through `shellfe.py`. Springing A is pinned and B sits on a roller. Four linear runs give the tie force by compatibility: self-weight, 1 Pa of plan load on the full span, 1 Pa on half the span, and a unit inward edge force. All results are in `results/panel_day25.csv`, and `tests/test_panel.py` checks them.
+
+1. **Done-when.** With a rigid tie, the FE thrust is between 0.994 and 0.997 of wL²/8f in all 24 rows. The Done-when asks for 10 %.
+2. **Unstressed ties fail.** Tie stretch lowers the thrust by 4-17 %. The lost thrust turns into bending, and the pattern-load section check fails at every trial thickness, even with a 32 mm tie. A tie prestressed to hold the dead-load spread at zero passes, because only the live load then stretches it. This is a finding about the floor, not just a modelling choice [J].
+3. **Sized panel.** t = 60 mm with prestressed ties every 1.2 m. This is the thinnest thickness at which all three levelling options pass. At 50 mm, only recycled fill passes (pattern utilisation 0.984).
+
+| Levelling | Tie (mm) | Pattern utilisation | Buckling factor | Tie steel (kg/m²) |
+|---|---|---|---|---|
+| Foamed fill | 22 | 0.959 | 4.85 | 2.49 |
+| Recycled fill | 25 | 0.841 | 4.29 | 3.21 |
+| Raised floor | 28 | 0.976 | 5.59 | 4.03 |
+
+   All three options at 60 mm use 0.0607 m³/m² of concrete and 2.04 kg/m² of mesh.
+4. **Limits.** Buckling is linear eigenvalue analysis, with no imperfection knock-down. The section check is the AI assistant's simplified one-layer method, and the GB 50010 eccentric-compression clause has not been checked. ν = 0.2, E_s = 200 GPa, α1 = 1.0, ξb = 0.518 and g = 9.81 m/s² are not yet traced to a clause [J]. Everything here is for one panel; the family rows follow from Day 26.
+
 ## Sources read for this note
 
 The texts came from open copies. The papers' own page numbers are given where the copy shows them. The direct PDF download failed today, so I read text extracted from each PDF; the author should check each page number against the PDF before Paper 1 cites it [?].
