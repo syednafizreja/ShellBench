@@ -168,17 +168,39 @@ Both finest meshes are within the 2 % Done-when. The figure is `figures/benchmar
 `src/shellbench/panel.py` sizes one vault panel: a 6.6 m span, f/L = 1/15 and one 1.2 m tie bay, modelled in S8R through `shellfe.py`. Springing A is pinned and B sits on a roller. Four linear runs give the tie force by compatibility: self-weight, 1 Pa of plan load on the full span, 1 Pa on half the span, and a unit inward edge force. All results are in `results/panel_day25.csv`, and `tests/test_panel.py` checks them.
 
 1. **Done-when.** With a rigid tie, the FE thrust is between 0.994 and 0.997 of wL²/8f in all 24 rows. The Done-when asks for 10 %.
-2. **Unstressed ties fail.** Tie stretch lowers the thrust by 4-17 %. The lost thrust turns into bending, and the pattern-load section check fails at every trial thickness, even with a 32 mm tie. A tie prestressed to hold the dead-load spread at zero passes, because only the live load then stretches it. This is a finding about the floor, not just a modelling choice [J].
-3. **Sized panel.** t = 60 mm with prestressed ties every 1.2 m. This is the thinnest thickness at which all three levelling options pass. At 50 mm, only recycled fill passes (pattern utilisation 0.984).
+2. **Unstressed ties fail.** Tie stretch lowers the thrust by 4-17 %. The lost thrust turns into bending, and the pattern-load section check fails at every trial thickness, even with a 32 mm tie. A tie prestressed to hold the dead-load spread at zero passes, because only the live load then stretches it. The author approved prestressed ties on 3 Nov 2026.
+3. **Section check (corrected 3 Nov 2026).** JGJ 22-2012 3.2.1 says shell resistance is calculated to GB 50010, with γRE = 1.0 for shells. The check is therefore GB 50010-2010 6.2.17 (rectangular section, eccentric compression), with the mesh at mid-depth. It includes the additional eccentricity e_a = max(20 mm, t/30) from 6.2.5. GB 50010 6.2.3 does not allow second-order moments to be ignored here, so the moment is multiplied by 1/(1 − 1/λ), where λ is the FE buckling factor [J]. At 60 mm, e_a is a third of the thickness, and the earlier 60 mm result no longer holds.
+4. **Sized panel.** t = 90 mm with prestressed ties every 1.2 m. This is the thinnest trial thickness at which all three levelling options pass. At 80 mm, recycled fill reaches a pattern utilisation of 1.003.
 
 | Levelling | Tie (mm) | Pattern utilisation | Buckling factor | Tie steel (kg/m²) |
 |---|---|---|---|---|
-| Foamed fill | 22 | 0.959 | 4.85 | 2.49 |
-| Recycled fill | 25 | 0.841 | 4.29 | 3.21 |
-| Raised floor | 28 | 0.976 | 5.59 | 4.03 |
+| Foamed fill | 25 | 0.978 | 14.7 | 3.21 |
+| Recycled fill | 25 | 0.958 | 13.2 | 3.21 |
+| Raised floor | 28 | 0.954 | 16.7 | 4.03 |
 
-   All three options at 60 mm use 0.0607 m³/m² of concrete and 2.04 kg/m² of mesh.
-4. **Limits.** Buckling is linear eigenvalue analysis, with no imperfection knock-down. The section check is Claude's simplified one-layer method, and the GB 50010 eccentric-compression clause has not been checked. ν = 0.2, E_s = 200 GPa, α1 = 1.0, ξb = 0.518 and g = 9.81 m/s² are not yet traced to a clause [J]. Everything here is for one panel; the family rows follow from Day 26.
+   All three options at 90 mm use 0.0911 m³/m² of concrete and 3.06 kg/m² of mesh, which is 1.5 times the concrete of the withdrawn 60 mm result. This feeds directly into the red team in §6.
+5. **Clauses behind the constants.** All are from GB 50010-2010:
+   - ν = 0.2: 4.1.5 (not 4.1.8)
+   - E_s = 2.00 × 10⁵ N/mm² for HRB400: Table 4.2.5
+   - α1 = 1.0 and β1 = 0.8 for grades up to C50: 6.2.6
+   - εcu: 6.2.1-5, capped at 0.0033
+   - ξb: formula 6.2.7-1, computed in the code as 0.5176
+   - e_a: 6.2.5
+   - minimum shell thickness of 50 mm: JGJ 22-2012 3.3.2
+   - g: there is no code clause. Standard gravity is 9.80665 m/s² (3rd CGPM 1901, Declaration 2), rounded to 9.81 [J].
+
+   The clauses were read on 3 Nov in third-party web copies, of the 2015 and 2024 editions. Their licence was not checked, so the copies and their links are not in this repo. Confirm each clause in your own copy.
+6. **Limits.**
+   - Buckling uses linear eigenvalues, with no imperfection knock-down.
+   - JGJ 22-2012 3.2.9 requires a stability check. For non-uniform loads it calls for a dedicated stability analysis. That analysis has not been done.
+   - The empirical stability formula for cylindrical shells in JGJ 22-2012 was not retrieved [?].
+   - The 6.2.4 member formula for second-order moments is replaced here by the FE-based amplifier [J].
+   - A two-layer mesh might allow a thinner shell. It is a design change for Day 26 [J].
+
+## Sources read for this note (Day 25 additions)
+
+- GB 50010-2010 (2015 edition), clauses 4.1.1, 4.1.5, 4.2.5, 6.2.1, 6.2.3, 6.2.5-6.2.7; GB 50010-2010 (2024 edition), 6.2.17 (formula images); JGJ 22-2012, 3.2.1, 3.2.9, 3.3.2. All were read on 3 Nov 2026 in third-party web copies, which are not linked here.
+- BIPM, Declaration 2 of the 3rd CGPM (1901): <https://www.bipm.org/en/committees/cg/cgpm/3-1901/resolution-2>.
 
 ## Sources read for this note
 
