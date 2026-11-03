@@ -19,7 +19,7 @@ Newest entry first. Each Claude reads this at the start of a session and adds an
 
 **Open**
 - The author must confirm every clause in their own copy of each code. The clauses were read in third-party copies whose licence was not checked.
-- The JGJ 22-2012 stability rule and safety factor were not retrieved (3.2.9 asks for a dedicated analysis under non-uniform load). Buckling is still linear, with no imperfection knock-down.
+- JGJ 22-2012 has no cylindrical-shell stability formula. The contents show stability only in 5.3 and 6.4, with none in chapter 7. A dedicated stability analysis (3.2.9) with an imperfection allowance is a to-do for Day 26 or later. Buckling is still linear.
 - The H3 numerical clause was not found, so the default rule stands. Secondary sources: IBC 1604.4 (rigid), ASCE 7-16 12.3.1.3 (flexible).
 - The dataset DOI is open.
 - Day 26: consider a two-layer mesh to thin the shell [J].
