@@ -18,10 +18,10 @@ Newest entry first. Each the AI assistant reads this at the start of a session a
 **Decisions by the author:** plan approved; prestressed ties approved.
 
 **Open**
-- The author must confirm every clause in their own copy of each code. The clauses were read in third-party copies whose licence was not checked.
+- Clauses: the author checked every GB 50010, JGJ 22 and GB 50011 clause cited here against their own copies on 3 Nov 2026. Done.
 - JGJ 22-2012 has no cylindrical-shell stability formula. The contents show stability only in 5.3 and 6.4, with none in chapter 7. A dedicated stability analysis (3.2.9) with an imperfection allowance is a to-do for Day 26 or later. Buckling is still linear.
 - The H3 numerical clause was not found, so the default rule stands. Secondary sources: IBC 1604.4 (rigid), ASCE 7-16 12.3.1.3 (flexible).
-- The dataset DOI is open.
+- Dataset DOI: not minted on purpose. Schedule (11 Nov, Day 33) and preregistration 2.4 gate it on the Day 31 checks and on the surrogate code being frozen first, and the family dataset does not exist yet. Release v0.4 on 11 Nov after the gate.
 - Day 26: consider a two-layer mesh to thin the shell [J].
 
 ## 3 Nov 2026, the AI assistant (Day 17 and Day 25 sync)
