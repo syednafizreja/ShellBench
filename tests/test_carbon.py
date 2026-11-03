@@ -40,6 +40,7 @@ def quantities(cases) -> list[dict]:
 
 
 def _qty(rows, source, element, material):
+    """Return the quantity of one element from the rows of a carbon table."""
     return next(r["quantity"] for r in rows if r["steel_source [text]"] == source
                 and r["element [text]"] == element and r["material [text]"] == material)
 
@@ -117,6 +118,7 @@ def test_footing_hand_check(cases):
 
 
 def _write_factors(path: Path, rows: list[str]) -> Path:
+    """Write a factor CSV with the standard header and return its path."""
     header = ",".join(cb.FACTOR_FIELDS)
     path.write_text("\n".join([header, *rows]) + "\n", encoding="utf-8")
     return path
