@@ -2,6 +2,11 @@
 
 Newest entry first. Each session reads this at the start of a session and adds an entry at the end (see "Sync with cloud the assistant" in CONTRIBUTING.md).
 
+## 3 Nov 2026, weekly maintenance run (cloud)
+
+**Done:** pytest 153 passed with CalculiX 2.21. Added docstrings to seven helper functions (PR assistant/fixes-2026-11-03). README refreshed in a separate PR (assistant/landing-2026-11-03).
+**Open:** none from this run. No open issues labelled bug. Regenerating results/anchor_carbon.csv here differs from the committed file only in line endings.
+
 ## 3 Nov 2026 (later), laptop session (Day 17 approval and Day 25 correction)
 
 **Done**
