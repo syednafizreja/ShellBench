@@ -189,6 +189,12 @@ Choices [J]: normalised by the paper's own 0.3024 and 0.0940 (the roof is 2.2 % 
 Tomorrow: Day 17 pre-registration (GATE: my approval), Day 25.
 Compliance: sources - MacNeal and Harder (1985) pp. 8, 9, 11; COMSOL and Altair pages as a cross-check on the roof data. AI use - The AI assistant implemented the code and tests and read the values with my permission. Numbers - benchmark values from the paper; results from the code run of 2 Nov. Data - nothing confidential; thesis_source/ not tracked; the paper copy not committed. Repo - branch day24-benchmarks, PR #90.
 
+## Day 17 - 3 Nov 2026 (pre-registration, GATE)
+
+Done: docs/preregistration.md section 2, the analysis plan for H1-H4. It covers the quantities, the valid-building rule, a decision rule for each hypothesis with thresholds marked [J], a Deviations list and the sensitivity cases. No family row exists. It is pre-registered once the author approves and merges it.
+Open for the author: the [J] thresholds (95 % H1, 1.5 and 90/88/80 % H4, 10 % and the majority rule in H3, the 5 % failure stop); ASCE 7 cl. 12.3.1.3 delta_d/Delta > 2 is [?] until opened.
+Compliance: sources - charter, research_question.md, schedule.md. AI use - The AI assistant drafted the plan, and the author decides. Numbers - thresholds are [J], with no results. Repo - branch day17-preregistration, merged by the author only after approval.
+
 ## Day 16 - 2 Nov 2026 (generator)
 
 Done: src/shellbench/generator.py sizes a regular RC frame from building inputs, following docs/design_rules.md R3-R16: preliminary sizes, a 2D OpenSeesPy frame, D, L, G_E and base-shear E cases (psi_T 0.7), drift loop, axial ratio, beam steel at the ends and mid-span with the GB 55001/55002 factors, bars and frame quantities, with a log of each sizing pass. tests/test_generator_anchor.py (6 tests); pytest 138 passed. `shellbench.__version__` set to 0.1.0 to match pyproject (ShellForm's request).
