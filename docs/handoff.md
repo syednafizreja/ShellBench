@@ -2,6 +2,11 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 3 Nov 2026, weekly maintenance run (cloud)
+
+**Done:** pytest 153 passed with CalculiX 2.21. Added docstrings to seven helper functions (PR fixes-2026-11-03). README refreshed in a separate PR (landing-2026-11-03).
+**Open:** none from this run. No open issues labelled bug. Regenerating results/anchor_carbon.csv here differs from the committed file only in line endings.
+
 ## 3 Nov 2026 (later), the AI assistant (Day 17 approval and Day 25 correction)
 
 **Done**
