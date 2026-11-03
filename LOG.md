@@ -189,6 +189,13 @@ Choices [J]: normalised by the paper's own 0.3024 and 0.0940 (the roof is 2.2 % 
 Tomorrow: Day 17 pre-registration (GATE: my approval), Day 25.
 Compliance: sources - MacNeal and Harder (1985) pp. 8, 9, 11; COMSOL and Altair pages as a cross-check on the roof data. AI use - Claude implemented the code and tests and read the values with my permission. Numbers - benchmark values from the paper; results from the code run of 2 Nov. Data - nothing confidential; thesis_source/ not tracked; the paper copy not committed. Repo - branch day24-benchmarks, PR #90.
 
+## Day 25 - 3 Nov 2026 (one shell panel, floor-r3)
+
+Done: src/shellbench/floorpanel.py and tests/test_floorpanel.py (3 tests); pytest 148 passed. The panel is layout A, 6.6 m span, 7.2 m wide, f = L/15, t = 60 mm, ties at 1.2 m, raised floor and finishes, office live load (all inputs [J] or sourced in the module).
+Results: design load 7.42 kPa (1.3D + 1.5L). Closed-form thrust 91.8 kN/m; CalculiX S8R thrust from the crown membrane stress 91.4 kN/m (-0.5 %, limit 10 %). Tie force 110 kN, A_t 306 mm^2 (one C20, 314 mm^2) per 1.2 m. Crown deflection 0.85 mm; first buckling factor 5.8; largest |sxx| 2.0 MPa against f_c 19.1 MPa. Quantities per m^2 of plan: concrete 0.0607 m^3, mesh 1.02 kg, ties 2.00 kg.
+Not yet: pattern live load (half-span), which drives bending and may set the mesh; tie anchorage into the frame beam; the beam's weak-axis check at end frames. These go to Day 26 before the floor library.
+Compliance: sources - floor_concept.md, GB 50010 values already checked, Oval et al. 2023 Table 6. AI use - Claude wrote the code. Numbers - from the CalculiX run of 3 Nov. Repo - branch day25-panel.
+
 ## Day 16 - 2 Nov 2026 (generator)
 
 Done: src/shellbench/generator.py sizes a regular RC frame from building inputs, following docs/design_rules.md R3-R16: preliminary sizes, a 2D OpenSeesPy frame, D, L, G_E and base-shear E cases (psi_T 0.7), drift loop, axial ratio, beam steel at the ends and mid-span with the GB 55001/55002 factors, bars and frame quantities, with a log of each sizing pass. tests/test_generator_anchor.py (6 tests); pytest 138 passed. `shellbench.__version__` set to 0.1.0 to match pyproject (ShellForm's request).
