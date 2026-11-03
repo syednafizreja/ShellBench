@@ -9,7 +9,7 @@ This file holds the four hypotheses of ShellBench, the analysis that will test e
 | Part | What it holds | Status |
 |---|---|---|
 | 1. Hypotheses | H1-H4, verbatim | Committed 25 Oct 2026, before any family result exists |
-| 2. Analysis plan | Variables, comparisons and decision rules for each hypothesis | To be written and committed by 3 Nov 2026 (charter date "Hypotheses committed"), before the 200-building pilot in Week 3 |
+| 2. Analysis plan | Variables, comparisons and decision rules for each hypothesis | Approved by the author on 3 Nov 2026 (charter date "Hypotheses committed"), before any family row, pilot run or surrogate run |
 | 3. Verdicts | One verdict per hypothesis, with the result files behind it | After Week 5 (H1-H3) and Week 7 (H4) |
 
 The hypotheses were committed ahead of the 3 Nov date so that the public record of their wording is as early as possible. No family result, pilot run or surrogate run existed when they were committed: the repository at this point holds only the anchor building under gravity load (Days 5-6). Git history gives the timestamp.
@@ -26,7 +26,7 @@ The hypotheses were committed ahead of the 3 Nov date so that the public record 
 
 ## 2. Analysis plan
 
-**DRAFT, 3 Nov 2026: awaiting the author's approval (Day 17 GATE).** Claude drafted this plan before any family row, pilot run or surrogate run existed. It counts as committed only when the author approves it. The Status row changes only then. No family row (Day 19 onwards) is run before approval. The research question and the Option A design fixes it follows are in [research_question.md](research_question.md). Every threshold below marked [J] is Claude's proposal, and the author confirms or changes it.
+**Approved by the author, 3 Nov 2026 (Day 17 gate closed).** Claude drafted this plan before any family row, pilot run or surrogate run existed, and the author approved all of it, including every threshold marked [J], on the same day. Any later change goes in the change log (2.0, "Changes"). The research question and the Option A design fixes it follows are in [research_question.md](research_question.md). Thresholds marked [J] were proposed by Claude and approved by the author.
 
 ### 2.0 Rules for all four hypotheses
 
@@ -63,11 +63,11 @@ The pipeline follows schedule.md (Track B, Days 43-47). Its code and hyperparame
 - **Measured.** RMSE and MAE of the whole-building carbon of each of the three models on each split. Empirical coverage of split-conformal intervals at a nominal 90 % on the unseen-storey split. Agreement between the floor system the surrogate picks (lower predicted carbon) and the one the full analysis picks.
 - **Verdict rule [J].** *Supported* if, for the best model on the random split, its RMSE on unseen storeys is at least 1.5 times its random-split RMSE, the conformal coverage on unseen storeys is between 88 % and 92 %, and the floor-system choice agrees in at least 80 % of test buildings. *Partly supported* if one or two of the three hold. *Not supported* if none holds. The leakage test (schedule, Day 46) must pass before any H4 verdict is given.
 
-### 2.5 Author items before approval
+### 2.5 Author items (approved 3 Nov 2026)
 
-1. The thresholds marked [J]: "every building" and 90 % (H1), the permutation test and "more than half of slices" (H2), the 5 % and the default rigidity rule (H3), and 1.5×, 88-92 % and 80 % (H4).
-2. The H1 population: each building's best shell variant, with all variants reported.
-3. The GB 50011 / JGJ 3 rigid-diaphragm clause (H3).
+1. The thresholds marked [J]: "every building" and 90 % (H1), the permutation test and "more than half of slices" (H2), the 5 % and the default rigidity rule (H3), and 1.5×, 88-92 % and 80 % (H4). Approved.
+2. The H1 population: each building's best shell variant, with all variants reported. Approved.
+3. The GB 50011 / JGJ 3 rigid-diaphragm clause (H3). Approved as written: the default rule applies unless a numerical clause is found before Day 27. Its source is still to be confirmed.
 
 ## 3. Verdicts
 
