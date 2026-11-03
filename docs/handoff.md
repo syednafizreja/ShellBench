@@ -2,6 +2,26 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 3 Nov 2026, Claude Code in VS Code (Day 17 and Day 25 sync)
+
+**Done:**
+- PR #94 merged.
+- Day 17: the H1-H4 analysis plan is drafted in preregistration.md section 2. It is marked DRAFT, and the Status row is unchanged.
+- Day 25: `panel.py` sizes one vault panel. The rigid-tie thrust is 0.994-0.997 of wL²/8f, so floor-r3 is met.
+- Sized panel: 60 mm with prestressed ties every 1.2 m.
+- Checks: pytest 150 passed. anchor_frame was re-run and results/ is byte-identical.
+
+**Decisions (Claude's, for the author to confirm) [J]:**
+- Ties are prestressed to hold the dead-load spread at zero. Unstressed ties lose 4-17 % of the thrust and fail the pattern-load check at every thickness (floor_concept, Panel sizing).
+- Prestressed ties go into the Day 26 family.
+
+**Open:**
+- **Day 17 GATE:** the author approves or changes the plan, including the [J] thresholds in 2.5. This must happen before Day 19, the first family row.
+- Constants not yet traced to a clause: ν, E_s, α1, ξb and g.
+- The GB 50010 eccentric-compression check is not done; the section check is a simplified one-layer method.
+- Buckling has no imperfection knock-down.
+- The dataset DOI string is still open.
+
 ## 2 Nov 2026, Claude Code in VS Code (Day 24 sync)
 
 **Done:** Day 24 merged in PR #90, which replaces the "Day 24 is gated" notes below. Finest mesh: Scordelis-Lo roof 0.9984, pinched hemisphere 0.9965, both within 2 %; `figures/benchmarks_convergence.png` saved for Paper 1. After the merge, on main: pytest 145 passed; `python -m shellbench.anchor_frame` run; `results/` byte-identical (figures restored). CI ran all 145 with none skipped on CalculiX 2.21; the laptop runs 2.23.
