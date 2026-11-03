@@ -129,6 +129,7 @@ class Plan:
         return sum(BAYS_X_M[i] * SPANS_Y_M[j] for i, j in self.panels)
 
     def _has(self, i: int, j: int) -> bool:
+        """Return True if panel (i, j) is part of this plan."""
         return (i, j) in self.panels
 
     def columns(self) -> list[tuple[int, int]]:
@@ -354,6 +355,7 @@ def footings(plan: Plan, cases: dict[str, c.CaseResult]) -> list[Footing]:
 
 def _row(plan: Plan, source: str, element: str, material: str, unit: str,
          qty: float) -> dict:
+    """Return one carbon-table row for a quantity [unit given by ``unit``] of one element."""
     floor = N_SLAB_LEVELS * plan.area_m2()
     return {"plan [text]": plan.name, "steel_source [text]": source,
             "element [text]": element, "material [text]": material,
