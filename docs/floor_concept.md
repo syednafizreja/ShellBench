@@ -189,11 +189,11 @@ Both finest meshes are within the 2 % Done-when. The figure is `figures/benchmar
    - minimum shell thickness of 50 mm: JGJ 22-2012 3.3.2
    - g: there is no code clause. Standard gravity is 9.80665 m/s² (3rd CGPM 1901, Declaration 2), rounded to 9.81 [J].
 
-   The clauses were read on 3 Nov in third-party web copies, of the 2015 and 2024 editions. Their licence was not checked, so the copies and their links are not in this repo. Confirm each clause in your own copy.
+   The clauses were read on 3 Nov in third-party web copies, of the 2015 and 2024 editions. Their licence was not checked, so the copies and their links are not in this repo. The author checked each clause against their own copies of the codes on 3 Nov 2026.
 6. **Limits.**
    - Buckling uses linear eigenvalues, with no imperfection knock-down.
    - JGJ 22-2012 3.2.9 requires a stability check. For non-uniform loads it calls for a dedicated stability analysis. That analysis has not been done.
-   - JGJ 22-2012 gives no stability formula for cylindrical shells. Its contents list stability checks only in 5.3 (rotational shells) and 6.4 (double-curved shallow shells). Chapter 7 (cylindrical shells) has none. The 3.2.9 requirement for a dedicated analysis therefore governs this vault [J]. Checked in a third-party contents page on 3 Nov 2026; confirm in your own copy.
+   - JGJ 22-2012 gives no stability formula for cylindrical shells. Its contents list stability checks only in 5.3 (rotational shells) and 6.4 (double-curved shallow shells). Chapter 7 (cylindrical shells) has none. The 3.2.9 requirement for a dedicated analysis therefore governs this vault [J]. Checked in a third-party contents page on 3 Nov 2026; the author checked it against their own copy the same day.
    - The 6.2.4 member formula for second-order moments is replaced here by the FE-based amplifier [J].
    - A two-layer mesh might allow a thinner shell. It is a design change for Day 26 [J].
 
