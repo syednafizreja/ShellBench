@@ -3,7 +3,8 @@
 [![Tests](https://github.com/syednafizreja/ShellBench/actions/workflows/tests.yml/badge.svg)](https://github.com/syednafizreja/ShellBench/actions/workflows/tests.yml)
 ![Python 3.12](https://img.shields.io/badge/python-3.12-blue)
 ![Licence: MIT](https://img.shields.io/badge/licence-MIT-green)
-![Status: Day 22, 30 Oct 2026](https://img.shields.io/badge/status-day%2022%20(30%20Oct%202026)-orange)
+![Release: v0.1.0](https://img.shields.io/badge/release-v0.1.0-blue)
+![Status: 3 Nov 2026](https://img.shields.io/badge/status-3%20Nov%202026-orange)
 
 **How much do thin-shell floors cut the whole-building A1–A3 embodied carbon of a GB 50010 / GB 50011 RC frame across 3–8 storeys, and how does the saving change with storey count and seismic intensity once diaphragm, tie and topping needs are met?**
 
@@ -11,18 +12,20 @@
 
 A thinner floor weighs less. Less weight means smaller seismic forces, which can mean smaller beams, columns and footings. ShellBench follows that chain through the whole building, using real design codes, rather than comparing floors on their own.
 
-> **Status (30 Oct 2026, Day 22).** Week 1 is complete ([review](docs/week01_review.md)). The anchor model is built and checked; the shell floor work has started. Daily progress is in [LOG.md](LOG.md). First release: [v0.0.1](https://github.com/syednafizreja/ShellBench/releases/tag/v0.0.1), "Baseline spec and gravity check".
+> **Status (3 Nov 2026).** Release [v0.1.0](docs/releases/v0.1.0.md) (1 Nov) validated the anchor. Since then the frame generator, the shell benchmarks and one sized shell panel have been added, and the analysis plan has been approved. Daily progress is in [LOG.md](LOG.md); the last handover is in [docs/handoff.md](docs/handoff.md).
 
 | Area | State |
 |---|---|
-| Thesis audit and validation targets | Done. 16 thesis inconsistencies (B1–B16) each have a recorded decision. |
-| Anchor frame (OpenSeesPy) | Dead, live and combined gravity load, wind, the GB 50011 base-shear method and a response-spectrum check with a 3D model are in `src/shellbench/`. Every difference above 10 % from the thesis has a written reason ([docs/anchor_notes.md](docs/anchor_notes.md)). |
-| Design checks and quantities | GB 50010 / GB 50011 checks of the beams and columns, a quantity take-off and an A1–A3 carbon step are in the package. |
-| Shell floor | Concept approved (layout A, Day 22; [docs/floor_concept.md](docs/floor_concept.md)). A CalculiX smoke test differs from the closed form by 0.005 %. |
-| Tests | pytest: 132 passed (31 Oct 2026). |
-| Open | The GB 50011 / JGJ 3 topping rule is still [?] and is needed before Day 27. |
+| Thesis audit and validation targets | Done. Each inconsistency found in the thesis has a recorded decision ([docs/baseline_spec.md](docs/baseline_spec.md), [docs/anchor_report.md](docs/anchor_report.md)). |
+| Anchor frame (OpenSeesPy) | Gravity, wind, the GB 50011 base-shear method and a response-spectrum check with a 3D model are in `src/shellbench/`. Every difference above 10 % from the thesis has a written reason ([docs/anchor_notes.md](docs/anchor_notes.md)). Released as v0.1.0. |
+| Design checks and carbon | GB 50010 / GB 50011 checks, a quantity take-off and an A1–A3 carbon step ([results/anchor_carbon.csv](results/anchor_carbon.csv)). |
+| Generator | `generator.py` sizes a regular RC frame from building inputs, following [docs/design_rules.md](docs/design_rules.md). It is checked against the anchor (Day 16, [LOG.md](LOG.md)). The batch runner and data format are next (Day 18, [docs/schedule.md](docs/schedule.md)). |
+| Analysis plan | H1–H4 and the plan were approved by the author on 3 Nov 2026 ([docs/preregistration.md](docs/preregistration.md)). No family result exists yet. |
+| Shell floor | Concept approved ([docs/floor_concept.md](docs/floor_concept.md)). Form-finding and a CalculiX wrapper are done. Both benchmarks are within 2 % at the finest mesh ([figures/benchmarks_convergence.png](figures/benchmarks_convergence.png)). One panel is sized: 90 mm with prestressed ties ([results/panel_day25.csv](results/panel_day25.csv)). |
+| Tests | pytest: 153 passed (3 Nov 2026, [docs/handoff.md](docs/handoff.md)). CI runs them on every push ([workflow](.github/workflows/tests.yml)). |
+| Open | The GB 50011 / JGJ 3 topping rule is still [?] ([docs/floor_concept.md](docs/floor_concept.md) 4.4). JGJ 22-2012 has no cylindrical-shell stability formula, so a dedicated stability analysis is still to do. The dataset DOI is not minted yet ([docs/handoff.md](docs/handoff.md)). |
 
-Plan: the build ends 13 Nov, the author checks 14–17 Nov, v1.0 follows on 17 Nov, and Paper 1 is submitted by 22 Nov.
+Plan: the build ends 13 Nov, the author checks 14–17 Nov, v1.0 follows on 17 Nov, and Paper 1 is submitted by 22 Nov ([docs/schedule.md](docs/schedule.md)).
 
 ---
 
@@ -46,17 +49,32 @@ flowchart LR
     classDef doing fill:#fff3c4,stroke:#b8860b,color:#000;
     classDef todo fill:#eeeeee,stroke:#888,color:#000;
     class T,A,V,M done;
-    class S doing;
-    class G,F,D,AI,P1,P2 todo;
+    class S,G doing;
+    class F,D,AI,P1,P2 todo;
 ```
 
-Green: done. Yellow: in progress. Grey: not started.
+Green: done. Yellow: in progress (shell floor module; generator proven on the thesis building, family not yet run). Grey: not started. Source: [LOG.md](LOG.md).
 
 1. **Anchor.** Rebuild the thesis building in code (gravity, wind, earthquake), add the code checks and the embodied-carbon count, and match the thesis results.
 2. **Generator.** Write code that designs a building the way the thesis did, prove it on the thesis sizes, then use it to produce a family of buildings.
 3. **Shell floor.** Form-find a vaulted floor panel, check it with a benchmarked shell finite-element solver, and size it for thickness, ties and buckling.
 4. **Comparison.** Design every building in the family twice, once with a flat slab and once with a shell floor, and explain the saving term by term.
 5. **Surrogate.** Train a fast model on the family and test whether it picks the same floor as the full design.
+
+## Progress
+
+Dates are from [LOG.md](LOG.md) and [docs/schedule.md](docs/schedule.md).
+
+```mermaid
+timeline
+    title ShellBench, 18 Oct to 17 Nov 2026
+    18-25 Oct : Thesis audit, baseline spec, gravity check : v0.0.1
+    26-31 Oct : Wind, seismic, design checks, carbon : Anchor report
+    1 Nov : v0.1.0 released
+    2-3 Nov : Generator, shell benchmarks : Analysis plan approved : One shell panel sized
+    4-13 Nov (planned) : Batch runner, floor library, family and results
+    14-17 Nov (planned) : Author checks : v1.0
+```
 
 ## Roadmap
 
@@ -65,9 +83,9 @@ Each week has a GitHub issue with its goals.
 | Week | Dates (2026) | Goal | Release | Status |
 |---|---|---|---|---|
 | 1 | 19–25 Oct | [Audit the thesis and model it under gravity](https://github.com/syednafizreja/ShellBench/issues/1) | v0.0.1 | Done |
-| 2 | 26 Oct–1 Nov | [Finish the anchor: lateral loads, code checks, carbon](https://github.com/syednafizreja/ShellBench/issues/2) | v0.1 (31 Oct) | In progress |
-| 3 | 1–7 Nov | [The generator and the building family](https://github.com/syednafizreja/ShellBench/issues/3) | v0.2 | Not started |
-| 4 | 30 Oct–6 Nov (alongside week 3) | [The thin-shell floor module](https://github.com/syednafizreja/ShellBench/issues/4) | v0.3 (5 Nov) | In progress (concept approved) |
+| 2 | 26 Oct–1 Nov | [Finish the anchor: lateral loads, code checks, carbon](https://github.com/syednafizreja/ShellBench/issues/2) | [v0.1.0](docs/releases/v0.1.0.md) (1 Nov) | Done |
+| 3 | 1–7 Nov | [The generator and the building family](https://github.com/syednafizreja/ShellBench/issues/3) | v0.2 | In progress (generator built, Day 16) |
+| 4 | 30 Oct–6 Nov (alongside week 3) | [The thin-shell floor module](https://github.com/syednafizreja/ShellBench/issues/4) | v0.3 (5 Nov) | In progress (benchmarks and one panel done) |
 | 5 | 7–13 Nov | [Whole-building results](https://github.com/syednafizreja/ShellBench/issues/5) | dataset DOI (11 Nov) | Not started |
 | 6 | 4–22 Nov | [Write and submit Paper 1](https://github.com/syednafizreja/ShellBench/issues/6) | submitted by 22 Nov | Not started |
 | 7 | 7–13 Nov | [The AI surrogate study](https://github.com/syednafizreja/ShellBench/issues/7) | v0.5 | Not started |
@@ -75,7 +93,7 @@ Each week has a GitHub issue with its goals.
 
 Dates moved on 28 Oct 2026 with the author's approval: the build ends 13 Nov, 14-17 Nov is the author's check window, and no check is dropped. The day-by-day map is [docs/schedule.md](docs/schedule.md).
 
-The hypotheses (H1–H4) will be frozen in public in Week 3, before any family result exists.
+The hypotheses (H1–H4) and their analysis plan are in [docs/preregistration.md](docs/preregistration.md), approved before any family result exists.
 
 Reuse items built into the weeks above (details in [docs/impact_strategy.md](docs/impact_strategy.md)): carbon factors as data files and a Zenodo DOI for every release from v0.1 (Week 2); buildings defined as data, not code (Week 3); a written floor plug-in contract with a conformance test (Week 4); reference problems and a datasheet in the dataset (Week 5); one-command reproduction of each paper's figures (Weeks 6 and 8); JOSS-ready documentation and two tutorials in v1.0 (Week 8).
 
@@ -96,7 +114,10 @@ Reuse items built into the weeks above (details in [docs/impact_strategy.md](doc
 | [notes/gb50011_base_shear_primer.md](notes/gb50011_base_shear_primer.md) | Study note on the GB 50011 base-shear method worked on the thesis building, with the clauses to check before Day 9. |
 | [docs/impact_strategy.md](docs/impact_strategy.md) | How others will reuse and cite ShellBench: what the charter already covers, additions A1-A10 placed in Weeks 2-8 without moving a date, and ideas parked under Later. |
 | [docs/floor_concept.md](docs/floor_concept.md) | The approved shell floor concept (layout A), levelling options and the f/L range 1/8 to 1/20. |
-| [src/shellbench/](src/shellbench/) | Also holds the wind, seismic, response-spectrum, 3D anchor, design-check, carbon and CalculiX modules, each with tests. |
+| [src/shellbench/](src/shellbench/) | Also holds the wind, seismic, response-spectrum, 3D anchor, design-check, carbon, CalculiX, form-finding, shell finite-element, panel and generator modules, each with tests. |
+| [docs/anchor_report.md](docs/anchor_report.md), [docs/design_rules.md](docs/design_rules.md) | What the anchor reproduces and what it does not; the rules the generator follows. |
+| [docs/preregistration.md](docs/preregistration.md) | H1–H4 and the approved analysis plan. |
+| [validation/benchmarks.csv](validation/benchmarks.csv) | Geometry, loads and reference answers of the two shell benchmarks, each with its page. |
 | [docs/q1_standards.md](docs/q1_standards.md) | Journal and publication-ethics rules (Elsevier, Springer Nature, COPE) that the project follows every day, with a daily compliance check. |
 
 ## The anchor building
@@ -120,14 +141,16 @@ The thesis is kept private and is not in this repository. Only the values typed 
 
 ```
 ShellBench/
-├── src/shellbench/       Python package (anchor frame, wind, seismic, carbon, CalculiX)
+├── src/shellbench/       Python package (anchor frame, wind, seismic, carbon, generator, shell floor, CalculiX)
 ├── tests/                pytest suite
-├── docs/                 specifications, literature, charter and journal-rule notes
+├── docs/                 specifications, literature, charter, schedule, handoff, releases
 ├── validation/
-│   └── thesis_values/    thesis results as CSV validation targets, with flags
+│   ├── thesis_values/    thesis results as CSV validation targets, with flags
+│   └── benchmarks.csv    shell benchmark reference values
 ├── data/                 input data (carbon factors)
+├── .github/workflows/    CI (tests) and release
 ├── results/              generated results (anchor frame, gravity)
-├── figures/              generated figures
+├── figures/              generated figures (PNG)
 ├── paper/                manuscripts (empty so far)
 ├── notes/                working notes (GB 50010 and GB 50011 primers)
 ├── .claude/commands/     /sync and /today commands
@@ -167,7 +190,9 @@ Code and documents in this repository are drafted with Claude (Anthropic) and ch
 
 ## How to cite
 
-Citation metadata is in [CITATION.cff](CITATION.cff); GitHub's "Cite this repository" button uses it. The repository is public, and Zenodo mints a DOI for each GitHub release, so only final files are released.
+Citation metadata is in [CITATION.cff](CITATION.cff) (version 0.1.0, released 2026-11-01); GitHub's "Cite this repository" button uses it. Zenodo mints a DOI for each GitHub release. The DOI string is not yet in `CITATION.cff` ([docs/handoff.md](docs/handoff.md)).
+
+> Hasib, S. N. R. (2026). *ShellBench* (version 0.1.0) [Software]. https://github.com/syednafizreja/ShellBench
 
 ## Author
 
