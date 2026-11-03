@@ -2,6 +2,28 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 3 Nov 2026 (later), Claude Code in VS Code (Day 17 approval and Day 25 correction)
+
+**Done**
+- Day 17: the author approved the analysis plan, all [J] thresholds and the H1 population. docs/preregistration.md is marked approved (PR #96).
+- Day 25 correction (PR #97): the section check is now GB 50010-2010 6.2.17, as JGJ 22-2012 3.2.1 requires.
+  - It includes e_a from 6.2.5 and a second-order amplifier 1/(1 - 1/λ) [J].
+  - **The sized panel is 90 mm with prestressed ties** (25/25/28 mm). The earlier 60 mm result is withdrawn.
+  - The Done-when is unchanged.
+  - floor_concept "Panel sizing" is rewritten, and the LOG has a dated correction note.
+  - Issue #4 has a follow-up comment.
+- Constants traced to clauses: ν 4.1.5; E_s Table 4.2.5; α1 and β1 6.2.6; εcu 6.2.1-5; ξb 6.2.7-1; e_a 6.2.5. g is the CGPM 1901 value, rounded [J].
+- Sync: pytest 153 passed; anchor_frame ran; results/ is unchanged apart from panel_day25.csv, which changed on purpose.
+
+**Decisions by the author:** plan approved; prestressed ties approved.
+
+**Open**
+- The author must confirm every clause in their own copy of each code. The clauses were read in third-party copies whose licence was not checked.
+- The JGJ 22-2012 stability rule and safety factor were not retrieved (3.2.9 asks for a dedicated analysis under non-uniform load). Buckling is still linear, with no imperfection knock-down.
+- The H3 numerical clause was not found, so the default rule stands. Secondary sources: IBC 1604.4 (rigid), ASCE 7-16 12.3.1.3 (flexible).
+- The dataset DOI is open.
+- Day 26: consider a two-layer mesh to thin the shell [J].
+
 ## 3 Nov 2026, Claude Code in VS Code (Day 17 and Day 25 sync)
 
 **Done:**
