@@ -2,6 +2,30 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 4 Nov 2026 (later), Claude Code in VS Code (Day 26 code values and sync)
+
+This entry replaces the "Open (author)" list of the entry below.
+
+**Done**
+- PR #107: GB 50011-2010 (2016 edition) values read by Claude from the IISEE copy and put in the code. Author to confirm each one in your own copy.
+  - α_max frequent (Table 5.1.4-1, p. 33).
+  - PGA→intensity (Table 3.2.2, p. 6).
+  - Frame height limit (Table 6.1.1, p. 48).
+  - Frame grade (Table 6.1.2, p. 49).
+  - Axial ratio limits (Table 6.3.6, p. 62).
+- New status `outside_code`: s07-p040 and s08-p040 are taller than 24 m at 9 degrees. The rows are kept but not run. Full family: 34 ok, 2 outside_code, 0 failed. Sample: all 10 rows ok.
+- family_rc now has 36 columns (seismic_grade and axial_ratio_limit added); family_shell columns follow from 37.
+- Two-layer capacity fix: the check now takes the larger valid branch of GB 50010 6.2.17 (Claude's reading, author to confirm). Floor library rebuilt: 72 of 72 sized at 70-100 mm, and two layers are now 0-20 mm thinner than one.
+- JGJ 22 stability: closed [J]. It is covered by linear λ (lowest 9.0) through the 1/(1 − 1/λ) amplifier.
+- Issues #3 and #4 have comments.
+- Sync: pytest 168 passed; anchor_frame rerun, results/ byte-identical.
+
+**Open**
+- Fill carbon factors (due Fri 6 Nov).
+- Take-off scope (Day 19/20).
+- Paper 1 Methods start (author).
+- Author to confirm the GB 50011 table values and the 6.2.17 reading.
+
 ## 4 Nov 2026, Claude Code in VS Code (Day 18 and Day 26)
 
 **Done**
