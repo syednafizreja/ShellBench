@@ -180,6 +180,14 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 18 - 4 Nov 2026 (batch runner, frozen data format)
+
+Done: src/shellbench/family.py (batch runner: seeded sampling of the frozen family definition, one row per building, nothing dropped, CSV plus parquet when pyarrow is present); docs/data_card.md part 1 (frozen columns, units, meanings, family definition); 10-row sample in results/family_sample/ (pre-release, not for results); tests/test_family.py (3 tests). pytest 156 passed.
+Sample: 2 of 10 rows ok (0.10 g), 8 not_run because alpha_max at 0.05, 0.15, 0.20, 0.30 and 0.40 g is not confirmed from GB 50011 Table 5.1.4-1. A 36-building check run sized all six 0.10 g buildings with no failure and no resize: columns 450-700 mm, drift 1/1314 or less, axial ratio 0.46-0.54, frame-strip carbon 68-81 kgCO2e/m^2.
+Choices [J]: family ranges and steps (data_card.md); every storey-PGA cell gets an equal share; frame-strip carbon only for now, whole-building columns to be added before Day 20.
+Open: alpha_max for the other five PGA levels and the PGA-intensity map (Table 3.2.2) from the author's GB 50011 copy, or the family runs at 0.10 g only and H2's PGA half is "not tested".
+Compliance: sources - generator.py, data/carbon_factors.csv (GBT51366, D29), preregistration.md 2.1. AI use - The AI assistant wrote the code and the card. Numbers - from the runs of 4 Nov. Repo - branch day18-batch-runner.
+
 ## Day 17 and Day 25 - 3 Nov 2026 (analysis plan drafted; one sized panel, floor-r3)
 
 Day 17, drafted with the gate still open: docs/preregistration.md section 2 now holds the analysis plan for H1-H4 (quantity, population, comparison, verdict rule). It is marked DRAFT. The Status row still says "to be written", and it changes only when I approve. The thresholds marked [J] and the H1 population are listed in section 2.5 for me to decide. No family row (Day 19 onwards) is run before I approve. H1-H4 are untouched.

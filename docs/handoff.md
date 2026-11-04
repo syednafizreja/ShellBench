@@ -2,6 +2,12 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 4 Nov 2026, the AI assistant (Day 18)
+
+**Done:** `family.py` batch runner, `docs/data_card.md` part 1 (data format frozen today), 10-row sample, 3 tests; pytest 156 passed.
+**Decisions [J]:** family ranges in data_card.md; the carbon column is frame-strip only for now.
+**Open:** alpha_max at the other PGA levels and Table 3.2.2 (author's GB 50011 copy); whole-building quantity columns before Day 20; parquet needs pyarrow in the env (not in CI); Day 26 floor library next.
+
 ## 3 Nov 2026 (later), the AI assistant (Day 17 approval and Day 25 correction)
 
 **Done**
