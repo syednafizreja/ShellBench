@@ -41,7 +41,7 @@ def test_family_size_and_ids():
 
 @pytest.fixture(scope="module")
 def sample():
-    """First eight buildings: six at 0.10 g and two blocked at 0.05 g."""
+    """First eight buildings: six at 0.10 g and two at 0.05 g."""
     return batch.run_family(8)
 
 
@@ -54,13 +54,34 @@ def test_anchor_row_matches_day16(sample):
     assert r["axial_ratio"] == pytest.approx(0.4385, abs=5e-4)
 
 
-def test_blocked_rows_are_kept(sample):
-    """Unconfirmed alpha_max gives a blocked row with a reason, never a dropped one."""
-    blocked = sample[sample["pga_g"] == 0.05]
-    assert len(blocked) == 2
-    assert (blocked["status"] == "blocked").all()
-    assert blocked["failure_reason"].str.contains("not confirmed").all()
-    assert blocked["carbon_building_kgco2e_per_m2"].isna().all()
+def test_blocked_rows_are_kept(monkeypatch):
+    """A missing alpha_max gives a blocked row with a reason, never a dropped one."""
+    monkeypatch.setattr(batch.s, "ALPHA_MAX_FREQUENT", {})
+    spec = batch.family()[0]
+    r = batch.run_building(spec, *batch.factors())
+    assert r["status"] == "blocked" and "not confirmed" in r["failure_reason"]
+    assert r["carbon_building_kgco2e_per_m2"] is None
+
+
+def test_grade_and_axial_limit():
+    """GB 50011 Tables 6.1.2 and 6.3.6 by hand: grade from intensity and height."""
+    assert batch.seismic_grade(7, 15.35) == 3 and batch.FRAME_AXIAL_LIMIT[3] == 0.85
+    assert batch.seismic_grade(7, 26.15) == 2 and batch.FRAME_AXIAL_LIMIT[2] == 0.75
+    assert batch.seismic_grade(6, 24.0) == 4 and batch.seismic_grade(8, 24.01) == 1
+
+
+def test_outside_code_rows_are_kept():
+    """9 degrees: 7 and 8 storeys exceed the 24 m frame limit (Table 6.1.1) and are not run."""
+    rows = [batch.run_building(sp, *batch.factors()) for sp in batch.family() if sp["pga_g"] == 0.40
+            and sp["storeys"] >= 7]
+    assert [r["status"] for r in rows] == ["outside_code", "outside_code"]
+    assert all("Table 6.1.1" in r["failure_reason"] for r in rows)
+
+
+def test_sample_statuses(sample):
+    """With all six alpha_max values, the first eight buildings all run."""
+    assert (sample["status"] == "ok").all()
+    assert sample.loc[sample["pga_g"] == 0.05, "alpha_max"].tolist() == [0.04, 0.04]
 
 
 def test_carbon_adds_up(sample):

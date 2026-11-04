@@ -24,7 +24,11 @@ What changed from Day 25:
 - **Fill at its true depth.** The fill is f − z(x), deepest at the springings, not a uniform f/3. CalculiX runs a fifth unit case with this shaped load. The buckling run carries the same shaped fill.
 - **Two-layer mesh.** a = a′ = cover + 1.5 × mesh bar = 24 mm [J]. The capacity is GB 50010 6.2.17 with A_s = A_s′. In these shells x < 2a′, so the rule in the last paragraph of 6.2.17 (as in 6.2.14) applies: moments are taken about the compression steel. When x > ξ_b h₀ the steel is ignored, as in the one-layer check [J]. Each face carries the minimum ratio, so the mesh mass is 2 × layers × ρ × t × arc factor × 7850 kg/m³ [J].
 - With true fill, the Day 25 ratio check (closed form against FE) is not a pass condition. Spot check 5 replaces it.
-- Buckling is still linear, with no imperfection allowance. The JGJ 22-2012 stability analysis (3.2.9) is still open.
+- Buckling is linear, with no imperfection allowance. JGJ 22-2012 asks for a stability analysis (3.2.9), but chapter 7 gives no stability formula for cylindrical shells (LOG, 3 Nov). Decision of 4 Nov 2026 [J]: stability enters through the linear FE buckling factor λ, in two ways:
+  - the 1/(1 − 1/λ) amplifier in the 6.2.17 check;
+  - the lowest λ in the library is 12.8, far above 1.
+
+  A separate knock-down factor is not added. This item is closed; author to confirm.
 
 `panel.py` gained these as optional keyword arguments only. Rerunning `python -m shellbench.panel` leaves `results/panel_day25.csv` byte-identical.
 
