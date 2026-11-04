@@ -550,8 +550,16 @@ def quantities(b: BuildingInput, z: Sizes, res: GeneratorResult) -> dict[str, fl
     def chosen(entry: tuple[float, str]) -> float:
         return bars_area_mm2(entry[1], entry[0]) / 1e6
 
-    steel_m3 = n * sum((chosen(res.beam_steel[(k, "left top")]) + chosen(res.beam_steel[(k, "mid bottom")])) * L
-                       for k, L in enumerate(b.spans_m))
-    steel_m3 += (len(b.spans_m) + 1) * sum(b.storey_heights_m) * chosen(res.column_steel)
+    beam_steel_m3 = n * sum((chosen(res.beam_steel[(k, "left top")]) + chosen(res.beam_steel[(k, "mid bottom")])) * L
+                            for k, L in enumerate(b.spans_m))
+    column_steel_m3 = (len(b.spans_m) + 1) * sum(b.storey_heights_m) * chosen(res.column_steel)
+    steel_m3 = beam_steel_m3 + column_steel_m3
+    # The split keys (Day 18) let the batch runner separate floor and lateral
+    # system; the two totals above are unchanged.
     return {"concrete_m3_per_m2": (slab + beams + cols) / area,
-            "bar_steel_kg_per_m2": steel_m3 * 7850.0 / area}
+            "bar_steel_kg_per_m2": steel_m3 * 7850.0 / area,
+            "slab_concrete_m3_per_m2": slab / area,
+            "beam_concrete_m3_per_m2": beams / area,
+            "column_concrete_m3_per_m2": cols / area,
+            "beam_bar_kg_per_m2": beam_steel_m3 * 7850.0 / area,
+            "column_bar_kg_per_m2": column_steel_m3 * 7850.0 / area}
