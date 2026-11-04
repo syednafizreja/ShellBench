@@ -59,8 +59,14 @@ G_ACCEL_M_S2: float = 9.80665
 #: Maximum seismic influence coefficient for frequent earthquakes [-], keyed by
 #: (intensity degree, design basic acceleration in g). GB 50011-2010 Table
 #: 5.1.4-1; 7 degrees, 0.10 g confirmed by the author on 25 Oct 2026
-#: (docs/anchor_notes.md, lateral-load decision 3). No other entry is confirmed.
-ALPHA_MAX_FREQUENT: dict[tuple[int, float], float] = {(7, 0.10): 0.08}
+#: (docs/anchor_notes.md, lateral-load decision 3). The other five entries were
+#: read by the AI assistant on 4 Nov 2026 from Table 5.1.4-1 of GB 50011-2010 (2016
+#: edition, p. 33; bracketed values are for 0.15 g and 0.30 g); author to
+#: confirm in own copy.
+ALPHA_MAX_FREQUENT: dict[tuple[int, float], float] = {
+    (6, 0.05): 0.04, (7, 0.10): 0.08, (7, 0.15): 0.12,
+    (8, 0.20): 0.16, (8, 0.30): 0.24, (9, 0.40): 0.32,
+}
 
 #: Characteristic period of the anchor site [s]. Spec S4, decision B5 (site
 #: class II, design group 1, GB 50011-2010 Table 5.1.4-2).

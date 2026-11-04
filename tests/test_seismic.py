@@ -40,8 +40,11 @@ def test_spectrum_refuses_unconfirmed_inputs():
     with pytest.raises(ValueError):
         s.alpha_spectrum(6.5, A_MAX, TG)
     with pytest.raises(KeyError):
-        s.alpha_max_frequent(8, 0.20)
+        s.alpha_max_frequent(8, 0.25)  # not a Table 3.2.2 acceleration
     assert s.alpha_max_frequent(7, 0.10) == 0.08
+    # Table 5.1.4-1, frequent row (2016 edition, p. 33)
+    assert [s.alpha_max_frequent(i, a) for i, a in ((6, 0.05), (7, 0.15), (8, 0.20), (8, 0.30), (9, 0.40))] \
+        == [0.04, 0.12, 0.16, 0.24, 0.32]
 
 
 def test_period_for_alpha_inverts_the_spectrum():
