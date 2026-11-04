@@ -2,6 +2,35 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 4 Nov 2026, Claude Code in VS Code (Day 18 and Day 26)
+
+**Done**
+- Day 18 (PR #105): batch runner src/shellbench/batch.py.
+  - The family_rc format is frozen in docs/data_card.md: 34 columns, plus family_shell columns 35-47.
+  - The 10-row sample has 6 ok rows at 0.10 g and 4 blocked rows at 0.05 g.
+  - The anchor row matches Day 16.
+  - pyarrow was added to environment.yml.
+- Day 26 (PR #105): floor library src/shellbench/floorlib.py, written to results/floor_library.csv.
+  - 72 cases, all sized at 80-120 mm, with true-depth fill and an optional two-layer mesh.
+  - 5 spot checks are in tests/test_floor_library.py; docs/floor_library.md explains them.
+  - panel.py gained optional keyword arguments only; panel_day25.csv is byte-identical.
+- Sync: pytest 164 passed; anchor_frame rerun, results/ unchanged.
+
+**Decisions**
+- All choices are marked [J] in the LOG (Day 18 and Day 26).
+- No α_max value is filled in from memory. Rows with a missing value are kept as "blocked".
+- Spot check 1 now includes the axial-shortening factor 1/(1 + (15/8) i²/f²).
+
+**Open (author)**
+- α_max for 0.05/0.15/0.20/0.30/0.40 g (GB 50011 Table 5.1.4-1).
+- The PGA→intensity map (Table 3.2.2 [?]).
+- Carbon factors for the fills.
+- The take-off scope for Day 19/20.
+- The JGJ 22 stability rule (3.2.9).
+- The seismic grade and axial limit by intensity.
+- Whether 6.2.17 with the x < 2a′ rule is right for the two-layer mesh. Under it, two layers need 10-30 mm more shell.
+- Dataset DOI on 11 Nov.
+
 ## 3 Nov 2026 (later), Claude Code in VS Code (Day 17 approval and Day 25 correction)
 
 **Done**
