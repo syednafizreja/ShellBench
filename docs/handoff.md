@@ -2,6 +2,12 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 4 Nov 2026, the AI assistant (Day 26)
+
+**Done:** `library.py` and `results/floor_library.csv`: 90 cases, 76 sized; 5 spot checks pass; pytest 160 on main.
+**Note:** library.py sets panel.py's SPAN_M, RISE_RATIO and LIVE_PA per case in worker processes [J]; a cleaner API would pass them as arguments (keep the signatures ShellForm uses).
+**Open:** f/L 1/20 at 3.0 kPa does not size up to 120 mm with a 32 mm tie; Day 27 topping; imperfection stability.
+
 ## 3 Nov 2026 (later), the AI assistant (Day 17 approval and Day 25 correction)
 
 **Done**

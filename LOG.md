@@ -180,6 +180,14 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 26 - 4 Nov 2026 (shell floor library, v0.3 input)
+
+Done: src/shellbench/library.py sizes the Day 25 panel (panel.py checks unchanged, prestressed ties) over 5 spans (6.0-8.4 m, matching the family's frame spacing) x 3 rise ratios (1/15, 1/17.5, 1/20) x 2 live loads (2.5, 3.0 kPa) x 3 levellings = 90 cases, results/floor_library.csv. tests/test_library.py (7 tests); pytest 160 passed on main.
+Result: 76 of 90 cases sized (60 needed). Thickness 80-120 mm; ties 25-32 mm at 1.2 m (3.2-5.3 kg/m^2); buckling factors 8-30 (linear). The 14 unsized cases are all f/L = 1/20 at 3.0 kPa (and one other levelling at 6.0 m): no trial thickness up to 120 mm passes the pattern-load check with a 32 mm tie. They are kept as no_pass rows.
+Spot checks (SF001, SF020, SF044, SF060, SF087): w_uls, wL^2/8f, concrete t k and tie steel within 0.05 % of hand values; CalculiX thrust 0.7-1.3 % below the closed form (limit 10 %).
+Not yet: topping (Day 27), imperfection-based stability (buckling still linear), fill depth f - z (uniform f/3 kept).
+Compliance: sources - panel.py and floor_concept.md as merged 3 Nov. AI use - The AI assistant wrote the code. Numbers - from the CalculiX runs of 4 Nov. Repo - branch day26-floor-library.
+
 ## Day 17 and Day 25 - 3 Nov 2026 (analysis plan drafted; one sized panel, floor-r3)
 
 Day 17, drafted with the gate still open: docs/preregistration.md section 2 now holds the analysis plan for H1-H4 (quantity, population, comparison, verdict rule). It is marked DRAFT. The Status row still says "to be written", and it changes only when I approve. The thresholds marked [J] and the H1 population are listed in section 2.5 for me to decide. No family row (Day 19 onwards) is run before I approve. H1-H4 are untouched.
