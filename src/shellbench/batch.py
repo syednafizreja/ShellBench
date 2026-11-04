@@ -19,14 +19,16 @@ C40 for every building [J]; both are columns, so later values can be added.
 
 Order: the validated 0.10 g block first, then the other PGAs in rising order;
 storeys rise inside each block [J]. ``--n 10`` takes the first ten buildings,
-so the sample shows six computed rows and four blocked rows.
+so the sample shows the six 0.10 g rows and the first four 0.05 g rows.
 
 PGA and alpha_max
 -----------------
-alpha_max comes from ``seismic.alpha_max_frequent``. Only 7 degrees, 0.10 g is
-confirmed (Table 5.1.4-1, by the author on 25 Oct 2026). The other PGAs give a
-row with status ``blocked`` until the author confirms their values. Nothing is
-filled in from memory.
+alpha_max comes from ``seismic.alpha_max_frequent`` (Table 5.1.4-1, all six
+PGAs since 4 Nov 2026). A missing entry still gives status ``blocked``.
+Seismic grade from Table 6.1.2 sets the column axial ratio limit (Table 6.3.6).
+A building taller than the frame limit of Table 6.1.1 (24 m at 9 degrees) is
+kept with status ``outside_code`` and is not run. Height is the sum of storey
+heights [J].
 
 Carbon
 ------
@@ -66,8 +68,19 @@ TAKEOFF_SCOPE = "frame_strip_v1"  # slab, frame beams, columns, longitudinal bar
 
 STOREYS: tuple[int, ...] = (3, 4, 5, 6, 7, 8)  # preregistration 2.0
 PGAS_G: tuple[float, ...] = (0.10, 0.05, 0.15, 0.20, 0.30, 0.40)  # 0.10 g first [J]
-#: Intensity for each PGA, GB 50011-2010 Table 3.2.2 [?]: author to confirm.
+#: Intensity for each PGA, GB 50011-2010 Table 3.2.2 (2016 edition, p. 6; read
+#: by the AI assistant on 4 Nov 2026, author to confirm). 0.15 g and 0.30 g are designed
+#: as 7 and 8 degrees (3.2.2).
 INTENSITY: dict[float, int] = {0.05: 6, 0.10: 7, 0.15: 7, 0.20: 8, 0.30: 8, 0.40: 9}
+#: Largest height of a frame structure [m], GB 50011-2010 Table 6.1.1 (p. 48).
+FRAME_MAX_HEIGHT_M: dict[float, float] = {0.05: 60.0, 0.10: 50.0, 0.15: 50.0, 0.20: 40.0,
+                                          0.30: 35.0, 0.40: 24.0}
+#: Frame seismic grade, GB 50011-2010 Table 6.1.2 (p. 49), class C buildings:
+#: intensity -> (grade at height <= 24 m, grade above 24 m).
+FRAME_GRADE: dict[int, tuple[int, int]] = {6: (4, 3), 7: (3, 2), 8: (2, 1), 9: (1, 1)}
+GRADE_SPLIT_HEIGHT_M: float = 24.0  # Table 6.1.2
+#: Column axial ratio limit of a frame by seismic grade, GB 50011-2010 Table 6.3.6 (p. 62).
+FRAME_AXIAL_LIMIT: dict[int, float] = {1: 0.65, 2: 0.75, 3: 0.85, 4: 0.90}
 TG_S: float = 0.35  # anchor, test_generator_anchor.py [J] for the family
 CONCRETE_GRADE: str = "C40"  # spec X1; checks.py values are C40
 GROUND_STOREY_M: float = 4.55  # spec G7 (B4)
@@ -94,7 +107,16 @@ COLUMNS: tuple[str, ...] = (
     "floor_concrete_m3_per_m2", "lateral_concrete_m3_per_m2",
     "floor_steel_kg_per_m2", "lateral_steel_kg_per_m2",
     "carbon_floor_kgco2e_per_m2", "carbon_lateral_kgco2e_per_m2", "carbon_building_kgco2e_per_m2",
+    "seismic_grade", "axial_ratio_limit",  # added 4 Nov 2026, at the end
 )
+#: family_shell order (docs/data_card.md): COLUMNS[:34] + shell columns 35-47 + COLUMNS[34:].
+FROZEN_RC_COUNT: int = 34
+
+
+def seismic_grade(intensity: int, height_m: float) -> int:
+    """Frame seismic grade (1-4) from GB 50011-2010 Table 6.1.2, class C building."""
+    low, high = FRAME_GRADE[intensity]
+    return low if height_m <= GRADE_SPLIT_HEIGHT_M else high
 
 
 def building_id(storeys: int, pga_g: float, tg_s: float, grade: str) -> str:
@@ -135,7 +157,10 @@ def run_building(spec: dict, conc_factor: float, steel_factor: float) -> dict:
         conc_factor: Concrete factor [kgCO2e/m^3].
         steel_factor: Bar steel factor [kgCO2e/kg].
     """
-    b = replace(ANCHOR, storey_heights_m=storey_heights(spec["storeys"]), tg_s=spec["tg_s"])
+    height = sum(storey_heights(spec["storeys"]))
+    grade = seismic_grade(spec["intensity"], height)
+    b = replace(ANCHOR, storey_heights_m=storey_heights(spec["storeys"]), tg_s=spec["tg_s"],
+                axial_ratio_limit=FRAME_AXIAL_LIMIT[grade])
     n = spec["storeys"]
     row = dict.fromkeys(COLUMNS)
     row.update(spec)
@@ -144,7 +169,11 @@ def run_building(spec: dict, conc_factor: float, steel_factor: float) -> dict:
                storey_heights_m="/".join(f"{x:g}" for x in b.storey_heights_m),
                tributary_width_m=b.tributary_width_m,
                floor_area_m2=n * sum(b.spans_m) * b.tributary_width_m, floor_system="beam_slab",
-               failure_reason="")
+               failure_reason="", seismic_grade=grade, axial_ratio_limit=b.axial_ratio_limit)
+    if height > FRAME_MAX_HEIGHT_M[spec["pga_g"]]:
+        row.update(status="outside_code", failure_reason=(
+            f"frame height {height:g} m > {FRAME_MAX_HEIGHT_M[spec['pga_g']]:g} m (GB 50011 Table 6.1.1)"))
+        return row
     try:
         b = replace(b, alpha_max=s.alpha_max_frequent(spec["intensity"], spec["pga_g"]))
     except KeyError as exc:

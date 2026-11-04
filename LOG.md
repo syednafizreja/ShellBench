@@ -200,6 +200,23 @@ For me:
 - Confirm that 6.2.17 with the x < 2a′ rule is the right check for the two-layer mesh.
 Tomorrow: Day 19 onwards, per schedule.md, once the α_max values are in.
 Compliance: sources - none new; GB 50010-2010 6.2.17 and 6.2.14 and GB 50011 tables as already cited (to be confirmed in my copies). AI use - The AI assistant wrote the batch runner, the library code, the tests and the docs. Numbers - inputs trace to baseline_spec, floor_concept, the code and the carbon_factors.csv; results from the code runs of 4 Nov; judgements marked [J]. Data - nothing confidential; thesis_source/ not tracked. Repo - branch day18-day26-batch-library.
+Later, 4 Nov 2026: under my standing rule of 4 Nov ("you do it all"), the AI assistant closed today's author items.
+- **Source.** The full text of GB 50011-2010 (2016 edition, Chinese), from the IISEE world list (iisee.kenken.go.jp). The AI assistant read the table pages as page images.
+- **Values:**
+  - Table 3.2.2 (p. 6), intensity map: 0.05 g → 6, 0.10 and 0.15 g → 7, 0.20 and 0.30 g → 8, 0.40 g → 9.
+  - Table 5.1.4-1 (p. 33), α_max frequent: 0.04, 0.08 (0.12), 0.16 (0.24), 0.32.
+  - Table 6.1.1 (p. 48), frame height limits: 60, 50, 40, 35 and 24 m.
+  - Table 6.1.2 (p. 49), frame grade by intensity and height (≤ 24 m or above).
+  - Table 6.3.6 (p. 62), frame axial-ratio limits: 0.65, 0.75, 0.85 and 0.90.
+- **Code.** seismic.py now holds all six α_max values. batch.py sets the grade and the axial limit per building, and adds the columns `seismic_grade` and `axial_ratio_limit` at the end; the frozen order is kept.
+- **New status `outside_code`.** It applies to s07-p040 and s08-p040 (26.15 and 29.75 m, above 24 m at 9 degrees). These rows are kept but not run.
+- **Sample.** It is regenerated: all 10 rows are ok. s07-p010 now has 700 mm columns (grade 2, limit 0.75). The whole family was run as a check: 34 ok, 2 outside_code, 0 failed.
+- **JGJ 22 stability: closed [J].** JGJ 22 has no formula for cylindrical shells. Stability enters through the FE buckling factor λ, in the 1/(1 − 1/λ) amplifier. The lowest λ is 9.0 (after the fix below), and no separate knock-down is added.
+- **Two-layer capacity fixed; earlier finding withdrawn.** panel.moment_capacity_two_layer checked only the x < 2a′ branch of GB 50010 6.2.17. It now takes the larger of that branch and the branch with the compression steel not counted (The AI assistant's reading, author to confirm). A new test checks two layers never give less capacity than one. The library was rebuilt: 72 of 72 sized at 70-100 mm, two layers 0-20 mm thinner than one. This replaces the Day 26 lines above (80-120 mm; two layers 10-30 mm thicker). results/panel_day25.csv is unchanged.
+- **Not due today.** Fill carbon factors are due Fri 6 Nov (schedule). The whole-building take-off scope belongs to Day 19/20.
+- pytest: 168 passed.
+
+Compliance (later): sources - GB 50011-2010 (2016 edition), the IISEE copy, licence not checked, not stored in the repo. AI use - The AI assistant read the tables and changed the code, and records this as the AI assistant's reading. I am to confirm each value in my own copy. Numbers - every code value cites table and page. Repo - branch day26-code-values.
 
 ## Day 17 and Day 25 - 3 Nov 2026 (analysis plan drafted; one sized panel, floor-r3)
 
