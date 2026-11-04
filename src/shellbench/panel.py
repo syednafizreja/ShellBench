@@ -447,9 +447,13 @@ def moment_capacity_two_layer(n: float, t: float, as_face_m2_m: float) -> float:
       N e <= alpha_1 f_c x (h_0 - x / 2) + f_y' A_s' (h_0 - a'), with e = e_i + t / 2 - a.
     - x < 2 a' (6.2.17 last paragraph, as 6.2.14): N e' <= f_y A_s (h_0 - a'),
       with e' = e_i - t / 2 + a'.
+    - Compression steel not counted (6.2.17 asks x >= 2 a' only when it is
+      counted): alpha_1 f_c x = N + f_y A_s, N e <= alpha_1 f_c x (h_0 - x / 2),
+      valid while x <= xi_b h_0. This branch is never below the one-layer value.
     - Small eccentricity (x > xi_b h_0): the steel is ignored, as in the one-layer
       check (conservative) [J].
-    Returns the largest N e_i the section carries.
+    Returns the largest N e_i of the valid branches (Claude's reading of 6.2.17,
+    4 Nov 2026; author to confirm).
     """
     a = two_layer_cover_m()
     h0 = t - a
@@ -458,8 +462,13 @@ def moment_capacity_two_layer(n: float, t: float, as_face_m2_m: float) -> float:
         return max(n * (t - x) / 2.0, 0.0)
     steel = FY_PA * as_face_m2_m * (h0 - a)
     if x >= 2.0 * a:
-        return max(ALPHA_1 * FC_PA * x * (h0 - x / 2.0) + steel - n * (t / 2.0 - a), 0.0)
-    return max(steel + n * (t / 2.0 - a), 0.0)
+        with_comp = ALPHA_1 * FC_PA * x * (h0 - x / 2.0) + steel - n * (t / 2.0 - a)
+    else:
+        with_comp = steel + n * (t / 2.0 - a)
+    c = n + FY_PA * as_face_m2_m
+    x_t = c / (ALPHA_1 * FC_PA)
+    no_comp = c * (h0 - x_t / 2.0) - n * (t / 2.0 - a) if x_t <= xi_b() * h0 else 0.0
+    return max(with_comp, no_comp, 0.0)
 
 
 def utilisation(p_plan: np.ndarray, h: float, t: float, as_m2_m: float, buckle: float,
