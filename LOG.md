@@ -180,6 +180,27 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 18 and Day 26 - 4 Nov 2026 (batch runner and frozen format; floor library)
+
+Playbook source: the Done-when lines below are taken from schedule.md's copy of the playbook (the playbook itself is not in the repo).
+Day 18: new src/shellbench/batch.py runs the conventional family (storeys 3-8 × PGA 0.10, 0.05, 0.15, 0.20, 0.30, 0.40 g; 36 buildings) through the generator and writes a row in the frozen family_rc format. docs/data_card.md fixes the 34 family_rc columns and the 13 family_shell columns to come (35-47). The 10-row sample is in results/family_rc_sample.csv and .parquet (`--n 10`). It has 6 ok rows at 0.10 g and 4 blocked rows at 0.05 g. The anchor row (4 storeys, 0.10 g) gives T1 0.5485 s, drift 1/1163 and axial ratio 0.4385, the same as Day 16. Carbon uses GB/T 51366 (C40 340 kgCO2e/m³, HRB400 2340 kgCO2e/t): 64.3-78.5 kgCO2e/m² for the building, 40.8 for the floor. generator.quantities() gained split concrete and bar keys; the totals are unchanged. pyarrow 26.0.1 was added to environment.yml.
+Done-when met (Day 18): frozen format plus a 10-row sample in docs/data_card.md.
+Day 26: new src/shellbench/floorlib.py sizes 72 floor cases (span 6.0 and 6.6 m × f/L 1/8-1/20 × three levelling options × one or two mesh layers, prestressed ties, fill at its true depth f − z). All 72 are sized, at 80-120 mm. panel.py gained optional keyword arguments only, and results/panel_day25.csv is byte-identical after a rerun. docs/floor_library.md has the case definition, results and spot checks.
+Done-when met (Day 26): 72 cases (≥ 60) and 5 spot checks, each run on every case it applies to (tests/test_floor_library.py). pytest: 164 passed.
+Finding: spot check 1 at first missed by up to 2.5 % on flat, thick vaults. Axial shortening explains it: the closed form 1/(1 + (15/8) i²/f²) gives 0.9756 against the model's 0.9755 for L60-r20-rs-m2. With that factor, all raised-floor cases agree within 1 %.
+Finding: the two-layer mesh needs 10-30 mm more shell than one mid-depth layer. The GB 50010 6.2.17 rule for x < 2a′ takes moments about the compression steel, which leaves N a lever arm of only t/2 − a′.
+Choices [J]: PGA order (0.10 g first), Tg 0.35 s and C40 for the family; building ID format; take-off scope "frame_strip_v1"; trial thicknesses 50-150 mm; a = a′ = 24 mm for the two-layer mesh; each face at the minimum ratio; the steel is ignored for small eccentricity.
+For me:
+- α_max (frequent) for 0.05, 0.15, 0.20, 0.30 and 0.40 g from GB 50011 Table 5.1.4-1. Those rows are blocked, not filled from memory.
+- Confirm the PGA→intensity map (GB 50011 Table 3.2.2 [?]).
+- Carbon factors for foamed and recycled fill.
+- The whole-building take-off scope for Day 19/20: stirrups, footings, slab bars, longitudinal and secondary beams.
+- The JGJ 22 stability rule (3.2.9).
+- The seismic grade and axial-ratio limit by intensity.
+- Confirm that 6.2.17 with the x < 2a′ rule is the right check for the two-layer mesh.
+Tomorrow: Day 19 onwards, per schedule.md, once the α_max values are in.
+Compliance: sources - none new; GB 50010-2010 6.2.17 and 6.2.14 and GB 50011 tables as already cited (to be confirmed in my copies). AI use - The AI assistant wrote the batch runner, the library code, the tests and the docs. Numbers - inputs trace to baseline_spec, floor_concept, the code and the carbon_factors.csv; results from the code runs of 4 Nov; judgements marked [J]. Data - nothing confidential; thesis_source/ not tracked. Repo - branch day18-day26-batch-library.
+
 ## Day 17 and Day 25 - 3 Nov 2026 (analysis plan drafted; one sized panel, floor-r3)
 
 Day 17, drafted with the gate still open: docs/preregistration.md section 2 now holds the analysis plan for H1-H4 (quantity, population, comparison, verdict rule). It is marked DRAFT. The Status row still says "to be written", and it changes only when I approve. The thresholds marked [J] and the H1 population are listed in section 2.5 for me to decide. No family row (Day 19 onwards) is run before I approve. H1-H4 are untouched.
