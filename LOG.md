@@ -211,9 +211,10 @@ Later, 4 Nov 2026: under my standing rule of 4 Nov ("you do it all"), the AI ass
 - **Code.** seismic.py now holds all six α_max values. batch.py sets the grade and the axial limit per building, and adds the columns `seismic_grade` and `axial_ratio_limit` at the end; the frozen order is kept.
 - **New status `outside_code`.** It applies to s07-p040 and s08-p040 (26.15 and 29.75 m, above 24 m at 9 degrees). These rows are kept but not run.
 - **Sample.** It is regenerated: all 10 rows are ok. s07-p010 now has 700 mm columns (grade 2, limit 0.75). The whole family was run as a check: 34 ok, 2 outside_code, 0 failed.
-- **JGJ 22 stability: closed [J].** JGJ 22 has no formula for cylindrical shells. Stability enters through the FE buckling factor λ, in the 1/(1 − 1/λ) amplifier. The lowest λ is 12.8, and no separate knock-down is added.
+- **JGJ 22 stability: closed [J].** JGJ 22 has no formula for cylindrical shells. Stability enters through the FE buckling factor λ, in the 1/(1 − 1/λ) amplifier. The lowest λ is 9.0 (after the fix below), and no separate knock-down is added.
+- **Two-layer capacity fixed; earlier finding withdrawn.** panel.moment_capacity_two_layer checked only the x < 2a′ branch of GB 50010 6.2.17. It now takes the larger of that branch and the branch with the compression steel not counted (The AI assistant's reading, author to confirm). A new test checks two layers never give less capacity than one. The library was rebuilt: 72 of 72 sized at 70-100 mm, two layers 0-20 mm thinner than one. This replaces the Day 26 lines above (80-120 mm; two layers 10-30 mm thicker). results/panel_day25.csv is unchanged.
 - **Not due today.** Fill carbon factors are due Fri 6 Nov (schedule). The whole-building take-off scope belongs to Day 19/20.
-- pytest: 167 passed.
+- pytest: 168 passed.
 
 Compliance (later): sources - GB 50011-2010 (2016 edition), the IISEE copy, licence not checked, not stored in the repo. AI use - The AI assistant read the tables and changed the code, and records this as the AI assistant's reading. I am to confirm each value in my own copy. Numbers - every code value cites table and page. Repo - branch day26-code-values.
 
