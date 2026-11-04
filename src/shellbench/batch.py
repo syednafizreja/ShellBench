@@ -109,6 +109,8 @@ COLUMNS: tuple[str, ...] = (
     "carbon_floor_kgco2e_per_m2", "carbon_lateral_kgco2e_per_m2", "carbon_building_kgco2e_per_m2",
     "seismic_grade", "axial_ratio_limit",  # added 4 Nov 2026, at the end
 )
+#: family_shell order (docs/data_card.md): COLUMNS[:34] + shell columns 35-47 + COLUMNS[34:].
+FROZEN_RC_COUNT: int = 34
 
 
 def seismic_grade(intensity: int, height_m: float) -> int:

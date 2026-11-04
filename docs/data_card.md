@@ -88,12 +88,14 @@ Columns 1-34 have the same names, units and meanings, with `floor_system = shell
 | 46 | `fill_kg_per_m2` | kg/m² | Levelling fill or raised-floor mass |
 | 47 | `tie_steel_kg_per_m2` | kg/m² | Tie steel (also inside column 30) |
 
-Columns added on 4 Nov 2026, after the freeze (adding is allowed). Both files carry them at the end: after column 34 in family_rc and after column 47 in family_shell. Read them by name.
+Columns added on 4 Nov 2026, after the freeze (adding is allowed). Both files carry them at the end, so their position differs by file. Read them by name.
 
-| # | Column | Unit | Meaning |
-|---|---|---|---|
-| 48 | `seismic_grade` | [-] | Frame seismic grade 1-4, GB 50011-2010 Table 6.1.2 |
-| 49 | `axial_ratio_limit` | [-] | Column axial-ratio limit used in design, Table 6.3.6 |
+| # in family_rc | # in family_shell | Column | Unit | Meaning |
+|---|---|---|---|---|
+| 35 | 48 | `seismic_grade` | [-] | Frame seismic grade 1-4, GB 50011-2010 Table 6.1.2 |
+| 36 | 49 | `axial_ratio_limit` | [-] | Column axial-ratio limit used in design, Table 6.3.6 |
+
+family_shell is built as family_rc columns 1-34, then shell columns 35-47, then columns 35-36 of family_rc (`batch.COLUMNS[:34] + shell + batch.COLUMNS[34:]`).
 
 In family_shell, `slab_mm` is empty and `topping_mm` holds the topping. Fill carbon needs a factor for each fill that `data/carbon_factors.csv` does not have yet (author item).
 
