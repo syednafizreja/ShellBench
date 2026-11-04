@@ -1,0 +1,111 @@
+# Data card: ShellBench building family (part 1, frozen format)
+
+**Format frozen 4 Nov 2026 (Day 18).** From this date no column is renamed and no column changes its unit or meaning. New columns may be added at the end only (schedule.md, "ShellForm data hand-over", item 1). Part 2 (how the rows were checked, failure counts, licence, DOI) follows on Day 20 and Day 31.
+
+Every row released before the dataset DOI (11 Nov 2026) carries `release = "pre-release, not for results"`.
+
+## Files
+
+| File | One row per | Written by | Status |
+|---|---|---|---|
+| `family_rc.parquet` | building, conventional floor (beam and slab) | `python -m shellbench.batch` | Runner done (Day 18). Sample: [../results/family_rc_sample.csv](../results/family_rc_sample.csv) |
+| `family_shell.parquet` | building × floor variant × topping | the batch runner after Day 29 (shell floor in the generator) | Format below; no rows yet |
+
+Both files use the same `building_id` for the same building (the Day 31 check needs this). The ID is built from the inputs, not from a row number, so a family dimension added later does not change an existing ID: `s{storeys:02d}-p{PGA × 100:03d}-tg{Tg × 100:02d}-{grade}`, for example `s04-p010-tg35-C40` is the anchor.
+
+## Family definition
+
+- Storey counts 3, 4, 5, 6, 7 and 8; PGA 0.05, 0.10, 0.15, 0.20, 0.30 and 0.40 g (preregistration 2.0). That gives 36 conventional buildings.
+- Every other input is the anchor's. Spans 7.2 / 6.6 / 7.2 m, frame spacing 7.2 m, loads as in `tests/test_generator_anchor.py`, which gives the source of each.
+- Storey heights: 4.55 m ground storey, then 3.6 m storeys (spec G6, G7) [J].
+- Tg 0.35 s and concrete C40 for every building [J]. Both are columns, so other values can be added later without a format change.
+- Run order: the 0.10 g block first (the validated case), then the other PGAs in rising order; storeys rise inside each block [J].
+- **Blocked rows.** α_max is confirmed only for 7 degrees, 0.10 g (GB 50011-2010 Table 5.1.4-1, by the author on 25 Oct 2026). Rows at the other five PGAs have `status = blocked` until the author confirms their α_max. No value is filled in from memory.
+- The PGA-to-intensity map (0.05 g → 6, 0.10 and 0.15 g → 7, 0.20 and 0.30 g → 8, 0.40 g → 9) is GB 50011-2010 Table 3.2.2 [?]. The author must confirm it in their own copy.
+
+## Columns of family_rc
+
+Units are in the column name, or in the Unit column for names without one. `[-]` means a pure number.
+
+| # | Column | Unit | Meaning |
+|---|---|---|---|
+| 1 | `building_id` | text | Stable ID, see above |
+| 2 | `release` | text | "pre-release, not for results" until the DOI version |
+| 3 | `shellbench_version` | text | `shellbench.__version__` of the code that wrote the row |
+| 4 | `takeoff_scope` | text | Which elements the quantities and carbon include. `frame_strip_v1` = one frame strip: slab, frame beams below the slab, columns, longitudinal bars only. Stirrups, footings, slab bars, longitudinal and secondary beams are not in it yet |
+| 5 | `storeys` | [-] | Number of storeys |
+| 6 | `pga_g` | g | Design basic ground acceleration |
+| 7 | `intensity` | [-] | Fortification intensity for that PGA |
+| 8 | `tg_s` | s | Site characteristic period |
+| 9 | `alpha_max` | [-] | Frequent-earthquake α_max used; empty if blocked |
+| 10 | `concrete_grade` | text | Concrete strength grade |
+| 11 | `spans_m` | m | Transverse spans, left to right, joined by "/" |
+| 12 | `storey_heights_m` | m | Storey heights, ground first, joined by "/" |
+| 13 | `tributary_width_m` | m | Frame spacing carried by the modelled frame |
+| 14 | `floor_area_m2` | m² | Floor area of the strip: storeys × sum of spans × tributary width. Every "per_m2" column is per m² of this area |
+| 15 | `floor_system` | text | `beam_slab` in family_rc |
+| 16 | `status` | text | `ok` (designed, all checks pass), `failed` (generator did not converge or a check cannot be met), `blocked` (an input is not confirmed) |
+| 17 | `failure_reason` | text | Empty when `ok` |
+| 18 | `n_passes` | [-] | Analysis passes of the generator's resize loop |
+| 19 | `period_s` | s | First period, after the ψ_T reduction |
+| 20 | `max_drift_ratio` | [-] | Largest storey drift ratio under frequent earthquake |
+| 21 | `axial_ratio` | [-] | Largest ground-storey column axial ratio |
+| 22 | `column_mm` | mm | Square column side |
+| 23 | `beam_b_mm` | mm | Frame beam widths, per span, "/" |
+| 24 | `beam_h_mm` | mm | Frame beam depths, per span, "/" |
+| 25 | `slab_mm` | mm | Slab thickness |
+| 26 | `concrete_m3_per_m2` | m³/m² | Concrete in the take-off scope |
+| 27 | `bar_steel_kg_per_m2` | kg/m² | Bar steel in the take-off scope |
+| 28 | `floor_concrete_m3_per_m2` | m³/m² | Concrete of the floor elements (slab; for shells: vault, topping) |
+| 29 | `lateral_concrete_m3_per_m2` | m³/m² | Concrete of the lateral system (frame beams and columns), preregistration 2.2 |
+| 30 | `floor_steel_kg_per_m2` | kg/m² | Steel of the floor elements (slab bars; for shells: mesh, ties). 0 in `frame_strip_v1`, which has no slab bars |
+| 31 | `lateral_steel_kg_per_m2` | kg/m² | Steel of frame beams and columns |
+| 32 | `carbon_floor_kgco2e_per_m2` | kgCO2e/m² | A1-A3 carbon of the floor elements (C_floor, preregistration 2.1) |
+| 33 | `carbon_lateral_kgco2e_per_m2` | kgCO2e/m² | A1-A3 carbon of the lateral system |
+| 34 | `carbon_building_kgco2e_per_m2` | kgCO2e/m² | Sum of the two above in this take-off scope (C_bldg once the scope is whole-building) |
+
+Carbon factors: `data/carbon_factors.csv`, set GBT51366 (C40 340 kgCO2e/m³, HRB400 2340 kgCO2e/t; sources and open checks are in that file).
+
+## Columns of family_shell
+
+Columns 1-34 have the same names, units and meanings, with `floor_system = shell_vault`. Then:
+
+| # | Column | Unit | Meaning |
+|---|---|---|---|
+| 35 | `floor_variant_id` | text | Case ID in the floor library ([floor_library.md](floor_library.md)) |
+| 36 | `vault_span_m` | m | Vault span L |
+| 37 | `rise_ratio` | [-] | f / L |
+| 38 | `levelling` | text | `foamed_fill`, `recycled_fill` or `raised_floor` |
+| 39 | `mesh_layers` | [-] | 1 (mid-depth) or 2 (one near each face) |
+| 40 | `shell_thickness_mm` | mm | Vault thickness |
+| 41 | `tie_bar_mm` | mm | Tie bar diameter |
+| 42 | `tie_spacing_m` | m | Tie spacing along the vault |
+| 43 | `tie_prestressed` | bool | Tie tensioned against the dead-load spread |
+| 44 | `topping_mm` | mm | Structural topping: 0, 40, 50 or 60 (preregistration 2.3) |
+| 45 | `diaphragm_rigid` | bool | Passes the rigid-diaphragm rule of preregistration 2.3 |
+| 46 | `fill_kg_per_m2` | kg/m² | Levelling fill or raised-floor mass |
+| 47 | `tie_steel_kg_per_m2` | kg/m² | Tie steel (also inside column 30) |
+
+In family_shell, `slab_mm` is empty and `topping_mm` holds the topping. Fill carbon needs a factor for each fill that `data/carbon_factors.csv` does not have yet (author item).
+
+## 10-row sample (`python -m shellbench.batch --n 10`)
+
+Pre-release, not for results. Run on 4 Nov 2026. Twelve of the 34 columns are shown; the full rows are in [../results/family_rc_sample.csv](../results/family_rc_sample.csv) and `.parquet`.
+
+| building_id | status | period_s | max_drift_ratio | axial_ratio | column_mm | beam_h_mm | concrete_m3_per_m2 | bar_steel_kg_per_m2 | carbon_floor_kgco2e_per_m2 | carbon_lateral_kgco2e_per_m2 | carbon_building_kgco2e_per_m2 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| s03-p010-tg35-C40 | ok | 0.4845 | 0.0009437 | 0.3962 | 450 | 600/550/600 | 0.1603 | 4.177 | 40.8 | 23.48 | 64.28 |
+| s04-p010-tg35-C40 | ok | 0.5485 | 0.00086 | 0.4385 | 500 | 600/550/600 | 0.1647 | 4.563 | 40.8 | 25.88 | 66.68 |
+| s05-p010-tg35-C40 | ok | 0.6135 | 0.0008349 | 0.46 | 550 | 600/550/600 | 0.1697 | 5.049 | 40.8 | 28.7 | 69.5 |
+| s06-p010-tg35-C40 | ok | 0.6823 | 0.0008445 | 0.4699 | 600 | 600/550/600 | 0.1751 | 5.462 | 40.8 | 31.53 | 72.33 |
+| s07-p010-tg35-C40 | ok | 0.7558 | 0.0008429 | 0.4729 | 650 | 600/550/600 | 0.1811 | 6.182 | 40.8 | 35.24 | 76.04 |
+| s08-p010-tg35-C40 | ok | 0.8336 | 0.0008349 | 0.4721 | 700 | 600/550/600 | 0.1876 | 6.277 | 40.8 | 37.66 | 78.46 |
+| s03-p005-tg35-C40 | blocked | | | | | | | | | | |
+| s04-p005-tg35-C40 | blocked | | | | | | | | | | |
+| s05-p005-tg35-C40 | blocked | | | | | | | | | | |
+| s06-p005-tg35-C40 | blocked | | | | | | | | | | |
+
+Checks on the sample:
+- The anchor row `s04-p010-tg35-C40` gives T1 0.5485 s, drift 1/1163 and axial ratio 0.4385, the Day 16 values (LOG Day 16, `tests/test_generator_anchor.py`).
+- Floor carbon 40.8 kgCO2e/m² = 0.12 m slab × 340 kgCO2e/m³ by hand, in every `ok` row.
+- The blocked rows give the reason "alpha_max for (6, 0.05) not confirmed from Table 5.1.4-1".
