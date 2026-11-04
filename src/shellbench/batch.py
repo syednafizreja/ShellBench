@@ -1,0 +1,202 @@
+﻿"""Batch runner for the conventional building family (Playbook Day 18).
+
+File: src/shellbench/batch.py
+
+What this module does
+---------------------
+It builds the family definition (one ``BuildingInput`` per building), runs
+``generator.generate`` on each building and writes one row per building in the
+frozen format of ``docs/data_card.md``. A building that fails or cannot be run
+is written with its status and reason; no row is dropped (preregistration 2.0).
+
+Family definition
+-----------------
+Storey counts 3-8 and PGA 0.05, 0.10, 0.15, 0.20, 0.30 and 0.40 g
+(preregistration 2.0, research_question.md). Every other input is the anchor's
+(tests/test_generator_anchor.py gives the source of each value). Taller
+buildings add 3.6 m storeys above the 4.55 m ground storey [J]. Tg 0.35 s and
+C40 for every building [J]; both are columns, so later values can be added.
+
+Order: the validated 0.10 g block first, then the other PGAs in rising order;
+storeys rise inside each block [J]. ``--n 10`` takes the first ten buildings,
+so the sample shows six computed rows and four blocked rows.
+
+PGA and alpha_max
+-----------------
+alpha_max comes from ``seismic.alpha_max_frequent``. Only 7 degrees, 0.10 g is
+confirmed (Table 5.1.4-1, by the author on 25 Oct 2026). The other PGAs give a
+row with status ``blocked`` until the author confirms their values. Nothing is
+filled in from memory.
+
+Carbon
+------
+Quantities are those of ``generator.quantities``: one frame strip, slab, frame
+beams, columns and their longitudinal bars. Stirrups, footings, slab bars and
+the longitudinal and secondary beams are not in it yet; the column
+``takeoff_scope`` records this, so later rows can be told apart. Factors come
+from ``data/carbon_factors.csv`` (set GBT51366).
+
+Usage::
+
+    python -m shellbench.batch --n 10 --out results/family_rc_sample
+
+Units: m, s, g (PGA), mm for sections, m^3 and kg per m^2 of floor, kgCO2e
+per m^2 of floor.
+"""
+
+from __future__ import annotations
+
+import argparse
+from dataclasses import replace
+from pathlib import Path
+
+import pandas as pd
+
+import shellbench
+from shellbench import anchor_frame as af
+from shellbench import carbon as cb
+from shellbench import generator as g
+from shellbench import seismic as s
+
+ROOT = Path(__file__).resolve().parents[2]
+FACTOR_FILE = ROOT / "data" / "carbon_factors.csv"
+FACTOR_SET = "GBT51366"  # the only set in data/carbon_factors.csv
+RELEASE = "pre-release, not for results"  # schedule.md, ShellForm hand-over item 2
+TAKEOFF_SCOPE = "frame_strip_v1"  # slab, frame beams, columns, longitudinal bars
+
+STOREYS: tuple[int, ...] = (3, 4, 5, 6, 7, 8)  # preregistration 2.0
+PGAS_G: tuple[float, ...] = (0.10, 0.05, 0.15, 0.20, 0.30, 0.40)  # 0.10 g first [J]
+#: Intensity for each PGA, GB 50011-2010 Table 3.2.2 [?]: author to confirm.
+INTENSITY: dict[float, int] = {0.05: 6, 0.10: 7, 0.15: 7, 0.20: 8, 0.30: 8, 0.40: 9}
+TG_S: float = 0.35  # anchor, test_generator_anchor.py [J] for the family
+CONCRETE_GRADE: str = "C40"  # spec X1; checks.py values are C40
+GROUND_STOREY_M: float = 4.55  # spec G7 (B4)
+UPPER_STOREY_M: float = 3.60  # spec G6
+
+#: Anchor inputs; each value and its source is listed in tests/test_generator_anchor.py.
+ANCHOR = g.BuildingInput(
+    spans_m=af.SPANS_M, storey_heights_m=af.STOREY_HEIGHTS_M, tributary_width_m=7.2,
+    slab_panel_m=3.6, floor_dead_kn_m2=4.05, roof_dead_kn_m2=4.224,
+    live_kn_m2=(2.5, 3.0, 2.5), roof_live_kn_m2=0.5,
+    floor_secondary_kn_m=(2.54, 2.54, 2.54), roof_secondary_kn_m=(2.78, 2.54, 2.78),
+    floor_beam_wall_kn_m=(5.51, 0.0, 5.51), exterior_wall_kn_m=8.37,
+    interior_wall_kn_m=6.36, longitudinal_beam_kn_m=3.61, parapet_kn_m=2.54,
+    alpha_max=0.08, tg_s=0.35, psi_t=0.7, concrete_e_mpa=3.25e4, beam_i_factor=af.BEAM_INERTIA_FACTOR)
+
+#: Frozen column order of family_rc (docs/data_card.md). Add columns at the end only.
+COLUMNS: tuple[str, ...] = (
+    "building_id", "release", "shellbench_version", "takeoff_scope",
+    "storeys", "pga_g", "intensity", "tg_s", "alpha_max", "concrete_grade",
+    "spans_m", "storey_heights_m", "tributary_width_m", "floor_area_m2", "floor_system",
+    "status", "failure_reason", "n_passes", "period_s", "max_drift_ratio", "axial_ratio",
+    "column_mm", "beam_b_mm", "beam_h_mm", "slab_mm",
+    "concrete_m3_per_m2", "bar_steel_kg_per_m2",
+    "floor_concrete_m3_per_m2", "lateral_concrete_m3_per_m2",
+    "floor_steel_kg_per_m2", "lateral_steel_kg_per_m2",
+    "carbon_floor_kgco2e_per_m2", "carbon_lateral_kgco2e_per_m2", "carbon_building_kgco2e_per_m2",
+)
+
+
+def building_id(storeys: int, pga_g: float, tg_s: float, grade: str) -> str:
+    """Stable building ID, shared by family_rc and family_shell.
+
+    It is made from the inputs, not from a row index, so adding a family
+    dimension later does not change an existing ID. Example: ``s04-p010-tg35-C40``.
+    """
+    return f"s{storeys:02d}-p{round(pga_g * 100):03d}-tg{round(tg_s * 100):02d}-{grade}"
+
+
+def storey_heights(storeys: int) -> tuple[float, ...]:
+    """Ground storey 4.55 m, then 3.6 m storeys [m]."""
+    return (GROUND_STOREY_M,) + (UPPER_STOREY_M,) * (storeys - 1)
+
+
+def family() -> list[dict]:
+    """The family definition, in run order: one dict of inputs per building."""
+    return [{"storeys": n, "pga_g": pga, "intensity": INTENSITY[pga], "tg_s": TG_S,
+             "concrete_grade": CONCRETE_GRADE,
+             "building_id": building_id(n, pga, TG_S, CONCRETE_GRADE)}
+            for pga in PGAS_G for n in STOREYS]
+
+
+def factors() -> tuple[float, float]:
+    """Carbon factors: concrete [kgCO2e/m^3] and bar steel [kgCO2e/kg]."""
+    f = cb.read_factors(FACTOR_FILE)
+    conc, conc_unit = f[(FACTOR_SET, CONCRETE_GRADE)]
+    steel, steel_unit = f[(FACTOR_SET, cb.BAR_STEEL)]
+    return conc * cb.CONVERSIONS[conc_unit][1], steel * cb.CONVERSIONS[steel_unit][1]
+
+
+def run_building(spec: dict, conc_factor: float, steel_factor: float) -> dict:
+    """Run one building and return its row (all ``COLUMNS``).
+
+    Args:
+        spec: One entry of ``family()``.
+        conc_factor: Concrete factor [kgCO2e/m^3].
+        steel_factor: Bar steel factor [kgCO2e/kg].
+    """
+    b = replace(ANCHOR, storey_heights_m=storey_heights(spec["storeys"]), tg_s=spec["tg_s"])
+    n = spec["storeys"]
+    row = dict.fromkeys(COLUMNS)
+    row.update(spec)
+    row.update(release=RELEASE, shellbench_version=shellbench.__version__, takeoff_scope=TAKEOFF_SCOPE,
+               spans_m="/".join(f"{x:g}" for x in b.spans_m),
+               storey_heights_m="/".join(f"{x:g}" for x in b.storey_heights_m),
+               tributary_width_m=b.tributary_width_m,
+               floor_area_m2=n * sum(b.spans_m) * b.tributary_width_m, floor_system="beam_slab",
+               failure_reason="")
+    try:
+        b = replace(b, alpha_max=s.alpha_max_frequent(spec["intensity"], spec["pga_g"]))
+    except KeyError as exc:
+        row.update(status="blocked", failure_reason=str(exc).strip("'\""))
+        return row
+    row["alpha_max"] = b.alpha_max
+    try:
+        res = g.generate(b)
+    except RuntimeError as exc:
+        row.update(status="failed", failure_reason=str(exc))
+        return row
+    q = res.quantities
+    floor_c, lat_c = q["slab_concrete_m3_per_m2"], q["beam_concrete_m3_per_m2"] + q["column_concrete_m3_per_m2"]
+    floor_s, lat_s = 0.0, q["beam_bar_kg_per_m2"] + q["column_bar_kg_per_m2"]  # slab bars not in scope
+    row.update(
+        status="ok", n_passes=sum(h.startswith("pass ") for h in res.history), period_s=res.period_s,
+        max_drift_ratio=max(res.drift_ratios), axial_ratio=res.axial_ratio,
+        column_mm=res.final.column_mm, beam_b_mm="/".join(str(bw) for bw, _ in res.final.beams_mm),
+        beam_h_mm="/".join(str(h) for _, h in res.final.beams_mm), slab_mm=res.final.slab_mm,
+        concrete_m3_per_m2=q["concrete_m3_per_m2"], bar_steel_kg_per_m2=q["bar_steel_kg_per_m2"],
+        floor_concrete_m3_per_m2=floor_c, lateral_concrete_m3_per_m2=lat_c,
+        floor_steel_kg_per_m2=floor_s, lateral_steel_kg_per_m2=lat_s,
+        carbon_floor_kgco2e_per_m2=floor_c * conc_factor + floor_s * steel_factor,
+        carbon_lateral_kgco2e_per_m2=lat_c * conc_factor + lat_s * steel_factor)
+    row["carbon_building_kgco2e_per_m2"] = row["carbon_floor_kgco2e_per_m2"] + row["carbon_lateral_kgco2e_per_m2"]
+    return row
+
+
+def run_family(n: int | None = None) -> pd.DataFrame:
+    """Run the first ``n`` buildings of the family (all if None), frozen column order."""
+    conc, steel = factors()
+    specs = family()[:n] if n else family()
+    return pd.DataFrame([run_building(sp, conc, steel) for sp in specs], columns=list(COLUMNS))
+
+
+def write(df: pd.DataFrame, stem: Path) -> None:
+    """Write ``stem``.parquet and ``stem``.csv (numbers to 4 significant figures in the CSV)."""
+    stem.parent.mkdir(parents=True, exist_ok=True)
+    df.to_parquet(stem.with_suffix(".parquet"), index=False)
+    df.to_csv(stem.with_suffix(".csv"), index=False, float_format="%.4g")
+
+
+def main(argv: list[str] | None = None) -> None:
+    """Command line: ``--n`` buildings, written to ``--out`` (no suffix)."""
+    p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    p.add_argument("--n", type=int, default=None, help="first n buildings of the family")
+    p.add_argument("--out", type=Path, default=ROOT / "results" / "family_rc_sample")
+    a = p.parse_args(argv)
+    df = run_family(a.n)
+    write(df, a.out)
+    print(df["status"].value_counts().to_string())
+
+
+if __name__ == "__main__":
+    main()
