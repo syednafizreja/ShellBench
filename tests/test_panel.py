@@ -80,3 +80,11 @@ def test_sized_panel_passes(tmp_path):
     rows = pn.size_panel(tmp_path, thicknesses=(0.090,), levellings=("recycled_fill",))
     assert [r.passes for r in rows if r.prestressed] == [True]
     assert all(abs(r.h_ratio - 1.0) <= pn.DONE_WHEN_TOLERANCE for r in rows)
+
+
+def test_two_layer_capacity_not_below_one_layer():
+    """Same steel per face: two layers never carry less N e_i than one mid-depth layer."""
+    for t in (0.08, 0.10, 0.12, 0.15):
+        as_m = 0.00214 * t  # Day 25 mesh ratio 0.214 % (LOG 3 Nov)
+        for n in (5.0e4, 1.0e5, 2.0e5, 4.0e5):
+            assert pn.moment_capacity_two_layer(n, t, as_m) >= pn.moment_capacity(n, t, as_m) * (1 - 1e-9)

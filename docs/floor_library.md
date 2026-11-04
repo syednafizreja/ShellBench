@@ -2,7 +2,7 @@
 
 File: docs/floor_library.md. Built by `python -m shellbench.floorlib` ([../src/shellbench/floorlib.py](../src/shellbench/floorlib.py)); output [../results/floor_library.csv](../results/floor_library.csv); checked by [../tests/test_floor_library.py](../tests/test_floor_library.py).
 
-**Done-when (Day 26):** 60 or more library cases with 5 spot checks. **Result:** 72 cases, all 72 sized. The 5 spot checks pass on every case they apply to.
+**Done-when (Day 26):** 60 or more library cases with 5 spot checks. **Result:** 72 cases, all 72 sized, at 70-100 mm. The 5 spot checks pass on every case they apply to.
 
 ## What a case is
 
@@ -22,9 +22,13 @@ A case is one floor variant of layout A, sized to the smallest trial thickness t
 What changed from Day 25:
 
 - **Fill at its true depth.** The fill is f − z(x), deepest at the springings, not a uniform f/3. CalculiX runs a fifth unit case with this shaped load. The buckling run carries the same shaped fill.
-- **Two-layer mesh.** a = a′ = cover + 1.5 × mesh bar = 24 mm [J]. The capacity is GB 50010 6.2.17 with A_s = A_s′. In these shells x < 2a′, so the rule in the last paragraph of 6.2.17 (as in 6.2.14) applies: moments are taken about the compression steel. When x > ξ_b h₀ the steel is ignored, as in the one-layer check [J]. Each face carries the minimum ratio, so the mesh mass is 2 × layers × ρ × t × arc factor × 7850 kg/m³ [J].
+- **Two-layer mesh.** a = a′ = cover + 1.5 × mesh bar = 24 mm [J]. The capacity is GB 50010 6.2.17 with A_s = A_s′. In these shells x < 2a′, so the rule in the last paragraph of 6.2.17 (as in 6.2.14) applies: moments are taken about the compression steel. 6.2.17 also allows the check with the compression steel not counted, so the capacity is the larger of the two valid branches (Claude's reading of 6.2.17, author to confirm). When x > ξ_b h₀ the steel is ignored, as in the one-layer check [J]. Each face carries the minimum ratio, so the mesh mass is 2 × layers × ρ × t × arc factor × 7850 kg/m³ [J].
 - With true fill, the Day 25 ratio check (closed form against FE) is not a pass condition. Spot check 5 replaces it.
-- Buckling is still linear, with no imperfection allowance. The JGJ 22-2012 stability analysis (3.2.9) is still open.
+- Buckling is linear, with no imperfection allowance. JGJ 22-2012 asks for a stability analysis (3.2.9), but chapter 7 gives no stability formula for cylindrical shells (LOG, 3 Nov). Decision of 4 Nov 2026 [J]: stability enters through the linear FE buckling factor λ, in two ways:
+  - the 1/(1 − 1/λ) amplifier in the 6.2.17 check;
+  - the lowest λ in the library is 9.0, far above 1.
+
+  A separate knock-down factor is not added. This item is closed; author to confirm.
 
 `panel.py` gained these as optional keyword arguments only. Rerunning `python -m shellbench.panel` leaves `results/panel_day25.csv` byte-identical.
 
@@ -34,31 +38,31 @@ Sized thickness [mm]:
 
 | L [m] | f/L | foamed m1 | foamed m2 | raised m1 | raised m2 | recycled m1 | recycled m2 |
 |---|---|---|---|---|---|---|---|
-| 6.0 | 1/8 | 90 | 100 | 80 | 90 | 90 | 100 |
-| 6.0 | 1/10 | 80 | 100 | 80 | 90 | 90 | 100 |
-| 6.0 | 1/12 | 80 | 100 | 80 | 90 | 90 | 100 |
-| 6.0 | 1/15 | 80 | 100 | 80 | 100 | 90 | 100 |
-| 6.0 | 1/18 | 90 | 100 | 80 | 110 | 90 | 100 |
-| 6.0 | 1/20 | 90 | 120 | 90 | 120 | 90 | 110 |
-| 6.6 | 1/8 | 90 | 100 | 80 | 100 | 100 | 110 |
-| 6.6 | 1/10 | 90 | 100 | 80 | 100 | 100 | 110 |
-| 6.6 | 1/12 | 90 | 100 | 90 | 100 | 100 | 110 |
-| 6.6 | 1/15 | 90 | 110 | 90 | 100 | 90 | 110 |
-| 6.6 | 1/18 | 90 | 110 | 90 | 110 | 100 | 110 |
-| 6.6 | 1/20 | 100 | 120 | 90 | 120 | 100 | 110 |
+| 6.0 | 1/8 | 90 | 80 | 80 | 70 | 90 | 80 |
+| 6.0 | 1/10 | 80 | 80 | 80 | 70 | 90 | 80 |
+| 6.0 | 1/12 | 80 | 80 | 80 | 70 | 90 | 80 |
+| 6.0 | 1/15 | 80 | 80 | 80 | 70 | 90 | 80 |
+| 6.0 | 1/18 | 90 | 80 | 80 | 80 | 90 | 80 |
+| 6.0 | 1/20 | 90 | 80 | 90 | 80 | 90 | 80 |
+| 6.6 | 1/8 | 90 | 80 | 80 | 80 | 100 | 90 |
+| 6.6 | 1/10 | 90 | 80 | 80 | 80 | 100 | 90 |
+| 6.6 | 1/12 | 90 | 80 | 90 | 80 | 100 | 90 |
+| 6.6 | 1/15 | 90 | 80 | 90 | 80 | 90 | 80 |
+| 6.6 | 1/18 | 90 | 80 | 90 | 80 | 100 | 80 |
+| 6.6 | 1/20 | 100 | 80 | 90 | 80 | 100 | 90 |
 
 Ranges over the library:
 
-- concrete 0.081-0.121 m³/m²;
-- mesh 2.7-8.1 kg/m²;
+- concrete 0.071-0.104 m³/m²;
+- mesh 2.7-6.3 kg/m²;
 - tie bars 16-32 mm;
-- linear buckling factor 12.8-44.0.
+- linear buckling factor 9.0-33.2.
 
 Findings:
 
-1. **The two-layer mesh needs 10-30 mm more shell in every case.** The cause is the x < 2a′ rule. With one mid-depth layer, N acts about (t − x)/2 from the compression block. With two layers, the rule leaves N only t/2 − a′, about 21 mm at t = 90 mm. The extra face steel does not make up for this. The rule is conservative, because it ignores the concrete above a′. A full strain-compatibility check could narrow the gap [J]. **Author to confirm** that 6.2.17 with the 6.2.14 rule is the check to use.
+1. **The two-layer mesh is 0-20 mm thinner than one layer in every case.** A first run had it 10-30 mm thicker. That came from checking only the x < 2a′ branch, which leaves N a lever arm of only t/2 − a′. The capacity now takes the larger of that branch and the branch with the compression steel not counted, and a test checks that two layers never give less capacity than one [J].
 2. Recycled fill is heavier, so it governs at 6.6 m. Foamed fill and the raised floor come out much the same.
-3. The flattest vault (1/20) is the thickest in each column. The thinnest (80 mm) is at 1/8-1/15.
+3. In each column the flattest vault (1/20) is at least as thick as any of 1/10-1/15. The thinnest case (70 mm) is the raised floor with two layers at 6.0 m, 1/8-1/15.
 
 ## Five spot checks
 

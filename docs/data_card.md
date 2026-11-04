@@ -20,8 +20,10 @@ Both files use the same `building_id` for the same building (the Day 31 check ne
 - Storey heights: 4.55 m ground storey, then 3.6 m storeys (spec G6, G7) [J].
 - Tg 0.35 s and concrete C40 for every building [J]. Both are columns, so other values can be added later without a format change.
 - Run order: the 0.10 g block first (the validated case), then the other PGAs in rising order; storeys rise inside each block [J].
-- **Blocked rows.** α_max is confirmed only for 7 degrees, 0.10 g (GB 50011-2010 Table 5.1.4-1, by the author on 25 Oct 2026). Rows at the other five PGAs have `status = blocked` until the author confirms their α_max. No value is filled in from memory.
-- The PGA-to-intensity map (0.05 g → 6, 0.10 and 0.15 g → 7, 0.20 and 0.30 g → 8, 0.40 g → 9) is GB 50011-2010 Table 3.2.2 [?]. The author must confirm it in their own copy.
+- **α_max.** GB 50011-2010 Table 5.1.4-1, frequent earthquake: 0.04 (6°, 0.05 g), 0.08 (7°, 0.10 g), 0.12 (7°, 0.15 g), 0.16 (8°, 0.20 g), 0.24 (8°, 0.30 g), 0.32 (9°, 0.40 g). The 7°/0.10 g value was confirmed by the author on 25 Oct 2026. The other five were read by Claude on 4 Nov 2026 in the 2016 edition (p. 33); author to confirm. A row whose α_max is missing still gets `status = blocked`.
+- **Intensity.** 0.05 g → 6, 0.10 and 0.15 g → 7, 0.20 and 0.30 g → 8, 0.40 g → 9: GB 50011-2010 Table 3.2.2 (2016 edition, p. 6), read by Claude on 4 Nov 2026; author to confirm.
+- **Seismic grade and axial limit.** Frame grade from Table 6.1.2 (p. 49) by intensity and height (≤ 24 m or above). The column axial-ratio limit comes from Table 6.3.6 (p. 62): 0.65, 0.75, 0.85 and 0.90 for grades 1-4. Height is the sum of storey heights [J].
+- **Outside the code.** A frame taller than Table 6.1.1 allows (p. 48: 60, 50, 50, 40, 35 and 24 m for the six PGAs) gets `status = outside_code` and is not run. Only `s07-p040` and `s08-p040` are affected.
 
 ## Columns of family_rc
 
@@ -44,7 +46,7 @@ Units are in the column name, or in the Unit column for names without one. `[-]`
 | 13 | `tributary_width_m` | m | Frame spacing carried by the modelled frame |
 | 14 | `floor_area_m2` | m² | Floor area of the strip: storeys × sum of spans × tributary width. Every "per_m2" column is per m² of this area |
 | 15 | `floor_system` | text | `beam_slab` in family_rc |
-| 16 | `status` | text | `ok` (designed, all checks pass), `failed` (generator did not converge or a check cannot be met), `blocked` (an input is not confirmed) |
+| 16 | `status` | text | `ok` (designed, all checks pass), `failed` (generator did not converge or a check cannot be met), `blocked` (an input is not confirmed), `outside_code` (taller than GB 50011 Table 6.1.1 allows; not run) |
 | 17 | `failure_reason` | text | Empty when `ok` |
 | 18 | `n_passes` | [-] | Analysis passes of the generator's resize loop |
 | 19 | `period_s` | s | First period, after the ψ_T reduction |
@@ -86,26 +88,36 @@ Columns 1-34 have the same names, units and meanings, with `floor_system = shell
 | 46 | `fill_kg_per_m2` | kg/m² | Levelling fill or raised-floor mass |
 | 47 | `tie_steel_kg_per_m2` | kg/m² | Tie steel (also inside column 30) |
 
+Columns added on 4 Nov 2026, after the freeze (adding is allowed). Both files carry them at the end, so their position differs by file. Read them by name.
+
+| # in family_rc | # in family_shell | Column | Unit | Meaning |
+|---|---|---|---|---|
+| 35 | 48 | `seismic_grade` | [-] | Frame seismic grade 1-4, GB 50011-2010 Table 6.1.2 |
+| 36 | 49 | `axial_ratio_limit` | [-] | Column axial-ratio limit used in design, Table 6.3.6 |
+
+family_shell is built as family_rc columns 1-34, then shell columns 35-47, then columns 35-36 of family_rc (`batch.COLUMNS[:34] + shell + batch.COLUMNS[34:]`).
+
 In family_shell, `slab_mm` is empty and `topping_mm` holds the topping. Fill carbon needs a factor for each fill that `data/carbon_factors.csv` does not have yet (author item).
 
 ## 10-row sample (`python -m shellbench.batch --n 10`)
 
-Pre-release, not for results. Run on 4 Nov 2026. Twelve of the 34 columns are shown; the full rows are in [../results/family_rc_sample.csv](../results/family_rc_sample.csv) and `.parquet`.
+Pre-release, not for results. Run on 4 Nov 2026. Fourteen of the 36 columns are shown; the full rows are in [../results/family_rc_sample.csv](../results/family_rc_sample.csv) and `.parquet`.
 
-| building_id | status | period_s | max_drift_ratio | axial_ratio | column_mm | beam_h_mm | concrete_m3_per_m2 | bar_steel_kg_per_m2 | carbon_floor_kgco2e_per_m2 | carbon_lateral_kgco2e_per_m2 | carbon_building_kgco2e_per_m2 |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| s03-p010-tg35-C40 | ok | 0.4845 | 0.0009437 | 0.3962 | 450 | 600/550/600 | 0.1603 | 4.177 | 40.8 | 23.48 | 64.28 |
-| s04-p010-tg35-C40 | ok | 0.5485 | 0.00086 | 0.4385 | 500 | 600/550/600 | 0.1647 | 4.563 | 40.8 | 25.88 | 66.68 |
-| s05-p010-tg35-C40 | ok | 0.6135 | 0.0008349 | 0.46 | 550 | 600/550/600 | 0.1697 | 5.049 | 40.8 | 28.7 | 69.5 |
-| s06-p010-tg35-C40 | ok | 0.6823 | 0.0008445 | 0.4699 | 600 | 600/550/600 | 0.1751 | 5.462 | 40.8 | 31.53 | 72.33 |
-| s07-p010-tg35-C40 | ok | 0.7558 | 0.0008429 | 0.4729 | 650 | 600/550/600 | 0.1811 | 6.182 | 40.8 | 35.24 | 76.04 |
-| s08-p010-tg35-C40 | ok | 0.8336 | 0.0008349 | 0.4721 | 700 | 600/550/600 | 0.1876 | 6.277 | 40.8 | 37.66 | 78.46 |
-| s03-p005-tg35-C40 | blocked | | | | | | | | | | |
-| s04-p005-tg35-C40 | blocked | | | | | | | | | | |
-| s05-p005-tg35-C40 | blocked | | | | | | | | | | |
-| s06-p005-tg35-C40 | blocked | | | | | | | | | | |
+| building_id | status | alpha_max | seismic_grade | period_s | max_drift_ratio | axial_ratio | column_mm | beam_h_mm | concrete_m3_per_m2 | bar_steel_kg_per_m2 | carbon_floor_kgco2e_per_m2 | carbon_lateral_kgco2e_per_m2 | carbon_building_kgco2e_per_m2 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| s03-p010-tg35-C40 | ok | 0.08 | 3 | 0.4845 | 0.0009437 | 0.3962 | 450 | 600/550/600 | 0.1603 | 4.177 | 40.8 | 23.48 | 64.28 |
+| s04-p010-tg35-C40 | ok | 0.08 | 3 | 0.5485 | 0.00086 | 0.4385 | 500 | 600/550/600 | 0.1647 | 4.563 | 40.8 | 25.88 | 66.68 |
+| s05-p010-tg35-C40 | ok | 0.08 | 3 | 0.6135 | 0.0008349 | 0.46 | 550 | 600/550/600 | 0.1697 | 5.049 | 40.8 | 28.7 | 69.5 |
+| s06-p010-tg35-C40 | ok | 0.08 | 3 | 0.6823 | 0.0008445 | 0.4699 | 600 | 600/550/600 | 0.1751 | 5.462 | 40.8 | 31.53 | 72.33 |
+| s07-p010-tg35-C40 | ok | 0.08 | 2 | 0.7248 | 0.0008094 | 0.4131 | 700 | 600/550/600 | 0.1878 | 6.172 | 40.8 | 37.48 | 78.28 |
+| s08-p010-tg35-C40 | ok | 0.08 | 2 | 0.8336 | 0.0008349 | 0.4721 | 700 | 600/550/600 | 0.1876 | 6.277 | 40.8 | 37.66 | 78.46 |
+| s03-p005-tg35-C40 | ok | 0.04 | 4 | 0.5771 | 0.0005927 | 0.4966 | 400 | 600/550/600 | 0.1559 | 3.95 | 40.8 | 21.46 | 62.26 |
+| s04-p005-tg35-C40 | ok | 0.04 | 4 | 0.6254 | 0.0005224 | 0.5349 | 450 | 600/550/600 | 0.1599 | 4.015 | 40.8 | 22.96 | 63.76 |
+| s05-p005-tg35-C40 | ok | 0.04 | 4 | 0.6135 | 0.0004175 | 0.457 | 550 | 600/550/600 | 0.1697 | 4.771 | 40.8 | 28.05 | 68.85 |
+| s06-p005-tg35-C40 | ok | 0.04 | 4 | 0.6823 | 0.0004222 | 0.4673 | 600 | 600/550/600 | 0.1751 | 5.148 | 40.8 | 30.79 | 71.59 |
 
 Checks on the sample:
 - The anchor row `s04-p010-tg35-C40` gives T1 0.5485 s, drift 1/1163 and axial ratio 0.4385, the Day 16 values (LOG Day 16, `tests/test_generator_anchor.py`).
 - Floor carbon 40.8 kgCO2e/m² = 0.12 m slab × 340 kgCO2e/m³ by hand, in every `ok` row.
-- The blocked rows give the reason "alpha_max for (6, 0.05) not confirmed from Table 5.1.4-1".
+- `s07-p010` is 26.15 m tall, so it is grade 2 with axial limit 0.75 (Tables 6.1.2 and 6.3.6). Its columns are 700 mm. Under the earlier single limit of 0.85 they were 650 mm.
+- The whole family (36 buildings) was also run on 4 Nov as a check: 34 `ok`, 0 `failed`, and 2 `outside_code` (`s07-p040` and `s08-p040`, taller than 24 m at 9 degrees).
