@@ -2,6 +2,11 @@
 
 Newest entry first. Each session reads this at the start of a session and adds an entry at the end (see "Sync with cloud the assistant" in CONTRIBUTING.md).
 
+## 5 Nov 2026 (sync), laptop session
+
+- Synced main after PR #116. pytest: 172 passed. `python -m shellbench.anchor_frame` run: results/ byte-identical; figures/ restored (font bytes only).
+- Open items: as in the entry below.
+
 ## 5 Nov 2026 (late night), laptop session (code checks on record; take-off scope)
 
 Decisions the author's; checked: S. N. R. Hasib, 5 Nov 2026. Branch day19-author-checks.
