@@ -180,9 +180,24 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - Claude decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 19 (evening) - 5 Nov 2026 (beam I sensitivity; raised-floor factor)
+
+Done by Claude under my 5 Nov hand-over; author to confirm.
+
+- `batch.py` has a new `--beam-i-factor` option, and `hand_check_pilot.py` takes the factor as an optional second argument.
+- The pilot was run at beam I factor 1.5: results/family_rc_pilot_beam_i15.csv.
+  - Status counts unchanged (34 ok, 2 outside_code).
+  - 11 buildings got deeper beams; every ok row still passes 1/550.
+  - Carbon changed by -1.6 % to +0.3 %.
+- Hand check at the same factor: the hand drift is 1.10-1.16 times the generator's. s03-p030 and s06-p040 are still above 1/550 by hand, so the beam factor does not explain the gap; it is a method difference [J]. 2.0 stays the primary value (spec M7), and 1.5 is a sensitivity row. See docs/pilot_hand_checks.md.
+- The raised floor now has a factor: `RAISED_FLOOR` 534.5 kgCO2e/t (set `OVAL2023`). It comes from Oval et al. (2023) Table 6, A1 row "flooring system", 29 kg → 15.50 kgCO2eq/m².
+- Foamed fill is still [?]. Hawkins et al. (2020) Table 2 is ICE-based (D29). No open-access 2020-2026 foamed-concrete mix near 800 kg/m³ could be checked: one MDPI PDF returned 403, and the Firecrawl credits ran out.
+Compliance: sources - Oval et al. 2023 AAM (Univ. of Bath), Table 6, p. 19; Hawkins et al. 2020 AAM, Table 2 (read, not used). AI use - Claude ran, checked and decided; author to confirm. Numbers - from results/family_rc_pilot_beam_i15.csv and the hand script. Data - existing results/ byte-identical; pytest 172 passed. Repo - branch day19-sensitivity.
+
 ## Day 19 (later) - 5 Nov 2026 (pilot hand checks; floor-only carbon factors)
 
 Done by Claude under my 5 Nov hand-over; author to confirm.
+
 - Hand checks of s04-p010, s03-p030 and s06-p040 are in docs/pilot_hand_checks.md, with the script in scripts/hand_check_pilot.py. Methods: D-value drift, Rayleigh period, cantilever-method axial force. Period, drift and axial ratio agree within 25 %, and every hand value is higher.
 - Open point: the hand drift for s03-p030 (1/508) and s06-p040 (1/526) exceeds 1/550, while the generator's values pass. A sensitivity run with the beam I factor at 1.5 is proposed.
 - data/carbon_factors.csv gains four rows from GB/T 51366 Table D.0.1 (PDF pp. 22-23 of the third-party copy):
@@ -197,6 +212,7 @@ Compliance: sources - GB/T 51366-2019 Table D.0.1 (third-party copy, read from p
 ## Day 19 (later) - 5 Nov 2026 (decision card 1: family size)
 
 Decided by Claude under my 5 Nov hand-over; author to confirm.
+
 - The family stays as frozen in preregistration.md section 2: 36 conventional buildings, each with up to 72 floor variants, so up to 2,592 building-floor rows.
 - No span, bay or storey-height axis is added, because that would change the preregistered plan.
 - H4 holds out 6 PGAs x the floor variants per storey count (432 rows with all 72 variants), not 6 rows.
@@ -207,6 +223,7 @@ Compliance: sources - preregistration.md section 2, results/floor_library.csv. A
 ## Day 19 (later) - 5 Nov 2026 (decision card 2: R11 drift rule)
 
 Decided by Claude under my 5 Nov hand-over ("you do it all"); author to confirm.
+
 - R11 default is now "best_ratio". Each step tries all columns +50 mm and all beams +50 mm deeper, and keeps the one with the larger drift reduction per m³ of added frame concrete. The beam step must meet GB 50011 cl. 6.3.1.
 - The old columns-first rule is kept as `--drift-rule columns_first`. It reproduces the Day 19 pilot CSV byte for byte (tests/test_drift_rule.py).
 - results/family_rc_pilot.csv was rerun with the new rule:
@@ -227,6 +244,7 @@ Compliance: sources - GB 50011-2010 English edition (IISEE), pages 40 and 55, no
 
 Done: the whole conventional family as defined in batch.py (36 buildings: storeys 3-8 x six PGAs, every other input the anchor's) run as the pilot, results/family_rc_pilot.csv (pre-release, not for results). 34 ok, 0 failed, 2 outside_code (s07-p040, s08-p040, above the 24 m frame limit at 9 degrees). Failure rate 0 % (limit 2 %); outside_code rows are not counted as failures [J].
 Findings (red team):
+
 1. The family has 36 buildings, not the 200-building pilot and 2,000-building family of schedule.md and impact_strategy.md. H4 (leave-one-storey-count-out) would have 6 test rows per fold. Author decision needed.
 2. The R11 drift rule grows columns first. At 0.30 g, s07 went from 700 to 1100 mm columns for drift 1/470 to 1/480, then beams +100 mm took it to 1/575. Columns run the full height, so this makes the conventional frame heavier than it needs to be and could inflate the shell saving at high PGA (H2). Author decision needed before Day 20.
 3. Carbon 62-121 kgCO2e/m^2 (frame strip, takeoff_scope as recorded); 0.30-0.40 g buildings are drift- and xi-governed.
@@ -244,6 +262,7 @@ Finding: spot check 1 at first missed by up to 2.5 % on flat, thick vaults. Axia
 Finding: the two-layer mesh needs 10-30 mm more shell than one mid-depth layer. The GB 50010 6.2.17 rule for x < 2a′ takes moments about the compression steel, which leaves N a lever arm of only t/2 − a′.
 Choices [J]: PGA order (0.10 g first), Tg 0.35 s and C40 for the family; building ID format; take-off scope "frame_strip_v1"; trial thicknesses 50-150 mm; a = a′ = 24 mm for the two-layer mesh; each face at the minimum ratio; the steel is ignored for small eccentricity.
 For me:
+
 - α_max (frequent) for 0.05, 0.15, 0.20, 0.30 and 0.40 g from GB 50011 Table 5.1.4-1. Those rows are blocked, not filled from memory.
 - Confirm the PGA→intensity map (GB 50011 Table 3.2.2 [?]).
 - Carbon factors for foamed and recycled fill.

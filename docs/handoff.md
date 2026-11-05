@@ -2,6 +2,20 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 5 Nov 2026 (night), Claude Code in VS Code (beam I 1.5 sensitivity; raised-floor factor)
+
+Done by Claude after the author's "fix and finish". **Author to confirm.**
+
+- **Beam I 1.5 sensitivity:** done (`--beam-i-factor`; results/family_rc_pilot_beam_i15.csv).
+  - All ok rows still pass 1/550. Carbon changes by -1.6 % to +0.3 %.
+  - With matching factors, the hand drift is still 10-16 % higher, and s03-p030 and s06-p040 still exceed 1/550 by hand. So the beam factor is not the cause; the gap is a method difference between the D-value hand method and the frame analysis [J].
+  - Decision: keep 2.0 (spec M7) as primary, report 1.5 as a sensitivity row, and state the hand-check gap in Paper 1 Methods.
+- **Raised floor:** RAISED_FLOOR is 534.5 kgCO2e/t, from Oval et al. (2023) Table 6, A1 (15.50 kgCO2eq for 29 kg per m²; ecoinvent background, kept as its own set, OVAL2023).
+- **Still open:**
+  - The foamed-fill factor [?]: needs an open-access 2020-2026 mix with its cement content, or the author's choice. Hawkins 2020 is ICE-based, so it is not used (D29).
+  - The author's own-copy checks of Table 5.5.1, cl. 6.3.1, cl. 6.2.2 and the Table D.0.1 rows.
+  - Take-off scope; Paper 1 Methods.
+
 ## 5 Nov 2026 (evening), Claude Code in VS Code (cards decided; hand checks; floor carbon)
 
 The author asked Claude to decide and do everything. Each item below was decided or checked by Claude. **Author to confirm.**
