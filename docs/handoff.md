@@ -2,6 +2,28 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 5 Nov 2026 (Day 20 + sync), Claude Code in VS Code
+
+Decisions the author's; checked: S. N. R. Hasib, 5 Nov 2026. PR #118 merged.
+
+- **Synced main after PR #118.** pytest: 175 passed. anchor_frame: results/ byte-identical.
+- **New scope `building_v2`** (data_card row 4; LOG Day 20).
+  - It is v1 plus the grid-plan slab bars and secondary beams (floor) and longitudinal beams (lateral).
+  - Pilot: building median 76.8 → 109.0 kgCO2e/m²; floor share about 0.53.
+- **Known bias:** S_b is biased high. The lateral side is 41.2 against the anchor's 58.9 for s04-p010, because of:
+  - the missing frame and column stirrups;
+  - 500 mm against 600 mm columns (a design difference);
+  - the strip against the whole plan (factor 1.3125).
+
+  Close this, or bound S_b at 1.0 and 1.3125, before quoting any S_b.
+- **Team rule (author, forever):** the app and Claude Code are one team, synced through this file and LOG.md. Keep entries short and dense, and never redo recorded work.
+- **Open, in this order:**
+  1. Frame and column stirrups at generator sizes. `carbon.column_stirrup_legs_m()` is fixed at COLUMN_B_M; add a size argument. Add footings too if the generator exposes base loads.
+  2. R14: read GB 50011 cl. 6.2.4, 6.2.5, 6.3.3 and 6.3.7 (PDF page = printed + 9). Then code the strong-column and shear checks with tests, and rerun the family under v2.
+  3. Foamed fill: an open-access 2020-2026 mix. Otherwise it stays [?].
+  4. Paper 1 Methods skeleton: hand-drift gap, beam I 1.5 sensitivity, cl. 6.2.2 status, scope and S_b bias.
+  5. GB/T 51366 Table D.0.1 official-copy check (physical, the author).
+
 ## 5 Nov 2026 (sync), Claude Code in VS Code
 
 - Synced main after PR #116. pytest: 172 passed. `python -m shellbench.anchor_frame` run: results/ byte-identical; figures/ restored (font bytes only).
