@@ -2,6 +2,20 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 5 Nov 2026 (foamed fill factor), the AI assistant
+
+- **FOAMED_FILL = 472.7 kgCO2e/t, cement only [J]** (data/carbon_factors.csv; data_card).
+  - Source: Yang et al. 2025, Sci. Rep., doi:10.1038/s41598-025-03366-0, open access; OpenAlex checked. Table 1, 800 row: 514.47 kg/m³ neat cement.
+  - Multiplied by the GB/T 51366 ordinary Portland cement row, 735 kgCO2e/t (PDF p. 22 of the copy, read in the scan).
+  - Sensitivity: the 1000 row gives 475.7 kgCO2e/t.
+  - It understates the shell saving (conservative), which partly offsets the lateral S_b bias.
+  - No code reads it yet.
+- The C30, C40, HRB400 and HPB300 rows now carry their PDF page in the copy (pp. 22-23).
+
+## 5 Nov 2026 (GB/T 51366 search), the AI assistant
+
+- **Steel row (corrected, see PR #123):** the full third-party copy (scan, PDF p. 23) shows 热轧碳钢钢筋, 热轧碳钢棒材 and 热轧碳钢大型轨梁(方圆坯、管坯) as three separate rows, all at 2340 kgCO2e/t. That settles the row label. The DeepSeek search fragments (gohoedu PDF, patent CN113205272A) disagree with each other and are not relied on; gohoedu.com does not resolve here. No official full text or printed page number was found online.
+- **Decision (author):** the CSV values stand. Paper 1 cites "GB/T 51366-2019, Table D.0.1", without a page number. The official-copy check stays open but does not block. Close it only if a printed copy turns up (library or purchase).
 ## 5 Nov 2026 (Day 21 stirrups), the AI assistant
 
 Branch day21-stirrups. Decisions [J] are the AI assistant's; author to check.
