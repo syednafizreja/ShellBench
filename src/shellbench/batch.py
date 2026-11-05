@@ -1,4 +1,4 @@
-﻿"""Batch runner for the conventional building family (Playbook Day 18).
+"""Batch runner for the conventional building family (Playbook Day 18).
 
 File: src/shellbench/batch.py
 
@@ -149,13 +149,14 @@ def factors() -> tuple[float, float]:
     return conc * cb.CONVERSIONS[conc_unit][1], steel * cb.CONVERSIONS[steel_unit][1]
 
 
-def run_building(spec: dict, conc_factor: float, steel_factor: float) -> dict:
+def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule: str = "best_ratio") -> dict:
     """Run one building and return its row (all ``COLUMNS``).
 
     Args:
         spec: One entry of ``family()``.
         conc_factor: Concrete factor [kgCO2e/m^3].
         steel_factor: Bar steel factor [kgCO2e/kg].
+        drift_rule: R11 drift-fix rule, one of ``generator.DRIFT_RULES``.
     """
     height = sum(storey_heights(spec["storeys"]))
     grade = seismic_grade(spec["intensity"], height)
@@ -181,7 +182,7 @@ def run_building(spec: dict, conc_factor: float, steel_factor: float) -> dict:
         return row
     row["alpha_max"] = b.alpha_max
     try:
-        res = g.generate(b)
+        res = g.generate(b, drift_rule=drift_rule)
     except RuntimeError as exc:
         row.update(status="failed", failure_reason=str(exc))
         return row
@@ -202,11 +203,11 @@ def run_building(spec: dict, conc_factor: float, steel_factor: float) -> dict:
     return row
 
 
-def run_family(n: int | None = None) -> pd.DataFrame:
+def run_family(n: int | None = None, drift_rule: str = "best_ratio") -> pd.DataFrame:
     """Run the first ``n`` buildings of the family (all if None), frozen column order."""
     conc, steel = factors()
     specs = family()[:n] if n else family()
-    return pd.DataFrame([run_building(sp, conc, steel) for sp in specs], columns=list(COLUMNS))
+    return pd.DataFrame([run_building(sp, conc, steel, drift_rule) for sp in specs], columns=list(COLUMNS))
 
 
 def write(df: pd.DataFrame, stem: Path) -> None:
@@ -221,8 +222,10 @@ def main(argv: list[str] | None = None) -> None:
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--n", type=int, default=None, help="first n buildings of the family")
     p.add_argument("--out", type=Path, default=ROOT / "results" / "family_rc_sample")
+    p.add_argument("--drift-rule", choices=g.DRIFT_RULES, default="best_ratio",
+                   help="R11 drift-fix rule (decision card 2, 5 Nov 2026)")
     a = p.parse_args(argv)
-    df = run_family(a.n)
+    df = run_family(a.n, a.drift_rule)
     write(df, a.out)
     print(df["status"].value_counts().to_string())
 

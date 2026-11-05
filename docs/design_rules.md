@@ -42,7 +42,17 @@ R10. **Model.** The 2D elastic OpenSeesPy frame of the anchor for member forces 
 
 ## 4. Checks and what to change when one fails
 
-R11. **Drift.** Elastic storey drift ≤ 1/550 for frames (spec S11; GB 50011 Table 5.5.1 [?]). If a storey fails: first increase all columns by 50 mm and rerun; if that does not fix it after the column size reaches 1.5 times its R5 value, increase the beams by 50 mm in depth [J]. Each change reruns the whole analysis. "Columns first, then beams" is the playbook's order; the stopping rule is mine [J].
+R11. **Drift.** Elastic storey drift ≤ 1/550 for frames (spec S11; GB 50011-2010 Table 5.5.1, English edition p. 40, read by the AI assistant on 5 Nov 2026 from the IISEE copy, author to confirm).
+
+If a storey fails, the default rule since 5 Nov 2026 is "best_ratio" (decision card 2) [J]:
+- Try two candidates: all columns +50 mm, or all beams +50 mm deeper.
+- Keep the one with the larger drift reduction per m³ of added frame concrete.
+- The beam candidate must meet GB 50011-2010 cl. 6.3.1 (p. 55): b ≥ 200 mm, h/b ≤ 4, clear span/h ≥ 4.
+- Each change reruns the whole analysis.
+
+This departs from the playbook's "columns first, then beams" order. That rule is kept as `--drift-rule columns_first`: columns +50 mm up to 1.5 times the R5 size, then beams +50 mm. It is run as a sensitivity case (results/family_rc_pilot_r11_columns_first.csv).
+
+Not checked [?]: strong column/weak beam (GB 50011 cl. 6.2.2) is not modelled in the generator. "best_ratio" gives deeper beams relative to the columns than the old rule, so this check matters more now. It is open for the column design.
 
 R12. **Columns.** Axial ratio μ = N / (f_c A) ≤ R6, with N from the seismic combination (GB 50011 Table 6.3.6 note [?]; GB 50010 Table 11.4.16 note 1, p. 164 of the translation, checked). If it fails, increase the column by 50 mm [J]. Longitudinal steel at least 0.75 % in total and 0.20 % per side for grade III (GB 50010 Table 11.4.12-1, p. 163, checked; other grades [?]). The thesis used 4C22 (0.42 %), which is below this (B6); the generator applies the code minimum, otherwise the conventional frame's steel carbon is too low and the shell floor's saving looks too large (anchor report §6).
 
@@ -61,7 +71,7 @@ R16. **Stirrups** φ10@100 four legs in columns over the full height, φ10@200 t
 1. R3: **120 mm practical minimum** for floor slabs [J]. It reproduces B1, and a 90 mm floor slab would carry less than the thesis building, which would make the shell floor's saving look smaller than it is.
 2. R5: **code values** (number of storeys, μ_lim from R6) [J]. The thesis habit (five floors, 0.75) has no code basis. Day 16 reports the column size the rules give, and drift (R11) decides whether it grows.
 3. R4: **one rule, h = L/12** for all main beams [J]. Day 16 reports BC (550 against the thesis 500) as an explained difference rather than adding a rule written to match one beam.
-4. R11: the drift stopping rule **as written** [J].
+4. R11: the drift stopping rule **as written** [J]. Replaced on 5 Nov 2026 by the "best_ratio" rule (decision card 2, see R11). The old rule is kept as a sensitivity case.
 5. R14: **add the shear and strong-column checks** before the family run (Day 20) [J], because at 8-9 degrees they can set the column size and so the carbon.
 6. R1, R2, R6, R7, R11: still [?]. Two public copies of GB 50011 were found on 31 Oct 2026 but could not be read from the cloud. Until they are read, the generator runs 0.10 g only.
 

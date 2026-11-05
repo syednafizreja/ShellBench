@@ -180,6 +180,25 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 19 (later) - 5 Nov 2026 (decision card 2: R11 drift rule)
+
+Decided by the AI assistant under my 5 Nov hand-over ("you do it all"); author to confirm.
+- R11 default is now "best_ratio". Each step tries all columns +50 mm and all beams +50 mm deeper, and keeps the one with the larger drift reduction per m³ of added frame concrete. The beam step must meet GB 50011 cl. 6.3.1.
+- The old columns-first rule is kept as `--drift-rule columns_first`. It reproduces the Day 19 pilot CSV byte for byte (tests/test_drift_rule.py).
+- results/family_rc_pilot.csv was rerun with the new rule:
+  - 34 ok, 2 outside_code, 0 failed.
+  - 9 drift-governed rows changed (0.30 g s04-s08, 0.40 g s03-s06). Columns are 100-350 mm smaller, and drift is still within 1/550.
+  - Building carbon is now 62-95 kgCO2e/m², down from 62-121.
+  - s07-p030 now has 750 mm columns, down from 1100.
+  - The old run is results/family_rc_pilot_r11_columns_first.csv (sensitivity row for H2).
+- Code values read by the AI assistant on 5 Nov from the IISEE English copy of GB 50011-2010:
+  - Table 5.5.1, RC frame 1/550 (p. 40). This closes R11's [?].
+  - Cl. 6.3.1 beam limits (p. 55). All rows of both runs pass (tightest margin 1.09, s06-p040).
+- Open [?]: strong column/weak beam (cl. 6.2.2) is not modelled.
+- Unchanged: anchor results/, family_rc_sample, floor_library and panel_day25. pytest 172 passed.
+
+Compliance: sources - GB 50011-2010 English edition (IISEE), pages 40 and 55, not stored in the repo. AI use - The AI assistant chose the rule and changed the code; author to confirm. Numbers - from the 5 Nov run. Repo - branch day19-r11.
+
 ## Day 19 - 5 Nov 2026 (pilot of the conventional family)
 
 Done: the whole conventional family as defined in batch.py (36 buildings: storeys 3-8 x six PGAs, every other input the anchor's) run as the pilot, results/family_rc_pilot.csv (pre-release, not for results). 34 ok, 0 failed, 2 outside_code (s07-p040, s08-p040, above the 24 m frame limit at 9 degrees). Failure rate 0 % (limit 2 %); outside_code rows are not counted as failures [J].
