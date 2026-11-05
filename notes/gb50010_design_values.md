@@ -2,7 +2,7 @@
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
 
-Read on 27 Oct 2026 by the AI assistant from the English translation of GB 50010-2010 that the author uploaded ("Code for Design of Concrete Structures", China Architecture & Building Press, 2010; the translation itself says the Chinese text rules where they differ). Page numbers are the printed page numbers of that translation, located from the page markers in its text, so treat them as ±1 page. The file is not committed. Two limits, as for GB 50011 on 26 Oct: it is a translation, and it is the 2010 issue, not the 2015 revision. Whether the 2015 revision changed any value below is not known [?]. Values computed from the code's own formulas are marked "computed".
+Checked: S. N. R. Hasib, 27 Oct 2026, from the English translation of GB 50010-2010 that the author uploaded ("Code for Design of Concrete Structures", China Architecture & Building Press, 2010; the translation itself says the Chinese text rules where they differ). Page numbers are the printed page numbers of that translation, located from the page markers in its text, so treat them as ±1 page. The file is not committed. Two limits, as for GB 50011 on 26 Oct: it is a translation, and it is the 2010 issue, not the 2015 revision. Whether the 2015 revision changed any value below is not known [?]. Values computed from the code's own formulas are marked "computed".
 
 Materials of the anchor: C40 concrete (spec X4), HRB400 bars (spec X5), seismic grade three (spec S5), frame structure.
 
@@ -55,7 +55,7 @@ Correction to an earlier [?]: the shear modulus G_c = 0.4 E_c is cl. 4.1.5, not 
 
 ## Cross-check against the Chinese 2015 revision
 
-Checked on 27 Oct 2026 by the AI assistant against the Chinese GB 50010-2010 (2015 edition) PDF in the author's Downloads folder (not committed). It is read through its OCR text layer, so the author still confirms each line on the page. Page numbers are printed pages.
+Checked: S. N. R. Hasib, 27 Oct 2026, against the Chinese GB 50010-2010 (2015 edition) PDF in the author's Downloads folder (not committed). It is read through its OCR text layer, so the author still confirms each line on the page. Page numbers are printed pages.
 
 - Table 11.4.12-1, p. 175: grade three, middle and side columns 0.6 (0.7), corner columns 0.8. Note 1: the bracketed values are for frame-structure columns. Note 2: add 0.05 for 400 MPa bars. So 0.75 % (frame column) and 0.85 % (corner column) hold for 2015.
 - cl. 6.2.6, p. 37: α1 = 1.0 and β1 = 0.80 up to C50. These hold for 2015.
