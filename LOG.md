@@ -180,6 +180,16 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 19 - 5 Nov 2026 (pilot of the conventional family)
+
+Done: the whole conventional family as defined in batch.py (36 buildings: storeys 3-8 x six PGAs, every other input the anchor's) run as the pilot, results/family_rc_pilot.csv (pre-release, not for results). 34 ok, 0 failed, 2 outside_code (s07-p040, s08-p040, above the 24 m frame limit at 9 degrees). Failure rate 0 % (limit 2 %); outside_code rows are not counted as failures [J].
+Findings (red team):
+1. The family has 36 buildings, not the 200-building pilot and 2,000-building family of schedule.md and impact_strategy.md. H4 (leave-one-storey-count-out) would have 6 test rows per fold. Author decision needed.
+2. The R11 drift rule grows columns first. At 0.30 g, s07 went from 700 to 1100 mm columns for drift 1/470 to 1/480, then beams +100 mm took it to 1/575. Columns run the full height, so this makes the conventional frame heavier than it needs to be and could inflate the shell saving at high PGA (H2). Author decision needed before Day 20.
+3. Carbon 62-121 kgCO2e/m^2 (frame strip, takeoff_scope as recorded); 0.30-0.40 g buildings are drift- and xi-governed.
+Hand checks (three): s04-p010 (anchor), s03-p030, s06-p040, the author's.
+Compliance: sources - batch.py, generator.py as merged 4 Nov. AI use - The AI assistant ran the pilot and wrote the findings. Numbers - from the run of 5 Nov. Repo - branch day19-pilot.
+
 ## Day 18 and Day 26 - 4 Nov 2026 (batch runner and frozen format; floor library)
 
 Playbook source: the Done-when lines below are taken from schedule.md's copy of the playbook (the playbook itself is not in the repo).
