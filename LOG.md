@@ -180,6 +180,17 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 20 - 5 Nov 2026 (take-off scope building_v2)
+
+Decisions mine; checked: S. N. R. Hasib, 5 Nov 2026.
+
+- New scope `building_v2` (batch `--scope`). It is v1 plus the grid-plan slab bars and secondary beams (floor) and longitudinal beams (lateral), per m², taken from `carbon.family_fixed_per_m2`. The test equates them with results/anchor_quantities.csv. The `frame_strip_v1` rows are unchanged.
+- Family pilot rerun (results/family_rc_pilot_building_v2.csv): floor median 40.8 → 57.6 kgCO2e/m²; building 76.8 → 109.0 (range 94.4-127.6); floor share about 0.53. Designs unchanged.
+- Anchor cross-check (s04-p010): floor 57.6 vs 57.3; lateral 41.2 vs 58.9. The gap comes from the excluded frame and column stirrups, the 500 mm vs 600 mm columns (a design difference), and the strip vs the whole plan: the plan holds 1.3125× the strip's columns and frame beams per m². This biases S_b high. Paper 1 must close the gap, or bound S_b at 1.0 and 1.3125 (data_card row 4).
+- Open before the family run: frame and column stirrups at generator sizes; footings, if the generator gives base loads; the R14 checks (cl. 6.2.2, 6.2.4, 6.2.5).
+
+Compliance: sources - none new. AI use - The AI assistant wrote the code, tests and text; I decided and checked. Numbers - from the code and results/anchor_quantities.csv. Data - nothing confidential. Repo - branch day20-scope-v2; 175 tests pass; anchor results byte-identical.
+
 ## Day 19 (night) - 5 Nov 2026 (code checks on record; take-off scope)
 
 Decisions mine; checked: S. N. R. Hasib, 5 Nov 2026.
