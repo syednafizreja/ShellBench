@@ -30,7 +30,7 @@ Sources and their status
   0.6 (wind accompanying live) and 0.7 (live accompanying wind): Th §8.7 and
   the printed headers of Tables 8-13 and 8-15. The 1.3 and 1.5 equal the
   minimum values of GB 55001-2021 cl. 3.1.13 items 1 and 4 (checked 24 Oct
-  2026 against the online text; the author to confirm in their copy). The
+  2026 against the online text). The
   thesis does not cite GB 55001. The 0.6 and 0.7 are not traced to a clause.
 - Seismic combination 1.2 x gravity + 1.3 x earthquake: Th §8.7 text, which is
   garbled ("multiplied by1.21.3 times"). The reading equals GB 50011-2010
@@ -40,7 +40,7 @@ Sources and their status
 - Current seismic factors for Layer 2: GB 55002-2021 cl. 4.3.2, Tables
   4.3.2-1 and 4.3.2-2: gamma_G >= 1.3, gamma_Eh >= 1.4 when only horizontal
   earthquake is computed (checked 24 Oct 2026 against the online text; the
-  author to confirm in their copy). In force from 1 Jan 2022, so it applied
+  checked: S. N. R. Hasib). In force from 1 Jan 2022, so it applied
   when the thesis was completed (29 May 2023); the thesis values are lower
   (flag D21). ``CODE_SEISMIC_COMBINATIONS`` holds these; the anchor keeps
   the thesis values so that it can reproduce the thesis.
