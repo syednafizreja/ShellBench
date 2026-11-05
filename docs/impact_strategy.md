@@ -6,7 +6,7 @@ This note answers a question the author raised on 25 Oct 2026: is ShellBench too
 
 ## Short answer
 
-The worry is half right. The anchor report on its own is a single-building study and few people will cite it. But the anchor was never meant to be the product. It is the validation case. The products are the generator, the 2,000-building family, the floor plug-in and the dataset, and those are already planned as open outputs (MIT code, CC BY 4.0 dataset on Zenodo, JOSS).
+The worry is half right. The anchor report on its own is a single-building study and few people will cite it. But the anchor was never meant to be the product. It is the validation case. The products are the generator, the building family (36 buildings, up to 2,592 building-floor rows), the floor plug-in and the dataset, and those are already planned as open outputs (MIT code, CC BY 4.0 dataset on Zenodo, JOSS).
 
 So the study does not need a new public version. It needs to be built and presented so that a stranger can pick it up, run it on their own building or floor, and check their own code against ours. That is mostly a matter of how we do Weeks 3 to 8, not extra outputs.
 
@@ -18,7 +18,7 @@ The thesis building is actually the strongest part of the reuse story [J]. Most 
 |---|---|---|
 | Open code anyone can run | MIT licence, public repo, tests in CI | `LICENSE`, `.github/workflows/tests.yml` |
 | Other floor systems can be added | Floor type is a plug-in | Charter, Layer 3 |
-| Results beyond one building | Family of about 2,000 code-designed buildings, 3-8 storeys, PGA sweep 0.05-0.40 g | Charter, `docs/research_question.md` |
+| Results beyond one building | Family of 36 code-designed buildings (3-8 storeys x PGA 0.05-0.40 g), each with up to 72 floor variants: up to 2,592 building-floor rows (decision card 1, 5 Nov 2026) | Charter, `docs/research_question.md` |
 | Citable data | Zenodo dataset with DOI by 11 Nov (was 20 Nov; moved 26 and 28 Oct), CC BY 4.0 | Charter |
 | Citable software | v1.0 software DOI by 17 Nov (was 13 Dec; moved 26 and 28 Oct); JOSS from 19 Apr 2027 | Charter |
 | Fair comparison | Best code-compliant conventional floor as the baseline | `docs/goal_stress_test.md`, H2 fix |
@@ -31,7 +31,7 @@ The thesis building is actually the strongest part of the reuse story [J]. Most 
 2. **Hard-wired inputs.** If the generator holds thesis numbers in its code, nobody can run it on their own building without editing source files. This is the biggest practical barrier and it is decided in the first days of Week 3.
 3. **One design code and one country's carbon factors.** A reader in Europe or the US may see GB 50010/50011 and Chinese factors and stop. A second code is outside the charter. What we can do inside it is make the carbon factors a swappable input file and keep every code clause in one module, so the work is transferable in principle and the limitation is honest.
 4. **A plug-in nobody else can write.** "Floor type is a plug-in" means little unless the interface is written down and tested on more than one floor. The conventional baselines we already need (flat slab, and one ribbed or hollow-core floor) can be the first plug-ins, so the interface is proven before anyone else touches it.
-5. **A dataset without a datasheet.** 2,000 rows with unclear units, missing failed designs and no record of how each row was made will not be reused. Documentation is what turns a file into a dataset.
+5. **A dataset without a datasheet.** Some 2,000 rows with unclear units, missing failed designs and no record of how each row was made will not be reused. Documentation is what turns a file into a dataset.
 6. **No reference answers.** The name promises a benchmark. MacNeal and Harder (1985) is still cited because it gives fixed problems with known answers that everyone checks their elements against. ShellBench can do the same for whole-building floor comparisons, with a small published set of reference buildings and their full intermediate results.
 
 ## Additions adopted (in scope, no date moves)
