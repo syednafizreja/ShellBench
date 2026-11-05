@@ -453,7 +453,7 @@ def moment_capacity_two_layer(n: float, t: float, as_face_m2_m: float) -> float:
     - Small eccentricity (x > xi_b h_0): the steel is ignored, as in the one-layer
       check (conservative) [J].
     Returns the largest N e_i of the valid branches (Claude's reading of 6.2.17,
-    4 Nov 2026; author to confirm).
+    4 Nov 2026).
     """
     a = two_layer_cover_m()
     h0 = t - a

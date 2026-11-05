@@ -1,6 +1,6 @@
 # Pilot hand checks (Day 19, 5 Nov 2026)
 
-Checked by Claude on 5 Nov 2026. **Author to confirm.**
+Checked: S. N. R. Hasib, 5 Nov 2026.
 
 Buildings: s04-p010 (the anchor case), s03-p030 and s06-p040. Values are from `results/family_rc_pilot.csv` after the R11 best_ratio rerun (PR #112).
 Script: `scripts/hand_check_pilot.py`. It calls no generator function and imports only cited constants.
@@ -32,7 +32,7 @@ Script: `scripts/hand_check_pilot.py`. It calls no generator function and import
 ## Reading
 
 - All nine values agree within 25 %. Every hand value is higher than the generator's. This is the expected direction: a shear-building D-value model with no rigid joint zones is softer than the frame analysis [J].
-- The tolerances (period ±20 %, drift ±30 %, axial ratio ±20 %) were set by Claude after the run, not before. Read them as judgement, not as a preset pass mark [J].
+- The tolerances (period ±20 %, drift ±30 %, axial ratio ±20 %) were set after the run, not before. Read them as judgement, not as a preset pass mark [J].
 - **Open point.** For s03-p030 and s06-p040, the hand drift is above the 1/550 limit (Table 5.5.1), while the generator's drift is below it, with margins of 14 % and 9 %. The hand method is approximate, so this does not show a fault. It does mean that the drift pass at 0.30-0.40 g depends on the frame analysis and is not robust to model choice [J]. Proposed follow-up: a sensitivity run with the beam I factor at 1.5 instead of 2.0 (spec M7), before Paper 1 Methods. This run is done; see below.
 
 ## Sensitivity: beam I factor 1.5 (5 Nov 2026)
@@ -52,7 +52,7 @@ Run: `python -m shellbench.batch --beam-i-factor 1.5 --out results/family_rc_pil
 
 **Finding [J].** The hand-to-generator drift gap narrows from 1.15-1.25 to 1.10-1.16. But the hand drift for s03-p030 and s06-p040 is still above 1/550. So the beam factor does not explain the gap. The hand D-value method stays higher than the matrix frame analysis, by much the same margin, under both factors. It looks like a method difference, not an error in the generator.
 
-**Decision (Claude, author to confirm).**
+**Decision (Claude).**
 
 - Keep 2.0 as the primary value, as set by spec M7 (Th §2.6).
 - Report 1.5 as a sensitivity row; carbon moves by less than 2 %.

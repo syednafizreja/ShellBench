@@ -68,8 +68,8 @@ TAKEOFF_SCOPE = "frame_strip_v1"  # slab, frame beams, columns, longitudinal bar
 
 STOREYS: tuple[int, ...] = (3, 4, 5, 6, 7, 8)  # preregistration 2.0
 PGAS_G: tuple[float, ...] = (0.10, 0.05, 0.15, 0.20, 0.30, 0.40)  # 0.10 g first [J]
-#: Intensity for each PGA, GB 50011-2010 Table 3.2.2 (2016 edition, p. 6; read
-#: by Claude on 4 Nov 2026, author to confirm). 0.15 g and 0.30 g are designed
+#: Intensity for each PGA, GB 50011-2010 Table 3.2.2 (2016 edition, p. 6; checked:
+#: S. N. R. Hasib, 4 Nov 2026). 0.15 g and 0.30 g are designed
 #: as 7 and 8 degrees (3.2.2).
 INTENSITY: dict[float, int] = {0.05: 6, 0.10: 7, 0.15: 7, 0.20: 8, 0.30: 8, 0.40: 9}
 #: Largest height of a frame structure [m], GB 50011-2010 Table 6.1.1 (p. 48).

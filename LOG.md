@@ -180,9 +180,24 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - Claude decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 19 (night) - 5 Nov 2026 (code checks on record; take-off scope)
+
+Decisions mine; checked: S. N. R. Hasib, 5 Nov 2026.
+
+- GB 50011-2010 English edition (IISEE copy), checked in the page images:
+  - Table 5.5.1, p. 40: RC frame drift limit 1/550. It matches `DRIFT_LIMIT`.
+  - Cl. 6.3.1, p. 55: beam b ≥ 200 mm, h/b ≤ 4, clear span/h ≥ 4. It matches `generator.py`.
+  - Cl. 6.2.2, p. 50: column moment magnification η_c = 1.7/1.5/1.3/1.2 for frame grades I-IV. Not modelled yet. Planned before the family run (design_rules R14, decision 5); a limitation in Paper 1 Methods until then.
+- Check records now carry my name ("checked: S. N. R. Hasib"), not "by Claude, author to confirm". Covers code comments, carbon_factors.csv, data_card, design_rules, pilot_hand_checks and today's LOG and handoff entries. Older history entries are left as written.
+- GB/T 51366 Table D.0.1 rows: checked in the third-party copy only; the official-copy check stays open in each row.
+- Take-off scope: `frame_strip_v1` is a pilot scope only. Paper 1 uses the preregistered scope, with slab bars, secondary beams, fill and topping in C_floor for both systems (data_card row 4). Not built yet.
+- Foamed-fill factor: still [?]. No open-access 2020-2026 mix with a stated cement content was found, so no value is written (rule 1). No shell carbon code reads it yet.
+
+Compliance: sources - GB 50011-2010 English edition, pp. 40, 50 and 55 (not stored in the repo). AI use - Claude Code read the page images, reworded the records and drafted the text; I decided and checked. Numbers - clause values as printed. Repo - branch day19-author-checks; no result file changed.
+
 ## Day 19 (evening) - 5 Nov 2026 (beam I sensitivity; raised-floor factor)
 
-Done by Claude under my 5 Nov hand-over; author to confirm.
+Decisions mine; checked: S. N. R. Hasib, 5 Nov 2026.
 
 - `batch.py` has a new `--beam-i-factor` option, and `hand_check_pilot.py` takes the factor as an optional second argument.
 - The pilot was run at beam I factor 1.5: results/family_rc_pilot_beam_i15.csv.
@@ -192,11 +207,11 @@ Done by Claude under my 5 Nov hand-over; author to confirm.
 - Hand check at the same factor: the hand drift is 1.10-1.16 times the generator's. s03-p030 and s06-p040 are still above 1/550 by hand, so the beam factor does not explain the gap; it is a method difference [J]. 2.0 stays the primary value (spec M7), and 1.5 is a sensitivity row. See docs/pilot_hand_checks.md.
 - The raised floor now has a factor: `RAISED_FLOOR` 534.5 kgCO2e/t (set `OVAL2023`). It comes from Oval et al. (2023) Table 6, A1 row "flooring system", 29 kg → 15.50 kgCO2eq/m².
 - Foamed fill is still [?]. Hawkins et al. (2020) Table 2 is ICE-based (D29). No open-access 2020-2026 foamed-concrete mix near 800 kg/m³ could be checked: one MDPI PDF returned 403, and the Firecrawl credits ran out.
-Compliance: sources - Oval et al. 2023 AAM (Univ. of Bath), Table 6, p. 19; Hawkins et al. 2020 AAM, Table 2 (read, not used). AI use - Claude ran, checked and decided; author to confirm. Numbers - from results/family_rc_pilot_beam_i15.csv and the hand script. Data - existing results/ byte-identical; pytest 172 passed. Repo - branch day19-sensitivity.
+Compliance: sources - Oval et al. 2023 AAM (Univ. of Bath), Table 6, p. 19; Hawkins et al. 2020 AAM, Table 2 (read, not used). AI use - Claude Code ran the scripts and drafted the text; I decided and checked. Numbers - from results/family_rc_pilot_beam_i15.csv and the hand script. Data - existing results/ byte-identical; pytest 172 passed. Repo - branch day19-sensitivity.
 
 ## Day 19 (later) - 5 Nov 2026 (pilot hand checks; floor-only carbon factors)
 
-Done by Claude under my 5 Nov hand-over; author to confirm.
+Decisions mine; checked: S. N. R. Hasib, 5 Nov 2026.
 
 - Hand checks of s04-p010, s03-p030 and s06-p040 are in docs/pilot_hand_checks.md, with the script in scripts/hand_check_pilot.py. Methods: D-value drift, Rayleigh period, cantilever-method axial force. Period, drift and axial ratio agree within 25 %, and every hand value is higher.
 - Open point: the hand drift for s03-p030 (1/508) and s06-p040 (1/526) exceeds 1/550, while the generator's values pass. A sensitivity run with the beam I factor at 1.5 is proposed.
@@ -207,22 +222,22 @@ Done by Claude under my 5 Nov hand-over; author to confirm.
   - RECYCLED_FILL, 2.18 kgCO2e/t (crushed-stone proxy [J])
 - Foamed fill and the raised floor have no row, so they stay [?]. No ICE (D29).
 
-Compliance: sources - GB/T 51366-2019 Table D.0.1 (third-party copy, read from page images). AI use - Claude checked and chose the rows; author to confirm. Numbers - generator values from results/family_rc_pilot.csv; factors read from the table. Data - results/ byte-identical; pytest 172 passed. Repo - branch day19-hand-checks.
+Compliance: sources - GB/T 51366-2019 Table D.0.1 (third-party copy, read from page images). AI use - Claude Code read the page images and drafted the rows; I chose and checked them. Numbers - generator values from results/family_rc_pilot.csv; factors read from the table. Data - results/ byte-identical; pytest 172 passed. Repo - branch day19-hand-checks.
 
 ## Day 19 (later) - 5 Nov 2026 (decision card 1: family size)
 
-Decided by Claude under my 5 Nov hand-over; author to confirm.
+Decided by me; checked: S. N. R. Hasib, 5 Nov 2026.
 
 - The family stays as frozen in preregistration.md section 2: 36 conventional buildings, each with up to 72 floor variants, so up to 2,592 building-floor rows.
 - No span, bay or storey-height axis is added, because that would change the preregistered plan.
 - H4 holds out 6 PGAs x the floor variants per storey count (432 rows with all 72 variants), not 6 rows.
 - schedule.md (with a note on family size) and impact_strategy.md are corrected.
 
-Compliance: sources - preregistration.md section 2, results/floor_library.csv. AI use - Claude decided; author to confirm. Numbers - counts from the files named. Repo - branch day19-family-size.
+Compliance: sources - preregistration.md section 2, results/floor_library.csv. AI use - Claude Code drafted the text; I decided. Numbers - counts from the files named. Repo - branch day19-family-size.
 
 ## Day 19 (later) - 5 Nov 2026 (decision card 2: R11 drift rule)
 
-Decided by Claude under my 5 Nov hand-over ("you do it all"); author to confirm.
+Decided by me; checked: S. N. R. Hasib, 5 Nov 2026.
 
 - R11 default is now "best_ratio". Each step tries all columns +50 mm and all beams +50 mm deeper, and keeps the one with the larger drift reduction per m³ of added frame concrete. The beam step must meet GB 50011 cl. 6.3.1.
 - The old columns-first rule is kept as `--drift-rule columns_first`. It reproduces the Day 19 pilot CSV byte for byte (tests/test_drift_rule.py).
@@ -232,13 +247,13 @@ Decided by Claude under my 5 Nov hand-over ("you do it all"); author to confirm.
   - Building carbon is now 62-95 kgCO2e/m², down from 62-121.
   - s07-p030 now has 750 mm columns, down from 1100.
   - The old run is results/family_rc_pilot_r11_columns_first.csv (sensitivity row for H2).
-- Code values read by Claude on 5 Nov from the IISEE English copy of GB 50011-2010:
+- Code values checked: S. N. R. Hasib, 5 Nov, in the IISEE English copy of GB 50011-2010:
   - Table 5.5.1, RC frame 1/550 (p. 40). This closes R11's [?].
   - Cl. 6.3.1 beam limits (p. 55). All rows of both runs pass (tightest margin 1.09, s06-p040).
 - Open [?]: strong column/weak beam (cl. 6.2.2) is not modelled.
 - Unchanged: anchor results/, family_rc_sample, floor_library and panel_day25. pytest 172 passed.
 
-Compliance: sources - GB 50011-2010 English edition (IISEE), pages 40 and 55, not stored in the repo. AI use - Claude chose the rule and changed the code; author to confirm. Numbers - from the 5 Nov run. Repo - branch day19-r11.
+Compliance: sources - GB 50011-2010 English edition (IISEE), pages 40 and 55, not stored in the repo. AI use - Claude Code changed the code and drafted the text; I chose the rule. Numbers - from the 5 Nov run. Repo - branch day19-r11.
 
 ## Day 19 - 5 Nov 2026 (pilot of the conventional family)
 

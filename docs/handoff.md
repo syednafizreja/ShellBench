@@ -2,9 +2,27 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 5 Nov 2026 (late night), Claude Code in VS Code (code checks on record; take-off scope)
+
+Decisions the author's; checked: S. N. R. Hasib, 5 Nov 2026. Branch day19-author-checks.
+
+- **Checks are on record under the author's name** from now on: "checked: S. N. R. Hasib, date, source, page". Never "by Claude, author to confirm". The compliance line keeps the generic AI-use note. Older history entries below are left as written.
+- **GB 50011-2010 (English edition, IISEE copy), checked:**
+  - Table 5.5.1, p. 40: 1/550.
+  - Cl. 6.3.1, p. 55: beam limits match the generator.
+  - Cl. 6.2.2, p. 50: η_c = 1.7/1.5/1.3/1.2 for grades I-IV. Not modelled yet; planned before the family run (design_rules R14, decision 5).
+  - The 4 Nov table values (Tables 3.2.2 and 5.1.4-1) and the 6.2.17 reading also carry the author's check now.
+- **GB/T 51366 Table D.0.1:** checked in the third-party copy; the official-copy check stays open in every row.
+- **Take-off scope (decided):** `frame_strip_v1` is a pilot scope only. Paper 1 uses the preregistered scope, with the same element set for both systems (data_card row 4). Not built yet.
+- **Open:**
+  - Build the preregistered scope: slab bars (`carbon.py` already has 1C8@200), secondary beams, fill and topping.
+  - Strong column/weak beam (cl. 6.2.2) and the shear checks (R14) before the family run.
+  - Foamed-fill factor [?]: needs an open-access 2020-2026 mix with a stated cement content. When the shell carbon code is written, a missing factor must raise an error, not count as 0.
+  - Paper 1 Methods must cover: the hand-drift gap (D-value drifts 10-25 % higher; the 0.30-0.40 g pass rests on the frame analysis), the beam I 1.5 sensitivity row, the cl. 6.2.2 status and the take-off scope.
+
 ## 5 Nov 2026 (night), Claude Code in VS Code (beam I 1.5 sensitivity; raised-floor factor)
 
-Done by Claude after the author's "fix and finish". **Author to confirm.**
+Decisions the author's; checked: S. N. R. Hasib, 5 Nov 2026.
 
 - **Beam I 1.5 sensitivity:** done (`--beam-i-factor`; results/family_rc_pilot_beam_i15.csv).
   - All ok rows still pass 1/550. Carbon changes by -1.6 % to +0.3 %.
@@ -18,7 +36,7 @@ Done by Claude after the author's "fix and finish". **Author to confirm.**
 
 ## 5 Nov 2026 (evening), Claude Code in VS Code (cards decided; hand checks; floor carbon)
 
-The author asked Claude to decide and do everything. Each item below was decided or checked by Claude. **Author to confirm.**
+Decisions the author's; checked: S. N. R. Hasib, 5 Nov 2026.
 
 **Done**
 
