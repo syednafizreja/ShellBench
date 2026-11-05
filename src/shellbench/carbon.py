@@ -433,6 +433,53 @@ def take_off(plan: Plan, source: str, frame_steel: dict[tuple[str, int], FrameBe
     return rows
 
 
+class _NoFrameSteel:
+    """Frame-beam steel stand-in with zero mass, so ``take_off`` measures the
+    size-independent elements only (frame beams come from the generator)."""
+
+    def __getitem__(self, _key):
+        return self
+
+    def mass_kg(self, _clear_m: float) -> float:
+        """Return 0 kg: frame-beam bars are not taken from the anchor here."""
+        return 0.0
+
+
+#: Elements of the family take-off that do not depend on generator sizing, and
+#: where they belong (preregistration.md, Measured: C_floor holds the slab with
+#: its bars and the secondary beams; longitudinal beams are part of the frame).
+FAMILY_FIXED_ELEMENTS: dict[tuple[str, str], str] = {
+    ("slabs", BAR_STEEL): "floor",
+    ("secondary beams", CONCRETE_GRADE): "floor",
+    ("secondary beams", BAR_STEEL): "floor",
+    ("secondary beams", STIRRUP_STEEL): "floor",
+    ("longitudinal beams", CONCRETE_GRADE): "lateral",
+    ("longitudinal beams", BAR_STEEL): "lateral",
+    ("longitudinal beams", STIRRUP_STEEL): "lateral",
+}
+
+
+def family_fixed_per_m2(plan_name: str = "grid") -> dict[tuple[str, str], float]:
+    """Return the size-independent take-off items per m^2 of floor.
+
+    The values come from ``take_off`` on the anchor plan, so they equal the
+    anchor's rows exactly. Every level is measured the same way, so the value
+    per m^2 of floor does not depend on the storey count. Using the anchor plan
+    and the anchor's secondary and longitudinal beams for every family building
+    is a judgement [J] (data_card, takeoff_scope).
+
+    Args:
+        plan_name: ``"grid"`` (B11, default) or ``"drawn"``.
+
+    Returns:
+        Quantity per m^2 of floor, keyed (element, material): m^3/m^2 for
+        concrete, kg/m^2 for steel.
+    """
+    rows = take_off(make_plan(plan_name), "code", _NoFrameSteel(), [])
+    return {(r["element [text]"], r["material [text]"]): r["quantity"] / r["floor_area [m2]"]
+            for r in rows if (r["element [text]"], r["material [text]"]) in FAMILY_FIXED_ELEMENTS}
+
+
 def footing_rows(plan: Plan, pads: list[Footing]) -> list[dict]:
     """Build ``results/anchor_footings.csv`` rows for one plan."""
     return [{"plan [text]": plan.name, "axis [text]": str(k + 1), "line [text]": LINES_Y[m],
