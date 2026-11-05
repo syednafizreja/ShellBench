@@ -180,6 +180,16 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 19 (later) - 5 Nov 2026 (decision card 1: family size)
+
+Decided by the AI assistant under my 5 Nov hand-over; author to confirm.
+- The family stays as frozen in preregistration.md section 2: 36 conventional buildings, each with up to 72 floor variants, so up to 2,592 building-floor rows.
+- No span, bay or storey-height axis is added, because that would change the preregistered plan.
+- H4 holds out 6 PGAs x the floor variants per storey count (432 rows with all 72 variants), not 6 rows.
+- schedule.md (with a note on family size) and impact_strategy.md are corrected.
+
+Compliance: sources - preregistration.md section 2, results/floor_library.csv. AI use - The AI assistant decided; author to confirm. Numbers - counts from the files named. Repo - branch day19-family-size.
+
 ## Day 19 (later) - 5 Nov 2026 (decision card 2: R11 drift rule)
 
 Decided by the AI assistant under my 5 Nov hand-over ("you do it all"); author to confirm.
