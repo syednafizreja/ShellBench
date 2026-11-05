@@ -2,6 +2,15 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 5 Nov 2026 (GB/T 51366 search), Claude Code in VS Code
+
+- **What DeepSeek found:** the author ran a web search with DeepSeek. Two independent fragments show 2340 kgCO2e/t on the 热轧碳钢钢筋 row:
+  - patent CN113205272A;
+  - a gohoedu.com PDF.
+
+  A group-standard PDF (ttbz.org.cn) repeats C30 295, C50 385 and 碎石 2.18. No official full text or printed page number was found online, and the mohurd.gov.cn pages do not open.
+- **Decision (author):** the CSV values stand. The row label 热轧碳钢钢筋 is confirmed, not the 轨梁/方圆坯/管坯 row. Paper 1 cites "GB/T 51366-2019, Table D.0.1", without a page number. The official-copy check stays open but does not block. Close it only if a printed copy turns up (library or purchase).
+
 ## 5 Nov 2026 (Day 20 + sync), Claude Code in VS Code
 
 Decisions the author's; checked: S. N. R. Hasib, 5 Nov 2026. PR #118 merged.
