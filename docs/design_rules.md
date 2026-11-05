@@ -36,29 +36,29 @@ R7. **Column minimum dimension and slenderness.** Clear height over section dept
 
 R8. **Loads.** Dead loads from the build-up of each element (as Th §3-4 and docs/baseline_spec.md A4). Live loads 2.5 kN/m² office and 3.0 kN/m² corridor (decision B3). Wind from GB 50009 as in Th Table 8-1. Earthquake by the base-shear method of GB 50011 cl. 5.2.1, with G_i = dead + 0.5 floor live (Table 5.1.3) and the period factor ψ_T = 0.7 (anchor decision, JGJ 3-2010 cl. 4.3.17 [?]). The response-spectrum check (Day 10) stays a check, not the design method [J].
 
-R9. **Combinations.** The generator uses the current codes (author's decision, 24 Oct 2026): 1.3 D + 1.5 L and the wind combinations from GB 55001-2021 cl. 3.1.13, and 1.3 G_E ± 1.4 E_h from GB 55002-2021 cl. 4.3.2 (both checked by the AI assistant in the online texts). The anchor keeps the thesis factors (1.2 / 1.3), so the generator and the anchor differ here on purpose.
+R9. **Combinations.** The generator uses the current codes (author's decision, 24 Oct 2026): 1.3 D + 1.5 L and the wind combinations from GB 55001-2021 cl. 3.1.13, and 1.3 G_E ± 1.4 E_h from GB 55002-2021 cl. 4.3.2 (both checked: S. N. R. Hasib, in the online texts). The anchor keeps the thesis factors (1.2 / 1.3), so the generator and the anchor differ here on purpose.
 
 R10. **Model.** The 2D elastic OpenSeesPy frame of the anchor for member forces (Days 5-11), and the 3D model on the drawing grid for periods (Day 10, D25). Beam stiffness 2.0 I₀ for interior frames, 1.5 I₀ for edge frames (spec M7).
 
 ## 4. Checks and what to change when one fails
 
-R11. **Drift.** Elastic storey drift ≤ 1/550 for frames (spec S11; GB 50011-2010 Table 5.5.1, English edition p. 40, read by the AI assistant on 5 Nov 2026 from the IISEE copy, author to confirm).
+R11. **Drift.** Elastic storey drift ≤ 1/550 for frames (spec S11; GB 50011-2010 Table 5.5.1, English edition p. 40, checked: S. N. R. Hasib, 5 Nov 2026 from the IISEE copy).
 
 If a storey fails, the default rule since 5 Nov 2026 is "best_ratio" (decision card 2) [J]:
 - Try two candidates: all columns +50 mm, or all beams +50 mm deeper.
 - Keep the one with the larger drift reduction per m³ of added frame concrete.
-- The beam candidate must meet GB 50011-2010 cl. 6.3.1 (p. 55): b ≥ 200 mm, h/b ≤ 4, clear span/h ≥ 4.
+- The beam candidate must meet GB 50011-2010 cl. 6.3.1 (English edition p. 55; checked: S. N. R. Hasib, 5 Nov 2026, matches `generator.py`): b ≥ 200 mm, h/b ≤ 4, clear span/h ≥ 4.
 - Each change reruns the whole analysis.
 
 This departs from the playbook's "columns first, then beams" order. That rule is kept as `--drift-rule columns_first`: columns +50 mm up to 1.5 times the R5 size, then beams +50 mm. It is run as a sensitivity case (results/family_rc_pilot_r11_columns_first.csv).
 
-Not checked [?]: strong column/weak beam (GB 50011 cl. 6.2.2) is not modelled in the generator. "best_ratio" gives deeper beams relative to the columns than the old rule, so this check matters more now. It is open for the column design.
+Strong column/weak beam (GB 50011-2010 cl. 6.2.2, English edition p. 50; clause read, checked: S. N. R. Hasib, 5 Nov 2026). The clause magnifies the column-end moment demand at beam-column joints: ΣM_c = η_c ΣM_b, with η_c = 1.7, 1.5, 1.3 and 1.2 for frame structures of grades I to IV (exceptions as stated in the clause). It is a capacity-design rule for column moments. The generator does not model it: columns are sized by the axial ratio (R12) and drift (R11), not by moment capacity. "best_ratio" gives deeper beams relative to the columns than the old rule, so the rule may matter at higher grades. Not modelled yet; planned before the family run per R14 and decision 5; a limitation in Paper 1 Methods until then.
 
 R12. **Columns.** Axial ratio μ = N / (f_c A) ≤ R6, with N from the seismic combination (GB 50011 Table 6.3.6 note [?]; GB 50010 Table 11.4.16 note 1, p. 164 of the translation, checked). If it fails, increase the column by 50 mm [J]. Longitudinal steel at least 0.75 % in total and 0.20 % per side for grade III (GB 50010 Table 11.4.12-1, p. 163, checked; other grades [?]). The thesis used 4C22 (0.42 %), which is below this (B6); the generator applies the code minimum, otherwise the conventional frame's steel carbon is too low and the shell floor's saving looks too large (anchor report §6).
 
 R13. **Beams.** Required steel from `checks.py` as on Day 11: face moments, rectangular section, h₀ = h − 50 mm, GB 50010 cl. 6.2.10 (p. 36-37, checked), γ_RE = 0.75 for flexure (cl. 11.1.6, p. 152, checked). ξ ≤ 0.35 at the ends for grades II and III (cl. 11.3.1, p. 154, checked; grade I is 0.25 [?]). If ξ fails, increase the beam depth by 50 mm [J]. Minimum steel for grade III: max(0.25 %, 55 f_t / f_y) at supports and max(0.20 %, 45 f_t / f_y) at mid-span (Table 11.3.6-1, p. 156, checked; Th §9.1 quotes the same).
 
-R14. **Checks not yet in `checks.py`** (Day 11 rule 10): strong-column weak-beam (GB 50011 cl. 6.2.2 [?]), strong-shear weak-bending and member shear (cl. 6.2.4, 6.2.5 [?]), crack width and deflection (GB 50010 cl. 3.4 [?]). The thesis did not do these either (Th §9). Proposed [J]: add shear and strong-column checks before Day 20, because at 8-9 degrees they can govern the column size and so the carbon. If the author prefers to leave them out, Paper 1 must say so as a limitation.
+R14. **Checks not yet in `checks.py`** (Day 11 rule 10): strong-column weak-beam (GB 50011 cl. 6.2.2, read 5 Nov 2026; not modelled yet, see R11), strong-shear weak-bending and member shear (cl. 6.2.4, 6.2.5 [?]), crack width and deflection (GB 50010 cl. 3.4 [?]). The thesis did not do these either (Th §9). Proposed [J]: add shear and strong-column checks before Day 20, because at 8-9 degrees they can govern the column size and so the carbon. If the author prefers to leave them out, Paper 1 must say so as a limitation.
 
 ## 5. Rounding and bars
 
@@ -66,7 +66,7 @@ R15. **Sizes** in steps of 50 mm (playbook). **Bars** from the standard diameter
 
 R16. **Stirrups** φ10@100 four legs in columns over the full height, φ10@200 two legs in beams (drawings 01 and 03; D28 (c)). Confinement rules by grade (GB 50011 cl. 6.3.3, 6.3.7 [?]) replace these when R14 is added.
 
-## 6. Decisions (taken by the AI assistant on 31 Oct 2026 under the author's hand-over; the author may change any)
+## 6. Decisions (author, 31 Oct 2026)
 
 1. R3: **120 mm practical minimum** for floor slabs [J]. It reproduces B1, and a 90 mm floor slab would carry less than the thesis building, which would make the shell floor's saving look smaller than it is.
 2. R5: **code values** (number of storeys, μ_lim from R6) [J]. The thesis habit (five floors, 0.75) has no code basis. Day 16 reports the column size the rules give, and drift (R11) decides whether it grows.

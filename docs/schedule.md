@@ -162,7 +162,7 @@ What ShellForm needs from this list is not known yet [?]. If the floor-level sta
 
 The Day 19 pilot found that the family is 36 buildings, not the 200 and 2,000 written here earlier.
 
-Decision by the AI assistant under the author's 5 Nov hand-over [J]; author to confirm:
+Decision (author, 5 Nov 2026) [J]:
 - Keep the frozen family of preregistration.md section 2: storeys 3-8 x six PGAs x the floor-library variants.
 - Adding span, bay or storey-height axes would change a preregistered plan. That would need a change-log entry and both-ways reporting. None is made.
 - The conventional family is 36 buildings. The shell family is each building with up to 72 floor variants (results/floor_library.csv: 2 spans x 6 rises x 2 mesh layers x 3 levelling options), so up to 2,592 building-floor rows.

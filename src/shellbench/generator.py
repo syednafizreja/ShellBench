@@ -34,10 +34,10 @@ GAMMA_EH = 1.4  # GB 55002-2021 cl. 4.3.2, Table 4.3.2-2 (R9)
 GAMMA_D = 1.3  # GB 55001-2021 cl. 3.1.13 item 1 (R9)
 GAMMA_L = 1.5  # GB 55001-2021 cl. 3.1.13 item 4 (R9)
 #: Elastic storey drift limit of an RC frame, GB 50011-2010 Table 5.5.1 (English
-#: edition, p. 40; read by the AI assistant on 5 Nov 2026 from the IISEE copy, author to confirm) (R11).
+#: edition, p. 40; checked: S. N. R. Hasib, 5 Nov 2026 from the IISEE copy) (R11).
 DRIFT_LIMIT = 1.0 / 550.0
-#: Beam section limits, GB 50011-2010 cl. 6.3.1 (English edition, p. 55; read by
-#: the AI assistant on 5 Nov 2026, author to confirm): b >= 200 mm, h/b <= 4, clear span/h >= 4.
+#: Beam section limits, GB 50011-2010 cl. 6.3.1 (English edition, p. 55; checked:
+#: S. N. R. Hasib, 5 Nov 2026): b >= 200 mm, h/b <= 4, clear span/h >= 4.
 BEAM_MIN_B_MM = 200
 BEAM_MAX_H_OVER_B = 4.0
 BEAM_MIN_CLEAR_SPAN_OVER_H = 4.0
