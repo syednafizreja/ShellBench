@@ -149,7 +149,8 @@ def factors() -> tuple[float, float]:
     return conc * cb.CONVERSIONS[conc_unit][1], steel * cb.CONVERSIONS[steel_unit][1]
 
 
-def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule: str = "best_ratio") -> dict:
+def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule: str = "best_ratio",
+                 beam_i_factor: float | None = None) -> dict:
     """Run one building and return its row (all ``COLUMNS``).
 
     Args:
@@ -157,12 +158,16 @@ def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule
         conc_factor: Concrete factor [kgCO2e/m^3].
         steel_factor: Bar steel factor [kgCO2e/kg].
         drift_rule: R11 drift-fix rule, one of ``generator.DRIFT_RULES``.
+        beam_i_factor: Beam I factor on I0 [-]; None keeps the anchor value
+            (``anchor_frame.BEAM_INERTIA_FACTOR``, spec M7). Sensitivity runs only.
     """
     height = sum(storey_heights(spec["storeys"]))
     grade = seismic_grade(spec["intensity"], height)
     b = replace(ANCHOR, storey_heights_m=storey_heights(spec["storeys"]), tg_s=spec["tg_s"],
                 axial_ratio_limit=FRAME_AXIAL_LIMIT[grade])
-    n = spec["storeys"]
+    if beam_i_factor is not None:
+        b = replace(b, beam_i_factor=beam_i_factor)
+    n =spec["storeys"]
     row = dict.fromkeys(COLUMNS)
     row.update(spec)
     row.update(release=RELEASE, shellbench_version=shellbench.__version__, takeoff_scope=TAKEOFF_SCOPE,
@@ -203,11 +208,15 @@ def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule
     return row
 
 
-def run_family(n: int | None = None, drift_rule: str = "best_ratio") -> pd.DataFrame:
-    """Run the first ``n`` buildings of the family (all if None), frozen column order."""
+def run_family(n: int | None = None, drift_rule: str = "best_ratio",
+               beam_i_factor: float | None = None) -> pd.DataFrame:
+    """Run the first ``n`` buildings of the family (all if None), frozen column order.
+
+    ``beam_i_factor`` overrides the beam I factor for a sensitivity run (None = anchor value).
+    """
     conc, steel = factors()
     specs = family()[:n] if n else family()
-    return pd.DataFrame([run_building(sp, conc, steel, drift_rule) for sp in specs], columns=list(COLUMNS))
+    return pd.DataFrame([run_building(sp, conc, steel, drift_rule, beam_i_factor) for sp in specs], columns=list(COLUMNS))
 
 
 def write(df: pd.DataFrame, stem: Path) -> None:
@@ -224,8 +233,10 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--out", type=Path, default=ROOT / "results" / "family_rc_sample")
     p.add_argument("--drift-rule", choices=g.DRIFT_RULES, default="best_ratio",
                    help="R11 drift-fix rule (decision card 2, 5 Nov 2026)")
+    p.add_argument("--beam-i-factor", type=float, default=None,
+                   help="beam I factor on I0 for a sensitivity run (default: spec M7 value)")
     a = p.parse_args(argv)
-    df = run_family(a.n, a.drift_rule)
+    df = run_family(a.n, a.drift_rule, a.beam_i_factor)
     write(df, a.out)
     print(df["status"].value_counts().to_string())
 
