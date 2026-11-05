@@ -2,6 +2,7 @@
 
 File: scripts/hand_check_pilot.py
 Run:  python scripts/hand_check_pilot.py results/family_rc_pilot.csv
+      python scripts/hand_check_pilot.py results/family_rc_pilot_beam_i15.csv 1.5
 
 Hand methods: gravity take-down by tributary length, Rayleigh period with the
 D-value (Muto) storey stiffness, base-shear method (cl. 5.2.1) without the top
@@ -13,6 +14,7 @@ Units: kN, m, s.
 import csv
 import math
 import sys
+from dataclasses import replace
 
 from shellbench import batch as bt
 from shellbench import checks as c
@@ -110,10 +112,12 @@ def check(row, b):
 
 if __name__ == "__main__":
     rows = {r["building_id"]: r for r in csv.DictReader(open(sys.argv[1], encoding="utf-8"))}
+    # Optional second argument: beam I factor of the run being checked (default: spec M7 value).
+    b0 = replace(bt.ANCHOR, beam_i_factor=float(sys.argv[2])) if len(sys.argv) > 2 else bt.ANCHOR
     for bid in ("s04-p010-tg35-C40", "s03-p030-tg35-C40", "s06-p040-tg35-C40"):
         r = rows[bid]
         r["column_mm"] = int(float(r["column_mm"]))
-        out = check(r, bt.ANCHOR)
+        out = check(r, b0)
         print(bid, f"col {r['column_mm']} beams {r['beam_b_mm']}x{r['beam_h_mm']}",
               f"W={out['weight_kN']:.0f} FEk={out['fek_kN']:.0f}")
         for key in ("period", "drift", "axial"):

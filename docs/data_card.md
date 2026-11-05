@@ -103,7 +103,9 @@ In family_shell, `slab_mm` is empty and `topping_mm` holds the topping. Floor-on
 - Recycled-content cases are `TIE_STEEL_EAF` at 3030 and `TIE_STEEL_BOF` at 1990 kgCO2e/t. These are crude-steel rows, and in this table the EAF route is the higher one.
 - `RECYCLED_FILL` is 2.18 kgCO2e/t, the crushed-stone row used as a proxy [J].
 
-Foamed-concrete fill and the raised floor have no row in Table D.0.1 and no factor yet [?]. ICE is not used (D29).
+- `RAISED_FLOOR` (set `OVAL2023`) is 534.5 kgCO2e/t. It comes from Oval et al. (2023) Table 6, row "flooring system", stage A1: 29 kg gives 15.50 kgCO2eq per m². So the 29 kg/m² raised floor costs 15.50 kgCO2e/m². This row uses an ecoinvent background, not the GB/T 51366 set, so report it separately [J].
+
+Foamed-concrete fill has no row in Table D.0.1 and still has no factor [?]. Hawkins et al. (2020) Table 2 takes its values from Jones and Hammond (ICE), so it is not used (D29). A factor needs an open-access 2020-2026 mix with a stated cement content near 800 kg/m³, multiplied by the Table D.0.1 cement row (735 kgCO2e/t).
 
 ## 10-row sample (`python -m shellbench.batch --n 10`)
 
