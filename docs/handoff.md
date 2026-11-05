@@ -2,6 +2,32 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 5 Nov 2026 (evening), the AI assistant (cards decided; hand checks; floor carbon)
+
+The author asked the AI assistant to decide and do everything. Each item below was decided or checked by the AI assistant. **Author to confirm.**
+
+**Done**
+
+- **Card 1 (PR #113): keep the family as preregistered.** That is 36 buildings × up to 72 floor variants = up to 2,592 rows. The earlier 200/2,000 figures were corrected in schedule.md and impact_strategy.md; their origin is not recorded.
+- **Card 2 (PR #112): R11 now uses "best_ratio".** At each step it takes +50 mm columns or +50 mm beams, whichever gives more drift reduction per m³. Beams must meet GB 50011 cl. 6.3.1.
+  - Drift limit 1/550, Table 5.5.1, printed p. 40. Cl. 6.3.1 is on printed p. 55.
+  - The old rule is kept as `--drift-rule columns_first`, with results/family_rc_pilot_r11_columns_first.csv.
+  - Pilot rerun: 9 rows changed, columns 100-350 mm smaller, carbon 62-95 kgCO2e/m².
+- **Hand checks (this PR):** docs/pilot_hand_checks.md and scripts/hand_check_pilot.py. Period, drift and axial ratio agree within 25 %, and every hand value is higher.
+- **Floor-only carbon (this PR):** four rows from GB/T 51366 Table D.0.1:
+  - TIE_BAR, 2340
+  - TIE_STEEL_EAF, 3030 (high recycled content)
+  - TIE_STEEL_BOF, 1990 (low recycled content)
+  - RECYCLED_FILL, 2.18 kgCO2e/t (crushed-stone proxy [J])
+- No ICE (D29). pytest 172 passed; results/ byte-identical.
+
+**Open**
+
+- The hand drift for s03-p030 and s06-p040 is above 1/550, while the generator's passes. A sensitivity run with the beam I factor at 1.5 is proposed.
+- Foamed-concrete fill and the raised floor have no GB/T 51366 row. Each needs a primary open-access 2020-2026 source (for example, a foamed-concrete mix with its cement content), or the author's choice.
+- The author confirms: Table 5.5.1 and cl. 6.3.1 in their own copy; the card 1 and 2 decisions; the Table D.0.1 rows in the official copy.
+- Still open from before: cl. 6.2.2 strong column/weak beam [?]; take-off scope; Paper 1 Methods.
+
 ## 5 Nov 2026 (later), the AI assistant (Day 19 merged; decision cards)
 
 **Done**

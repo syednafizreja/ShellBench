@@ -180,6 +180,20 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 19 (later) - 5 Nov 2026 (pilot hand checks; floor-only carbon factors)
+
+Done by the AI assistant under my 5 Nov hand-over; author to confirm.
+- Hand checks of s04-p010, s03-p030 and s06-p040 are in docs/pilot_hand_checks.md, with the script in scripts/hand_check_pilot.py. Methods: D-value drift, Rayleigh period, cantilever-method axial force. Period, drift and axial ratio agree within 25 %, and every hand value is higher.
+- Open point: the hand drift for s03-p030 (1/508) and s06-p040 (1/526) exceeds 1/550, while the generator's values pass. A sensitivity run with the beam I factor at 1.5 is proposed.
+- data/carbon_factors.csv gains four rows from GB/T 51366 Table D.0.1 (PDF pp. 22-23 of the third-party copy):
+  - TIE_BAR, 2340 kgCO2e/t
+  - TIE_STEEL_EAF, 3030 kgCO2e/t
+  - TIE_STEEL_BOF, 1990 kgCO2e/t
+  - RECYCLED_FILL, 2.18 kgCO2e/t (crushed-stone proxy [J])
+- Foamed fill and the raised floor have no row, so they stay [?]. No ICE (D29).
+
+Compliance: sources - GB/T 51366-2019 Table D.0.1 (third-party copy, read from page images). AI use - The AI assistant checked and chose the rows; author to confirm. Numbers - generator values from results/family_rc_pilot.csv; factors read from the table. Data - results/ byte-identical; pytest 172 passed. Repo - branch day19-hand-checks.
+
 ## Day 19 (later) - 5 Nov 2026 (decision card 1: family size)
 
 Decided by the AI assistant under my 5 Nov hand-over; author to confirm.
