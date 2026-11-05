@@ -2,6 +2,19 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 5 Nov 2026, the AI assistant (morning sync)
+
+**Done**
+- Pulled main (already up to date). pytest: 168 passed.
+- anchor_frame rerun: results/ byte-identical. Figures restored (Windows font bytes only).
+- No local step was requested by the last entry. No other changes.
+
+**Open** (carried from the entry below)
+- Fill carbon factors (due Fri 6 Nov).
+- Take-off scope (Day 19/20).
+- Paper 1 Methods start (author).
+- Author to confirm the GB 50011 table values and the 6.2.17 reading.
+
 ## 4 Nov 2026 (later), the AI assistant (Day 26 code values and sync)
 
 This entry replaces the "Open (author)" list of the entry below.
