@@ -97,7 +97,13 @@ Columns added on 4 Nov 2026, after the freeze (adding is allowed). Both files ca
 
 family_shell is built as family_rc columns 1-34, then shell columns 35-47, then columns 35-36 of family_rc (`batch.COLUMNS[:34] + shell + batch.COLUMNS[34:]`).
 
-In family_shell, `slab_mm` is empty and `topping_mm` holds the topping. Fill carbon needs a factor for each fill that `data/carbon_factors.csv` does not have yet (author item).
+In family_shell, `slab_mm` is empty and `topping_mm` holds the topping. Floor-only factors (GB/T 51366 Table D.0.1; read by Claude on 5 Nov 2026, author to confirm) are as follows:
+
+- `TIE_BAR` is 2340 kgCO2e/t.
+- Recycled-content cases are `TIE_STEEL_EAF` at 3030 and `TIE_STEEL_BOF` at 1990 kgCO2e/t. These are crude-steel rows, and in this table the EAF route is the higher one.
+- `RECYCLED_FILL` is 2.18 kgCO2e/t, the crushed-stone row used as a proxy [J].
+
+Foamed-concrete fill and the raised floor have no row in Table D.0.1 and no factor yet [?]. ICE is not used (D29).
 
 ## 10-row sample (`python -m shellbench.batch --n 10`)
 
