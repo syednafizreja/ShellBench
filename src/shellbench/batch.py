@@ -32,11 +32,17 @@ heights [J].
 
 Carbon
 ------
-Quantities are those of ``generator.quantities``: one frame strip, slab, frame
-beams, columns and their longitudinal bars. Stirrups, footings, slab bars and
-the longitudinal and secondary beams are not in it yet; the column
-``takeoff_scope`` records this, so later rows can be told apart. Factors come
-from ``data/carbon_factors.csv`` (set GBT51366).
+The column ``takeoff_scope`` names the elements in each row (``--scope``):
+
+* ``frame_strip_v1`` (pilot): the quantities from ``generator.quantities``.
+  One frame strip, with slab, frame beams, columns and their longitudinal bars.
+* ``building_v2``: v1 plus the anchor-plan elements that do not depend on
+  member size (``carbon.family_fixed_per_m2``, grid plan, code steel). Slab
+  bars and secondary beams go to the floor; longitudinal beams go to lateral.
+  Frame-beam and column stirrups and footings are still left out (data card
+  row 4).
+
+Factors come from ``data/carbon_factors.csv`` (set GBT51366).
 
 Usage::
 
@@ -65,6 +71,11 @@ FACTOR_FILE = ROOT / "data" / "carbon_factors.csv"
 FACTOR_SET = "GBT51366"  # the only set in data/carbon_factors.csv
 RELEASE = "pre-release, not for results"  # schedule.md, ShellForm hand-over item 2
 TAKEOFF_SCOPE = "frame_strip_v1"  # slab, frame beams, columns, longitudinal bars
+#: Take-off scopes. ``building_v2`` adds the size-independent elements of the
+#: anchor plan (``carbon.family_fixed_per_m2``): slab bars and secondary beams
+#: to the floor, longitudinal beams to the lateral system (preregistration.md,
+#: Measured). Frame-beam and column stirrups and footings are not in it yet.
+SCOPES: tuple[str, ...] = (TAKEOFF_SCOPE, "building_v2")
 
 STOREYS: tuple[int, ...] = (3, 4, 5, 6, 7, 8)  # preregistration 2.0
 PGAS_G: tuple[float, ...] = (0.10, 0.05, 0.15, 0.20, 0.30, 0.40)  # 0.10 g first [J]
@@ -150,7 +161,7 @@ def factors() -> tuple[float, float]:
 
 
 def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule: str = "best_ratio",
-                 beam_i_factor: float | None = None) -> dict:
+                 beam_i_factor: float | None = None, scope: str = TAKEOFF_SCOPE) -> dict:
     """Run one building and return its row (all ``COLUMNS``).
 
     Args:
@@ -160,7 +171,11 @@ def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule
         drift_rule: R11 drift-fix rule, one of ``generator.DRIFT_RULES``.
         beam_i_factor: Beam I factor on I0 [-]; None keeps the anchor value
             (``anchor_frame.BEAM_INERTIA_FACTOR``, spec M7). Sensitivity runs only.
+        scope: Take-off scope, one of ``SCOPES``. Stirrups in ``building_v2``
+            use the bar steel factor: the HPB300 row equals the HRB400 row (D28 (e)).
     """
+    if scope not in SCOPES:
+        raise ValueError(f"unknown take-off scope {scope!r}")
     height = sum(storey_heights(spec["storeys"]))
     grade = seismic_grade(spec["intensity"], height)
     b = replace(ANCHOR, storey_heights_m=storey_heights(spec["storeys"]), tg_s=spec["tg_s"],
@@ -170,7 +185,7 @@ def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule
     n =spec["storeys"]
     row = dict.fromkeys(COLUMNS)
     row.update(spec)
-    row.update(release=RELEASE, shellbench_version=shellbench.__version__, takeoff_scope=TAKEOFF_SCOPE,
+    row.update(release=RELEASE, shellbench_version=shellbench.__version__, takeoff_scope=scope,
                spans_m="/".join(f"{x:g}" for x in b.spans_m),
                storey_heights_m="/".join(f"{x:g}" for x in b.storey_heights_m),
                tributary_width_m=b.tributary_width_m,
@@ -193,13 +208,23 @@ def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule
         return row
     q = res.quantities
     floor_c, lat_c = q["slab_concrete_m3_per_m2"], q["beam_concrete_m3_per_m2"] + q["column_concrete_m3_per_m2"]
-    floor_s, lat_s = 0.0, q["beam_bar_kg_per_m2"] + q["column_bar_kg_per_m2"]  # slab bars not in scope
+    floor_s, lat_s = 0.0, q["beam_bar_kg_per_m2"] + q["column_bar_kg_per_m2"]  # slab bars not in v1
+    conc_all, steel_all = q["concrete_m3_per_m2"], q["bar_steel_kg_per_m2"]
+    if scope == "building_v2":
+        for key, v in cb.family_fixed_per_m2().items():
+            to_floor = cb.FAMILY_FIXED_ELEMENTS[key] == "floor"
+            if key[1] == cb.CONCRETE_GRADE:
+                floor_c, lat_c = (floor_c + v, lat_c) if to_floor else (floor_c, lat_c + v)
+                conc_all += v
+            else:
+                floor_s, lat_s = (floor_s + v, lat_s) if to_floor else (floor_s, lat_s + v)
+                steel_all += v
     row.update(
         status="ok", n_passes=sum(h.startswith("pass ") for h in res.history), period_s=res.period_s,
         max_drift_ratio=max(res.drift_ratios), axial_ratio=res.axial_ratio,
         column_mm=res.final.column_mm, beam_b_mm="/".join(str(bw) for bw, _ in res.final.beams_mm),
         beam_h_mm="/".join(str(h) for _, h in res.final.beams_mm), slab_mm=res.final.slab_mm,
-        concrete_m3_per_m2=q["concrete_m3_per_m2"], bar_steel_kg_per_m2=q["bar_steel_kg_per_m2"],
+        concrete_m3_per_m2=conc_all, bar_steel_kg_per_m2=steel_all,
         floor_concrete_m3_per_m2=floor_c, lateral_concrete_m3_per_m2=lat_c,
         floor_steel_kg_per_m2=floor_s, lateral_steel_kg_per_m2=lat_s,
         carbon_floor_kgco2e_per_m2=floor_c * conc_factor + floor_s * steel_factor,
@@ -209,14 +234,14 @@ def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule
 
 
 def run_family(n: int | None = None, drift_rule: str = "best_ratio",
-               beam_i_factor: float | None = None) -> pd.DataFrame:
+               beam_i_factor: float | None = None, scope: str = TAKEOFF_SCOPE) -> pd.DataFrame:
     """Run the first ``n`` buildings of the family (all if None), frozen column order.
 
     ``beam_i_factor`` overrides the beam I factor for a sensitivity run (None = anchor value).
     """
     conc, steel = factors()
     specs = family()[:n] if n else family()
-    return pd.DataFrame([run_building(sp, conc, steel, drift_rule, beam_i_factor) for sp in specs], columns=list(COLUMNS))
+    return pd.DataFrame([run_building(sp, conc, steel, drift_rule, beam_i_factor, scope) for sp in specs], columns=list(COLUMNS))
 
 
 def write(df: pd.DataFrame, stem: Path) -> None:
@@ -235,8 +260,10 @@ def main(argv: list[str] | None = None) -> None:
                    help="R11 drift-fix rule (decision card 2, 5 Nov 2026)")
     p.add_argument("--beam-i-factor", type=float, default=None,
                    help="beam I factor on I0 for a sensitivity run (default: spec M7 value)")
+    p.add_argument("--scope", choices=SCOPES, default=TAKEOFF_SCOPE,
+                   help="take-off scope (data_card row 4)")
     a = p.parse_args(argv)
-    df = run_family(a.n, a.drift_rule, a.beam_i_factor)
+    df = run_family(a.n, a.drift_rule, a.beam_i_factor, a.scope)
     write(df, a.out)
     print(df["status"].value_counts().to_string())
 
