@@ -199,14 +199,23 @@ def stirrup_kg(legs_length_m: float, spacing_m: float, run_m: float) -> float:
     return n * steel_kg(c.bar_area_mm2(STIRRUP_BAR), legs_length_m)
 
 
-def beam_stirrup_legs_m(h_m: float) -> float:
-    """Return the leg length of one closed 2-leg beam stirrup [m] (rule 7)."""
-    return 2 * ((BEAM_B_M - 2 * STIRRUP_COVER_M) + (h_m - 2 * STIRRUP_COVER_M))
+def beam_stirrup_legs_m(h_m: float, b_m: float = BEAM_B_M) -> float:
+    """Return the leg length of one closed 2-leg beam stirrup [m] (rule 7).
+
+    Args:
+        h_m: Beam depth [m].
+        b_m: Beam width [m]; the anchor width BEAM_B_M by default.
+    """
+    return 2 * ((b_m - 2 * STIRRUP_COVER_M) + (h_m - 2 * STIRRUP_COVER_M))
 
 
-def column_stirrup_legs_m() -> float:
-    """Return the leg length of one 4 x 4-leg column stirrup set [m] (rule 7)."""
-    return 2 * COLUMN_STIRRUP_LEGS * (COLUMN_B_M - 2 * STIRRUP_COVER_M)
+def column_stirrup_legs_m(b_m: float = COLUMN_B_M) -> float:
+    """Return the leg length of one 4 x 4-leg square column stirrup set [m] (rule 7).
+
+    Args:
+        b_m: Column side [m]; the anchor side COLUMN_B_M by default.
+    """
+    return 2 * COLUMN_STIRRUP_LEGS * (b_m - 2 * STIRRUP_COVER_M)
 
 
 @dataclass
@@ -478,6 +487,35 @@ def family_fixed_per_m2(plan_name: str = "grid") -> dict[tuple[str, str], float]
     rows = take_off(make_plan(plan_name), "code", _NoFrameSteel(), [])
     return {(r["element [text]"], r["material [text]"]): r["quantity"] / r["floor_area [m2]"]
             for r in rows if (r["element [text]"], r["material [text]"]) in FAMILY_FIXED_ELEMENTS}
+
+
+def frame_stirrups_kg(spans_m: tuple[float, ...], storey_heights_m: tuple[float, ...],
+                      column_mm: float, beams_mm: tuple[tuple[float, float], ...]
+                      ) -> tuple[float, float]:
+    """Return frame-beam and column stirrup mass of one frame strip [kg].
+
+    Uses the generator's member sizes with the anchor's detailing (rule 7):
+    beam stirrups 1C10@200 over the clear span, column stirrups 1C10@100 with
+    4 legs each way over each storey height. Applying the anchor detailing to
+    every family member is a [J] choice; the GB 50011 6.3.3 / 6.3.7 densified
+    zones are not modelled.
+
+    Args:
+        spans_m: Frame spans [m].
+        storey_heights_m: Storey heights [m]; one beam level per storey.
+        column_mm: Square column side [mm].
+        beams_mm: (width, depth) of each span's beam [mm].
+
+    Returns:
+        (frame-beam stirrups, column stirrups) [kg].
+    """
+    col_b = column_mm / 1000.0
+    beams = len(storey_heights_m) * sum(
+        stirrup_kg(beam_stirrup_legs_m(h / 1000.0, bw / 1000.0), BEAM_STIRRUP_SPACING_M, L - col_b)
+        for (bw, h), L in zip(beams_mm, spans_m))
+    cols = (len(spans_m) + 1) * sum(
+        stirrup_kg(column_stirrup_legs_m(col_b), COLUMN_STIRRUP_SPACING_M, h) for h in storey_heights_m)
+    return beams, cols
 
 
 def footing_rows(plan: Plan, pads: list[Footing]) -> list[dict]:

@@ -41,6 +41,9 @@ The column ``takeoff_scope`` names the elements in each row (``--scope``):
   bars and secondary beams go to the floor; longitudinal beams go to lateral.
   Frame-beam and column stirrups and footings are still left out (data card
   row 4).
+* ``building_v3``: v2 plus frame-beam and column stirrups at the generator's
+  member sizes (``carbon.frame_stirrups_kg``, anchor detailing [J]), both to
+  lateral. Footings are still left out: the generator returns no base loads.
 
 Factors come from ``data/carbon_factors.csv`` (set GBT51366).
 
@@ -75,7 +78,7 @@ TAKEOFF_SCOPE = "frame_strip_v1"  # slab, frame beams, columns, longitudinal bar
 #: anchor plan (``carbon.family_fixed_per_m2``): slab bars and secondary beams
 #: to the floor, longitudinal beams to the lateral system (preregistration.md,
 #: Measured). Frame-beam and column stirrups and footings are not in it yet.
-SCOPES: tuple[str, ...] = (TAKEOFF_SCOPE, "building_v2")
+SCOPES: tuple[str, ...] = (TAKEOFF_SCOPE, "building_v2", "building_v3")
 
 STOREYS: tuple[int, ...] = (3, 4, 5, 6, 7, 8)  # preregistration 2.0
 PGAS_G: tuple[float, ...] = (0.10, 0.05, 0.15, 0.20, 0.30, 0.40)  # 0.10 g first [J]
@@ -210,7 +213,7 @@ def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule
     floor_c, lat_c = q["slab_concrete_m3_per_m2"], q["beam_concrete_m3_per_m2"] + q["column_concrete_m3_per_m2"]
     floor_s, lat_s = 0.0, q["beam_bar_kg_per_m2"] + q["column_bar_kg_per_m2"]  # slab bars not in v1
     conc_all, steel_all = q["concrete_m3_per_m2"], q["bar_steel_kg_per_m2"]
-    if scope == "building_v2":
+    if scope in ("building_v2", "building_v3"):
         for key, v in cb.family_fixed_per_m2().items():
             to_floor = cb.FAMILY_FIXED_ELEMENTS[key] == "floor"
             if key[1] == cb.CONCRETE_GRADE:
@@ -219,6 +222,12 @@ def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule
             else:
                 floor_s, lat_s = (floor_s + v, lat_s) if to_floor else (floor_s, lat_s + v)
                 steel_all += v
+    if scope == "building_v3":
+        area = n * sum(b.spans_m) * b.tributary_width_m
+        sb, sc = cb.frame_stirrups_kg(b.spans_m, b.storey_heights_m, res.final.column_mm,
+                                      tuple(res.final.beams_mm))
+        lat_s += (sb + sc) / area
+        steel_all += (sb + sc) / area
     row.update(
         status="ok", n_passes=sum(h.startswith("pass ") for h in res.history), period_s=res.period_s,
         max_drift_ratio=max(res.drift_ratios), axial_ratio=res.axial_ratio,

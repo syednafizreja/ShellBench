@@ -158,3 +158,21 @@ def test_totals_pinned(quantities):
     assert conc["slabs"] / sum(conc.values()) == pytest.approx(0.469, abs=1e-3)
     bars = {e: _qty(quantities, "code", e, "HRB400") for e in cb.ELEMENTS}
     assert max(bars, key=bars.get) == "slabs"
+
+
+def test_frame_stirrups_match_take_off_at_anchor_sizes(quantities):
+    """At anchor sizes, one strip of frame_stirrups_kg is 1/7 of the grid take-off.
+
+    The grid plan has 7 frame lines of 3 spans and 4 columns each (28 columns).
+    """
+    beams, cols = cb.frame_stirrups_kg(cb.SPANS_Y_M, cb.STOREY_HEIGHTS_M, 600,
+                                       ((300, 600), (300, 500), (300, 600)))
+    assert 7 * beams == pytest.approx(_qty(quantities, "code", "frame beams", "HPB300"), abs=1e-2)
+    assert 7 * cols == pytest.approx(_qty(quantities, "code", "columns", "HPB300"), abs=1e-2)
+
+
+def test_frame_stirrups_grow_with_size():
+    """Larger members carry more stirrup steel (sizes in mm)."""
+    small = cb.frame_stirrups_kg((7.2,), (3.6,), 500, ((300, 600),))
+    big = cb.frame_stirrups_kg((7.2,), (3.6,), 700, ((350, 700),))
+    assert big[0] > small[0] and big[1] > small[1]

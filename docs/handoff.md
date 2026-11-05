@@ -2,6 +2,16 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 5 Nov 2026 (Day 21 stirrups), the AI assistant
+
+Branch day21-stirrups. Decisions [J] are the AI assistant's; author to check.
+
+- **Stirrups at generator sizes (open item 1, done):** `carbon.frame_stirrups_kg()`; `beam_stirrup_legs_m` and `column_stirrup_legs_m` now take a size (defaults unchanged). Anchor detailing on every member [J]: beams 1C10@200 over clear span, columns 1C10@100, 4 legs each way. The 6.3.3/6.3.7 densified zones are not modelled.
+- Test: at anchor sizes, 7 strips equal the grid take-off stirrups (beams and columns).
+- **New scope `building_v3`** = v2 + those stirrups (lateral). Pilot: results/family_rc_pilot_building_v3.csv, 34 ok, 2 outside_code. Median lateral 51.4 → 59.3, building 109.0 → 116.8 kgCO2e/m², floor share 0.529 → 0.493. s04-p010 lateral 41.2 → 47.3 against the anchor's 58.9: the rest is 500 vs 600 mm columns and the 1.3125 plan factor.
+- **Footings:** still out. `GeneratorResult` has no base loads; the generator needs to expose them first.
+- **Not done here:** R14 (cl. 6.2.4, 6.2.5, 6.3.3, 6.3.7) needs the GB 50011 PDF, which is on the laptop. The foamed-fill search found nothing new; it stays [?].
+
 ## 5 Nov 2026 (Day 20 + sync), the AI assistant
 
 Decisions the author's; checked: S. N. R. Hasib, 5 Nov 2026. PR #118 merged.
