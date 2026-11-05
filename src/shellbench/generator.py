@@ -33,7 +33,14 @@ GAMMA_G_SEISMIC = 1.3  # GB 55002-2021 cl. 4.3.2, Table 4.3.2-1 (R9)
 GAMMA_EH = 1.4  # GB 55002-2021 cl. 4.3.2, Table 4.3.2-2 (R9)
 GAMMA_D = 1.3  # GB 55001-2021 cl. 3.1.13 item 1 (R9)
 GAMMA_L = 1.5  # GB 55001-2021 cl. 3.1.13 item 4 (R9)
-DRIFT_LIMIT = 1.0 / 550.0  # spec S11; GB 50011 Table 5.5.1 [?] (R11)
+#: Elastic storey drift limit of an RC frame, GB 50011-2010 Table 5.5.1 (English
+#: edition, p. 40; read by Claude on 5 Nov 2026 from the IISEE copy, author to confirm) (R11).
+DRIFT_LIMIT = 1.0 / 550.0
+#: Beam section limits, GB 50011-2010 cl. 6.3.1 (English edition, p. 55; read by
+#: Claude on 5 Nov 2026, author to confirm): b >= 200 mm, h/b <= 4, clear span/h >= 4.
+BEAM_MIN_B_MM = 200
+BEAM_MAX_H_OVER_B = 4.0
+BEAM_MIN_CLEAR_SPAN_OVER_H = 4.0
 PRELIM_GRAVITY_KN_M2 = 14.0  # Th s2.4, load per floor for preliminary sizing (R5)
 PRELIM_BETA_EDGE = 1.3  # Th s2.4 (R5)
 PRELIM_BETA_INTERIOR = 1.25  # Th s2.4 (R5)
@@ -41,7 +48,10 @@ SLAB_MIN_MM = 120  # R3 decision 1, 31 Oct 2026 [J]
 SLAB_SPAN_RATIO_TWO_WAY = 40.0  # Th s2.1; GB 50010 cl. 9.1.2 [?] (R3)
 BEAM_SPAN_RATIO = 12.0  # R4 [J], within Th s2.3's L/14 to L/8
 BEAM_MIN_WIDTH_MM = 250  # R4 [J]
-COLUMN_GROWTH_LIMIT = 1.5  # R11 stopping rule [J]
+COLUMN_GROWTH_LIMIT = 1.5  # R11 stopping rule of the "columns_first" rule [J]
+#: R11 drift-fix rules (decision card 2, 5 Nov 2026 [J]). "best_ratio" is the
+#: default; "columns_first" is the rule of 4 Nov, kept for the sensitivity run.
+DRIFT_RULES = ("best_ratio", "columns_first")
 BAR_DIAMETERS_MM = (12, 14, 16, 18, 20, 22, 25, 28, 32)  # R15 [J]; GB 1499.2 [?]
 BARS_PER_LAYER = (2, 6)  # R15 [J], 300 mm beam
 MAX_ITERATIONS = 40
@@ -472,14 +482,59 @@ def bars_area_mm2(label: str, as_req_mm2: float) -> float:
     return int(n) * math.pi * int(d) ** 2 / 4.0
 
 
-def generate(b: BuildingInput, verbose: bool = False) -> GeneratorResult:
+def max_drift(b: BuildingInput, z: Sizes) -> float:
+    """Largest elastic storey drift ratio under E for sizes ``z`` [-] (R11)."""
+    _, forces = seismic_forces(b, z)
+    return max(drift_ratios(b, run_case(b, z, "E", forces)))
+
+
+def frame_concrete_m3(b: BuildingInput, z: Sizes) -> float:
+    """Concrete of the frame strip's beams and columns [m^3] (slab excluded)."""
+    n = len(b.storey_heights_m)
+    beams = n * sum(bw / 1000.0 * (h - z.slab_mm) / 1000.0 * L for (bw, h), L in zip(z.beams_mm, b.spans_m))
+    cols = (len(b.spans_m) + 1) * sum(b.storey_heights_m) * (z.column_mm / 1000.0) ** 2
+    return beams + cols
+
+
+def beams_meet_631(b: BuildingInput, z: Sizes) -> bool:
+    """True if every beam meets GB 50011-2010 cl. 6.3.1 (width, h/b, clear span/h)."""
+    return all(bw >= BEAM_MIN_B_MM and h / bw <= BEAM_MAX_H_OVER_B
+               and (L * 1000.0 - z.column_mm) / h >= BEAM_MIN_CLEAR_SPAN_OVER_H
+               for (bw, h), L in zip(z.beams_mm, b.spans_m))
+
+
+def drift_step(b: BuildingInput, z: Sizes, drift: float) -> tuple[Sizes, str]:
+    """One R11 step of the "best_ratio" rule (decision card 2, 5 Nov 2026 [J]).
+
+    Two candidates are tried: all columns +50 mm, or all beams +50 mm deeper.
+    The one with the larger drift reduction per m^3 of added frame concrete is
+    kept. The beam candidate is only allowed if it meets cl. 6.3.1. If neither
+    reduces the drift, the columns grow.
+    """
+    col = Sizes(z.column_mm + SIZE_STEP_MM, list(z.beams_mm), z.slab_mm)
+    bm = Sizes(z.column_mm, [(bw, h + SIZE_STEP_MM) for bw, h in z.beams_mm], z.slab_mm)
+    v0 = frame_concrete_m3(b, z)
+    ratios = {name: (drift - max_drift(b, cand)) / (frame_concrete_m3(b, cand) - v0)
+              for name, cand in (("columns", col), ("beams", bm))}
+    if not beams_meet_631(b, bm):
+        ratios["beams"] = float("-inf")
+    if ratios["beams"] > ratios["columns"] and ratios["beams"] > 0.0:
+        return bm, f"R11 drift {drift:.5f} > 1/550: beams +50 mm (best ratio)"
+    return col, f"R11 drift {drift:.5f} > 1/550: columns to {col.column_mm} (best ratio)"
+
+
+def generate(b: BuildingInput, verbose: bool = False, drift_rule: str = "best_ratio") -> GeneratorResult:
     """Size the frame: preliminary sizes, then check and resize until all pass.
 
-    Order of the loop (R11-R13): drift first (columns, then beams once the
-    columns reach 1.5 times their preliminary size), then the axial ratio
-    (columns), then xi at the beam ends (that beam's depth). With ``verbose``,
-    the log of each pass is printed.
+    Order of the loop (R11-R13): drift first, then the axial ratio (columns),
+    then xi at the beam ends (that beam's depth). The drift fix follows
+    ``drift_rule``: "best_ratio" (default) grows whichever of columns or beams
+    gives more drift reduction per m^3 of concrete; "columns_first" grows the
+    columns until 1.5 times their preliminary size, then the beams. With
+    ``verbose``, the log of each pass is printed.
     """
+    if drift_rule not in DRIFT_RULES:
+        raise ValueError(f"drift_rule must be one of {DRIFT_RULES}")
     pre = preliminary_sizes(b)
     z = Sizes(pre.column_mm, list(pre.beams_mm), pre.slab_mm)
     history = []
@@ -490,6 +545,10 @@ def generate(b: BuildingInput, verbose: bool = False) -> GeneratorResult:
         drifts = drift_ratios(b, cases["E"])
         history.append(f"pass {n_pass}: columns {z.column_mm}, beams {z.beams_mm}, "
                        f"T1 {t1:.3f} s, drift 1/{1.0 / max(drifts):.0f}")
+        if max(drifts) > DRIFT_LIMIT and drift_rule == "best_ratio":
+            z, line = drift_step(b, z, max(drifts))
+            history.append(line)
+            continue
         if max(drifts) > DRIFT_LIMIT:
             if z.column_mm + SIZE_STEP_MM <= COLUMN_GROWTH_LIMIT * pre.column_mm:
                 z.column_mm += SIZE_STEP_MM
