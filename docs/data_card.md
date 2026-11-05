@@ -20,8 +20,8 @@ Both files use the same `building_id` for the same building (the Day 31 check ne
 - Storey heights: 4.55 m ground storey, then 3.6 m storeys (spec G6, G7) [J].
 - Tg 0.35 s and concrete C40 for every building [J]. Both are columns, so other values can be added later without a format change.
 - Run order: the 0.10 g block first (the validated case), then the other PGAs in rising order; storeys rise inside each block [J].
-- **α_max.** GB 50011-2010 Table 5.1.4-1, frequent earthquake: 0.04 (6°, 0.05 g), 0.08 (7°, 0.10 g), 0.12 (7°, 0.15 g), 0.16 (8°, 0.20 g), 0.24 (8°, 0.30 g), 0.32 (9°, 0.40 g). The 7°/0.10 g value was confirmed by the author on 25 Oct 2026. The other five were read by Claude on 4 Nov 2026 in the 2016 edition (p. 33); author to confirm. A row whose α_max is missing still gets `status = blocked`.
-- **Intensity.** 0.05 g → 6, 0.10 and 0.15 g → 7, 0.20 and 0.30 g → 8, 0.40 g → 9: GB 50011-2010 Table 3.2.2 (2016 edition, p. 6), read by Claude on 4 Nov 2026; author to confirm.
+- **α_max.** GB 50011-2010 Table 5.1.4-1, frequent earthquake: 0.04 (6°, 0.05 g), 0.08 (7°, 0.10 g), 0.12 (7°, 0.15 g), 0.16 (8°, 0.20 g), 0.24 (8°, 0.30 g), 0.32 (9°, 0.40 g). The 7°/0.10 g value was confirmed by the author on 25 Oct 2026. The other five were checked: S. N. R. Hasib, 4 Nov 2026 in the 2016 edition (p. 33). A row whose α_max is missing still gets `status = blocked`.
+- **Intensity.** 0.05 g → 6, 0.10 and 0.15 g → 7, 0.20 and 0.30 g → 8, 0.40 g → 9: GB 50011-2010 Table 3.2.2 (2016 edition, p. 6), checked: S. N. R. Hasib, 4 Nov 2026.
 - **Seismic grade and axial limit.** Frame grade from Table 6.1.2 (p. 49) by intensity and height (≤ 24 m or above). The column axial-ratio limit comes from Table 6.3.6 (p. 62): 0.65, 0.75, 0.85 and 0.90 for grades 1-4. Height is the sum of storey heights [J].
 - **Outside the code.** A frame taller than Table 6.1.1 allows (p. 48: 60, 50, 50, 40, 35 and 24 m for the six PGAs) gets `status = outside_code` and is not run. Only `s07-p040` and `s08-p040` are affected.
 
@@ -34,7 +34,7 @@ Units are in the column name, or in the Unit column for names without one. `[-]`
 | 1 | `building_id` | text | Stable ID, see above |
 | 2 | `release` | text | "pre-release, not for results" until the DOI version |
 | 3 | `shellbench_version` | text | `shellbench.__version__` of the code that wrote the row |
-| 4 | `takeoff_scope` | text | Which elements the quantities and carbon include. `frame_strip_v1` = one frame strip: slab, frame beams below the slab, columns, longitudinal bars only. Stirrups, footings, slab bars, longitudinal and secondary beams are not in it yet |
+| 4 | `takeoff_scope` | text | Which elements the quantities and carbon include. `frame_strip_v1` = one frame strip: slab, frame beams below the slab, columns, longitudinal bars only. Stirrups, footings, slab bars, longitudinal and secondary beams are not in it yet. Decision (author, 5 Nov 2026): `frame_strip_v1` is a pilot scope only. Paper 1 uses the preregistered scope (preregistration.md, Measured): C_floor = slab or vault with its bars, ties, fill, topping and secondary beams, and C_bldg = every element in the take-off, the same element set for both systems. A new scope value marks those rows |
 | 5 | `storeys` | [-] | Number of storeys |
 | 6 | `pga_g` | g | Design basic ground acceleration |
 | 7 | `intensity` | [-] | Fortification intensity for that PGA |
@@ -97,7 +97,7 @@ Columns added on 4 Nov 2026, after the freeze (adding is allowed). Both files ca
 
 family_shell is built as family_rc columns 1-34, then shell columns 35-47, then columns 35-36 of family_rc (`batch.COLUMNS[:34] + shell + batch.COLUMNS[34:]`).
 
-In family_shell, `slab_mm` is empty and `topping_mm` holds the topping. Floor-only factors (GB/T 51366 Table D.0.1; read by Claude on 5 Nov 2026, author to confirm) are as follows:
+In family_shell, `slab_mm` is empty and `topping_mm` holds the topping. Floor-only factors (GB/T 51366 Table D.0.1; checked: S. N. R. Hasib, 5 Nov 2026, in the third-party copy; official-copy check open) are as follows:
 
 - `TIE_BAR` is 2340 kgCO2e/t.
 - Recycled-content cases are `TIE_STEEL_EAF` at 3030 and `TIE_STEEL_BOF` at 1990 kgCO2e/t. These are crude-steel rows, and in this table the EAF route is the higher one.
