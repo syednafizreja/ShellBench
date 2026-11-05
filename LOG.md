@@ -189,7 +189,11 @@ Decisions mine; checked: S. N. R. Hasib, 5 Nov 2026.
 - Anchor cross-check (s04-p010): floor 57.6 vs 57.3; lateral 41.2 vs 58.9. The gap comes from the excluded frame and column stirrups, the 500 mm vs 600 mm columns (a design difference), and the strip vs the whole plan: the plan holds 1.3125× the strip's columns and frame beams per m². This biases S_b high. Paper 1 must close the gap, or bound S_b at 1.0 and 1.3125 (data_card row 4).
 - Open before the family run: frame and column stirrups at generator sizes; footings, if the generator gives base loads; the R14 checks (cl. 6.2.2, 6.2.4, 6.2.5).
 
-Compliance: sources - none new. AI use - Claude Code wrote the code, tests and text; I decided and checked. Numbers - from the code and results/anchor_quantities.csv. Data - nothing confidential. Repo - branch day20-scope-v2; 175 tests pass; anchor results byte-identical.
+- Later the same day:
+  - FOAMED_FILL = 472.7 kgCO2e/t, cement only [J]. From Yang et al. (2025), Sci. Rep. 15:18077, doi:10.1038/s41598-025-03366-0, Table 1, 800 row (514.47 kg/m³ cement), times the GB/T 51366 cement row 735 kgCO2e/t (PDF p. 22 of the copy). The 1000 row gives 475.7. The foamed-fill [?] is closed.
+  - Steel row label settled from the scan, PDF p. 23: 钢筋, 棒材 and 轨梁(方圆坯、管坯) are separate rows, all at 2340.
+
+Compliance: sources - none new for the scope work; for the fill, Yang et al. 2025 (CC BY-NC-ND, OpenAlex checked) and the GB/T 51366 copy. AI use - Claude Code wrote the code, tests and text; I decided and checked. Numbers - from the code and results/anchor_quantities.csv. Data - nothing confidential. Repo - branch day20-scope-v2; 175 tests pass; anchor results byte-identical.
 
 ## Day 19 (night) - 5 Nov 2026 (code checks on record; take-off scope)
 
