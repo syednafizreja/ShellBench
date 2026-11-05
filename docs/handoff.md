@@ -2,6 +2,11 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 5 Nov 2026 (sync), Claude Code in VS Code
+
+- Synced main after PR #116. pytest: 172 passed. `python -m shellbench.anchor_frame` run: results/ byte-identical; figures/ restored (font bytes only).
+- Open items: as in the entry below.
+
 ## 5 Nov 2026 (late night), Claude Code in VS Code (code checks on record; take-off scope)
 
 Decisions the author's; checked: S. N. R. Hasib, 5 Nov 2026. Branch day19-author-checks.
