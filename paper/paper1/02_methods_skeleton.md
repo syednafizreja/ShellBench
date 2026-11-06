@@ -60,7 +60,7 @@ Must say:
 - Preliminary sizing (R3-R5) and the author's decisions of 31 Oct 2026 (120 mm practical minimum; code values for R5; one beam rule h = L/12).
 - Loads, combinations (GB 55001-2021 cl. 3.1.13, GB 55002-2021 cl. 4.3.2), analysis model (2D elastic OpenSeesPy; beam I = 2.0 I₀ interior, 1.5 I₀ edge).
 - Checks and the redesign loop: drift ≤ 1/550 (Table 5.5.1) with the best_ratio rule (decision card 2, 5 Nov 2026), axial ratio, beam flexure and minimum steel (GB 50010 clauses as in design_rules R12-R13).
-- Reproduction of the thesis sizes: beams 300 × 600 match; columns 500 × 500 against the thesis 600 × 600, explained by R5 code values (decision 2).
+- Reproduction of the thesis sizes: beams 300 × 600 match; columns 500 × 500 against the thesis 600 × 600. Explanation confirmed by the author on 6 Nov 2026: a deliberate, code-based redesign, not an error. The generator sizes columns with the number of storeys and the GB 50011 Table 6.3.6 axial-ratio limit (0.85 for grade III), where the thesis used five floors and 0.75 (R5, decision 2). Minimum longitudinal steel is GB 50010 Table 11.4.12-1 (0.75 %), which the thesis 4C22 did not meet (B6).
 - Checks NOT in the generator at the time of writing: strong column/weak beam (cl. 6.2.2), shear (cl. 6.2.4, 6.2.5), confinement (6.3.3, 6.3.7). These are being added before the family run (handoff 5 Nov). Methods must state the final status, whichever it is.
 - Hand checks of the pilot (docs/pilot_hand_checks.md): three buildings, all hand values higher, within 25 %; tolerances set after the run, so stated as judgement.
 - The hand-drift gap: s03-p030 and s06-p040 pass 1/550 in the frame analysis but not by hand; beam I 1.5 sensitivity shows the beam factor is not the cause. The drift pass at 0.30-0.40 g depends on the frame analysis. State it plainly.
@@ -136,7 +136,7 @@ Must say:
 - Floor and building totals: C_floor (slab or vault with bars, ties, fill, topping, secondary beams) and C_bldg (every element).
 - Factor set: GB/T 51366-2019 Table D.0.1 only (D29: ICE licence forbids redistribution). C40 interpolated from C30 and C50 [J]. Floor-only rows (tie steel high/low recycled content, crushed-stone proxy for recycled fill). Raised floor from Oval et al. (2023) Table 6, ecoinvent background, kept as its own set.
 - Foamed fill factor: state the final source, or state that the foamed-fill variants are excluded from the verdicts if no factor is found. A missing factor raises an error in the code; it is never counted as 0 (handoff 5 Nov).
-- Factor uncertainty: see panel finding P4 (a decision for the author).
+- Factor sensitivity (author's decision 3, 6 Nov 2026; preregistration change log C1): one at a time, C40 between the C30 (295) and C50 (385) rows, and all steel between the converter (1990) and electric-arc (3030) rows of Table D.0.1. A sensitivity, not an uncertainty band; verdicts use base factors. State the crude-steel caveat.
 
 Table 3: carbon factors with source, row and page.
 
