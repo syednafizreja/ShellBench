@@ -26,6 +26,7 @@ Who cites it, and for what [J]: shell-floor researchers (Hawkins et al. 2020; Ov
 
 ## 3. Gap (from gap_matrix.md G1-G3; author's to rewrite)
 
+- **Gap in one sentence (writing skill §1; author's to rewrite):** For code-designed RC frames in seismic regions, no study has measured how much of a thin-shell floor's embodied-carbon saving survives at whole-building level once the frame is redesigned for the lighter floor and the floor's ties, levelling, topping and diaphragm needs are counted (gap_matrix G1-G3).
 - Context + variable + outcome: code-designed RC frames in seismic regions + thin-shell floor replacing the slab + whole-building A1-A3 embodied carbon.
 - Gap type [J]: an **evidence and methodological gap**. Shell-floor studies 2020-2026 are gravity-only and hold the frame fixed (rows 1, 4, 5, 8, 9). Seismic-carbon studies hold the floor fixed (row 12) or do not design it (rows 13, 14). Row 10 assumes seismic loads would not change its floor ranking. No study found combines a designed shell floor, a seismically redesigned frame and carbon (gap_matrix G1, G3).
 - Why it matters: floors are the largest share of structural embodied carbon (42 %, row 17), and seismic base shear scales with mass (row 15). Ties, fill and topping add material back. So neither the sign nor the size of the whole-building saving can be read from floor-level studies.
@@ -60,6 +61,19 @@ Publication goal [J]: reach the people who design and assess floors in seismic r
 | Safe | Journal of Cleaner Production (Elsevier) | Charter list; rows 2 and 4 published there | Quartile and no-fee route [?] |
 | Specialist | Bulletin of Earthquake Engineering (Springer) | Charter list; rows 16 and 23 published there | Quartile and no-fee route [?]; Springer AI rules (q1_standards §3) |
 | Speed | [?] | Not chosen. Structures (Elsevier) was ruled out of scope earlier, which is why the writing skill's "Structures second" is not used | Author decides, or the shortlist stays at four |
+
+## 7a. Article type and three JBE papers to model (writing skill §1)
+
+- Article type: research article (ScienceDirect labels JBE papers "Research article"; the Guide for Authors article-type list is to be checked at submission [?]).
+- Three recent JBE papers to model for structure and reporting, found and checked against Crossref on 6 Nov 2026. These are models of how JBE reports this kind of study; they are not yet in the gap matrix and the author has not opened them:
+
+| Paper | DOI | Why model it | Open copy |
+|---|---|---|---|
+| Zhang, Wen, Niu, Han, Li, Guo, Lv (2025). Low embodied carbon optimization design of concrete frame structures. JBE 111, 113213 | 10.1016/j.jobe.2025.113213 | Closest method: carbon-driven design of concrete frames, reported in JBE | SSRN preprint 10.2139/ssrn.4918421 |
+| Chang, Ma, Chiang, Lai (2025). The effects of structural design alternatives on the embodied carbon emissions of steel buildings. JBE 99, 111603 | 10.1016/j.jobe.2024.111603 | Same question shape (design alternative against whole-building embodied carbon), steel instead of RC | [?] |
+| Krieg, Rodgers, Pujol et al. (2026). The environmental impact of earthquake resilience: a quantitative review of embodied carbon and seismic design. JBE 130, 117119 | 10.1016/j.jobe.2026.117119 | Already gap_matrix row 11; how JBE frames seismic carbon and what its readers expect reported | Yes (reading_list) |
+
+Action for the author: open the first two and decide whether either belongs in the gap matrix. A paper read only as a model is not cited for any claim.
 
 ## 8. Frozen names (workflow §12 step 2)
 
