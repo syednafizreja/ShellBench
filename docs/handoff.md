@@ -31,6 +31,16 @@ Newest entry first. Each the AI assistant reads this at the start of a session a
 - pytest: 177 passed. anchor_frame: results/ byte-identical.
 - **Open:** today's playbook (6 Nov): Day 20 v0.2 overnight run of the conventional family; Day 28 review (half); Methods. The 5 Nov open list (stirrups at generator sizes, R14 checks, Paper 1 Methods skeleton, official GB/T copy) stands.
 
+## 6 Nov 2026 (reproducibility), the AI assistant
+
+Branch day22-repro. Asked for in paper/paper1/00_core.md section 10, before the DOI.
+
+- **One command:** `python scripts/reproduce.py` rebuilds every Paper 1 result (pytest, anchor_frame, panel, floorlib, the R14 family). `--quick` is the self-test: tests plus 2 buildings into a temp folder (passes).
+- **Provenance:** `batch.write` now also writes `stem.provenance.json`: shellbench version, git commit, seed, the Python and package versions, and the run options. Module `shellbench.provenance`.
+- **Seed:** `provenance.SEED = 20261103` (prereg approval date) [J], for the H2 permutation test and the bootstrap. Author may change it before any analysis runs, never after.
+- **Full run on Linux, 6 Nov:** family CSV identical at 4 s.f. Expected noise only: CRLF/LF in anchor_carbon.csv; the last digit of 4 panel rows and a few floor_library utilisations; Parquet floats ~1e-14. Not committed.
+- **Still to do:** regression tests on the headline numbers after 12 Nov; the carbon-factor sensitivity (prereg C1) once the shell take-off exists. PR #120's building_v3 pilot predates R14 and needs a rerun under R14 before it is merged.
+
 ## 5 Nov 2026 (foamed fill factor), the AI assistant
 
 - **FOAMED_FILL = 472.7 kgCO2e/t, cement only [J]** (data/carbon_factors.csv; data_card).
