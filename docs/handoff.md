@@ -2,6 +2,13 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 6 Nov 2026, the AI assistant (Paper 1 thread)
+
+- PR #121 merged: paper/paper1/ (Methods skeleton, review panel, numbers.md, references.md).
+- Author's decision 3: one-at-a-time carbon-factor sensitivity (preregistration change log C1). C40 between C30 295 and C50 385; all steel between converter 1990 and electric-arc 3030. No Monte Carlo. anchor_report §5 and anchor_notes D29 updated.
+- **For the build:** add the sensitivity run once the preregistered take-off scope exists (`--factor-bound` style option or a separate script; base factors stay the verdict factors).
+- Open (author): Paper 1 choices 1 and 2, rough sentences, voice_sample.md, Table D.0.1 official-copy check.
+
 ## 6 Nov 2026 (Day 20 close and sync), the AI assistant
 
 - Day 20 done, PR #126 merged. **Tag v0.2.0** "Generator and pilot family" is on c99fb66. It is a tag only, with no GitHub release, so no Zenodo DOI [J].
@@ -16,6 +23,7 @@ Newest entry first. Each the AI assistant reads this at the start of a session a
   - Re-judge decision card 2 under R14.
   - Day 28 half-day review and Methods.
 - **For the author:** confirm the R13/R14 clause values in an official copy (list in design_rules.md R13-R14), including the grade III ratio r of cl. 11.3.6.
+
 
 ## 6 Nov 2026 (sync), the AI assistant
 

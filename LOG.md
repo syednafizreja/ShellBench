@@ -180,6 +180,15 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Paper 1 - 6 Nov 2026 (Methods skeleton merged; factor sensitivity logged)
+
+- PR #121 merged (author asked): paper/paper1/ with the Methods skeleton, review panel findings P1-P11, numbers.md and references.md.
+- Decision 3 (author, 6 Nov 2026): option A. One-at-a-time carbon-factor sensitivity on Table D.0.1 rows only: C40 between C30 (295) and C50 (385); all steel between converter (1990) and electric-arc (3030) carbon steel. Logged as preregistration change log C1, before any shell-family row or any S_b. The "Monte Carlo band" in anchor_report §5 and anchor_notes D29 is withdrawn.
+- P6 closed: the generator's 500 mm columns against the thesis 600 mm are a deliberate code-based redesign (author's confirmation).
+- Open: the sensitivity run itself (build thread, after the take-off scope); rough sentences for Methods 2.1 and 2.8; choices 1 (journal) and 2 (voice); voice_sample.md.
+
+Compliance: no new number or source; the four bounds are existing Table D.0.1 rows (official-copy check still open). AI use: the AI assistant drafted the change-log entry and the doc edits; the decision is the author's.
+
 ## Day 20 - 6 Nov 2026 (R14 capacity design; full family run; v0.2)
 
 Done-when ("release v0.2 exists and the full run has started"): met. Tag v0.2 is on the merge commit. The full run is finished, not only started.
@@ -203,6 +212,7 @@ Done-when ("release v0.2 exists and the full run has started"): met. Tag v0.2 is
 - Day 28 half-day review and Methods: not done today. They are carried to Day 21 together with the checks above.
 
 Compliance: sources - GB 50010-2010 English translation (cl. 6.2.10, 6.2.14, 9.3.1, 11.3.1, 11.3.6, 11.4.x; PDF pp. 45-47, 123, 163-166) and GB 50011-2010 (cl. 6.2.2-6.2.5), not committed. AI use - The AI assistant wrote the code, tests and text and checked the clauses; the author confirms. Numbers - from the code and results/family_rc_r14_building_v2.csv. Data - nothing confidential. Repo - branch day20-r14; 184 tests pass; anchor results byte-identical.
+
 
 ## Day 20 - 5 Nov 2026 (take-off scope building_v2)
 
