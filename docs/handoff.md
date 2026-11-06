@@ -2,6 +2,12 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 6 Nov 2026 (sync), the AI assistant
+
+- **anchor_frame was broken on main** since the OVAL2023 row (Day 19, 3be99b4): `carbon_rows` treated every factor set as a full building set and stopped on "OVAL2023 has no row for C40". Fix [J]: a set with no take-off material is skipped; a set with some but not all still raises. Two new tests (floor-only set skipped; the real factor file runs). Carbon numbers unchanged.
+- pytest: 177 passed. anchor_frame: results/ byte-identical.
+- **Open:** today's playbook (6 Nov): Day 20 v0.2 overnight run of the conventional family; Day 28 review (half); Methods. The 5 Nov open list (stirrups at generator sizes, R14 checks, Paper 1 Methods skeleton, official GB/T copy) stands.
+
 ## 5 Nov 2026 (foamed fill factor), the AI assistant
 
 - **FOAMED_FILL = 472.7 kgCO2e/t, cement only [J]** (data/carbon_factors.csv; data_card).
