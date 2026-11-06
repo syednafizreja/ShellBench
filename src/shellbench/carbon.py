@@ -525,10 +525,14 @@ def carbon_rows(quantities: list[dict], factors: dict[tuple[str, str], tuple[flo
     Returns:
         One row per factor set, plan, steel source and element.
 
+    A set with no factor for any take-off material (for example the
+    one-row floor-only set OVAL2023, read by the floor code) is skipped.
+
     Raises:
-        KeyError: If a set has no factor for a material in the take-off.
+        KeyError: If a set has factors for some but not all take-off materials.
     """
-    sets = sorted({s for s, _ in factors})
+    materials = {q["material [text]"] for q in quantities}
+    sets = sorted({s for s, m in factors if m in materials})
     totals: dict[tuple, float] = {}
     floor = {}
     for fset in sets:
