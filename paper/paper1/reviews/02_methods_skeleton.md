@@ -27,6 +27,11 @@ Severity: **major** = a reviewer could reject on it; **minor** = must be fixed o
 
 A full Monte Carlo is not offered, because it would need a distribution for each factor and there is no sourced one [J].
 
+## Author's answers (6 Nov 2026)
+
+- **Decision 3: A.** Logged as preregistration change log C1. anchor_report §5 and anchor_notes D29 updated so that no Monte Carlo is promised. P4 closed.
+- **P6: confirmed.** The column difference is a deliberate code-based redesign. Wording in 2.3 corrected on one point: the axial-ratio limit is GB 50011 Table 6.3.6, but minimum longitudinal steel is GB 50010 Table 11.4.12-1, not GB 50011. P6 closed.
+
 ## Verdict of the panel
 
 The skeleton is fit to draft from once the author's rough sentences arrive, except 2.5 (waits for Days 27 and 29) and the numbers in 2.7 (wait for the take-off scope). Four majors (P1, P2, P4, P7) need either the author's words or later build steps. None of them needs a change to H1-H4.

@@ -613,7 +613,7 @@ The printed page of Table D.0.1 was not read [?].
 - The ICE FAQ (circularecology.com/ice-database-faqs.html, read 29 Oct 2026) says the free version is "intended for educational purposes only", and that "Distribution of the ICE Database – in whole, or in part – is not permitted". ShellBench publishes its factor file in an open repository and an open dataset, so it would distribute part of ICE.
 - The candidate Chinese database, CPCD (lca.cityghg.com), states no licence ("All rights reserved"), so it cannot be used either.
 
-So for now GB/T 51366 is the only factor set. The planned sensitivity on the factors is carried by the H6 Monte Carlo band instead. An openly licensed second set can be added later if one is found [J].
+So for now GB/T 51366 is the only factor set. The planned sensitivity on the factors is carried by the H6 Monte Carlo band instead. [Update, 6 Nov 2026: the Monte Carlo band is withdrawn; it was never in the analysis plan. The factor sensitivity is now the one-at-a-time sensitivity in preregistration.md, change log C1, author's decision.] An openly licensed second set can be added later if one is found [J].
 
 **A1-A3 per m² of floor area** (`results/anchor_carbon.csv`):
 
