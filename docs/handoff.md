@@ -2,6 +2,13 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 6 Nov 2026 (direction review), Claude Code in VS Code
+
+- Added docs/direction_review.md, which the author adopted as standing guidance. No dates move. It sets the priority order P1-P5: grade-I credibility first, independent anchor validation, carbon sensitivity shown prominently in Paper 1, modest H4 wording, and a transfer paragraph.
+- Paper 1 is the flagship. Paper 2 goes ahead only if H4 supports a real claim. ShellForm does not displace Paper 1 work before 22 Nov.
+- **Both Claudes:** follow it from Day 21. Day 21 starts with P1 (cl. 6.3.1 h/b on R14 beam growth, the grade-I beam capacity decision, hand-check or exclude the grade-I rows).
+- Open (author): the P2 validation source, the grade-I decision, and the journal's preprint policy.
+
 ## 6 Nov 2026, Claude in the app (Paper 1 thread)
 
 - PR #121 merged: paper/paper1/ (Methods skeleton, review panel, numbers.md, references.md).
