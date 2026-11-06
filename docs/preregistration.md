@@ -72,3 +72,17 @@ The pipeline follows schedule.md (Track B, Days 43-47). Its code and hyperparame
 ## 3. Verdicts
 
 None yet.
+
+### Change log
+
+**C1, 6 Nov 2026 (author's decision 3, Paper 1 review panel finding P4): carbon-factor sensitivity added.**
+
+- *What.* A one-at-a-time sensitivity on the carbon factors. Each bound is run alone, with every other factor at its base value:
+  - concrete: the C40 factor (340, the C30/C50 mean) set to the Table D.0.1 C30 row (295) and to the C50 row (385);
+  - steel: every steel factor (reinforcing bar, mesh and tie steel) set to the Table D.0.1 converter carbon steel row (1990 kgCO2e/t) and to the electric-arc carbon steel row (3030 kgCO2e/t).
+  All four values are rows already in data/carbon_factors.csv or in GB/T 51366-2019 Table D.0.1. No new source is used.
+- *Reported.* For each bound: S_f and S_b per building (minimum, median, maximum), the share of buildings with S_b > 0, and whether any H1-H3 verdict would read differently.
+- *What it is not.* It is a sensitivity, not an uncertainty band. The bounds are tabulated extremes, not a distribution. Every verdict is given with the base factors only (section 2.0). It replaces the "Monte Carlo band" named in anchor_notes D29 and anchor_report §5, which was never part of this plan.
+- *Caveat [J].* The converter and electric-arc rows are crude-steel values without rolling, while the base bar factor (2340) is the hot-rolled bar row. As bounds for bar steel they bracket the base value but are not like-for-like. Paper 1 states this.
+- *When.* Added after the conventional pilot rows (pre-release) and before any shell-family row, any S_f or S_b, or any DOI-data result existed. Git history gives the timestamp.
+
