@@ -2,6 +2,13 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 6 Nov 2026, Claude in the app (Paper 1 thread)
+
+- PR #121 merged: paper/paper1/ (Methods skeleton, review panel, numbers.md, references.md).
+- Author's decision 3: one-at-a-time carbon-factor sensitivity (preregistration change log C1). C40 between C30 295 and C50 385; all steel between converter 1990 and electric-arc 3030. No Monte Carlo. anchor_report §5 and anchor_notes D29 updated.
+- **For the build:** add the sensitivity run once the preregistered take-off scope exists (`--factor-bound` style option or a separate script; base factors stay the verdict factors).
+- Open (author): Paper 1 choices 1 and 2, rough sentences, voice_sample.md, Table D.0.1 official-copy check.
+
 ## 6 Nov 2026 (sync), Claude Code in VS Code
 
 - **anchor_frame was broken on main** since the OVAL2023 row (Day 19, 3be99b4): `carbon_rows` treated every factor set as a full building set and stopped on "OVAL2023 has no row for C40". Fix [J]: a set with no take-off material is skipped; a set with some but not all still raises. Two new tests (floor-only set skipped; the real factor file runs). Carbon numbers unchanged.
