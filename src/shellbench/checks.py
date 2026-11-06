@@ -76,6 +76,14 @@ EPS_CU: float = 0.0033
 #: Largest relative compression depth at a frame-beam end, grade II and III
 #: [-]. GB 50010 cl. 11.3.1, formula 11.3.1-2, p. 154 (x <= 0.35 h0).
 XI_END_LIMIT_GRADE_III: float = 0.35
+#: Same limit by seismic grade, cl. 11.3.1 (p. 154): grade I x <= 0.25 h0;
+#: grades II-III 0.35 h0; grade IV has no seismic limit (None, xi_b only).
+XI_END_LIMIT: dict[int, float | None] = {1: 0.25, 2: 0.35, 3: 0.35, 4: None}
+#: Minimum beam tension steel by grade, Table 11.3.6-1 (p. 156): (support %,
+#: support k, mid-span %, mid-span k) for max(%, k f_t/f_y).
+RHO_MIN_BEAM: dict[int, tuple[float, float, float, float]] = {
+    1: (0.40, 80.0, 0.30, 65.0), 2: (0.30, 65.0, 0.25, 55.0),
+    3: (0.25, 55.0, 0.20, 45.0), 4: (0.25, 55.0, 0.20, 45.0)}
 
 #: Seismic adjustment coefficient for flexural members [-]. GB 50010 Table 11.1.6, p. 152.
 GAMMA_RE_BEAM_FLEXURE: float = 0.75
@@ -113,14 +121,16 @@ def xi_b() -> float:
     return BETA1 / (1.0 + FY_N_MM2 / (ES_N_MM2 * EPS_CU))
 
 
-def rho_min_beam(position: str) -> float:
-    """Return the minimum tension-steel ratio of a grade-III frame beam [-].
+def rho_min_beam(position: str, grade: int = 3) -> float:
+    """Return the minimum tension-steel ratio of a frame beam [-].
 
-    GB 50010 Table 11.3.6-1, p. 156: support max(0.25 %, 55 f_t / f_y);
-    mid-span max(0.20 %, 45 f_t / f_y). The ratio is on b x h.
+    GB 50010 Table 11.3.6-1, p. 156. Grade III (default): support
+    max(0.25 %, 55 f_t / f_y); mid-span max(0.20 %, 45 f_t / f_y). Other
+    grades from RHO_MIN_BEAM. The ratio is on b x h.
 
     Args:
         position: ``"support"`` or ``"mid-span"``.
+        grade: Seismic grade 1-4.
 
     Returns:
         The ratio as a fraction.
@@ -128,10 +138,11 @@ def rho_min_beam(position: str) -> float:
     Raises:
         ValueError: For any other position.
     """
+    sup_pct, sup_k, mid_pct, mid_k = RHO_MIN_BEAM[grade]
     if position == "support":
-        return max(0.0025, 55.0 * FT_N_MM2 / FY_N_MM2 / 100.0)
+        return max(sup_pct / 100.0, sup_k * FT_N_MM2 / FY_N_MM2 / 100.0)
     if position == "mid-span":
-        return max(0.0020, 45.0 * FT_N_MM2 / FY_N_MM2 / 100.0)
+        return max(mid_pct / 100.0, mid_k * FT_N_MM2 / FY_N_MM2 / 100.0)
     raise ValueError(f"unknown beam position {position!r}")
 
 
@@ -179,8 +190,13 @@ class SectionDesign:
 
 
 def design_section(m_knm: float, b_mm: float, h_mm: float, position: str,
-                   at_end: bool) -> SectionDesign:
-    """Design the tension steel of a singly reinforced rectangular beam section.
+                   at_end: bool, grade: int = 3, comp_ratio: float = 0.0) -> SectionDesign:
+    """Design the tension steel of a rectangular beam section.
+
+    With ``comp_ratio`` = 0 (default) the section is singly reinforced, as
+    below. With ``comp_ratio`` = r > 0 the compression steel A_s' = r A_s
+    is counted (cl. 11.3.1 counts it in x; cl. 6.2.10), see
+    ``_doubly_reinforced``.
 
     alpha_s = M / (alpha1 f_c b h0^2), xi = 1 - sqrt(1 - 2 alpha_s),
     A_s = alpha1 f_c b xi h0 / f_y (GB 50010 cl. 6.2.10, p. 36-37), with
@@ -194,14 +210,18 @@ def design_section(m_knm: float, b_mm: float, h_mm: float, position: str,
         h_mm: Depth [mm].
         position: ``"support"`` or ``"mid-span"``, for the minimum steel.
         at_end: True at a beam end (cl. 11.3.1 applies).
+        grade: Seismic grade 1-4 (default 3, the anchor); sets the xi limit
+            and the minimum steel.
 
     Returns:
         A SectionDesign.
     """
     h0 = h_mm - A_S_MM
-    as_min = rho_min_beam(position) * b_mm * h_mm
+    as_min = rho_min_beam(position, grade) * b_mm * h_mm
     if m_knm <= 0.0:
         return SectionDesign(0.0, 0.0, 0.0, as_min, as_min, "ok")
+    if comp_ratio > 0.0:
+        return _doubly_reinforced(m_knm, b_mm, h0, as_min, at_end, grade, comp_ratio)
     alpha_s = m_knm * 1.0e6 / (ALPHA1 * FC_N_MM2 * b_mm * h0 * h0)
     if alpha_s >= 0.5:
         return SectionDesign(m_knm, math.inf, math.inf, as_min, math.inf,
@@ -211,8 +231,49 @@ def design_section(m_knm: float, b_mm: float, h_mm: float, position: str,
     status = "ok"
     if xi > xi_b():
         status = "needs compression steel (xi > xi_b)"
-    elif at_end and xi > XI_END_LIMIT_GRADE_III:
-        status = "needs compression steel (xi > 0.35, cl. 11.3.1)"
+    elif at_end and XI_END_LIMIT[grade] is not None and xi > XI_END_LIMIT[grade]:
+        status = f"needs compression steel (xi > {XI_END_LIMIT[grade]}, cl. 11.3.1)"
+    return SectionDesign(m_knm, xi, as_calc, as_min, max(as_calc, as_min), status)
+
+
+#: Ratio A_s'/A_s of bottom to top steel at a beam end that R13 counts as
+#: compression steel, GB 50010 cl. 11.3.6 item 2 (PDF p. 165): >= 0.5 for
+#: grade I, >= 0.3 for grade II. Grades III-IV: 0, the singly reinforced
+#: design [J] (the grade III value is not confirmed from the text; author
+#: to confirm). Checked by Claude, author to confirm.
+BEAM_END_COMP_RATIO: dict[int, float] = {1: 0.5, 2: 0.3, 3: 0.0, 4: 0.0}
+
+
+def _doubly_reinforced(m_knm: float, b_mm: float, h0: float, as_min: float,
+                       at_end: bool, grade: int, r: float) -> SectionDesign:
+    """Tension steel A_s of a section with compression steel A_s' = r A_s.
+
+    GB 50010 cl. 6.2.10: alpha1 f_c b x = f_y A_s - f_y' A_s' and
+    M = alpha1 f_c b x (h0 - x/2) + f_y' A_s' (h0 - a_s'), with f_y' = f_y and
+    a_s' = a_s [J]. With x = f_y (1 - r) A_s / (alpha1 f_c b) this is a
+    quadratic in A_s; the smaller root is taken. If x < 2 a_s', cl. 6.2.14
+    gives A_s = M / (f_y (h0 - a_s')). The x limit (xi_b, and cl. 11.3.1 at
+    an end) is then checked on x / h0.
+    """
+    m = m_knm * 1.0e6
+    k = FY_N_MM2 * (1.0 - r) / (ALPHA1 * FC_N_MM2 * b_mm)   # x per unit A_s [mm/mm^2]
+    qa = FY_N_MM2 * (1.0 - r) * k / 2.0
+    qb = FY_N_MM2 * ((1.0 - r) * h0 + r * (h0 - A_S_MM))
+    disc = qb * qb - 4.0 * qa * m
+    if disc < 0.0:
+        return SectionDesign(m_knm, math.inf, math.inf, as_min, math.inf,
+                             "section too small (no doubly reinforced solution)")
+    as_calc = (qb - math.sqrt(disc)) / (2.0 * qa)
+    x = k * as_calc
+    if x < 2.0 * A_S_MM:
+        as_calc = m / (FY_N_MM2 * (h0 - A_S_MM))
+        x = k * as_calc
+    xi = x / h0
+    status = "ok"
+    if xi > xi_b():
+        status = "needs more compression steel (xi > xi_b)"
+    elif at_end and XI_END_LIMIT[grade] is not None and xi > XI_END_LIMIT[grade]:
+        status = f"needs more compression steel (xi > {XI_END_LIMIT[grade]}, cl. 11.3.1)"
     return SectionDesign(m_knm, xi, as_calc, as_min, max(as_calc, as_min), status)
 
 
