@@ -2,6 +2,21 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 6 Nov 2026 (Day 20 close and sync), Claude Code in VS Code
+
+- Day 20 done, PR #126 merged. **Tag v0.2.0** "Generator and pilot family" is on c99fb66. It is a tag only, with no GitHub release, so no Zenodo DOI [J].
+- R14 is in the generator (`capacity.py`, `generator.capacity_step`): strong column, base factor, shear by η, section limits, stirrups and hoops by grade, and column bars by cl. 6.2.17 with more bars up to the 50 mm clear spacing (cl. 9.3.1).
+- At grade I-II beam ends, R13 now counts A_s' = r A_s (cl. 11.3.1, 11.3.6 item 2). `capacity_design=False` reproduces the Day 19 pilot.
+- Full family: results/family_rc_r14_building_v2.csv, 32 ok, 2 failed (grade I s08-p030 and s05-p040, no convergence), 2 outside code. Median building 114.2 kgCO2e/m².
+- pytest: 184 passed. anchor_frame: results/ byte-identical.
+- **Open for Day 21:**
+  - The grade-I ok rows are not credible yet: s07-p030 has 1750 mm columns and 80C32 at 354.9 kgCO2e/m². Hand-check them.
+  - Add cl. 6.3.1 (h/b ≤ 4) to the R14 beam growth step; widen the beam instead.
+  - Decide whether grade I uses actual beam capacity.
+  - Re-judge decision card 2 under R14.
+  - Day 28 half-day review and Methods.
+- **For the author:** confirm the R13/R14 clause values in an official copy (list in design_rules.md R13-R14), including the grade III ratio r of cl. 11.3.6.
+
 ## 6 Nov 2026 (sync), Claude Code in VS Code
 
 - **anchor_frame was broken on main** since the OVAL2023 row (Day 19, 3be99b4): `carbon_rows` treated every factor set as a full building set and stopped on "OVAL2023 has no row for C40". Fix [J]: a set with no take-off material is skipped; a set with some but not all still raises. Two new tests (floor-only set skipped; the real factor file runs). Carbon numbers unchanged.
