@@ -8,7 +8,9 @@ Status: 6 Nov 2026. A core file, not prose for the paper. Items 1, 3 and 5 are t
 
 Built from research_question.md (22 Oct 2026) and charter contribution 1:
 
-> This study designs the same GB 50010 / GB 50011 RC frame office, across 3-8 storeys and PGA 0.05-0.40 g, with a conventional floor and with a tied thin-shell floor, and measures how much of the floor's A1-A3 embodied-carbon saving is left at whole-building level once the ties, levelling, topping and diaphragm needs are counted and the frame is redesigned for the lighter floor.
+> We design one GB 50010 / GB 50011 RC frame office twice, once with a conventional floor and once with a tied thin-shell floor, across 3-8 storeys and PGA 0.05-0.40 g. We then measure how much of the floor's A1-A3 embodied-carbon saving is left at whole-building level, after the frame is redesigned for the lighter floor and the ties, levelling, topping and diaphragm needs are counted.
+
+Humanizer pass, 6 Nov 2026 (academic-humanizer Layers 1-4): one 63-word sentence split into two (Layer 2.11); "this study" changed to "we" (Layer 3 and writing skill §6); "the same ... office" changed to "one ... office ... twice" so the comparison is explicit; the order of the two conditions after "once" now matches the order in which the method applies them. No number, clause or citation changed.
 
 Who cites it, and for what [J]: shell-floor researchers (Hawkins et al. 2020; Oval et al. 2023), for the first seismic-frame boundary on their floors; seismic-carbon reviewers (Krieg et al. 2026), as a case where the floor is designed, not held fixed; and anyone using the open generator to test another floor system.
 
@@ -26,7 +28,8 @@ Who cites it, and for what [J]: shell-floor researchers (Hawkins et al. 2020; Ov
 
 ## 3. Gap (from gap_matrix.md G1-G3; author's to rewrite)
 
-- **Gap in one sentence (writing skill §1; author's to rewrite):** For code-designed RC frames in seismic regions, no study has measured how much of a thin-shell floor's embodied-carbon saving survives at whole-building level once the frame is redesigned for the lighter floor and the floor's ties, levelling, topping and diaphragm needs are counted (gap_matrix G1-G3).
+- **Gap in one sentence (writing skill §1; author's to rewrite):** No study in our search (gap_matrix.md, 2020-2026) measures how much of a thin-shell floor's embodied-carbon saving survives in a code-designed RC frame in a seismic region, where the frame is redesigned for the lighter floor and the floor's own ties, levelling, topping and diaphragm needs are counted (G1-G3).
+  - Humanizer pass, 6 Nov 2026: "no study has measured" became "no study in our search ... measures" (Layer 4: the verb must not be stronger than the evidence, which is a documented search, not proof of absence). The context moved after the verb so the sentence leads with the claim. Still one sentence, as §1 asks; at 52 words it is long, so the Introduction should split it [J].
 - Context + variable + outcome: code-designed RC frames in seismic regions + thin-shell floor replacing the slab + whole-building A1-A3 embodied carbon.
 - Gap type [J]: an **evidence and methodological gap**. Shell-floor studies 2020-2026 are gravity-only and hold the frame fixed (rows 1, 4, 5, 8, 9). Seismic-carbon studies hold the floor fixed (row 12) or do not design it (rows 13, 14). Row 10 assumes seismic loads would not change its floor ranking. No study found combines a designed shell floor, a seismically redesigned frame and carbon (gap_matrix G1, G3).
 - Why it matters: floors are the largest share of structural embodied carbon (42 %, row 17), and seismic base shear scales with mass (row 15). Ties, fill and topping add material back. So neither the sign nor the size of the whole-building saving can be read from floor-level studies.
