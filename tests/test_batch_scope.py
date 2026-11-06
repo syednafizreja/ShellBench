@@ -34,7 +34,7 @@ def test_fixed_elements_match_anchor_takeoff():
 
 
 def test_v2_adds_exactly_the_fixed_elements():
-    """v2 minus v1 is the fixed elements, split floor/lateral as in the preregistration."""
+    """v2 minus v1 is the fixed elements plus the R14 frame stirrups (lateral steel)."""
     conc, steel = bt.factors()
     spec = bt.family()[0]  # first building (0.10 g block)
     v1 = bt.run_building(spec, conc, steel)
@@ -50,8 +50,11 @@ def test_v2_adds_exactly_the_fixed_elements():
     assert v2["floor_concrete_m3_per_m2"] - v1["floor_concrete_m3_per_m2"] == pytest.approx(part("floor", True))
     assert v2["floor_steel_kg_per_m2"] - v1["floor_steel_kg_per_m2"] == pytest.approx(part("floor", False))
     assert v2["lateral_concrete_m3_per_m2"] - v1["lateral_concrete_m3_per_m2"] == pytest.approx(part("lateral", True))
-    assert v2["lateral_steel_kg_per_m2"] - v1["lateral_steel_kg_per_m2"] == pytest.approx(part("lateral", False))
-    extra = (part("floor", True) + part("lateral", True)) * conc + (part("floor", False) + part("lateral", False)) * steel
+    stirrups = v2["beam_stirrup_kg_per_m2"] + v2["column_stirrup_kg_per_m2"]
+    assert stirrups > 0.0
+    assert v2["lateral_steel_kg_per_m2"] - v1["lateral_steel_kg_per_m2"] == pytest.approx(part("lateral", False) + stirrups)
+    extra = ((part("floor", True) + part("lateral", True)) * conc
+             + (part("floor", False) + part("lateral", False) + stirrups) * steel)
     assert v2["carbon_building_kgco2e_per_m2"] - v1["carbon_building_kgco2e_per_m2"] == pytest.approx(extra)
     assert v2["column_mm"] == v1["column_mm"]  # the scope does not change the design
 
