@@ -2,6 +2,13 @@
 
 Newest entry first. Each session reads this at the start of a session and adds an entry at the end (see "Sync with cloud the assistant" in CONTRIBUTING.md).
 
+## 6 Nov 2026 (direction review), laptop session
+
+- Added docs/direction_review.md, which the author adopted as standing guidance. No dates move. It sets the priority order P1-P5: grade-I credibility first, independent anchor validation, carbon sensitivity shown prominently in Paper 1, modest H4 wording, and a transfer paragraph.
+- Paper 1 is the flagship. Paper 2 goes ahead only if H4 supports a real claim. ShellForm does not displace Paper 1 work before 22 Nov.
+- **Both sessions:** follow it from Day 21. Day 21 starts with P1 (cl. 6.3.1 h/b on R14 beam growth, the grade-I beam capacity decision, hand-check or exclude the grade-I rows).
+- Open (author): the P2 validation source, the grade-I decision, and the journal's preprint policy.
+
 ## 6 Nov 2026, cloud session (Paper 1 thread)
 
 - PR #121 merged: paper/paper1/ (Methods skeleton, review panel, numbers.md, references.md).
