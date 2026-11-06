@@ -39,7 +39,7 @@ Branch day22-repro. Asked for in paper/paper1/00_core.md section 10, before the 
 - **Provenance:** `batch.write` now also writes `stem.provenance.json`: shellbench version, git commit, seed, the Python and package versions, and the run options. Module `shellbench.provenance`.
 - **Seed:** `provenance.SEED = 20261103` (prereg approval date) [J], for the H2 permutation test and the bootstrap. Author may change it before any analysis runs, never after.
 - **Full run on Linux, 6 Nov:** family CSV identical at 4 s.f. Expected noise only: CRLF/LF in anchor_carbon.csv; the last digit of 4 panel rows and a few floor_library utilisations; Parquet floats ~1e-14. Not committed.
-- **Still to do:** regression tests on the headline numbers after 12 Nov; the carbon-factor sensitivity (prereg C1) once the shell take-off exists. PR #120's building_v3 pilot predates R14 and needs a rerun under R14 before it is merged.
+- **Still to do:** regression tests on the headline numbers after 12 Nov; the carbon-factor sensitivity (prereg C1) once the shell take-off exists. PR #120 (building_v3 stirrups) closed unmerged: the R14 work on main already counts frame-beam and column stirrups in building_v2, at the R14 spacings.
 
 ## 5 Nov 2026 (foamed fill factor), Claude Code in VS Code
 
