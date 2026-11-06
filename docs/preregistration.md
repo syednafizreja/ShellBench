@@ -72,3 +72,10 @@ The pipeline follows schedule.md (Track B, Days 43-47). Its code and hyperparame
 ## 3. Verdicts
 
 None yet.
+
+Transparency note (6 Nov 2026, before any verdict). R14 capacity design was added to the generator after the plan was approved (design_rules.md R14). The analysis plan is unchanged, but the design rules that make the family rows changed:
+- R14 sizes the column bars and the frame stirrups.
+- R13 counts compression steel at grade I-II beam ends.
+- Column steel (`bar_steel_kg_per_m2`) changes in every scope, including `frame_strip_v1`.
+- Frame stirrups enter `building_v2` only.
+The Day 19 pilot files were made without R14 and are kept as they are. `generate(..., capacity_design=False)` reproduces them. Results for H1-H4 use the R14 rows (results/family_rc_r14_building_v2.*).

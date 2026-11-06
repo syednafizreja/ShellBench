@@ -16,9 +16,13 @@ SPEC = next(sp for sp in bt.family() if sp["building_id"] == "s07-p030-tg35-C40"
 
 
 def _row(rule: str) -> dict:
-    """Run s07-p030 (the building of Day 19 finding 2) with ``rule``."""
+    """Run s07-p030 (the building of Day 19 finding 2) with ``rule``, R14 off.
+
+    The Day 19 pilot had no capacity design; R14 (Day 20) changes the sizes,
+    so these tests pin the R11 rules alone.
+    """
     conc, steel = bt.factors()
-    return bt.run_building(SPEC, conc, steel, drift_rule=rule)
+    return bt.run_building(SPEC, conc, steel, drift_rule=rule, capacity_design=False)
 
 
 def test_columns_first_reproduces_day19_pilot():
