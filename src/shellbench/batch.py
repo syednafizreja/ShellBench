@@ -119,6 +119,7 @@ COLUMNS: tuple[str, ...] = (
     "floor_steel_kg_per_m2", "lateral_steel_kg_per_m2",
     "carbon_floor_kgco2e_per_m2", "carbon_lateral_kgco2e_per_m2", "carbon_building_kgco2e_per_m2",
     "seismic_grade", "axial_ratio_limit",  # added 4 Nov 2026, at the end
+    "column_bars", "column_rho", "beam_stirrup_kg_per_m2", "column_stirrup_kg_per_m2",  # R14, 6 Nov 2026
 )
 #: family_shell order (docs/data_card.md): COLUMNS[:34] + shell columns 35-47 + COLUMNS[34:].
 FROZEN_RC_COUNT: int = 34
@@ -161,8 +162,11 @@ def factors() -> tuple[float, float]:
 
 
 def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule: str = "best_ratio",
-                 beam_i_factor: float | None = None, scope: str = TAKEOFF_SCOPE) -> dict:
+                 beam_i_factor: float | None = None, scope: str = TAKEOFF_SCOPE,
+                 capacity_design: bool = True) -> dict:
     """Run one building and return its row (all ``COLUMNS``).
+
+    ``capacity_design`` False switches R14 off (the Day 19 pilot design).
 
     Args:
         spec: One entry of ``family()``.
@@ -179,7 +183,7 @@ def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule
     height = sum(storey_heights(spec["storeys"]))
     grade = seismic_grade(spec["intensity"], height)
     b = replace(ANCHOR, storey_heights_m=storey_heights(spec["storeys"]), tg_s=spec["tg_s"],
-                axial_ratio_limit=FRAME_AXIAL_LIMIT[grade])
+                axial_ratio_limit=FRAME_AXIAL_LIMIT[grade], seismic_grade=grade)
     if beam_i_factor is not None:
         b = replace(b, beam_i_factor=beam_i_factor)
     n =spec["storeys"]
@@ -202,7 +206,7 @@ def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule
         return row
     row["alpha_max"] = b.alpha_max
     try:
-        res = g.generate(b, drift_rule=drift_rule)
+        res = g.generate(b, drift_rule=drift_rule, capacity_design=capacity_design)
     except RuntimeError as exc:
         row.update(status="failed", failure_reason=str(exc))
         return row
@@ -211,6 +215,10 @@ def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule
     floor_s, lat_s = 0.0, q["beam_bar_kg_per_m2"] + q["column_bar_kg_per_m2"]  # slab bars not in v1
     conc_all, steel_all = q["concrete_m3_per_m2"], q["bar_steel_kg_per_m2"]
     if scope == "building_v2":
+        # R14 frame stirrups (Day 20): lateral system, bar steel factor (D28 (e)).
+        frame_stirrups = q["beam_stirrup_kg_per_m2"] + q["column_stirrup_kg_per_m2"]
+        lat_s += frame_stirrups
+        steel_all += frame_stirrups
         for key, v in cb.family_fixed_per_m2().items():
             to_floor = cb.FAMILY_FIXED_ELEMENTS[key] == "floor"
             if key[1] == cb.CONCRETE_GRADE:
@@ -228,20 +236,45 @@ def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule
         floor_concrete_m3_per_m2=floor_c, lateral_concrete_m3_per_m2=lat_c,
         floor_steel_kg_per_m2=floor_s, lateral_steel_kg_per_m2=lat_s,
         carbon_floor_kgco2e_per_m2=floor_c * conc_factor + floor_s * steel_factor,
-        carbon_lateral_kgco2e_per_m2=lat_c * conc_factor + lat_s * steel_factor)
+        carbon_lateral_kgco2e_per_m2=lat_c * conc_factor + lat_s * steel_factor,
+        column_bars=res.column_steel[1],
+        column_rho=res.capacity["column_bars"].rho if res.capacity else None,
+        beam_stirrup_kg_per_m2=q["beam_stirrup_kg_per_m2"], column_stirrup_kg_per_m2=q["column_stirrup_kg_per_m2"])
     row["carbon_building_kgco2e_per_m2"] = row["carbon_floor_kgco2e_per_m2"] + row["carbon_lateral_kgco2e_per_m2"]
     return row
 
 
 def run_family(n: int | None = None, drift_rule: str = "best_ratio",
-               beam_i_factor: float | None = None, scope: str = TAKEOFF_SCOPE) -> pd.DataFrame:
+               beam_i_factor: float | None = None, scope: str = TAKEOFF_SCOPE,
+               done: pd.DataFrame | None = None) -> pd.DataFrame:
     """Run the first ``n`` buildings of the family (all if None), frozen column order.
 
     ``beam_i_factor`` overrides the beam I factor for a sensitivity run (None = anchor value).
+    ``done`` holds rows of an earlier run (``--resume``): a building whose
+    ``building_id`` is there with status "ok", "outside_code" or "blocked"
+    is copied, not run again; failed rows are run again.
     """
     conc, steel = factors()
     specs = family()[:n] if n else family()
-    return pd.DataFrame([run_building(sp, conc, steel, drift_rule, beam_i_factor, scope) for sp in specs], columns=list(COLUMNS))
+    kept = {}
+    if done is not None and len(done):
+        kept = {r["building_id"]: r for r in done.to_dict("records") if r["status"] in RESUME_KEEP}
+    rows = [kept.get(sp["building_id"]) or run_building(sp, conc, steel, drift_rule, beam_i_factor, scope)
+            for sp in specs]
+    return pd.DataFrame(rows, columns=list(COLUMNS))
+
+
+#: Row statuses that ``--resume`` keeps from an earlier output.
+RESUME_KEEP: tuple[str, ...] = ("ok", "outside_code", "blocked")
+
+
+def read_done(stem: Path) -> pd.DataFrame | None:
+    """Rows of an earlier output ``stem``.parquet with the same columns, else None."""
+    path = stem.with_suffix(".parquet")
+    if not path.exists():
+        return None
+    df = pd.read_parquet(path)
+    return df if list(df.columns) == list(COLUMNS) else None
 
 
 def write(df: pd.DataFrame, stem: Path) -> None:
@@ -262,8 +295,10 @@ def main(argv: list[str] | None = None) -> None:
                    help="beam I factor on I0 for a sensitivity run (default: spec M7 value)")
     p.add_argument("--scope", choices=SCOPES, default=TAKEOFF_SCOPE,
                    help="take-off scope (data_card row 4)")
+    p.add_argument("--resume", action="store_true",
+                   help="keep finished rows of an earlier --out with the same columns")
     a = p.parse_args(argv)
-    df = run_family(a.n, a.drift_rule, a.beam_i_factor, a.scope)
+    df = run_family(a.n, a.drift_rule, a.beam_i_factor, a.scope, read_done(a.out) if a.resume else None)
     write(df, a.out)
     print(df["status"].value_counts().to_string())
 

@@ -73,6 +73,13 @@ The pipeline follows schedule.md (Track B, Days 43-47). Its code and hyperparame
 
 None yet.
 
+Transparency note (6 Nov 2026, before any verdict). R14 capacity design was added to the generator after the plan was approved (design_rules.md R14). The analysis plan is unchanged, but the design rules that make the family rows changed:
+- R14 sizes the column bars and the frame stirrups.
+- R13 counts compression steel at grade I-II beam ends.
+- Column steel (`bar_steel_kg_per_m2`) changes in every scope, including `frame_strip_v1`.
+- Frame stirrups enter `building_v2` only.
+The Day 19 pilot files were made without R14 and are kept as they are. `generate(..., capacity_design=False)` reproduces them. Results for H1-H4 use the R14 rows (results/family_rc_r14_building_v2.*).
+
 ### Change log
 
 **C1, 6 Nov 2026 (author's decision 3, Paper 1 review panel finding P4): carbon-factor sensitivity added.**
@@ -84,5 +91,5 @@ None yet.
 - *Reported.* For each bound: S_f and S_b per building (minimum, median, maximum), the share of buildings with S_b > 0, and whether any H1-H3 verdict would read differently.
 - *What it is not.* It is a sensitivity, not an uncertainty band. The bounds are tabulated extremes, not a distribution. Every verdict is given with the base factors only (section 2.0). It replaces the "Monte Carlo band" named in anchor_notes D29 and anchor_report §5, which was never part of this plan.
 - *Caveat [J].* The converter and electric-arc rows are crude-steel values without rolling, while the base bar factor (2340) is the hot-rolled bar row. As bounds for bar steel they bracket the base value but are not like-for-like. Paper 1 states this.
-- *When.* Added after the conventional pilot rows (pre-release) and before any shell-family row, any S_f or S_b, or any DOI-data result existed. Git history gives the timestamp.
+- *When.* Added after the conventional pilot and the R14 conventional family rows (both pre-release) and before any shell-family row, any S_f or S_b, or any DOI-data result existed. Git history gives the timestamp.
 

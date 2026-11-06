@@ -189,6 +189,31 @@ Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - Claude d
 
 Compliance: no new number or source; the four bounds are existing Table D.0.1 rows (official-copy check still open). AI use: Claude drafted the change-log entry and the doc edits; the decision is the author's.
 
+## Day 20 - 6 Nov 2026 (R14 capacity design; full family run; v0.2)
+
+Done-when ("release v0.2 exists and the full run has started"): met. Tag v0.2 is on the merge commit. The full run is finished, not only started.
+
+- R14 is in the generator (`capacity.py`, `generator.capacity_step`; design_rules.md R13, R14, R16). It covers strong column (η_c), the base factor, beam and column shear by η, the section limits, stirrups and hoops by grade, and column bars from cl. 6.2.17 with a second-order check.
+- At grade I-II beam ends, R13 counts A_s' = r A_s with r = 0.5 / 0.3 (cl. 11.3.1, 11.3.6 item 2). Column bars are added up to the 50 mm clear spacing (cl. 9.3.1). Without these two changes the grade-I buildings ran away to 1850 mm columns.
+- All clause values were checked by Claude from the GB 50010 / GB 50011 PDFs; the author confirms them in an official copy. The grade III value of r is not confirmed from the text, so r = 0 is used there [J].
+- **Full run** (results/family_rc_r14_building_v2.csv, `--scope building_v2 --resume`): 36 rows: 32 ok, 2 outside_code (s07/s08-p040, height > 24 m), and **2 failed**.
+  - The failed ones are s08-p030 and s05-p040, both grade I. They are "did not converge": the span-0 beam depth and the column steel grow in turn.
+  - Failure count 2 of 34 inside the code is 5.9 %, above the 2 % pilot target. Both are grade I, the case where the η substitution in R14 is a stated limitation.
+- Medians over the 32 ok rows: building 109.0 → 114.2 kgCO2e/m² (range 101.4-354.9), lateral 51.4 → 56.6. Floor is unchanged at 57.6, floor share 0.50. Stirrup medians: beams 0.68 and columns 0.96 kg/m².
+- **Not credible yet (open):** the grade-I ok rows are very large.
+  - s07-p030: 1750 mm columns, 80C32, building 354.9 kgCO2e/m².
+  - s06-p040: 1200 mm columns, 52C32.
+  - The R14 beam growth does not re-check cl. 6.3.1 (h/b ≤ 4); s07-p030's 1300 mm beam on a 300 mm width breaks it.
+  - Before any result is quoted, Day 21 must check these rows by hand, add cl. 6.3.1 to the R14 growth step (widen the beam instead), and decide whether to use actual beam capacity for grade I.
+- R14 changes column steel in every scope. The Day 19 pilot files stay as made, and `capacity_design=False` reproduces them (tests/test_drift_rule.py). There is a transparency note in preregistration.md §3.
+- Also seen: under R14, s07-p030 with "best_ratio" uses more concrete than with "columns_first" (0.459 vs 0.286 m³/m²). The Day 19 decision card 2 result holds without R14 only, to be re-judged on Day 21.
+- v0.2: version 0.2.0 (pyproject, `__version__`), annotated tag v0.2.0 "Generator and pilot family" only, with no GitHub release. A release mints a Zenodo DOI, and these rows are pre-release [J]. The family was rerun after the bump, so its rows carry 0.2.0; results are the same.
+- Slip check (schedule.md, "Check on 6 Nov"): v0.2 is on its date, and v0.3 was done on 5 Nov. No slip, so the surrogate keeps its days.
+- Day 28 half-day review and Methods: not done today. They are carried to Day 21 together with the checks above.
+
+Compliance: sources - GB 50010-2010 English translation (cl. 6.2.10, 6.2.14, 9.3.1, 11.3.1, 11.3.6, 11.4.x; PDF pp. 45-47, 123, 163-166) and GB 50011-2010 (cl. 6.2.2-6.2.5), not committed. AI use - Claude Code wrote the code, tests and text and checked the clauses; the author confirms. Numbers - from the code and results/family_rc_r14_building_v2.csv. Data - nothing confidential. Repo - branch day20-r14; 184 tests pass; anchor results byte-identical.
+
+
 ## Day 20 - 5 Nov 2026 (take-off scope building_v2)
 
 Decisions mine; checked: S. N. R. Hasib, 5 Nov 2026.
