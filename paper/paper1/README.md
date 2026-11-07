@@ -6,6 +6,7 @@ Paper 1: whole-building embodied carbon of thin-shell floors in GB-code RC frame
 
 | File | What | Status |
 |---|---|---|
+| 00_core.md | Contribution, professor-mode test, gap, narrative, Reviewer 2 objection, journal shortlist, frozen names, figure list, verification gaps | 6 Nov 2026 |
 | 02_methods_skeleton.md | Methods outline: what each subsection must say, sources, open items | Skeleton, 5 Nov 2026 |
 | reviews/02_methods_skeleton.md | Review panel findings on the skeleton | 5 Nov 2026 |
 | numbers.md | One row per manuscript number | Seeded |
