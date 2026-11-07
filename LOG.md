@@ -180,6 +180,13 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - Claude decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 21 (later) - 7 Nov 2026 (P1: grade-I column bar layout)
+
+Cause found: the grade-I columns grew because no bar layout fitted. With 32 mm bars at most, about 12 bars per face hit the 50 mm clear spacing (cl. 9.3.1) at a side steel ratio of only 0.6-0.95 %. Behind it, ΣM_bua uses one beam bar set for every storey, so the strong-column factor reaches about 3 at the upper joints.
+Done: column bars may now be 36 or 40 mm (`generator.COLUMN_BAR_DIAMETERS_MM`) [J]. Beams and panels are unchanged. Family rerun: 33 ok, 1 failed (was 2), 2 outside code. s07-p030 columns 1750 → 1300 mm (356.4 → 269.6 kgCO2e/m²); s08-p030 now converges (1300 mm, 269.9). Grade II at 0.30 g also falls (s05-p030 850 → 750 mm). Median building 114.25 → 115.9 kgCO2e/m², because one more row is ok.
+Limitation for Paper 1 Methods: beams carry one bar set for all storeys, which inflates the grade-I M_bua at the upper joints [J]. The 6 grade-I sensitivity (preregistration C2) stands.
+Compliance: sources - GB 50010-2010 cl. 9.3.1; GB/T 1499.2 bar sizes [?]. AI use - Claude found the cause, wrote the change and reran the family; I confirm. Numbers - from the code and the rerun. Data - nothing confidential. Repo - branch day21-grade1-bars; 189 tests pass.
+
 ## Day 21 (later) - 7 Nov 2026 (P1: grade I strong column by M_bua)
 
 Done: I chose option A, so grade I now uses 1.2 ΣM_bua (GB 50011 cl. 6.2.2) in place of η_c = 1.7 (`capacity.beam_mbua_knm`, f_yk 400 from GB 50010 Table 4.2.2-1 [?]). Family rerun: 32 ok, 2 failed, 2 outside code, as before; grade-I carbon moved by 0.3 kgCO2e/m² at most; median 114.25.

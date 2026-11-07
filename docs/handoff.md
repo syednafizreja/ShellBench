@@ -2,6 +2,13 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 7 Nov 2026 (Day 21, grade-I bars), Claude in the app
+
+- Grade-I column growth came from the bar layout (32 mm max, 50 mm clear spacing), not the strong-column factor. Column bars may now be 36/40 mm [J] (beams and panels unchanged). Family: 33 ok, 1 failed, 2 outside code; s07-p030 1300 mm (was 1750); s08-p030 now ok. Median 115.9. Branch day21-grade1-bars.
+- Limitation: one beam bar set for all storeys inflates the grade-I ΣM_bua at upper joints (k ≈ 3) [J]. Fix only if Paper 1 needs it: per-storey beam bars.
+- Author: confirm 36/40 mm HRB400 sizes in GB/T 1499.2.
+- Next: Day 29 shell floor in the generator.
+
 ## 7 Nov 2026 (Day 21, P1 part 1), Claude in the app
 
 Branch day21-p1-beam-growth.
