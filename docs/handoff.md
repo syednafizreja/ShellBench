@@ -2,6 +2,11 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 3 Nov 2026, weekly maintenance run (cloud)
+
+**Done:** pytest 153 passed with CalculiX 2.21. Added docstrings to seven helper functions (PR fixes-2026-11-03). README refreshed in a separate PR (landing-2026-11-03).
+**Open:** none from this run. No open issues labelled bug. Regenerating results/anchor_carbon.csv here differs from the committed file only in line endings.
+
 ## 7 Nov 2026 (Day 29, shell floor), the AI assistant
 
 - `shellfloor.py` + tests + results/family_shell.csv (5,184 rows: 36 buildings x 36 variants x 4 toppings; 4,856 ok, 288 outside code, 40 failed at 0.40 g grade I). Branch day29-shell-floor. `batch.run_building` gained `base=` (default unchanged, so family_rc is byte-identical).

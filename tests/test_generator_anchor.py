@@ -44,6 +44,7 @@ ANCHOR_SIZES = g.Sizes(600, [(300, 600), (300, 500), (300, 600)], 120)  # Th s2.
 
 @pytest.fixture(scope="module")
 def result():
+    """Generate the thesis building once for the whole module."""
     return g.generate(THESIS, verbose=True)
 
 
