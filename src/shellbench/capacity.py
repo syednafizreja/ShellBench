@@ -43,8 +43,15 @@ GRADES: tuple[int, ...] = (1, 2, 3, 4)
 # ---------------------------------------------------------------------------
 
 #: Column-end moment factor eta_c, frame structures, cl. 6.2.2 (p. 50). Grade 1
-#: should use 1.2 sum M_bua (6.2.2-2); 1.7 is used instead [J].
+#: uses 1.2 sum M_bua (6.2.2-2) from 7 Nov 2026; its 1.7 is not used.
 ETA_C: dict[int, float] = {1: 1.7, 2: 1.5, 3: 1.3, 4: 1.2}
+#: Grade 1 strong column: sum M_c = 1.2 sum M_bua, cl. 6.2.2 formula 6.2.2-2 (p. 50).
+#: Used by the generator from 7 Nov 2026 (author's decision A); ETA_C[1] is kept
+#: for reference only.
+GRADE1_MBUA_FACTOR: float = 1.2
+#: Characteristic yield strength of HRB400 [N/mm^2] for M_bua, GB 50010-2010
+#: Table 4.2.2-1 [?] (author to confirm in the official copy).
+FYK_N_MM2: float = 400.0
 #: Factor on the lower-end moment of bottom-storey columns, cl. 6.2.3 (p. 51).
 ETA_BASE: dict[int, float] = {1: 1.7, 2: 1.5, 3: 1.3, 4: 1.2}
 #: Beam-end shear factor eta_vb, cl. 6.2.4 (p. 51). Grade 4 uses the combined
@@ -594,3 +601,20 @@ def column_stirrup_kg(h_mm: float, bar_d_mm: float, clear_height_m: float,
         return 2.0 * st.legs * core * bar_area(st.diameter_mm) * length_mm / st.spacing_mm * 1e-9 * STEEL_DENSITY_KG_M3
 
     return kg(bottom, z_b) + kg(top, z_t) + kg(mid, max(0.0, hn - z_b - z_t))
+
+
+def beam_mbua_knm(as_mm2: float, h_mm: float, a_s_mm: float = 50.0,
+                  gamma_re: float = 0.75) -> float:
+    """Actual flexural capacity of one beam end, M_bua [kN m] (GB 50011 cl. 6.2.2).
+
+    M_bua = f_yk A_s (h0 - a_s') / gamma_RE, with the actual tension bars A_s,
+    h0 = h - a_s and a_s' = a_s [J]. Slab bars in the flange are not counted
+    [J], which gives a lower M_bua and so smaller columns (limitation).
+
+    Args:
+        as_mm2: Actual tension steel at that end [mm^2].
+        h_mm: Beam depth [mm].
+        a_s_mm: Cover to the bar centroid, top and bottom [mm] (spec X10).
+        gamma_re: Seismic adjustment factor for beam flexure, cl. 11.1.6.
+    """
+    return FYK_N_MM2 * as_mm2 * (h_mm - 2.0 * a_s_mm) / gamma_re / 1e6
