@@ -2,6 +2,15 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 7 Nov 2026, literature access check (VS Code)
+
+**Done:** Cross-checked the MacNeal-Harder values in validation/benchmarks.csv against independent open verification manuals. Checked by the AI assistant, author to confirm.
+- Scordelis-Lo 0.3024: Altair OptiStruct OS-V 0730 states the target is 0.3024 (vertical deflection, midpoint of free edge, ν = 0) and cites MacNeal & Harder 1985. https://help.altair.com/hwsolvers/os/topics/solvers/os/scordelis_lo_roof_verification_r.htm
+- Scordelis-Lo 0.3086: the COMSOL Scordelis-Lo model documentation gives 0.3086 as the reference value and notes that elements converge to about 0.302. https://doc.comsol.com/6.4/doc/com.comsol.help.models.sme.scordelis_lo_roof/models.sme.scordelis_lo_roof.pdf
+- Pinched hemisphere 0.094: STAAD.Pro verification (Bentley) lists 0.094 in and cites MacNeal & Harder; LARSA notes 0.094 against a lower bound of 0.0924. https://docs.bentley.com/LiveContent/web/STAAD.Pro%20Help-v21/ja/GUID-B8BEE8CF-778A-4A94-BB91-4CC92A20F8E1.html
+- Chang et al. 2025 (jobe.2024.111603): abstract read on NCKU Research Output. It supports the 00_core.md row at abstract level only.
+**Open:** The publisher's PDF of MacNeal-Harder is still unread. The three values now agree with two or more independent sources, so the "third-party copy" item is closed unless the author wants the original pages.
+
 ## 3 Nov 2026, weekly maintenance run (cloud)
 
 **Done:** pytest 153 passed with CalculiX 2.21. Added docstrings to seven helper functions (PR fixes-2026-11-03). README refreshed in a separate PR (landing-2026-11-03).
