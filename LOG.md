@@ -180,6 +180,13 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - Claude decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 21 - 7 Nov 2026 (P1: cl. 6.3.1 kept when beams grow)
+
+Done: R13 and R14 beam growth now keep GB 50011 cl. 6.3.1 (h/b <= 4, clear span/h >= 4). A beam that would break it gets 50 mm wider instead of deeper (`generator.grow_beam`) [J]. Before this, two grade-I rows broke h/b: s07-p030 (300 x 1300, h/b 4.33) and s06-p040 (300 x 1250, 4.17).
+Full family rerun (results/family_rc_r14_building_v2.csv): 32 ok, 2 failed, 2 outside code, as before. Only those two rows changed: s07-p030 beams 350/300/300 x 1200/750/900, 356.4 kgCO2e/m² (was 354.9); s06-p040 350/300/350 x 1200/900/1200, 251.6 (was 250.1). Median building 114.25 kgCO2e/m², unchanged.
+Not done: the grade-I rows are still not credible (s07-p030 has 1750 mm columns). Whether grade I uses actual beam capacity is my decision (direction_review P1).
+Compliance: sources - GB 50011-2010 cl. 6.3.1 (values already in the code, checked 5 Nov). AI use - Claude wrote the change and the test; I confirm. Numbers - from the code and the rerun. Data - nothing confidential. Repo - branch day21-p1-beam-growth; 185 tests pass.
+
 ## Paper 1 - 6 Nov 2026 (Methods skeleton merged; factor sensitivity logged)
 
 - PR #121 merged (author asked): paper/paper1/ with the Methods skeleton, review panel findings P1-P11, numbers.md and references.md.
