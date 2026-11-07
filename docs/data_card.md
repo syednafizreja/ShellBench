@@ -9,7 +9,7 @@ Every row released before the dataset DOI (11 Nov 2026) carries `release = "pre-
 | File | One row per | Written by | Status |
 |---|---|---|---|
 | `family_rc.parquet` | building, conventional floor (beam and slab) | `python -m shellbench.batch` | Runner done (Day 18). Sample: [../results/family_rc_sample.csv](../results/family_rc_sample.csv) |
-| `family_shell.parquet` | building × floor variant × topping | the batch runner after Day 29 (shell floor in the generator) | Format below; no rows yet |
+| `family_shell.parquet` | building × floor variant × topping | `python -m shellbench.shellfloor` (Day 29) | Format below; first full run 7 Nov 2026, pre-release (results/family_shell.csv). `floor_variant_id` joins the 6.0 m and 6.6 m library cases with `+`; span, thickness and tie columns hold both values, joined by `/`; `diaphragm_rigid` is empty until Day 27 |
 
 Both files use the same `building_id` for the same building (the Day 31 check needs this). The ID is built from the inputs, not from a row number, so a family dimension added later does not change an existing ID: `s{storeys:02d}-p{PGA × 100:03d}-tg{Tg × 100:02d}-{grade}`, for example `s04-p010-tg35-C40` is the anchor.
 
