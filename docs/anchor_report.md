@@ -87,7 +87,7 @@ The thesis's own design table (§9.2) is not internally consistent. Its A_s,req 
 
 ## 5. Embodied carbon
 
-A1-A3 carbon uses one factor set, GB/T 51366-2019 Table D.0.1 (`results/anchor_carbon.csv`). C40 has no row in that table, so its factor is the mean of the C30 and C50 rows [J]. The values were read from a third-party copy, and the author is to confirm them in an official copy. The planned second set, ICE, cannot be used: its free version may not be redistributed, and ShellBench publishes its factor file openly (D29). So the playbook's "both factor sets" becomes one set here, with the factor uncertainty carried by the planned Monte Carlo band [J].
+A1-A3 carbon uses one factor set, GB/T 51366-2019 Table D.0.1 (`results/anchor_carbon.csv`). C40 has no row in that table, so its factor is the mean of the C30 and C50 rows [J]. The values were read from a third-party copy, and the author is to confirm them in an official copy. The planned second set, ICE, cannot be used: its free version may not be redistributed, and ShellBench publishes its factor file openly (D29). So the playbook's "both factor sets" becomes one set here, with the factor uncertainty carried by a one-at-a-time sensitivity on Table D.0.1 rows (C30/C50 for concrete; converter/electric-arc steel), added to the preregistration change log as C1 on 6 Nov 2026. The "planned Monte Carlo band" named here earlier was never in the analysis plan and is withdrawn.
 
 Totals are the sums of the element rows in `anchor_carbon.csv`:
 

@@ -60,14 +60,14 @@ A day's date is the latest it may finish; work ahead is allowed. GATE days never
 | Mon 2 Nov | Day 16 generator reproduces the thesis | Day 24 finish (2 % on both benchmarks) | |
 | Tue 3 Nov | **Day 17 pre-registration** (GATE) | Day 25 size one panel | |
 | Wed 4 Nov | Day 18 batch runner | Day 26 floor library (60+ cases) | Methods: author starts |
-| Thu 5 Nov | Day 19 200-building pilot | **Day 27 diaphragm, topping rule, v0.3** | Methods |
+| Thu 5 Nov | Day 19 pilot (whole 36-building conventional family; see note on family size) | **Day 27 diaphragm, topping rule, v0.3** | Methods |
 | Fri 6 Nov | Day 20 v0.2, overnight run (conventional family) | Day 28 review (half). **ShellForm may start on the floor library** | Methods |
 | Sat 7 Nov | Day 21 review (half) + Day 29 shell floor in the generator | Day 43 splits code, on the conventional family | Day 36 skeleton and gap paragraph |
 | Sun 8 Nov | Day 30 anchor headline number | Day 44 three models, on the conventional family | Methods |
 | Mon 9 Nov | Day 31 full family, both floors (overnight) | Day 45 conformal intervals | Day 37 methods finished |
 | Tue 10 Nov | Day 31 checks + data card | Day 46 decision test + leakage test code; **surrogate code and hyperparameters frozen (commit) before the DOI** | |
-| Wed 11 Nov | **Day 33 v0.4 and dataset DOI** (GATE: Day 31 checks). **ShellForm full start** | | |
-| Thu 12 Nov | Day 32 H1-H3 verdicts on the published data; Day 33 sensitivities run | One final surrogate run on the published data (Days 44-46) | Day 38 results draft starts |
+| Wed 11 Nov | **Day 33 v0.4 and dataset DOI** (GATE: Day 31 checks, and `python scripts/reproduce.py` rebuilds every result with provenance files; done 6 Nov, PR for day22-repro). **ShellForm full start** | | |
+| Thu 12 Nov | Day 32 H1-H3 verdicts on the published data (seed `provenance.SEED`); Day 33 sensitivities run, including the carbon-factor bounds (prereg C1); then regression tests pin the headline numbers | One final surrogate run on the published data (Days 44-46) | Day 38 results draft starts |
 | Fri 13 Nov | Day 34 frozen Paper 1 figures | Day 47 H4 verdict and leakage test; Day 48 Paper 2 figures, v0.5. **End of build** | Day 38 results |
 | Sat 14 Nov | Check window: author checks the anchor report, the dataset and H1-H3 | Check window: author checks H4 | Day 39 discussion and abstract |
 | Sun 15 Nov | Check window (Day 35 review) | Check window | **Day 40 harsh review** |
@@ -89,8 +89,8 @@ The author asked for the ShellForm data earlier, so that ShellForm can also fini
 |---|---|---|---|
 | Sat 31 Oct | Anchor building: geometry, sections, quantities, carbon (v0.1) | Final | Days 12-13 |
 | Wed 4 Nov | Frozen data format + 10-row sample (`--n 10`) | Format final, rows pre-release | Day 18 Done-when |
-| Thu 5 Nov | Floor library (v0.3); 200-building conventional pilot | Library final; pilot pre-release | Days 26-27; pilot failure rate below 2 %, 3 hand checks |
-| Sat 7 Nov | 2,000-building conventional family (v0.2) | Pre-release | Day 20 failure count |
+| Thu 5 Nov | Floor library (v0.3); 36-building conventional pilot | Library final; pilot pre-release | Days 26-27; pilot failure rate below 2 %, 3 hand checks |
+| Sat 7 Nov | Conventional family, 36 buildings (v0.2); shell family up to 36 x 72 floor variants | Pre-release | Day 20 failure count |
 | Sun 8 Nov | Anchor building with both floors (slab against shell) | Pre-release | Day 30 hand check |
 | Wed 11 Nov | **Both families, dataset DOI (v0.4)** | **Final: the only data ShellForm reports** | Day 31 checks |
 
@@ -157,3 +157,14 @@ What ShellForm needs from this list is not known yet [?]. If the floor-level sta
 - **A data bug after 11 Nov.** Zenodo keeps one concept DOI across versions, so a fix becomes version 2 of the dataset, and ShellForm is told. It is reported, never hidden.
 - **Paper 2 without the AI assistant's harsh review.** The numbers are checked in the window. The prose will not get the same review unless the AI-assistance subscription renews. That is the author's choice, and nothing in this plan assumes it.
 - **ShellForm on early data.** The floor library (5 Nov) is final for floor-level work. At whole-building level ShellForm builds on pre-release files from 4 Nov and reports only on the 11 Nov DOI version (see "ShellForm data hand-over"). The risk is a need found after the 4 Nov format freeze; that is why the list of ShellForm's needs is due on 2 Nov.
+
+## Note on family size (decision card 1, 5 Nov 2026)
+
+The Day 19 pilot found that the family is 36 buildings, not the 200 and 2,000 written here earlier.
+
+Decision (author, 5 Nov 2026) [J]:
+- Keep the frozen family of preregistration.md section 2: storeys 3-8 x six PGAs x the floor-library variants.
+- Adding span, bay or storey-height axes would change a preregistered plan. That would need a change-log entry and both-ways reporting. None is made.
+- The conventional family is 36 buildings. The shell family is each building with up to 72 floor variants (results/floor_library.csv: 2 spans x 6 rises x 2 mesh layers x 3 levelling options), so up to 2,592 building-floor rows.
+- For H4, one held-out storey count is 6 PGAs x the floor variants. With all 72 variants that is 432 rows per fold, not 6.
+- The earlier "200" and "2,000" building figures did not match the frozen definition. Their origin is not recorded in the repo.
