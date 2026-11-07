@@ -10,6 +10,8 @@ Branch day21-p1-beam-growth.
 - Next: the column bar-layout growth at grade I (consider bars per face or a second column bar set) [J]; re-judge decision card 2 under R14; Day 29 shell floor in the generator.
 - **Author rule, 7 Nov:** take the recommended option without asking (memory decide-dont-ask).
 - Also open: PR #129 (reproducibility) and #128 (Paper 1 core), both green, need the author's merge.
+
+
 ## 7 Nov 2026 (sync), the AI assistant
 
 - Last handoff read: direction review adopted (P1-P5); Day 21 starts with P1 (cl. 6.3.1 h/b on R14 beam growth, grade-I decision).
