@@ -2,6 +2,12 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 7 Nov 2026 (Day 29, shell floor), Claude in the app
+
+- `shellfloor.py` + tests + results/family_shell.csv (5,184 rows: 36 buildings x 36 variants x 4 toppings; 4,856 ok, 288 outside code, 40 failed at 0.40 g grade I). Branch day29-shell-floor. `batch.run_building` gained `base=` (default unchanged, so family_rc is byte-identical).
+- Open: Day 27 diaphragm test and topping rule (fills `diaphragm_rigid`, picks the verdict variant); data_card needs the two-span variant ID and the 36 variants noted; decide the roof (conventional slab, now) before the DOI run.
+- Judgements [J]: bay-length weighting 2 x 6.0 + 4 x 6.6; beams counted full depth without the slab; anchor beam stiffness factor kept.
+
 ## 7 Nov 2026 (Day 21, grade-I bars), Claude in the app
 
 - Grade-I column growth came from the bar layout (32 mm max, 50 mm clear spacing), not the strong-column factor. Column bars may now be 36/40 mm [J] (beams and panels unchanged). Family: 33 ok, 1 failed, 2 outside code; s07-p030 1300 mm (was 1750); s08-p030 now ok. Median 115.9. Branch day21-grade1-bars.
