@@ -59,8 +59,14 @@ G_ACCEL_M_S2: float = 9.80665
 #: Maximum seismic influence coefficient for frequent earthquakes [-], keyed by
 #: (intensity degree, design basic acceleration in g). GB 50011-2010 Table
 #: 5.1.4-1; 7 degrees, 0.10 g confirmed by the author on 25 Oct 2026
-#: (docs/anchor_notes.md, lateral-load decision 3). No other entry is confirmed.
-ALPHA_MAX_FREQUENT: dict[tuple[int, float], float] = {(7, 0.10): 0.08}
+#: (docs/anchor_notes.md, lateral-load decision 3). The other five entries were
+#: checked: S. N. R. Hasib, 4 Nov 2026 from Table 5.1.4-1 of GB 50011-2010 (2016
+#: edition, p. 33; bracketed values are for 0.15 g and 0.30 g); author to
+#: confirm in own copy.
+ALPHA_MAX_FREQUENT: dict[tuple[int, float], float] = {
+    (6, 0.05): 0.04, (7, 0.10): 0.08, (7, 0.15): 0.12,
+    (8, 0.20): 0.16, (8, 0.30): 0.24, (9, 0.40): 0.32,
+}
 
 #: Characteristic period of the anchor site [s]. Spec S4, decision B5 (site
 #: class II, design group 1, GB 50011-2010 Table 5.1.4-2).
@@ -132,7 +138,7 @@ PSI_T_TRIALS: tuple[float, ...] = (0.9, 0.8, 0.7, 0.6)
 #: opened; the range is as cited by Zhou (2024), "框架结构计算中对周期折减系数
 #: 合理取值的研究", 建筑监督检测与造价 (9). JGJ 3 covers high-rise buildings, so
 #: using it for a four-storey frame is a borrowed practice rule [J]. 0.7, the
-#: smaller reduction, chosen by Claude on 27 Oct 2026 at the author's request,
+#: smaller reduction, chosen by the author on 27 Oct 2026,
 #: after the Day 9 run and not from the sensitivity table (0.8 would match the
 #: thesis best) [J]. The bare-frame runs (psi_T = 1.0) stay as the method
 #: comparison; downstream days (design checks, carbon) use this value.

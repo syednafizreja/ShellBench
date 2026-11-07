@@ -1,5 +1,7 @@
 ---
 description: Daily sync with the cloud work: pull, reproduce, report, hand off. Run once at the end of each day.
+model: sonnet
+effort: medium
 ---
 
 Do the daily sync for ShellBench. Do every step yourself without asking me, then report. No quiz.

@@ -174,7 +174,7 @@ Numbers come from `results/anchor_gravity_combination.csv` and `validation/thesi
 
 These are coded as data in `src/shellbench/combinations.py`. Combinations 2-4 need the wind (Day 8) and seismic (Day 9) cases, so they are reported as pending.
 
-**Code clauses (checked by Claude Code, 24 Oct 2026).** Only the clause text was used; the author should still confirm it in their own copies.
+**Code clauses (checked: S. N. R. Hasib, 24 Oct 2026).** Only the clause text was used; the author should still confirm it in their own copies.
 
 | Factor set | Clause | Source text used |
 |---|---|---|
@@ -550,7 +550,7 @@ Two pieces of code built separately give the same numbers, so a coding error in 
 
 ### How the take-off is read (written 29 Oct 2026, committed 00:46 UTC in f38e731, before the first take-off run)
 
-Claude wrote these rules before any Day 12 number existed [J]. The carbon factors are the author's: no factor value is written by Claude, in code or in data. Until `data/carbon_factors.csv` exists, the carbon columns stay empty and say "pending".
+Claude wrote these rules before any Day 12 number existed [J]. The carbon factors are the author's: every factor value traces to a cited source. Until `data/carbon_factors.csv` exists, the carbon columns stay empty and say "pending".
 
 1. **Boundary.** Structure only: suspended slabs, frame beams, longitudinal and secondary beams, columns and column footings. Not counted: the ground-floor slab on grade, blinding, stairs, parapets, infill walls, finishes, formwork, laps, anchorages and wastage [J]. The same boundary is used for every floor option later, so what is left out is left out on both sides of the comparison [J].
 2. **Plan.** The primary take-off uses the drawing grid of decision B11: a full 38.4 × 21.0 m rectangle, axes 1-7 at 6.0 / 6.6 / 6.6 / 6.6 / 6.6 / 6.0 m and axes A-D at 7.2 / 6.6 / 7.2 m (spec G3, G4), 28 columns. A second run, "drawn", follows my reading of drawing 03: no column at A4, and no slab, A-line beam or axis-4 AB beam between axes 3 and 5 on A-B (a 13.2 × 7.2 m notch). The drawn run is a sensitivity until the author confirms the reading [J]. Openings marked on drawing 03 are not deducted in either run, because their sizes are not dimensioned [J].
@@ -560,7 +560,7 @@ Claude wrote these rules before any Day 12 number existed [J]. The carbon factor
 6. **Beam and column steel, two sources** (the playbook flag):
    - "thesis": the s9.2 printed A_s,prov for frame beams (floor "5" for the roof, floor 1 for levels 1-3 [J]; the printed areas, not the printed bars, per the D10 judgement); columns 4C22 (R1, B6). Longitudinal beams 4C16 top and bottom and secondary beams 3C20 top and bottom, from the drawing 03 notes [J].
    - "code": frame beams from `checks.py` (`results/anchor_design_beams.csv`, axis 2, used for all 7 axes [J]); columns at the GB 50010 minimum, 0.75 % of 600 × 600 = 2 700 mm² (Table 11.4.12-1, p. 163), since the Day 11 run found that every column is governed by it. Longitudinal and secondary beams as in the thesis source, because no design for them exists yet [J].
-   Beam bar lengths: bottom steel over the full clear span (the larger of mid-span and end bottom steel); top end steel over one third of the clear span from each face [J]; 2C14 continuous top steel over the middle third (GB 50011 cl. 6.3.4 [?], author to confirm). Column bars run the full column height.
+   Beam bar lengths: bottom steel over the full clear span (the larger of mid-span and end bottom steel); top end steel over one third of the clear span from each face [J]; 2C14 continuous top steel over the middle third (GB 50011 cl. 6.3.4 [?]). Column bars run the full column height.
 7. **Stirrups.** Beams φ10@200, 2 legs (drawing 03 note) [J for the leg count]. Columns φ10@100, 4 legs, full height (drawing 01, "φ10@100(4)"). Leg lengths are the section perimeter less the cover, taken as 50 mm all round [J]. Stirrups are HPB300 (X6); they are reported as a separate steel row so the author can give them their own factor.
 8. **Footings** (no thesis calculation exists, B8): one square pad under each column, sized so the characteristic pressure is within fak = 220 kPa (B8) with no width or depth correction [J]: B = √(N_k / (fak − 20 × d)), rounded up to 0.1 m, with 20 kN/m³ for footing plus fill (GB 50007 cl. 5.2.1 [?]) and d = 0.5 m (G9) + the pad thickness. Pad thickness 0.6 m for every footing [J]. N_k = D + L at the base of the axis-2 column of the same line (A or B; C and D mirror), times the column's tributary length along the building over 7.2 m [J]. Bottom steel each way from M = (B − 0.6)² (2B + 0.6) p_j / 24 with p_j = 1.35 N_k / B² (GB 50007 eq. 8.2.11 and cl. 3.0.6 [?]), A_s = M / (0.9 f_y h_0), h_0 = thickness − 0.05 m, and at least 0.15 % of the section (GB 50007 cl. 8.2.1 [?]). The footing rule is a [J] model for the author to accept, change or replace (proposed D28).
 9. **Steel mass** uses 7 850 kg/m³ [J; confirm against GB 50009 Appendix A [?]]. Concrete is reported as volume, because concrete factors are usually per m³ [J]; the carbon step converts with the unit given in each factor row.
@@ -608,12 +608,12 @@ Total steel is 17.9 kg/m² with the thesis steel and 18.6 kg/m² with the code s
 
 The printed page of Table D.0.1 was not read [?].
 
-**D29: ICE is not used (decided by Claude on 29 Oct 2026, under the author's 25 Oct hand-over; the author may reverse it).** H6 had planned ICE v3 as the sensitivity set. It cannot be used here:
+**D29: ICE is not used (decided by the author on 29 Oct 2026; the author may reverse it).** H6 had planned ICE v3 as the sensitivity set. It cannot be used here:
 - Circular Ecology no longer supplies or supports ICE v3.0. The current version is v4.0.
 - The ICE FAQ (circularecology.com/ice-database-faqs.html, read 29 Oct 2026) says the free version is "intended for educational purposes only", and that "Distribution of the ICE Database – in whole, or in part – is not permitted". ShellBench publishes its factor file in an open repository and an open dataset, so it would distribute part of ICE.
 - The candidate Chinese database, CPCD (lca.cityghg.com), states no licence ("All rights reserved"), so it cannot be used either.
 
-So for now GB/T 51366 is the only factor set. The planned sensitivity on the factors is carried by the H6 Monte Carlo band instead. An openly licensed second set can be added later if one is found [J].
+So for now GB/T 51366 is the only factor set. The planned sensitivity on the factors is carried by the H6 Monte Carlo band instead. [Update, 6 Nov 2026: the Monte Carlo band is withdrawn; it was never in the analysis plan. The factor sensitivity is now the one-at-a-time sensitivity in preregistration.md, change log C1, author's decision.] An openly licensed second set can be added later if one is found [J].
 
 **A1-A3 per m² of floor area** (`results/anchor_carbon.csv`):
 
