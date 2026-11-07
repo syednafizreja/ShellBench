@@ -129,6 +129,7 @@ class Plan:
         return sum(BAYS_X_M[i] * SPANS_Y_M[j] for i, j in self.panels)
 
     def _has(self, i: int, j: int) -> bool:
+        """Return True if panel (i, j) is part of this plan."""
         return (i, j) in self.panels
 
     def columns(self) -> list[tuple[int, int]]:
@@ -354,6 +355,7 @@ def footings(plan: Plan, cases: dict[str, c.CaseResult]) -> list[Footing]:
 
 def _row(plan: Plan, source: str, element: str, material: str, unit: str,
          qty: float) -> dict:
+    """Return one carbon-table row for a quantity [unit given by ``unit``] of one element."""
     floor = N_SLAB_LEVELS * plan.area_m2()
     return {"plan [text]": plan.name, "steel_source [text]": source,
             "element [text]": element, "material [text]": material,
@@ -433,6 +435,53 @@ def take_off(plan: Plan, source: str, frame_steel: dict[tuple[str, int], FrameBe
     return rows
 
 
+class _NoFrameSteel:
+    """Frame-beam steel stand-in with zero mass, so ``take_off`` measures the
+    size-independent elements only (frame beams come from the generator)."""
+
+    def __getitem__(self, _key):
+        return self
+
+    def mass_kg(self, _clear_m: float) -> float:
+        """Return 0 kg: frame-beam bars are not taken from the anchor here."""
+        return 0.0
+
+
+#: Elements of the family take-off that do not depend on generator sizing, and
+#: where they belong (preregistration.md, Measured: C_floor holds the slab with
+#: its bars and the secondary beams; longitudinal beams are part of the frame).
+FAMILY_FIXED_ELEMENTS: dict[tuple[str, str], str] = {
+    ("slabs", BAR_STEEL): "floor",
+    ("secondary beams", CONCRETE_GRADE): "floor",
+    ("secondary beams", BAR_STEEL): "floor",
+    ("secondary beams", STIRRUP_STEEL): "floor",
+    ("longitudinal beams", CONCRETE_GRADE): "lateral",
+    ("longitudinal beams", BAR_STEEL): "lateral",
+    ("longitudinal beams", STIRRUP_STEEL): "lateral",
+}
+
+
+def family_fixed_per_m2(plan_name: str = "grid") -> dict[tuple[str, str], float]:
+    """Return the size-independent take-off items per m^2 of floor.
+
+    The values come from ``take_off`` on the anchor plan, so they equal the
+    anchor's rows exactly. Every level is measured the same way, so the value
+    per m^2 of floor does not depend on the storey count. Using the anchor plan
+    and the anchor's secondary and longitudinal beams for every family building
+    is a judgement [J] (data_card, takeoff_scope).
+
+    Args:
+        plan_name: ``"grid"`` (B11, default) or ``"drawn"``.
+
+    Returns:
+        Quantity per m^2 of floor, keyed (element, material): m^3/m^2 for
+        concrete, kg/m^2 for steel.
+    """
+    rows = take_off(make_plan(plan_name), "code", _NoFrameSteel(), [])
+    return {(r["element [text]"], r["material [text]"]): r["quantity"] / r["floor_area [m2]"]
+            for r in rows if (r["element [text]"], r["material [text]"]) in FAMILY_FIXED_ELEMENTS}
+
+
 def footing_rows(plan: Plan, pads: list[Footing]) -> list[dict]:
     """Build ``results/anchor_footings.csv`` rows for one plan."""
     return [{"plan [text]": plan.name, "axis [text]": str(k + 1), "line [text]": LINES_Y[m],
@@ -478,10 +527,14 @@ def carbon_rows(quantities: list[dict], factors: dict[tuple[str, str], tuple[flo
     Returns:
         One row per factor set, plan, steel source and element.
 
+    A set with no factor for any take-off material (for example the
+    one-row floor-only set OVAL2023, read by the floor code) is skipped.
+
     Raises:
-        KeyError: If a set has no factor for a material in the take-off.
+        KeyError: If a set has factors for some but not all take-off materials.
     """
-    sets = sorted({s for s, _ in factors})
+    materials = {q["material [text]"] for q in quantities}
+    sets = sorted({s for s, m in factors if m in materials})
     totals: dict[tuple, float] = {}
     floor = {}
     for fset in sets:

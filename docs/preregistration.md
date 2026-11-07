@@ -72,3 +72,32 @@ The pipeline follows schedule.md (Track B, Days 43-47). Its code and hyperparame
 ## 3. Verdicts
 
 None yet.
+
+Transparency note (6 Nov 2026, before any verdict). R14 capacity design was added to the generator after the plan was approved (design_rules.md R14). The analysis plan is unchanged, but the design rules that make the family rows changed:
+- R14 sizes the column bars and the frame stirrups.
+- R13 counts compression steel at grade I-II beam ends.
+- Column steel (`bar_steel_kg_per_m2`) changes in every scope, including `frame_strip_v1`.
+- Frame stirrups enter `building_v2` only.
+The Day 19 pilot files were made without R14 and are kept as they are. `generate(..., capacity_design=False)` reproduces them. Results for H1-H4 use the R14 rows (results/family_rc_r14_building_v2.*).
+
+### Change log
+
+**C1, 6 Nov 2026 (author's decision 3, Paper 1 review panel finding P4): carbon-factor sensitivity added.**
+
+- *What.* A one-at-a-time sensitivity on the carbon factors. Each bound is run alone, with every other factor at its base value:
+  - concrete: the C40 factor (340, the C30/C50 mean) set to the Table D.0.1 C30 row (295) and to the C50 row (385);
+  - steel: every steel factor (reinforcing bar, mesh and tie steel) set to the Table D.0.1 converter carbon steel row (1990 kgCO2e/t) and to the electric-arc carbon steel row (3030 kgCO2e/t).
+  All four values are rows already in data/carbon_factors.csv or in GB/T 51366-2019 Table D.0.1. No new source is used.
+- *Reported.* For each bound: S_f and S_b per building (minimum, median, maximum), the share of buildings with S_b > 0, and whether any H1-H3 verdict would read differently.
+- *What it is not.* It is a sensitivity, not an uncertainty band. The bounds are tabulated extremes, not a distribution. Every verdict is given with the base factors only (section 2.0). It replaces the "Monte Carlo band" named in anchor_notes D29 and anchor_report §5, which was never part of this plan.
+- *Caveat [J].* The converter and electric-arc rows are crude-steel values without rolling, while the base bar factor (2340) is the hot-rolled bar row. As bounds for bar steel they bracket the base value but are not like-for-like. Paper 1 states this.
+- *When.* Added after the conventional pilot and the R14 conventional family rows (both pre-release) and before any shell-family row, any S_f or S_b, or any DOI-data result existed. Git history gives the timestamp.
+
+**C2, 7 Nov 2026 (direction review P1; author's decision A, then Claude's choice [J] under the author's 7 Nov rule to take the recommended option): grade-I rows.**
+
+- *What changed in the generator.* At grade I the strong-column check now uses 1.2 ΣM_bua, the actual flexural capacity of the beams (GB 50011 cl. 6.2.2), and no longer η_c = 1.7 times the analysis moments. M_bua uses f_yk and the bars actually chosen, without the slab bars [J]. Beam growth keeps cl. 6.3.1 (h/b ≤ 4, clear span/h ≥ 4).
+- *Result.* The grade-I rows hardly moved (largest change 0.3 kgCO2e/m²). s07-p030 still has 1750 mm columns. Its history shows why: the column grows because no bar layout fits the magnified moments (cl. 9.3.1, 11.4.13), after the beams have grown deep for shear. The strong-column factor is not the driver.
+- *Choice [J].* The primary analysis stays as approved: every valid row, grade I included. A sensitivity case drops the grade-I rows (6 ok rows at 0.20-0.40 g), and every H1-H3 verdict is shown both ways (section 2.0, "Changes"). Excluding them from the primary analysis would drop rows because of their result, which the plan forbids.
+- *Why the grade-I rows are flagged.* The bar-layout growth is a generator limitation (one bar set for all columns; no beam redesign to cut the demand) [J]. Paper 1 Methods states it and lists the grade-I rows.
+- *When.* Before any shell-family row, S_f, S_b or DOI-data result.
+

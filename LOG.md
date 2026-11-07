@@ -180,6 +180,209 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - Claude decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 29 - 7 Nov 2026 (shell floor in the generator)
+
+Done: `shellfloor.py` designs each family building again with a vaulted shell floor. The frame is sized by the same generator under the shell's dead load (no secondary beams), and the row carries shell concrete, mesh, ties, fill and topping with their own factors. A floor variant pairs the 6.0 and 6.6 m library cases, weighted by bay length (2 x 6.0 and 4 x 6.6 m) [J]; 36 variants x 4 toppings (0, 40, 50, 60 mm) x 36 buildings = 5,184 rows (results/family_shell.csv, pre-release, not for results).
+Run: 4,856 ok, 288 outside code, 40 failed (s05-p040 28, s06-p040 11, s04-p040 1; all grade I at 0.40 g, no convergence). Rerun time 2.6 min.
+Not yet valid for any verdict (pre-release, and these are my reading of the first run only): against the conventional row, best variant per building has S_b > 0 in 94 % of buildings, median S_b about 6 %; foamed fill is worse than the conventional floor in nearly every case, recycled fill and raised floor are the candidates. The H3 diaphragm test and the topping rule (Day 27) are not built, so `diaphragm_rigid` is empty and every topping is shown; the verdict variant is chosen only after Day 27.
+Limits: beam stiffness factor stays the anchor's although there is no slab flange [J]; the roof keeps the conventional slab [J]; the vault thrust is carried by the ties only.
+Compliance: sources - floor library (Day 26), carbon_factors.csv rows as they stand. AI use - Claude wrote the module and tests; I confirm. Numbers - from the code and results/family_shell.csv. Data - nothing confidential. Repo - branch day29-shell-floor; 193 tests pass.
+
+## Day 21 (later) - 7 Nov 2026 (P1: grade-I column bar layout)
+
+Cause found: the grade-I columns grew because no bar layout fitted. With 32 mm bars at most, about 12 bars per face hit the 50 mm clear spacing (cl. 9.3.1) at a side steel ratio of only 0.6-0.95 %. Behind it, ΣM_bua uses one beam bar set for every storey, so the strong-column factor reaches about 3 at the upper joints.
+Done: column bars may now be 36 or 40 mm (`generator.COLUMN_BAR_DIAMETERS_MM`) [J]. Beams and panels are unchanged. Family rerun: 33 ok, 1 failed (was 2), 2 outside code. s07-p030 columns 1750 → 1300 mm (356.4 → 269.6 kgCO2e/m²); s08-p030 now converges (1300 mm, 269.9). Grade II at 0.30 g also falls (s05-p030 850 → 750 mm). Median building 114.25 → 115.9 kgCO2e/m², because one more row is ok.
+Limitation for Paper 1 Methods: beams carry one bar set for all storeys, which inflates the grade-I M_bua at the upper joints [J]. The 6 grade-I sensitivity (preregistration C2) stands.
+Compliance: sources - GB 50010-2010 cl. 9.3.1; GB/T 1499.2 bar sizes [?]. AI use - Claude found the cause, wrote the change and reran the family; I confirm. Numbers - from the code and the rerun. Data - nothing confidential. Repo - branch day21-grade1-bars; 189 tests pass.
+
+## Day 21 (later) - 7 Nov 2026 (P1: grade I strong column by M_bua)
+
+Done: I chose option A, so grade I now uses 1.2 ΣM_bua (GB 50011 cl. 6.2.2) in place of η_c = 1.7 (`capacity.beam_mbua_knm`, f_yk 400 from GB 50010 Table 4.2.2-1 [?]). Family rerun: 32 ok, 2 failed, 2 outside code, as before; grade-I carbon moved by 0.3 kgCO2e/m² at most; median 114.25.
+Finding: the grade-I columns grow because no bar layout fits (cl. 9.3.1, 11.4.13), not because of the strong-column factor. s07-p030 stays at 1750 mm.
+Decision (Claude, [J], under my 7 Nov rule to take the recommended option): the primary analysis keeps every valid row; a sensitivity case drops the 6 grade-I ok rows and shows each verdict both ways (preregistration C2).
+Compliance: sources - GB 50011-2010 cl. 6.2.2; GB 50010-2010 Table 4.2.2-1 [?]. AI use - Claude wrote the code, tests and C2; I confirm. Numbers - from the code and the rerun. Data - nothing confidential. Repo - branch day21-grade1-mbua; 186 tests pass.
+
+## Day 21 - 7 Nov 2026 (P1: cl. 6.3.1 kept when beams grow)
+
+Done: R13 and R14 beam growth now keep GB 50011 cl. 6.3.1 (h/b <= 4, clear span/h >= 4). A beam that would break it gets 50 mm wider instead of deeper (`generator.grow_beam`) [J]. Before this, two grade-I rows broke h/b: s07-p030 (300 x 1300, h/b 4.33) and s06-p040 (300 x 1250, 4.17).
+Full family rerun (results/family_rc_r14_building_v2.csv): 32 ok, 2 failed, 2 outside code, as before. Only those two rows changed: s07-p030 beams 350/300/300 x 1200/750/900, 356.4 kgCO2e/m² (was 354.9); s06-p040 350/300/350 x 1200/900/1200, 251.6 (was 250.1). Median building 114.25 kgCO2e/m², unchanged.
+Not done: the grade-I rows are still not credible (s07-p030 has 1750 mm columns). Whether grade I uses actual beam capacity is my decision (direction_review P1).
+Compliance: sources - GB 50011-2010 cl. 6.3.1 (values already in the code, checked 5 Nov). AI use - Claude wrote the change and the test; I confirm. Numbers - from the code and the rerun. Data - nothing confidential. Repo - branch day21-p1-beam-growth; 185 tests pass.
+
+## Paper 1 - 6 Nov 2026 (Methods skeleton merged; factor sensitivity logged)
+
+- PR #121 merged (author asked): paper/paper1/ with the Methods skeleton, review panel findings P1-P11, numbers.md and references.md.
+- Decision 3 (author, 6 Nov 2026): option A. One-at-a-time carbon-factor sensitivity on Table D.0.1 rows only: C40 between C30 (295) and C50 (385); all steel between converter (1990) and electric-arc (3030) carbon steel. Logged as preregistration change log C1, before any shell-family row or any S_b. The "Monte Carlo band" in anchor_report §5 and anchor_notes D29 is withdrawn.
+- P6 closed: the generator's 500 mm columns against the thesis 600 mm are a deliberate code-based redesign (author's confirmation).
+- Open: the sensitivity run itself (build thread, after the take-off scope); rough sentences for Methods 2.1 and 2.8; choices 1 (journal) and 2 (voice); voice_sample.md.
+
+Compliance: no new number or source; the four bounds are existing Table D.0.1 rows (official-copy check still open). AI use: Claude drafted the change-log entry and the doc edits; the decision is the author's.
+
+## Day 20 - 6 Nov 2026 (R14 capacity design; full family run; v0.2)
+
+Done-when ("release v0.2 exists and the full run has started"): met. Tag v0.2 is on the merge commit. The full run is finished, not only started.
+
+- R14 is in the generator (`capacity.py`, `generator.capacity_step`; design_rules.md R13, R14, R16). It covers strong column (η_c), the base factor, beam and column shear by η, the section limits, stirrups and hoops by grade, and column bars from cl. 6.2.17 with a second-order check.
+- At grade I-II beam ends, R13 counts A_s' = r A_s with r = 0.5 / 0.3 (cl. 11.3.1, 11.3.6 item 2). Column bars are added up to the 50 mm clear spacing (cl. 9.3.1). Without these two changes the grade-I buildings ran away to 1850 mm columns.
+- All clause values were checked by Claude from the GB 50010 / GB 50011 PDFs; the author confirms them in an official copy. The grade III value of r is not confirmed from the text, so r = 0 is used there [J].
+- **Full run** (results/family_rc_r14_building_v2.csv, `--scope building_v2 --resume`): 36 rows: 32 ok, 2 outside_code (s07/s08-p040, height > 24 m), and **2 failed**.
+  - The failed ones are s08-p030 and s05-p040, both grade I. They are "did not converge": the span-0 beam depth and the column steel grow in turn.
+  - Failure count 2 of 34 inside the code is 5.9 %, above the 2 % pilot target. Both are grade I, the case where the η substitution in R14 is a stated limitation.
+- Medians over the 32 ok rows: building 109.0 → 114.2 kgCO2e/m² (range 101.4-354.9), lateral 51.4 → 56.6. Floor is unchanged at 57.6, floor share 0.50. Stirrup medians: beams 0.68 and columns 0.96 kg/m².
+- **Not credible yet (open):** the grade-I ok rows are very large.
+  - s07-p030: 1750 mm columns, 80C32, building 354.9 kgCO2e/m².
+  - s06-p040: 1200 mm columns, 52C32.
+  - The R14 beam growth does not re-check cl. 6.3.1 (h/b ≤ 4); s07-p030's 1300 mm beam on a 300 mm width breaks it.
+  - Before any result is quoted, Day 21 must check these rows by hand, add cl. 6.3.1 to the R14 growth step (widen the beam instead), and decide whether to use actual beam capacity for grade I.
+- R14 changes column steel in every scope. The Day 19 pilot files stay as made, and `capacity_design=False` reproduces them (tests/test_drift_rule.py). There is a transparency note in preregistration.md §3.
+- Also seen: under R14, s07-p030 with "best_ratio" uses more concrete than with "columns_first" (0.459 vs 0.286 m³/m²). The Day 19 decision card 2 result holds without R14 only, to be re-judged on Day 21.
+- v0.2: version 0.2.0 (pyproject, `__version__`), annotated tag v0.2.0 "Generator and pilot family" only, with no GitHub release. A release mints a Zenodo DOI, and these rows are pre-release [J]. The family was rerun after the bump, so its rows carry 0.2.0; results are the same.
+- Slip check (schedule.md, "Check on 6 Nov"): v0.2 is on its date, and v0.3 was done on 5 Nov. No slip, so the surrogate keeps its days.
+- Day 28 half-day review and Methods: not done today. They are carried to Day 21 together with the checks above.
+
+Compliance: sources - GB 50010-2010 English translation (cl. 6.2.10, 6.2.14, 9.3.1, 11.3.1, 11.3.6, 11.4.x; PDF pp. 45-47, 123, 163-166) and GB 50011-2010 (cl. 6.2.2-6.2.5), not committed. AI use - Claude Code wrote the code, tests and text and checked the clauses; the author confirms. Numbers - from the code and results/family_rc_r14_building_v2.csv. Data - nothing confidential. Repo - branch day20-r14; 184 tests pass; anchor results byte-identical.
+
+
+## Day 20 - 5 Nov 2026 (take-off scope building_v2)
+
+Decisions mine; checked: S. N. R. Hasib, 5 Nov 2026.
+
+- New scope `building_v2` (batch `--scope`). It is v1 plus the grid-plan slab bars and secondary beams (floor) and longitudinal beams (lateral), per m², taken from `carbon.family_fixed_per_m2`. The test equates them with results/anchor_quantities.csv. The `frame_strip_v1` rows are unchanged.
+- Family pilot rerun (results/family_rc_pilot_building_v2.csv): floor median 40.8 → 57.6 kgCO2e/m²; building 76.8 → 109.0 (range 94.4-127.6); floor share about 0.53. Designs unchanged.
+- Anchor cross-check (s04-p010): floor 57.6 vs 57.3; lateral 41.2 vs 58.9. The gap comes from the excluded frame and column stirrups, the 500 mm vs 600 mm columns (a design difference), and the strip vs the whole plan: the plan holds 1.3125× the strip's columns and frame beams per m². This biases S_b high. Paper 1 must close the gap, or bound S_b at 1.0 and 1.3125 (data_card row 4).
+- Open before the family run: frame and column stirrups at generator sizes; footings, if the generator gives base loads; the R14 checks (cl. 6.2.2, 6.2.4, 6.2.5).
+
+- Later the same day:
+  - FOAMED_FILL = 472.7 kgCO2e/t, cement only [J]. From Yang et al. (2025), Sci. Rep. 15:18077, doi:10.1038/s41598-025-03366-0, Table 1, 800 row (514.47 kg/m³ cement), times the GB/T 51366 cement row 735 kgCO2e/t (PDF p. 22 of the copy). The 1000 row gives 475.7. The foamed-fill [?] is closed.
+  - Steel row label settled from the scan, PDF p. 23: 钢筋, 棒材 and 轨梁(方圆坯、管坯) are separate rows, all at 2340.
+
+Compliance: sources - none new for the scope work; for the fill, Yang et al. 2025 (CC BY-NC-ND, OpenAlex checked) and the GB/T 51366 copy. AI use - Claude Code wrote the code, tests and text; I decided and checked. Numbers - from the code and results/anchor_quantities.csv. Data - nothing confidential. Repo - branch day20-scope-v2; 175 tests pass; anchor results byte-identical.
+
+## Day 19 (night) - 5 Nov 2026 (code checks on record; take-off scope)
+
+Decisions mine; checked: S. N. R. Hasib, 5 Nov 2026.
+
+- GB 50011-2010 English edition (IISEE copy), checked in the page images:
+  - Table 5.5.1, p. 40: RC frame drift limit 1/550. It matches `DRIFT_LIMIT`.
+  - Cl. 6.3.1, p. 55: beam b ≥ 200 mm, h/b ≤ 4, clear span/h ≥ 4. It matches `generator.py`.
+  - Cl. 6.2.2, p. 50: column moment magnification η_c = 1.7/1.5/1.3/1.2 for frame grades I-IV. Not modelled yet. Planned before the family run (design_rules R14, decision 5); a limitation in Paper 1 Methods until then.
+- Check records now carry my name ("checked: S. N. R. Hasib"), not "by Claude, author to confirm". Covers code comments, carbon_factors.csv, data_card, design_rules, pilot_hand_checks and today's LOG and handoff entries. Older history entries are left as written.
+- GB/T 51366 Table D.0.1 rows: checked in the third-party copy only; the official-copy check stays open in each row.
+- Take-off scope: `frame_strip_v1` is a pilot scope only. Paper 1 uses the preregistered scope, with slab bars, secondary beams, fill and topping in C_floor for both systems (data_card row 4). Not built yet.
+- Foamed-fill factor: still [?]. No open-access 2020-2026 mix with a stated cement content was found, so no value is written (rule 1). No shell carbon code reads it yet.
+
+Compliance: sources - GB 50011-2010 English edition, pp. 40, 50 and 55 (not stored in the repo). AI use - Claude Code read the page images, reworded the records and drafted the text; I decided and checked. Numbers - clause values as printed. Repo - branch day19-author-checks; no result file changed.
+
+## Day 19 (evening) - 5 Nov 2026 (beam I sensitivity; raised-floor factor)
+
+Decisions mine; checked: S. N. R. Hasib, 5 Nov 2026.
+
+- `batch.py` has a new `--beam-i-factor` option, and `hand_check_pilot.py` takes the factor as an optional second argument.
+- The pilot was run at beam I factor 1.5: results/family_rc_pilot_beam_i15.csv.
+  - Status counts unchanged (34 ok, 2 outside_code).
+  - 11 buildings got deeper beams; every ok row still passes 1/550.
+  - Carbon changed by -1.6 % to +0.3 %.
+- Hand check at the same factor: the hand drift is 1.10-1.16 times the generator's. s03-p030 and s06-p040 are still above 1/550 by hand, so the beam factor does not explain the gap; it is a method difference [J]. 2.0 stays the primary value (spec M7), and 1.5 is a sensitivity row. See docs/pilot_hand_checks.md.
+- The raised floor now has a factor: `RAISED_FLOOR` 534.5 kgCO2e/t (set `OVAL2023`). It comes from Oval et al. (2023) Table 6, A1 row "flooring system", 29 kg → 15.50 kgCO2eq/m².
+- Foamed fill is still [?]. Hawkins et al. (2020) Table 2 is ICE-based (D29). No open-access 2020-2026 foamed-concrete mix near 800 kg/m³ could be checked: one MDPI PDF returned 403, and the Firecrawl credits ran out.
+Compliance: sources - Oval et al. 2023 AAM (Univ. of Bath), Table 6, p. 19; Hawkins et al. 2020 AAM, Table 2 (read, not used). AI use - Claude Code ran the scripts and drafted the text; I decided and checked. Numbers - from results/family_rc_pilot_beam_i15.csv and the hand script. Data - existing results/ byte-identical; pytest 172 passed. Repo - branch day19-sensitivity.
+
+## Day 19 (later) - 5 Nov 2026 (pilot hand checks; floor-only carbon factors)
+
+Decisions mine; checked: S. N. R. Hasib, 5 Nov 2026.
+
+- Hand checks of s04-p010, s03-p030 and s06-p040 are in docs/pilot_hand_checks.md, with the script in scripts/hand_check_pilot.py. Methods: D-value drift, Rayleigh period, cantilever-method axial force. Period, drift and axial ratio agree within 25 %, and every hand value is higher.
+- Open point: the hand drift for s03-p030 (1/508) and s06-p040 (1/526) exceeds 1/550, while the generator's values pass. A sensitivity run with the beam I factor at 1.5 is proposed.
+- data/carbon_factors.csv gains four rows from GB/T 51366 Table D.0.1 (PDF pp. 22-23 of the third-party copy):
+  - TIE_BAR, 2340 kgCO2e/t
+  - TIE_STEEL_EAF, 3030 kgCO2e/t
+  - TIE_STEEL_BOF, 1990 kgCO2e/t
+  - RECYCLED_FILL, 2.18 kgCO2e/t (crushed-stone proxy [J])
+- Foamed fill and the raised floor have no row, so they stay [?]. No ICE (D29).
+
+Compliance: sources - GB/T 51366-2019 Table D.0.1 (third-party copy, read from page images). AI use - Claude Code read the page images and drafted the rows; I chose and checked them. Numbers - generator values from results/family_rc_pilot.csv; factors read from the table. Data - results/ byte-identical; pytest 172 passed. Repo - branch day19-hand-checks.
+
+## Day 19 (later) - 5 Nov 2026 (decision card 1: family size)
+
+Decided by me; checked: S. N. R. Hasib, 5 Nov 2026.
+
+- The family stays as frozen in preregistration.md section 2: 36 conventional buildings, each with up to 72 floor variants, so up to 2,592 building-floor rows.
+- No span, bay or storey-height axis is added, because that would change the preregistered plan.
+- H4 holds out 6 PGAs x the floor variants per storey count (432 rows with all 72 variants), not 6 rows.
+- schedule.md (with a note on family size) and impact_strategy.md are corrected.
+
+Compliance: sources - preregistration.md section 2, results/floor_library.csv. AI use - Claude Code drafted the text; I decided. Numbers - counts from the files named. Repo - branch day19-family-size.
+
+## Day 19 (later) - 5 Nov 2026 (decision card 2: R11 drift rule)
+
+Decided by me; checked: S. N. R. Hasib, 5 Nov 2026.
+
+- R11 default is now "best_ratio". Each step tries all columns +50 mm and all beams +50 mm deeper, and keeps the one with the larger drift reduction per m³ of added frame concrete. The beam step must meet GB 50011 cl. 6.3.1.
+- The old columns-first rule is kept as `--drift-rule columns_first`. It reproduces the Day 19 pilot CSV byte for byte (tests/test_drift_rule.py).
+- results/family_rc_pilot.csv was rerun with the new rule:
+  - 34 ok, 2 outside_code, 0 failed.
+  - 9 drift-governed rows changed (0.30 g s04-s08, 0.40 g s03-s06). Columns are 100-350 mm smaller, and drift is still within 1/550.
+  - Building carbon is now 62-95 kgCO2e/m², down from 62-121.
+  - s07-p030 now has 750 mm columns, down from 1100.
+  - The old run is results/family_rc_pilot_r11_columns_first.csv (sensitivity row for H2).
+- Code values checked: S. N. R. Hasib, 5 Nov, in the IISEE English copy of GB 50011-2010:
+  - Table 5.5.1, RC frame 1/550 (p. 40). This closes R11's [?].
+  - Cl. 6.3.1 beam limits (p. 55). All rows of both runs pass (tightest margin 1.09, s06-p040).
+- Open [?]: strong column/weak beam (cl. 6.2.2) is not modelled.
+- Unchanged: anchor results/, family_rc_sample, floor_library and panel_day25. pytest 172 passed.
+
+Compliance: sources - GB 50011-2010 English edition (IISEE), pages 40 and 55, not stored in the repo. AI use - Claude Code changed the code and drafted the text; I chose the rule. Numbers - from the 5 Nov run. Repo - branch day19-r11.
+
+## Day 19 - 5 Nov 2026 (pilot of the conventional family)
+
+Done: the whole conventional family as defined in batch.py (36 buildings: storeys 3-8 x six PGAs, every other input the anchor's) run as the pilot, results/family_rc_pilot.csv (pre-release, not for results). 34 ok, 0 failed, 2 outside_code (s07-p040, s08-p040, above the 24 m frame limit at 9 degrees). Failure rate 0 % (limit 2 %); outside_code rows are not counted as failures [J].
+Findings (red team):
+
+1. The family has 36 buildings, not the 200-building pilot and 2,000-building family of schedule.md and impact_strategy.md. H4 (leave-one-storey-count-out) would have 6 test rows per fold. Author decision needed.
+2. The R11 drift rule grows columns first. At 0.30 g, s07 went from 700 to 1100 mm columns for drift 1/470 to 1/480, then beams +100 mm took it to 1/575. Columns run the full height, so this makes the conventional frame heavier than it needs to be and could inflate the shell saving at high PGA (H2). Author decision needed before Day 20.
+3. Carbon 62-121 kgCO2e/m^2 (frame strip, takeoff_scope as recorded); 0.30-0.40 g buildings are drift- and xi-governed.
+Hand checks (three): s04-p010 (anchor), s03-p030, s06-p040, the author's.
+Compliance: sources - batch.py, generator.py as merged 4 Nov. AI use - Claude ran the pilot and wrote the findings. Numbers - from the run of 5 Nov. Repo - branch day19-pilot.
+
+## Day 18 and Day 26 - 4 Nov 2026 (batch runner and frozen format; floor library)
+
+Playbook source: the Done-when lines below are taken from schedule.md's copy of the playbook (the playbook itself is not in the repo).
+Day 18: new src/shellbench/batch.py runs the conventional family (storeys 3-8 × PGA 0.10, 0.05, 0.15, 0.20, 0.30, 0.40 g; 36 buildings) through the generator and writes a row in the frozen family_rc format. docs/data_card.md fixes the 34 family_rc columns and the 13 family_shell columns to come (35-47). The 10-row sample is in results/family_rc_sample.csv and .parquet (`--n 10`). It has 6 ok rows at 0.10 g and 4 blocked rows at 0.05 g. The anchor row (4 storeys, 0.10 g) gives T1 0.5485 s, drift 1/1163 and axial ratio 0.4385, the same as Day 16. Carbon uses GB/T 51366 (C40 340 kgCO2e/m³, HRB400 2340 kgCO2e/t): 64.3-78.5 kgCO2e/m² for the building, 40.8 for the floor. generator.quantities() gained split concrete and bar keys; the totals are unchanged. pyarrow 26.0.1 was added to environment.yml.
+Done-when met (Day 18): frozen format plus a 10-row sample in docs/data_card.md.
+Day 26: new src/shellbench/floorlib.py sizes 72 floor cases (span 6.0 and 6.6 m × f/L 1/8-1/20 × three levelling options × one or two mesh layers, prestressed ties, fill at its true depth f − z). All 72 are sized, at 80-120 mm. panel.py gained optional keyword arguments only, and results/panel_day25.csv is byte-identical after a rerun. docs/floor_library.md has the case definition, results and spot checks.
+Done-when met (Day 26): 72 cases (≥ 60) and 5 spot checks, each run on every case it applies to (tests/test_floor_library.py). pytest: 164 passed.
+Finding: spot check 1 at first missed by up to 2.5 % on flat, thick vaults. Axial shortening explains it: the closed form 1/(1 + (15/8) i²/f²) gives 0.9756 against the model's 0.9755 for L60-r20-rs-m2. With that factor, all raised-floor cases agree within 1 %.
+Finding: the two-layer mesh needs 10-30 mm more shell than one mid-depth layer. The GB 50010 6.2.17 rule for x < 2a′ takes moments about the compression steel, which leaves N a lever arm of only t/2 − a′.
+Choices [J]: PGA order (0.10 g first), Tg 0.35 s and C40 for the family; building ID format; take-off scope "frame_strip_v1"; trial thicknesses 50-150 mm; a = a′ = 24 mm for the two-layer mesh; each face at the minimum ratio; the steel is ignored for small eccentricity.
+For me:
+
+- α_max (frequent) for 0.05, 0.15, 0.20, 0.30 and 0.40 g from GB 50011 Table 5.1.4-1. Those rows are blocked, not filled from memory.
+- Confirm the PGA→intensity map (GB 50011 Table 3.2.2 [?]).
+- Carbon factors for foamed and recycled fill.
+- The whole-building take-off scope for Day 19/20: stirrups, footings, slab bars, longitudinal and secondary beams.
+- The JGJ 22 stability rule (3.2.9).
+- The seismic grade and axial-ratio limit by intensity.
+- Confirm that 6.2.17 with the x < 2a′ rule is the right check for the two-layer mesh.
+Tomorrow: Day 19 onwards, per schedule.md, once the α_max values are in.
+Compliance: sources - none new; GB 50010-2010 6.2.17 and 6.2.14 and GB 50011 tables as already cited (to be confirmed in my copies). AI use - Claude wrote the batch runner, the library code, the tests and the docs. Numbers - inputs trace to baseline_spec, floor_concept, the code and the carbon_factors.csv; results from the code runs of 4 Nov; judgements marked [J]. Data - nothing confidential; thesis_source/ not tracked. Repo - branch day18-day26-batch-library.
+Later, 4 Nov 2026: under my standing rule of 4 Nov ("you do it all"), Claude closed today's author items.
+- **Source.** The full text of GB 50011-2010 (2016 edition, Chinese), from the IISEE world list (iisee.kenken.go.jp). Claude read the table pages as page images.
+- **Values:**
+  - Table 3.2.2 (p. 6), intensity map: 0.05 g → 6, 0.10 and 0.15 g → 7, 0.20 and 0.30 g → 8, 0.40 g → 9.
+  - Table 5.1.4-1 (p. 33), α_max frequent: 0.04, 0.08 (0.12), 0.16 (0.24), 0.32.
+  - Table 6.1.1 (p. 48), frame height limits: 60, 50, 40, 35 and 24 m.
+  - Table 6.1.2 (p. 49), frame grade by intensity and height (≤ 24 m or above).
+  - Table 6.3.6 (p. 62), frame axial-ratio limits: 0.65, 0.75, 0.85 and 0.90.
+- **Code.** seismic.py now holds all six α_max values. batch.py sets the grade and the axial limit per building, and adds the columns `seismic_grade` and `axial_ratio_limit` at the end; the frozen order is kept.
+- **New status `outside_code`.** It applies to s07-p040 and s08-p040 (26.15 and 29.75 m, above 24 m at 9 degrees). These rows are kept but not run.
+- **Sample.** It is regenerated: all 10 rows are ok. s07-p010 now has 700 mm columns (grade 2, limit 0.75). The whole family was run as a check: 34 ok, 2 outside_code, 0 failed.
+- **JGJ 22 stability: closed [J].** JGJ 22 has no formula for cylindrical shells. Stability enters through the FE buckling factor λ, in the 1/(1 − 1/λ) amplifier. The lowest λ is 9.0 (after the fix below), and no separate knock-down is added.
+- **Two-layer capacity fixed; earlier finding withdrawn.** panel.moment_capacity_two_layer checked only the x < 2a′ branch of GB 50010 6.2.17. It now takes the larger of that branch and the branch with the compression steel not counted (Claude's reading, author to confirm). A new test checks two layers never give less capacity than one. The library was rebuilt: 72 of 72 sized at 70-100 mm, two layers 0-20 mm thinner than one. This replaces the Day 26 lines above (80-120 mm; two layers 10-30 mm thicker). results/panel_day25.csv is unchanged.
+- **Not due today.** Fill carbon factors are due Fri 6 Nov (schedule). The whole-building take-off scope belongs to Day 19/20.
+- pytest: 168 passed.
+
+Compliance (later): sources - GB 50011-2010 (2016 edition), the IISEE copy, licence not checked, not stored in the repo. AI use - Claude read the tables and changed the code, and records this as Claude's reading. I am to confirm each value in my own copy. Numbers - every code value cites table and page. Repo - branch day26-code-values.
+
 ## Day 17 and Day 25 - 3 Nov 2026 (analysis plan drafted; one sized panel, floor-r3)
 
 Day 17, drafted with the gate still open: docs/preregistration.md section 2 now holds the analysis plan for H1-H4 (quantity, population, comparison, verdict rule). It is marked DRAFT. The Status row still says "to be written", and it changes only when I approve. The thresholds marked [J] and the H1 population are listed in section 2.5 for me to decide. No family row (Day 19 onwards) is run before I approve. H1-H4 are untouched.

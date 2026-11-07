@@ -36,7 +36,7 @@ Loads
 Self-weight per m^2 of shell surface (CalculiX gravity). Fill, finishes and
 live load per m^2 of plan (consistent nodal loads). The fill is taken as a
 uniform plan load of density x g x f / 3, as in floor_concept section 5; its
-true depth (f - z) is a refinement left for Day 26 [J].
+true depth (f - z) is an option from Day 26 (`true_fill`) [J].
 
 Section check
 -------------
@@ -162,26 +162,66 @@ class PanelRow:
     passes: bool
 
 
-def rise_m() -> float:
+@dataclass(frozen=True)
+class Vault:
+    """Geometry of one vault (Day 26). The defaults are the Day 25 panel.
+
+    Attributes:
+        span_m: Span L between the two frame beams [m].
+        rise_ratio: f / L [-].
+    """
+
+    span_m: float = SPAN_M
+    rise_ratio: float = RISE_RATIO
+
+
+DAY25_VAULT = Vault()
+
+
+def rise_m(vault: Vault | None = None) -> float:
     """Rise f of the vault [m]."""
-    return RISE_RATIO * SPAN_M
+    v = vault or DAY25_VAULT
+    return v.rise_ratio * v.span_m
 
 
-def slope(x: np.ndarray) -> np.ndarray:
+def slope(x: np.ndarray, vault: Vault | None = None) -> np.ndarray:
     """dz/dx of the parabola z = 4 f x (L - x) / L^2."""
-    return 4.0 * rise_m() * (SPAN_M - 2.0 * x) / SPAN_M**2
+    span = (vault or DAY25_VAULT).span_m
+    return 4.0 * rise_m(vault) * (span - 2.0 * x) / span**2
 
 
-def arc_factor() -> float:
+def arc_factor(vault: Vault | None = None) -> float:
     """Arc length of the vault divided by its span."""
-    x = np.linspace(0.0, SPAN_M, STATICS_POINTS)
-    return float(np.trapezoid(np.sqrt(1.0 + slope(x) ** 2), x) / SPAN_M)
+    span = (vault or DAY25_VAULT).span_m
+    x = np.linspace(0.0, span, STATICS_POINTS)
+    return float(np.trapezoid(np.sqrt(1.0 + slope(x, vault) ** 2), x) / span)
 
 
-def levelling_pa(name: str) -> float:
-    """Plan load of the levelling option [Pa]: fill to the crown or raised floor."""
+def is_fill(name: str) -> bool:
+    """True if the levelling option is a fill (load depends on depth), not a raised floor."""
+    return LEVELLING[name][0] == "fill"
+
+
+def fill_unit_weight(name: str) -> float:
+    """Unit weight of a fill [N/m^3]; 0 for a raised floor."""
     kind, value = LEVELLING[name]
-    return value * G_ACCEL * (rise_m() / 3.0 if kind == "fill" else 1.0)
+    return value * G_ACCEL if kind == "fill" else 0.0
+
+
+def levelling_pa(name: str, vault: Vault | None = None) -> float:
+    """Mean plan load of the levelling option [Pa]: fill to the crown or raised floor.
+
+    For a fill this is the mean depth f / 3 times the unit weight; the true
+    depth f - z(x) is used when ``true_fill`` is set (Day 26).
+    """
+    kind, value = LEVELLING[name]
+    return value * G_ACCEL * (rise_m(vault) / 3.0 if kind == "fill" else 1.0)
+
+
+def fill_depth(x: np.ndarray, vault: Vault | None = None) -> np.ndarray:
+    """Depth of fill from the shell up to the crown level, f - z(x) [m]."""
+    span = (vault or DAY25_VAULT).span_m
+    return rise_m(vault) - parabola(x, span, rise_m(vault))
 
 
 def min_steel_ratio() -> float:
@@ -204,22 +244,24 @@ def tie_bar(force_n: float) -> int | None:
 
 # --- CalculiX model -------------------------------------------------------
 
-def strip(thickness: float, rigid_tie: bool):
+def strip(thickness: float, rigid_tie: bool, vault: Vault | None = None):
     """Mesh one tie bay of the vault and set its supports.
 
     Args:
         thickness: Shell thickness [m].
         rigid_tie: True pins both springings; False puts B on a roller.
+        vault: Geometry; the Day 25 vault if None.
 
     Returns:
         The model (no loads yet) and the mesh grid.
     """
-    f = rise_m()
+    span = (vault or DAY25_VAULT).span_m
+    f = rise_m(vault)
 
     def surface(u: float, v: float) -> tuple[float, float, float]:
         """Point of the vault: u along the span, v across the strip."""
-        x = u * SPAN_M
-        return x, v * TIE_SPACING_M, float(parabola(np.array(x), SPAN_M, f))
+        x = u * span
+        return x, v * TIE_SPACING_M, float(parabola(np.array(x), span, f))
 
     nu, nv = ELEMENTS_ALONG_SPAN, ELEMENTS_ACROSS
     nodes, elements, grid = mapped_mesh(surface, nu, nv)
@@ -236,22 +278,28 @@ def strip(thickness: float, rigid_tie: bool):
     return model, grid
 
 
-def plan_loads(model: ShellModel, pressure_pa: float, x_max: float) -> list[tuple[int, int, float]]:
+def plan_loads(model: ShellModel, pressure_pa: float, x_max: float, vault: Vault | None = None,
+               shape=None) -> list[tuple[int, int, float]]:
     """Consistent nodal forces of a downward plan pressure on elements with centre x < x_max.
 
     For an 8-node element under uniform pressure the corner nodes take -1/12
-    and the midside nodes 1/3 of the element load.
+    and the midside nodes 1/3 of the element load. With ``shape`` (a function
+    of x), the pressure on each element is ``pressure_pa * shape(x_centre)``,
+    a mid-point rule over the element [J].
     """
-    dx = SPAN_M / ELEMENTS_ALONG_SPAN
+    span = (vault or DAY25_VAULT).span_m
+    dx = span / ELEMENTS_ALONG_SPAN
     dy = TIE_SPACING_M / ELEMENTS_ACROSS
     out: dict[int, float] = {}
     for el in model.elements:
         xc = sum(model.nodes[n][0] for n in el[:4]) / 4.0
         if xc >= x_max:
             continue
-        load = pressure_pa * dx * dy
+        load = pressure_pa * dx * dy * (float(shape(np.array(xc))) if shape else 1.0)
         for k, n in enumerate(el):
             out[n] = out.get(n, 0.0) + load * (-1.0 / 12.0 if k < 4 else 1.0 / 3.0)
+    if shape:  # ccx rejects number fields over 20 characters, e.g. 5.4931640624999995E-05
+        return [(n, 3, -float(f"{p:.12g}")) for n, p in out.items()]
     return [(n, 3, -p) for n, p in out.items()]
 
 
@@ -273,38 +321,57 @@ def spread(displacements: dict[int, tuple[float, float, float]], weights: dict[i
 
 @dataclass
 class Flexibility:
-    """Spreads of springing B from the four unit cases of one thickness [m]."""
+    """Spreads of springing B from the unit cases of one thickness [m]."""
 
     self_weight: float  # concrete self-weight, unfactored
     plan_full: float  # 1 Pa on the whole plan
     plan_half: float  # 1 Pa on the plan for x < L/2
     unit_force: float  # inward movement per 1 N of total tie force [m/N]
+    plan_fill: float = float("nan")  # fill of unit weight 1 N/m^3 to the crown, depth f - z (Day 26)
 
 
-def flexibility(thickness: float, workdir: Path) -> Flexibility:
-    """Run the four linear cases with springing B on a roller."""
+def flexibility(thickness: float, workdir: Path, vault: Vault | None = None,
+                fill_shape: bool = False) -> Flexibility:
+    """Run the linear unit cases with springing B on a roller.
+
+    Four cases always; with ``fill_shape`` a fifth, the true-depth fill case.
+    """
+    span = (vault or DAY25_VAULT).span_m
+    cases = ("self", "full", "half", "unit") + (("fill",) if fill_shape else ())
     out = []
-    for case in ("self", "full", "half", "unit"):
-        model, grid = strip(thickness, rigid_tie=False)
+    for case in cases:
+        model, grid = strip(thickness, rigid_tie=False, vault=vault)
         w = edge_weights(grid)
         if case == "self":
             model.density = CONCRETE_N_M3 / LOAD_GRAVITY
             model.gravity = (LOAD_GRAVITY, 0.0, 0.0, -1.0)
         elif case in ("full", "half"):
-            model.forces = plan_loads(model, 1.0, SPAN_M if case == "full" else SPAN_M / 2.0)
+            model.forces = plan_loads(model, 1.0, span if case == "full" else span / 2.0, vault)
+        elif case == "fill":
+            model.forces = plan_loads(model, 1.0, span, vault, shape=lambda x: fill_depth(x, vault))
         else:
             model.forces = [(n, 1, -UNIT_FORCE_N * wt) for n, wt in w.items()]
         res = run(model, workdir / f"t{thickness * 1e3:.0f}_{case}", name=case)
         out.append(spread(res.displacements, w))
-    return Flexibility(out[0], out[1], out[2], -out[3] / UNIT_FORCE_N)
+    return Flexibility(out[0], out[1], out[2], -out[3] / UNIT_FORCE_N,
+                       out[4] if fill_shape else float("nan"))
 
 
-def buckling_factor(thickness: float, sd_pa: float, workdir: Path, tag: str) -> float:
-    """First linear buckling factor under the uniform ULS load, rigid tie."""
-    model, _ = strip(thickness, rigid_tie=True)
+def buckling_factor(thickness: float, sd_pa: float, workdir: Path, tag: str,
+                    vault: Vault | None = None, fill_n_m3: float = 0.0) -> float:
+    """First linear buckling factor under the uniform ULS load, rigid tie.
+
+    ``sd_pa`` is the uniform superimposed dead load; ``fill_n_m3`` adds a fill
+    of that unit weight at its true depth f - z (Day 26).
+    """
+    span = (vault or DAY25_VAULT).span_m
+    model, _ = strip(thickness, rigid_tie=True, vault=vault)
     model.density = GAMMA_G * CONCRETE_N_M3 / LOAD_GRAVITY
     model.gravity = (LOAD_GRAVITY, 0.0, 0.0, -1.0)
-    model.forces = plan_loads(model, GAMMA_G * sd_pa + GAMMA_Q * LIVE_PA, SPAN_M)
+    model.forces = plan_loads(model, GAMMA_G * sd_pa + GAMMA_Q * LIVE_PA, span, vault)
+    if fill_n_m3:
+        model.forces += plan_loads(model, GAMMA_G * fill_n_m3, span, vault,
+                                   shape=lambda x: fill_depth(x, vault))
     res = run(model, workdir / f"t{thickness * 1e3:.0f}_buckle_{tag}", name="buckle",
               buckling_modes=BUCKLING_MODES)
     return res.buckling_factors[0]
@@ -312,24 +379,27 @@ def buckling_factor(thickness: float, sd_pa: float, workdir: Path, tag: str) -> 
 
 # --- statics and section ---------------------------------------------------
 
-def arch_forces(p_plan: np.ndarray, h: float) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+def arch_forces(p_plan: np.ndarray, h: float, vault: Vault | None = None
+                ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Moment and axial force along a two-pinned parabolic arch under vertical plan load.
 
     Args:
         p_plan: Plan load [N/m per m width] at ``STATICS_POINTS`` points from 0 to L.
         h: Horizontal thrust [N/m].
+        vault: Geometry; the Day 25 vault if None.
 
     Returns:
         x [m], M [N m/m] (positive sagging), N [N/m] (positive compression).
     """
-    x = np.linspace(0.0, SPAN_M, STATICS_POINTS)
-    moment_about_b = np.trapezoid(p_plan * (SPAN_M - x), x)
-    r_a = moment_about_b / SPAN_M
+    span = (vault or DAY25_VAULT).span_m
+    x = np.linspace(0.0, span, STATICS_POINTS)
+    moment_about_b = np.trapezoid(p_plan * (span - x), x)
+    r_a = moment_about_b / span
     cum = np.concatenate(([0.0], np.cumsum((p_plan[1:] + p_plan[:-1]) / 2.0 * np.diff(x))))
     v0 = r_a - cum
     m0 = np.concatenate(([0.0], np.cumsum((v0[1:] + v0[:-1]) / 2.0 * np.diff(x))))
-    theta = np.arctan(slope(x))
-    z = parabola(x, SPAN_M, rise_m())
+    theta = np.arctan(slope(x, vault))
+    z = parabola(x, span, rise_m(vault))
     return x, m0 - h * z, h * np.cos(theta) + v0 * np.sin(theta)
 
 
@@ -360,55 +430,121 @@ def moment_capacity(n: float, t: float, as_m2_m: float) -> float:
     return max(c * (t - x) / 2.0, 0.0)
 
 
-def utilisation(p_plan: np.ndarray, h: float, t: float, as_m2_m: float, buckle: float) -> float:
+def two_layer_cover_m() -> float:
+    """Distance a = a' from a face to the inner bar of a two-direction mesh [m].
+
+    Cover plus one outer bar plus half the inner bar (the inner direction
+    governs) [J].
+    """
+    return COVER_M + 1.5 * MESH_BAR_M
+
+
+def moment_capacity_two_layer(n: float, t: float, as_face_m2_m: float) -> float:
+    """N e_i capacity of a 1 m strip with one mesh near each face, A_s = A_s' [N m/m].
+
+    GB 50010-2010 6.2.17, symmetric steel (f_y = f_y'), so alpha_1 f_c x = N.
+    - Large eccentricity, 2 a' <= x <= xi_b h_0 (6.2.17-2):
+      N e <= alpha_1 f_c x (h_0 - x / 2) + f_y' A_s' (h_0 - a'), with e = e_i + t / 2 - a.
+    - x < 2 a' (6.2.17 last paragraph, as 6.2.14): N e' <= f_y A_s (h_0 - a'),
+      with e' = e_i - t / 2 + a'.
+    - Compression steel not counted (6.2.17 asks x >= 2 a' only when it is
+      counted): alpha_1 f_c x = N + f_y A_s, N e <= alpha_1 f_c x (h_0 - x / 2),
+      valid while x <= xi_b h_0. This branch is never below the one-layer value.
+    - Small eccentricity (x > xi_b h_0): the steel is ignored, as in the one-layer
+      check (conservative) [J].
+    Returns the largest N e_i of the valid branches (Claude's reading of 6.2.17,
+    4 Nov 2026).
+    """
+    a = two_layer_cover_m()
+    h0 = t - a
+    x = n / (ALPHA_1 * FC_PA)
+    if x > xi_b() * h0:
+        return max(n * (t - x) / 2.0, 0.0)
+    steel = FY_PA * as_face_m2_m * (h0 - a)
+    if x >= 2.0 * a:
+        with_comp = ALPHA_1 * FC_PA * x * (h0 - x / 2.0) + steel - n * (t / 2.0 - a)
+    else:
+        with_comp = steel + n * (t / 2.0 - a)
+    c = n + FY_PA * as_face_m2_m
+    x_t = c / (ALPHA_1 * FC_PA)
+    no_comp = c * (h0 - x_t / 2.0) - n * (t / 2.0 - a) if x_t <= xi_b() * h0 else 0.0
+    return max(with_comp, no_comp, 0.0)
+
+
+def utilisation(p_plan: np.ndarray, h: float, t: float, as_m2_m: float, buckle: float,
+                vault: Vault | None = None, layers: int = 1) -> float:
     """Largest N e_i / capacity along the arch.
 
     e_i = e_0 + e_a (6.2.17-4, 6.2.5). e_0 = M_2 / N, where M_2 is the first-order
     moment times 1 / (1 - 1 / lambda), with lambda the FE buckling factor. GB 50010
     6.2.3 does not let second-order moments be ignored here (l_c / i is far above
     34 - 12 M_1 / M_2). The amplifier stands in for 6.2.4, which is written for
-    straight members [J].
+    straight members [J]. ``layers`` = 2 uses the two-layer capacity, with
+    ``as_m2_m`` the steel of each face.
     """
-    _, m, n = arch_forces(p_plan, h)
+    _, m, n = arch_forces(p_plan, h, vault)
     amp = 1.0 / (1.0 - 1.0 / buckle) if buckle > 1.0 else math.inf
     ea = additional_eccentricity(t)
-    return float(max((abs(mi) * amp + ni * ea) / max(moment_capacity(ni, t, as_m2_m), 1e-9)
+    cap = moment_capacity if layers == 1 else moment_capacity_two_layer
+    return float(max((abs(mi) * amp + ni * ea) / max(cap(ni, t, as_m2_m), 1e-9)
                      for mi, ni in zip(m, n)))
+
+
+def cover_ok(t: float, layers: int = 1) -> bool:
+    """Cover on both faces fits: one mesh at mid-depth, or one near each face."""
+    if layers == 1:
+        return t >= 2.0 * COVER_M + MESH_BAR_M
+    return t >= 2.0 * (COVER_M + 2.0 * MESH_BAR_M)
 
 
 # --- one panel -------------------------------------------------------------
 
 def size_row(t: float, levelling: str, fl: Flexibility, buckle: float,
-             prestressed: bool = False) -> PanelRow:
+             prestressed: bool = False, vault: Vault | None = None,
+             true_fill: bool = False, layers: int = 1) -> PanelRow:
     """All checks for one thickness and levelling option, by superposition.
 
     Args:
         t: Shell thickness [m].
         levelling: Key of ``LEVELLING``.
-        fl: Spreads of the four unit cases at this thickness.
+        fl: Spreads of the unit cases at this thickness.
         buckle: First buckling factor at this thickness and levelling.
         prestressed: True if the tie is tensioned (turnbuckle) until the
             springings do not spread under the dead load, so only the live
             load stretches it [J]; False for an unstressed bar.
-    """
-    sd = FINISHES_PA + levelling_pa(levelling)
-    b = TIE_SPACING_M
-    x = np.linspace(0.0, SPAN_M, STATICS_POINTS)
-    self_plan = CONCRETE_N_M3 * t * np.sqrt(1.0 + slope(x) ** 2)  # per m^2 of plan
-    k = arc_factor()
-    w_uls = GAMMA_G * (CONCRETE_N_M3 * t * k + sd) + GAMMA_Q * LIVE_PA
-    h_closed = parabolic_thrust(w_uls, SPAN_M, rise_m())
+        vault: Geometry; the Day 25 vault if None.
+        true_fill: Fill at its true depth f - z (needs ``fl.plan_fill``);
+            False keeps the Day 25 uniform fill f / 3 deep.
+        layers: 1 mesh at mid-depth (Day 25) or 2, one near each face, each
+            at the minimum ratio [J].
 
-    d_dead = GAMMA_G * (fl.self_weight + sd * fl.plan_full)
+    The Day 25 Done-when (rigid-tie thrust within 10 % of w L^2 / (8 f)) is a
+    pass condition only for uniform load; with ``true_fill`` the load is not
+    uniform and h_ratio is reported against the uniform load of the same total.
+    """
+    span = (vault or DAY25_VAULT).span_m
+    f = rise_m(vault)
+    shaped = true_fill and is_fill(levelling)
+    gamma_fill = fill_unit_weight(levelling) if shaped else 0.0
+    sd = FINISHES_PA + (0.0 if shaped else levelling_pa(levelling, vault))
+    b = TIE_SPACING_M
+    x = np.linspace(0.0, span, STATICS_POINTS)
+    self_plan = CONCRETE_N_M3 * t * np.sqrt(1.0 + slope(x, vault) ** 2)  # per m^2 of plan
+    fill_plan = gamma_fill * fill_depth(x, vault)
+    k = arc_factor(vault)
+    w_uls = GAMMA_G * (CONCRETE_N_M3 * t * k + FINISHES_PA + levelling_pa(levelling, vault)) + GAMMA_Q * LIVE_PA
+    h_closed = parabolic_thrust(w_uls, span, f)
+
+    d_dead = GAMMA_G * (fl.self_weight + sd * fl.plan_full + (gamma_fill * fl.plan_fill if shaped else 0.0))
     d_uniform = d_dead + GAMMA_Q * LIVE_PA * fl.plan_full
     d_pattern = d_dead + GAMMA_Q * LIVE_PA * fl.plan_half
     t_rigid = d_uniform / fl.unit_force
     d_fixed = d_dead if prestressed else 0.0  # spread the prestress takes out
     strength_bar = tie_bar(t_rigid)
 
-    p_dead = GAMMA_G * (self_plan + sd)
+    p_dead = GAMMA_G * (self_plan + sd + fill_plan)
     p_uniform = p_dead + GAMMA_Q * LIVE_PA
-    p_pattern = p_dead + GAMMA_Q * LIVE_PA * (x < SPAN_M / 2.0)
+    p_pattern = p_dead + GAMMA_Q * LIVE_PA * (x < span / 2.0)
     rho = min_steel_ratio()
     as_m = rho * t
 
@@ -416,35 +552,35 @@ def size_row(t: float, levelling: str, fl: Flexibility, buckle: float,
     # stepped up from the strength size until the shell passes (stiffness).
     bar = None
     for d in (BAR_DIAMETERS_MM[BAR_DIAMETERS_MM.index(strength_bar):] if strength_bar else ()):
-        c_tie = SPAN_M / (E_STEEL_PA * bar_area_m2(d))
+        c_tie = span / (E_STEEL_PA * bar_area_m2(d))
         h_el_uniform = (d_fixed / fl.unit_force + (d_uniform - d_fixed) / (fl.unit_force + c_tie)) / b
         h_el_pattern = (d_fixed / fl.unit_force + (d_pattern - d_fixed) / (fl.unit_force + c_tie)) / b
-        u_uni = utilisation(p_uniform, h_el_uniform, t, as_m, buckle)
-        u_pat = utilisation(p_pattern, h_el_pattern, t, as_m, buckle)
+        u_uni = utilisation(p_uniform, h_el_uniform, t, as_m, buckle, vault, layers)
+        u_pat = utilisation(p_pattern, h_el_pattern, t, as_m, buckle, vault, layers)
         bar = d
         if max(u_uni, u_pat) <= 1.0:
             break
     a_tie = bar_area_m2(bar) if bar else float("nan")
     if not bar:
         h_el_uniform = u_uni = u_pat = float("nan")
-    _, _, n_rigid = arch_forces(p_uniform, t_rigid / b)
+    _, _, n_rigid = arch_forces(p_uniform, t_rigid / b, vault)
     sigma = float(n_rigid.max()) / t
     h_rigid = t_rigid / b
-    cover_ok = t >= 2.0 * COVER_M + MESH_BAR_M
-    passes = bool(bar and cover_ok and max(u_uni, u_pat) <= 1.0 and sigma <= FC_PA
-                  and buckle > 1.0 and abs(h_rigid / h_closed - 1.0) <= DONE_WHEN_TOLERANCE)
+    done_when_ok = shaped or abs(h_rigid / h_closed - 1.0) <= DONE_WHEN_TOLERANCE
+    passes = bool(bar and cover_ok(t, layers) and max(u_uni, u_pat) <= 1.0 and sigma <= FC_PA
+                  and buckle > 1.0 and done_when_ok)
     return PanelRow(
         thickness_m=t, levelling=levelling, prestressed=prestressed, w_uls_pa=w_uls, h_closed_n_m=h_closed,
         h_rigid_n_m=h_rigid, h_ratio=h_rigid / h_closed, tie_bar_mm=bar or 0,
         h_elastic_n_m=h_el_uniform, buckling_factor=buckle, membrane_stress_pa=sigma,
         util_uniform=u_uni, util_pattern=u_pat, concrete_m3_m2=t * k,
-        mesh_kg_m2=2.0 * rho * t * k * STEEL_DENSITY_KG_M3,
+        mesh_kg_m2=2.0 * layers * rho * t * k * STEEL_DENSITY_KG_M3,
         tie_kg_m2=a_tie * STEEL_DENSITY_KG_M3 / b if bar else float("nan"), passes=passes)
 
 
 def size_panel(workdir: Path, thicknesses: tuple[float, ...] = TRIAL_THICKNESSES_M,
                levellings: tuple[str, ...] = tuple(LEVELLING)) -> list[PanelRow]:
-    """Run every trial thickness and levelling option.
+    """Run every trial thickness and levelling option (the Day 25 panel).
 
     Args:
         workdir: Folder for the CalculiX runs.

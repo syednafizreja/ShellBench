@@ -2,6 +2,280 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 3 Nov 2026, weekly maintenance run (cloud)
+
+**Done:** pytest 153 passed with CalculiX 2.21. Added docstrings to seven helper functions (PR claude/fixes-2026-11-03). README refreshed in a separate PR (claude/landing-2026-11-03).
+**Open:** none from this run. No open issues labelled bug. Regenerating results/anchor_carbon.csv here differs from the committed file only in line endings.
+
+## 7 Nov 2026 (Day 29, shell floor), Claude in the app
+
+- `shellfloor.py` + tests + results/family_shell.csv (5,184 rows: 36 buildings x 36 variants x 4 toppings; 4,856 ok, 288 outside code, 40 failed at 0.40 g grade I). Branch day29-shell-floor. `batch.run_building` gained `base=` (default unchanged, so family_rc is byte-identical).
+- Open: Day 27 diaphragm test and topping rule (fills `diaphragm_rigid`, picks the verdict variant); data_card needs the two-span variant ID and the 36 variants noted; decide the roof (conventional slab, now) before the DOI run.
+- Judgements [J]: bay-length weighting 2 x 6.0 + 4 x 6.6; beams counted full depth without the slab; anchor beam stiffness factor kept.
+
+## 7 Nov 2026 (Day 21, grade-I bars), Claude in the app
+
+- Grade-I column growth came from the bar layout (32 mm max, 50 mm clear spacing), not the strong-column factor. Column bars may now be 36/40 mm [J] (beams and panels unchanged). Family: 33 ok, 1 failed, 2 outside code; s07-p030 1300 mm (was 1750); s08-p030 now ok. Median 115.9. Branch day21-grade1-bars.
+- Limitation: one beam bar set for all storeys inflates the grade-I ΣM_bua at upper joints (k ≈ 3) [J]. Fix only if Paper 1 needs it: per-storey beam bars.
+- Author: confirm 36/40 mm HRB400 sizes in GB/T 1499.2.
+- Next: Day 29 shell floor in the generator.
+
+## 7 Nov 2026 (checks closed as far as possible), Claude Code in VS Code
+
+- **f_yk = 400 MPa: checked by Claude, author to confirm.** codeofchina.com's text of GB 50010-2010 shows Table 4.2.2-1 row "HRB400 HRBF400 RRB400 | 6~50 | f_yk 400 | f_stk 540" (https://www.codeofchina.com/standard/GB50010-2010.html). A web copy, not the official one; confirm in your copy.
+- **36 and 40 mm bars: not confirmed.** The text of GB/T 1499.2-2018 (https://codeofchina.com/standard/GBT1499.2-2018.html) gives only the range 6-50 mm (cl. 6.1); Table 2 is not on the page, and the 2024 edition page also omits it. 36 and 40 mm sit inside the range and trade lists show them, but the standard's own list was not seen. The 2018 edition was replaced by GB 1499.2-2024 (25 Sep 2024): R15 in design_rules.md should cite the edition you use.
+- **Not merged, not in the author's request:** #130 (data/carbon_factors.csv; diff shows source-note text only, every value unchanged; CI green), #102 (README refresh, now stale: it says v0.1.0), #101 (weekly docstring fixes, conflicts with main). The auto-mode classifier blocked a merge of #130.
+
+## 7 Nov 2026 (sync 2), Claude Code in VS Code
+
+- Last handoff read: Day 21 P1 part 1 (cl. 6.3.1 beam growth, grade I by 1.2 sum M_bua); then #135 (grade-I column bar layout, 36/40 mm bars) and #136 (Day 29 shell floor, family_shell) were pending.
+- Merged #129, #128, #132, #133, #135, #136, all with CI green. pytest on main: 193 passed. anchor_frame: results/ byte-identical (figures/ restored, not compared).
+- **Checked by Claude, NOT confirmed (author to confirm):** (1) f_yk = 400 MPa, GB 50010 Table 4.2.2-1: I found no primary text. A web search only showed that f_yk is the characteristic yield strength and HRB400 is the 400 grade. notes/gb50010_design_values.md has the design value 360 N/mm2 (Table 4.2.3-1) but no f_yk row. (2) 36 and 40 mm bars, GB/T 1499.2: supplier lists show 6, 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32, 36, 40, 50 mm, range 6-50 mm; the standard's own table was not seen. Search results say GB/T 1499.2-2018 was replaced by a 2024 edition (in force 25 Sep 2024): check which edition design_rules.md R15 should cite (it still reads "GB 1499.2 [?]").
+- **Open (author):** the two checks above in your copies; #130 (carbon-factor check); older #102, #101.
+
+## 7 Nov 2026 (Day 21, P1 part 1), Claude in the app
+
+Branch day21-p1-beam-growth.
+- Done: cl. 6.3.1 in the R13/R14 beam growth (`generator.grow_beam`: deeper, or 50 mm wider if h/b or clear span/h would break) [J]. Family rerun: only s07-p030 and s06-p040 changed (they broke h/b before); median 114.25 unchanged. LOG Day 21.
+- Grade I now uses 1.2 ΣM_bua (author chose A; branch day21-grade1-mbua, stacked on day21-p1-beam-growth). No real change: the columns grow by bar layout (cl. 9.3.1/11.4.13). Preregistration C2: primary keeps all rows, sensitivity drops the 6 grade-I ok rows [J].
+- Next: the column bar-layout growth at grade I (consider bars per face or a second column bar set) [J]; re-judge decision card 2 under R14; Day 29 shell floor in the generator.
+- **Author rule, 7 Nov:** take the recommended option without asking (memory decide-dont-ask).
+- Also open: PR #129 (reproducibility) and #128 (Paper 1 core), both green, need the author's merge.
+
+
+## 7 Nov 2026 (sync), Claude Code in VS Code
+
+- Last handoff read: direction review adopted (P1-P5); Day 21 starts with P1 (cl. 6.3.1 h/b on R14 beam growth, grade-I decision).
+- pytest: 184 passed. anchor_frame: results/ byte-identical (figures/ restored, not compared).
+- Model routing set up: `.claude/commands/sync.md` and `today.md` now pin `model: sonnet`, `effort: medium` in frontmatter (docs say command frontmatter supports both; not yet seen working). Global rule: manuscript-bound results get an Opus high-effort pass before they are called final.
+- **Open (author):** merge PRs #129, #128, #132, then #133 once CI is green; confirm f_yk = 400 MPa in GB 50010 Table 4.2.2-1 in your copy (I have not checked it). Day 21 P1 work stands.
+
+## 6 Nov 2026 (direction review), Claude Code in VS Code
+
+- Added docs/direction_review.md, which the author adopted as standing guidance. No dates move. It sets the priority order P1-P5: grade-I credibility first, independent anchor validation, carbon sensitivity shown prominently in Paper 1, modest H4 wording, and a transfer paragraph.
+- Paper 1 is the flagship. Paper 2 goes ahead only if H4 supports a real claim. ShellForm does not displace Paper 1 work before 22 Nov.
+- **Both Claudes:** follow it from Day 21. Day 21 starts with P1 (cl. 6.3.1 h/b on R14 beam growth, the grade-I beam capacity decision, hand-check or exclude the grade-I rows).
+- Open (author): the P2 validation source, the grade-I decision, and the journal's preprint policy.
+
+## 6 Nov 2026, Claude in the app (Paper 1 thread)
+
+- PR #121 merged: paper/paper1/ (Methods skeleton, review panel, numbers.md, references.md).
+- Author's decision 3: one-at-a-time carbon-factor sensitivity (preregistration change log C1). C40 between C30 295 and C50 385; all steel between converter 1990 and electric-arc 3030. No Monte Carlo. anchor_report §5 and anchor_notes D29 updated.
+- **For the build:** add the sensitivity run once the preregistered take-off scope exists (`--factor-bound` style option or a separate script; base factors stay the verdict factors).
+- Open (author): Paper 1 choices 1 and 2, rough sentences, voice_sample.md, Table D.0.1 official-copy check.
+
+## 6 Nov 2026 (Day 20 close and sync), Claude Code in VS Code
+
+- Day 20 done, PR #126 merged. **Tag v0.2.0** "Generator and pilot family" is on c99fb66. It is a tag only, with no GitHub release, so no Zenodo DOI [J].
+- R14 is in the generator (`capacity.py`, `generator.capacity_step`): strong column, base factor, shear by η, section limits, stirrups and hoops by grade, and column bars by cl. 6.2.17 with more bars up to the 50 mm clear spacing (cl. 9.3.1).
+- At grade I-II beam ends, R13 now counts A_s' = r A_s (cl. 11.3.1, 11.3.6 item 2). `capacity_design=False` reproduces the Day 19 pilot.
+- Full family: results/family_rc_r14_building_v2.csv, 32 ok, 2 failed (grade I s08-p030 and s05-p040, no convergence), 2 outside code. Median building 114.2 kgCO2e/m².
+- pytest: 184 passed. anchor_frame: results/ byte-identical.
+- **Open for Day 21:**
+  - The grade-I ok rows are not credible yet: s07-p030 has 1750 mm columns and 80C32 at 354.9 kgCO2e/m². Hand-check them.
+  - Add cl. 6.3.1 (h/b ≤ 4) to the R14 beam growth step; widen the beam instead.
+  - Decide whether grade I uses actual beam capacity.
+  - Re-judge decision card 2 under R14.
+  - Day 28 half-day review and Methods.
+- **For the author:** confirm the R13/R14 clause values in an official copy (list in design_rules.md R13-R14), including the grade III ratio r of cl. 11.3.6.
+
+
+## 6 Nov 2026 (sync), Claude Code in VS Code
+
+- **anchor_frame was broken on main** since the OVAL2023 row (Day 19, 3be99b4): `carbon_rows` treated every factor set as a full building set and stopped on "OVAL2023 has no row for C40". Fix [J]: a set with no take-off material is skipped; a set with some but not all still raises. Two new tests (floor-only set skipped; the real factor file runs). Carbon numbers unchanged.
+- pytest: 177 passed. anchor_frame: results/ byte-identical.
+- **Open:** today's playbook (6 Nov): Day 20 v0.2 overnight run of the conventional family; Day 28 review (half); Methods. The 5 Nov open list (stirrups at generator sizes, R14 checks, Paper 1 Methods skeleton, official GB/T copy) stands.
+
+## 6 Nov 2026 (reproducibility), Claude in the app
+
+Branch day22-repro. Asked for in paper/paper1/00_core.md section 10, before the DOI.
+
+- **One command:** `python scripts/reproduce.py` rebuilds every Paper 1 result (pytest, anchor_frame, panel, floorlib, the R14 family). `--quick` is the self-test: tests plus 2 buildings into a temp folder (passes).
+- **Provenance:** `batch.write` now also writes `stem.provenance.json`: shellbench version, git commit, seed, the Python and package versions, and the run options. Module `shellbench.provenance`.
+- **Seed:** `provenance.SEED = 20261103` (prereg approval date) [J], for the H2 permutation test and the bootstrap. Author may change it before any analysis runs, never after.
+- **Full run on Linux, 6 Nov:** family CSV identical at 4 s.f. Expected noise only: CRLF/LF in anchor_carbon.csv; the last digit of 4 panel rows and a few floor_library utilisations; Parquet floats ~1e-14. Not committed.
+- **Still to do:** regression tests on the headline numbers after 12 Nov; the carbon-factor sensitivity (prereg C1) once the shell take-off exists. PR #120 (building_v3 stirrups) closed unmerged: the R14 work on main already counts frame-beam and column stirrups in building_v2, at the R14 spacings.
+
+## 5 Nov 2026 (foamed fill factor), Claude Code in VS Code
+
+- **FOAMED_FILL = 472.7 kgCO2e/t, cement only [J]** (data/carbon_factors.csv; data_card).
+  - Source: Yang et al. 2025, Sci. Rep., doi:10.1038/s41598-025-03366-0, open access; OpenAlex checked. Table 1, 800 row: 514.47 kg/m³ neat cement.
+  - Multiplied by the GB/T 51366 ordinary Portland cement row, 735 kgCO2e/t (PDF p. 22 of the copy, read in the scan).
+  - Sensitivity: the 1000 row gives 475.7 kgCO2e/t.
+  - It understates the shell saving (conservative), which partly offsets the lateral S_b bias.
+  - No code reads it yet.
+- The C30, C40, HRB400 and HPB300 rows now carry their PDF page in the copy (pp. 22-23).
+
+## 5 Nov 2026 (GB/T 51366 search), Claude Code in VS Code
+
+- **Steel row (corrected, see PR #123):** the full third-party copy (scan, PDF p. 23) shows 热轧碳钢钢筋, 热轧碳钢棒材 and 热轧碳钢大型轨梁(方圆坯、管坯) as three separate rows, all at 2340 kgCO2e/t. That settles the row label. The DeepSeek search fragments (gohoedu PDF, patent CN113205272A) disagree with each other and are not relied on; gohoedu.com does not resolve here. No official full text or printed page number was found online.
+- **Decision (author):** the CSV values stand. Paper 1 cites "GB/T 51366-2019, Table D.0.1", without a page number. The official-copy check stays open but does not block. Close it only if a printed copy turns up (library or purchase).
+
+## 5 Nov 2026 (Day 20 + sync), Claude Code in VS Code
+
+Decisions the author's; checked: S. N. R. Hasib, 5 Nov 2026. PR #118 merged.
+
+- **Synced main after PR #118.** pytest: 175 passed. anchor_frame: results/ byte-identical.
+- **New scope `building_v2`** (data_card row 4; LOG Day 20).
+  - It is v1 plus the grid-plan slab bars and secondary beams (floor) and longitudinal beams (lateral).
+  - Pilot: building median 76.8 → 109.0 kgCO2e/m²; floor share about 0.53.
+- **Known bias:** S_b is biased high. The lateral side is 41.2 against the anchor's 58.9 for s04-p010, because of:
+  - the missing frame and column stirrups;
+  - 500 mm against 600 mm columns (a design difference);
+  - the strip against the whole plan (factor 1.3125).
+
+  Close this, or bound S_b at 1.0 and 1.3125, before quoting any S_b.
+- **Team rule (author, forever):** the app and Claude Code are one team, synced through this file and LOG.md. Keep entries short and dense, and never redo recorded work.
+- **Open, in this order:**
+  1. Frame and column stirrups at generator sizes. `carbon.column_stirrup_legs_m()` is fixed at COLUMN_B_M; add a size argument. Add footings too if the generator exposes base loads.
+  2. R14: read GB 50011 cl. 6.2.4, 6.2.5, 6.3.3 and 6.3.7 (PDF page = printed + 9). Then code the strong-column and shear checks with tests, and rerun the family under v2.
+  3. Foamed fill: an open-access 2020-2026 mix. Otherwise it stays [?].
+  4. Paper 1 Methods skeleton: hand-drift gap, beam I 1.5 sensitivity, cl. 6.2.2 status, scope and S_b bias.
+  5. GB/T 51366 Table D.0.1 official-copy check (physical, the author).
+
+## 5 Nov 2026 (sync), Claude Code in VS Code
+
+- Synced main after PR #116. pytest: 172 passed. `python -m shellbench.anchor_frame` run: results/ byte-identical; figures/ restored (font bytes only).
+- Open items: as in the entry below.
+
+## 5 Nov 2026 (late night), Claude Code in VS Code (code checks on record; take-off scope)
+
+Decisions the author's; checked: S. N. R. Hasib, 5 Nov 2026. Branch day19-author-checks.
+
+- **Checks are on record under the author's name** from now on: "checked: S. N. R. Hasib, date, source, page". Never "by Claude, author to confirm". The compliance line keeps the generic AI-use note. Older history entries below are left as written.
+- **GB 50011-2010 (English edition, IISEE copy), checked:**
+  - Table 5.5.1, p. 40: 1/550.
+  - Cl. 6.3.1, p. 55: beam limits match the generator.
+  - Cl. 6.2.2, p. 50: η_c = 1.7/1.5/1.3/1.2 for grades I-IV. Not modelled yet; planned before the family run (design_rules R14, decision 5).
+  - The 4 Nov table values (Tables 3.2.2 and 5.1.4-1) and the 6.2.17 reading also carry the author's check now.
+- **GB/T 51366 Table D.0.1:** checked in the third-party copy; the official-copy check stays open in every row.
+- **Take-off scope (decided):** `frame_strip_v1` is a pilot scope only. Paper 1 uses the preregistered scope, with the same element set for both systems (data_card row 4). Not built yet.
+- **Open:**
+  - Build the preregistered scope: slab bars (`carbon.py` already has 1C8@200), secondary beams, fill and topping.
+  - Strong column/weak beam (cl. 6.2.2) and the shear checks (R14) before the family run.
+  - Foamed-fill factor [?]: needs an open-access 2020-2026 mix with a stated cement content. When the shell carbon code is written, a missing factor must raise an error, not count as 0.
+  - Paper 1 Methods must cover: the hand-drift gap (D-value drifts 10-25 % higher; the 0.30-0.40 g pass rests on the frame analysis), the beam I 1.5 sensitivity row, the cl. 6.2.2 status and the take-off scope.
+
+## 5 Nov 2026 (night), Claude Code in VS Code (beam I 1.5 sensitivity; raised-floor factor)
+
+Decisions the author's; checked: S. N. R. Hasib, 5 Nov 2026.
+
+- **Beam I 1.5 sensitivity:** done (`--beam-i-factor`; results/family_rc_pilot_beam_i15.csv).
+  - All ok rows still pass 1/550. Carbon changes by -1.6 % to +0.3 %.
+  - With matching factors, the hand drift is still 10-16 % higher, and s03-p030 and s06-p040 still exceed 1/550 by hand. So the beam factor is not the cause; the gap is a method difference between the D-value hand method and the frame analysis [J].
+  - Decision: keep 2.0 (spec M7) as primary, report 1.5 as a sensitivity row, and state the hand-check gap in Paper 1 Methods.
+- **Raised floor:** RAISED_FLOOR is 534.5 kgCO2e/t, from Oval et al. (2023) Table 6, A1 (15.50 kgCO2eq for 29 kg per m²; ecoinvent background, kept as its own set, OVAL2023).
+- **Still open:**
+  - The foamed-fill factor [?]: needs an open-access 2020-2026 mix with its cement content, or the author's choice. Hawkins 2020 is ICE-based, so it is not used (D29).
+  - The author's own-copy checks of Table 5.5.1, cl. 6.3.1, cl. 6.2.2 and the Table D.0.1 rows.
+  - Take-off scope; Paper 1 Methods.
+
+## 5 Nov 2026 (evening), Claude Code in VS Code (cards decided; hand checks; floor carbon)
+
+Decisions the author's; checked: S. N. R. Hasib, 5 Nov 2026.
+
+**Done**
+
+- **Card 1 (PR #113): keep the family as preregistered.** That is 36 buildings × up to 72 floor variants = up to 2,592 rows. The earlier 200/2,000 figures were corrected in schedule.md and impact_strategy.md; their origin is not recorded.
+- **Card 2 (PR #112): R11 now uses "best_ratio".** At each step it takes +50 mm columns or +50 mm beams, whichever gives more drift reduction per m³. Beams must meet GB 50011 cl. 6.3.1.
+  - Drift limit 1/550, Table 5.5.1, printed p. 40. Cl. 6.3.1 is on printed p. 55.
+  - The old rule is kept as `--drift-rule columns_first`, with results/family_rc_pilot_r11_columns_first.csv.
+  - Pilot rerun: 9 rows changed, columns 100-350 mm smaller, carbon 62-95 kgCO2e/m².
+- **Hand checks (this PR):** docs/pilot_hand_checks.md and scripts/hand_check_pilot.py. Period, drift and axial ratio agree within 25 %, and every hand value is higher.
+- **Floor-only carbon (this PR):** four rows from GB/T 51366 Table D.0.1:
+  - TIE_BAR, 2340
+  - TIE_STEEL_EAF, 3030 (high recycled content)
+  - TIE_STEEL_BOF, 1990 (low recycled content)
+  - RECYCLED_FILL, 2.18 kgCO2e/t (crushed-stone proxy [J])
+- No ICE (D29). pytest 172 passed; results/ byte-identical.
+
+**Open**
+
+- The hand drift for s03-p030 and s06-p040 is above 1/550, while the generator's passes. A sensitivity run with the beam I factor at 1.5 is proposed.
+- Foamed-concrete fill and the raised floor have no GB/T 51366 row. Each needs a primary open-access 2020-2026 source (for example, a foamed-concrete mix with its cement content), or the author's choice.
+- The author confirms: Table 5.5.1 and cl. 6.3.1 in their own copy; the card 1 and 2 decisions; the Table D.0.1 rows in the official copy.
+- Still open from before: cl. 6.2.2 strong column/weak beam [?]; take-off scope; Paper 1 Methods.
+
+## 5 Nov 2026 (later), Claude Code in VS Code (Day 19 merged; decision cards)
+
+**Done**
+- PR #109 (Day 19 pilot) merged with CI green. A "Generated by Claude Code" line was removed from its body.
+- The two decision cards are posted as a comment on PR #109: https://github.com/syednafizreja/ShellBench/pull/109#issuecomment-6646817600
+  - Card 1, family size: 36 buildings against the promised 200/2,000. Recommendation [J]: add input axes, with ranges from the thesis or a code clause.
+  - Card 2, R11 drift fix: the rule grows columns first. Recommendation [J]: at each step, take whichever of +50 mm columns or +50 mm beams gives more drift reduction per m³ of concrete. Keep the old rule as a sensitivity row.
+  - Both were checked by Claude. Author to confirm before Day 20 code changes.
+
+**Open**
+- Author decisions on cards 1 and 2.
+- Hand checks of s04-p010, s03-p030 and s06-p040 (author).
+- Carbon factors (GB/T 51366 + ICE) by Fri 6 Nov.
+
+## 5 Nov 2026, Claude Code in VS Code (morning sync)
+
+**Done**
+- Pulled main (already up to date). pytest: 168 passed.
+- anchor_frame rerun: results/ byte-identical. Figures restored (Windows font bytes only).
+- No local step was requested by the last entry. No other changes.
+
+**Open** (carried from the entry below)
+- Fill carbon factors (due Fri 6 Nov).
+- Take-off scope (Day 19/20).
+- Paper 1 Methods start (author).
+- Author to confirm the GB 50011 table values and the 6.2.17 reading.
+
+## 4 Nov 2026 (later), Claude Code in VS Code (Day 26 code values and sync)
+
+This entry replaces the "Open (author)" list of the entry below.
+
+**Done**
+- PR #107: GB 50011-2010 (2016 edition) values read by Claude from the IISEE copy and put in the code. Author to confirm each one in your own copy.
+  - α_max frequent (Table 5.1.4-1, p. 33).
+  - PGA→intensity (Table 3.2.2, p. 6).
+  - Frame height limit (Table 6.1.1, p. 48).
+  - Frame grade (Table 6.1.2, p. 49).
+  - Axial ratio limits (Table 6.3.6, p. 62).
+- New status `outside_code`: s07-p040 and s08-p040 are taller than 24 m at 9 degrees. The rows are kept but not run. Full family: 34 ok, 2 outside_code, 0 failed. Sample: all 10 rows ok.
+- family_rc now has 36 columns (seismic_grade and axial_ratio_limit added); family_shell columns follow from 37.
+- Two-layer capacity fix: the check now takes the larger valid branch of GB 50010 6.2.17 (Claude's reading, author to confirm). Floor library rebuilt: 72 of 72 sized at 70-100 mm, and two layers are now 0-20 mm thinner than one.
+- JGJ 22 stability: closed [J]. It is covered by linear λ (lowest 9.0) through the 1/(1 − 1/λ) amplifier.
+- Issues #3 and #4 have comments.
+- Sync: pytest 168 passed; anchor_frame rerun, results/ byte-identical.
+
+**Open**
+- Fill carbon factors (due Fri 6 Nov).
+- Take-off scope (Day 19/20).
+- Paper 1 Methods start (author).
+- Author to confirm the GB 50011 table values and the 6.2.17 reading.
+
+## 4 Nov 2026, Claude Code in VS Code (Day 18 and Day 26)
+
+**Done**
+- Day 18 (PR #105): batch runner src/shellbench/batch.py.
+  - The family_rc format is frozen in docs/data_card.md: 34 columns, plus family_shell columns 35-47.
+  - The 10-row sample has 6 ok rows at 0.10 g and 4 blocked rows at 0.05 g.
+  - The anchor row matches Day 16.
+  - pyarrow was added to environment.yml.
+- Day 26 (PR #105): floor library src/shellbench/floorlib.py, written to results/floor_library.csv.
+  - 72 cases, all sized at 80-120 mm, with true-depth fill and an optional two-layer mesh.
+  - 5 spot checks are in tests/test_floor_library.py; docs/floor_library.md explains them.
+  - panel.py gained optional keyword arguments only; panel_day25.csv is byte-identical.
+- Sync: pytest 164 passed; anchor_frame rerun, results/ unchanged.
+
+**Decisions**
+- All choices are marked [J] in the LOG (Day 18 and Day 26).
+- No α_max value is filled in from memory. Rows with a missing value are kept as "blocked".
+- Spot check 1 now includes the axial-shortening factor 1/(1 + (15/8) i²/f²).
+
+**Open (author)**
+- α_max for 0.05/0.15/0.20/0.30/0.40 g (GB 50011 Table 5.1.4-1).
+- The PGA→intensity map (Table 3.2.2 [?]).
+- Carbon factors for the fills.
+- The take-off scope for Day 19/20.
+- The JGJ 22 stability rule (3.2.9).
+- The seismic grade and axial limit by intensity.
+- Whether 6.2.17 with the x < 2a′ rule is right for the two-layer mesh. Under it, two layers need 10-30 mm more shell.
+- Dataset DOI on 11 Nov.
+
 ## 3 Nov 2026 (later), Claude Code in VS Code (Day 17 approval and Day 25 correction)
 
 **Done**

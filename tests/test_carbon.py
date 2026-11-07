@@ -40,6 +40,7 @@ def quantities(cases) -> list[dict]:
 
 
 def _qty(rows, source, element, material):
+    """Return the quantity of one element from the rows of a carbon table."""
     return next(r["quantity"] for r in rows if r["steel_source [text]"] == source
                 and r["element [text]"] == element and r["material [text]"] == material)
 
@@ -117,6 +118,7 @@ def test_footing_hand_check(cases):
 
 
 def _write_factors(path: Path, rows: list[str]) -> Path:
+    """Write a factor CSV with the standard header and return its path."""
     header = ",".join(cb.FACTOR_FIELDS)
     path.write_text("\n".join([header, *rows]) + "\n", encoding="utf-8")
     return path
@@ -134,6 +136,23 @@ def test_carbon_with_test_factors(quantities, tmp_path):
                 + 0.002 * _qty(quantities, "thesis", "slabs", "HRB400"))
     assert slab["A1-A3 [kgCO2e]"] == pytest.approx(expected, abs=0.1)
     assert len(rows) == 2 * len(cb.ELEMENTS)
+
+
+def test_floor_only_set_skipped(quantities, tmp_path):
+    """A set with no take-off material (like OVAL2023) adds no rows and no error."""
+    base = ["T,C40,1.0,kgCO2e/m3,test,1", "T,HRB400,2.0,kgCO2e/t,test,1",
+            "T,HPB300,2.0,kgCO2e/t,test,1"]
+    plain = cb.carbon_rows(quantities, cb.read_factors(_write_factors(tmp_path / "a.csv", base)))
+    extra = cb.carbon_rows(quantities, cb.read_factors(_write_factors(
+        tmp_path / "b.csv", [*base, "F,RAISED_FLOOR,534.5,kgCO2e/t,test,1"])))
+    assert extra == plain
+
+
+def test_real_factor_file_runs(quantities):
+    """The repository factor file gives carbon for the take-off without error."""
+    rows = cb.carbon_rows(quantities, cb.read_factors(
+        Path(__file__).resolve().parents[1] / "data" / "carbon_factors.csv"))
+    assert {r["factor_set [text]"] for r in rows} == {"GBT51366"}
 
 
 def test_factor_errors(quantities, tmp_path):
