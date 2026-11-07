@@ -54,6 +54,10 @@ COLUMN_GROWTH_LIMIT = 1.5  # R11 stopping rule of the "columns_first" rule [J]
 #: default; "columns_first" is the rule of 4 Nov, kept for the sensitivity run.
 DRIFT_RULES = ("best_ratio", "columns_first")
 BAR_DIAMETERS_MM = (12, 14, 16, 18, 20, 22, 25, 28, 32)  # R15 [J]; GB 1499.2 [?]
+#: Column bars may also be 36 and 40 mm (7 Nov 2026, P1) [J]. Both are standard
+#: HRB400 sizes in GB/T 1499.2 [?] (author to confirm). Beams and panels keep
+#: BAR_DIAMETERS_MM.
+COLUMN_BAR_DIAMETERS_MM = BAR_DIAMETERS_MM + (36, 40)
 BARS_PER_LAYER = (2, 6)  # R15 [J], 300 mm beam
 MAX_ITERATIONS = 40
 
@@ -823,7 +827,7 @@ def capacity_step(b: BuildingInput, z: Sizes, cases: dict[str, CaseForces],
     if not so_ok:
         out["grow_column"] = "second order not negligible (GB 50010 cl. 6.2.3)"
         return out
-    bars = cap.column_bars(h_col, side, grade, BAR_DIAMETERS_MM)
+    bars = cap.column_bars(h_col, side, grade, COLUMN_BAR_DIAMETERS_MM)
     if bars is None:
         out["grow_column"] = "no column bar layout fits (GB 50010 cl. 9.3.1, 11.4.13)"
         return out

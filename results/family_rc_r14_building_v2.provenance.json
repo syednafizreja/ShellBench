@@ -1,0 +1,19 @@
+{
+  "beam_i_factor": null,
+  "drift_rule": "best_ratio",
+  "git_commit": "c17d2f5a03137cc2d3ff9216d6783135643b30fb+dirty",
+  "n": null,
+  "rows": 36,
+  "scope": "building_v2",
+  "seed": 20261103,
+  "shellbench_version": "0.2.0",
+  "versions": {
+    "matplotlib": "3.11.2",
+    "numpy": "2.5.3",
+    "openseespy": "3.8.0.0",
+    "pandas": "3.0.5",
+    "pyarrow": "26.0.1",
+    "pytest": "9.1.1",
+    "python": "3.13.17"
+  }
+}
