@@ -522,6 +522,27 @@ def beams_meet_631(b: BuildingInput, z: Sizes) -> bool:
                for (bw, h), L in zip(z.beams_mm, b.spans_m))
 
 
+def grow_beam(bw: int, h: int, span_m: float, column_mm: int) -> tuple[int, int, str]:
+    """Grow one beam by one step while keeping GB 50011-2010 cl. 6.3.1 (P1, 7 Nov 2026).
+
+    The beam gets 50 mm deeper. If the deeper section would break h/b <= 4 or
+    clear span/h >= 4, it gets 50 mm wider instead [J].
+
+    Args:
+        bw: Beam width [mm].
+        h: Beam depth [mm].
+        span_m: Span [m].
+        column_mm: Column side [mm], for the clear span.
+
+    Returns:
+        (new width, new depth, "deeper" or "wider").
+    """
+    h2 = h + SIZE_STEP_MM
+    if h2 / bw <= BEAM_MAX_H_OVER_B and (span_m * 1000.0 - column_mm) / h2 >= BEAM_MIN_CLEAR_SPAN_OVER_H:
+        return bw, h2, "deeper"
+    return bw + SIZE_STEP_MM, h, "wider"
+
+
 def drift_step(b: BuildingInput, z: Sizes, drift: float) -> tuple[Sizes, str]:
     """One R11 step of the "best_ratio" rule (decision card 2, 5 Nov 2026 [J]).
 
@@ -610,9 +631,9 @@ def generate(b: BuildingInput, verbose: bool = False, drift_rule: str = "best_ra
                     steel[bot] = max(steel[bot], r_comp * steel[(j, k, loc)])
         if grow:
             for k in sorted(grow):
-                bw, h = z.beams_mm[k]
-                z.beams_mm[k] = (bw, h + SIZE_STEP_MM)
-                history.append(f"R13 xi limit at span {k}: beam to {bw} x {h + SIZE_STEP_MM}")
+                bw, h, _ = grow_beam(*z.beams_mm[k], b.spans_m[k], z.column_mm)
+                z.beams_mm[k] = (bw, h)
+                history.append(f"R13 xi limit at span {k}: beam to {bw} x {h}")
             continue
         beam_steel = {}
         for k in range(len(b.spans_m)):
@@ -628,9 +649,9 @@ def generate(b: BuildingInput, verbose: bool = False, drift_rule: str = "best_ra
                     z.column_mm += SIZE_STEP_MM
                     history.append(f"R14 {r14['grow_column']}: columns to {z.column_mm}")
                 for k in sorted(r14["grow_beams"]):
-                    bw, h = z.beams_mm[k]
-                    z.beams_mm[k] = (bw, h + SIZE_STEP_MM)
-                    history.append(f"R14 {r14['grow_beams'][k]} at span {k}: beam to {bw} x {h + SIZE_STEP_MM}")
+                    bw, h, _ = grow_beam(*z.beams_mm[k], b.spans_m[k], z.column_mm)
+                    z.beams_mm[k] = (bw, h)
+                    history.append(f"R14 {r14['grow_beams'][k]} at span {k}: beam to {bw} x {h}")
                 continue
             col_steel = (r14["column_bars"].area_mm2, r14["column_bars"].label)
         res = GeneratorResult(pre, z, history, t1, drifts, mu, beam_steel, col_steel, capacity=r14)

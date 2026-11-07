@@ -2,6 +2,13 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 7 Nov 2026 (Day 21, P1 part 1), Claude in the app
+
+Branch day21-p1-beam-growth.
+- Done: cl. 6.3.1 in the R13/R14 beam growth (`generator.grow_beam`: deeper, or 50 mm wider if h/b or clear span/h would break) [J]. Family rerun: only s07-p030 and s06-p040 changed (they broke h/b before); median 114.25 unchanged. LOG Day 21.
+- Open (P1, the author): grade-I actual beam capacity decision; hand-check or exclude the grade-I ok rows. Then re-judge decision card 2 under R14.
+- Also open: PR #129 (reproducibility) and #128 (Paper 1 core), both green, need the author's merge.
+
 ## 7 Nov 2026 (sync), Claude Code in VS Code
 
 - Last handoff read: direction review adopted (P1-P5); Day 21 starts with P1 (cl. 6.3.1 h/b on R14 beam growth, grade-I decision).
