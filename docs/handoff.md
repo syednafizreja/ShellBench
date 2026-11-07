@@ -10,6 +10,12 @@ Branch day21-p1-beam-growth.
 - Next: the column bar-layout growth at grade I (consider bars per face or a second column bar set) [J]; re-judge decision card 2 under R14; Day 29 shell floor in the generator.
 - **Author rule, 7 Nov:** take the recommended option without asking (memory decide-dont-ask).
 - Also open: PR #129 (reproducibility) and #128 (Paper 1 core), both green, need the author's merge.
+## 7 Nov 2026 (sync), the AI assistant
+
+- Last handoff read: direction review adopted (P1-P5); Day 21 starts with P1 (cl. 6.3.1 h/b on R14 beam growth, grade-I decision).
+- pytest: 184 passed. anchor_frame: results/ byte-identical (figures/ restored, not compared).
+- Model routing set up: `.commands/sync.md` and `today.md` now pin `model: sonnet`, `effort: medium` in frontmatter (docs say command frontmatter supports both; not yet seen working). Global rule: manuscript-bound results get an Opus high-effort pass before they are called final.
+- **Open (author):** merge PRs #129, #128, #132, then #133 once CI is green; confirm f_yk = 400 MPa in GB 50010 Table 4.2.2-1 in your copy (I have not checked it). Day 21 P1 work stands.
 
 ## 6 Nov 2026 (direction review), the AI assistant
 
@@ -46,6 +52,16 @@ Branch day21-p1-beam-growth.
 - **anchor_frame was broken on main** since the OVAL2023 row (Day 19, 3be99b4): `carbon_rows` treated every factor set as a full building set and stopped on "OVAL2023 has no row for C40". Fix [J]: a set with no take-off material is skipped; a set with some but not all still raises. Two new tests (floor-only set skipped; the real factor file runs). Carbon numbers unchanged.
 - pytest: 177 passed. anchor_frame: results/ byte-identical.
 - **Open:** today's playbook (6 Nov): Day 20 v0.2 overnight run of the conventional family; Day 28 review (half); Methods. The 5 Nov open list (stirrups at generator sizes, R14 checks, Paper 1 Methods skeleton, official GB/T copy) stands.
+
+## 6 Nov 2026 (reproducibility), the AI assistant
+
+Branch day22-repro. Asked for in paper/paper1/00_core.md section 10, before the DOI.
+
+- **One command:** `python scripts/reproduce.py` rebuilds every Paper 1 result (pytest, anchor_frame, panel, floorlib, the R14 family). `--quick` is the self-test: tests plus 2 buildings into a temp folder (passes).
+- **Provenance:** `batch.write` now also writes `stem.provenance.json`: shellbench version, git commit, seed, the Python and package versions, and the run options. Module `shellbench.provenance`.
+- **Seed:** `provenance.SEED = 20261103` (prereg approval date) [J], for the H2 permutation test and the bootstrap. Author may change it before any analysis runs, never after.
+- **Full run on Linux, 6 Nov:** family CSV identical at 4 s.f. Expected noise only: CRLF/LF in anchor_carbon.csv; the last digit of 4 panel rows and a few floor_library utilisations; Parquet floats ~1e-14. Not committed.
+- **Still to do:** regression tests on the headline numbers after 12 Nov; the carbon-factor sensitivity (prereg C1) once the shell take-off exists. PR #120 (building_v3 stirrups) closed unmerged: the R14 work on main already counts frame-beam and column stirrups in building_v2, at the R14 spacings.
 
 ## 5 Nov 2026 (foamed fill factor), the AI assistant
 

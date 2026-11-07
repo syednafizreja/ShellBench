@@ -66,8 +66,8 @@ A day's date is the latest it may finish; work ahead is allowed. GATE days never
 | Sun 8 Nov | Day 30 anchor headline number | Day 44 three models, on the conventional family | Methods |
 | Mon 9 Nov | Day 31 full family, both floors (overnight) | Day 45 conformal intervals | Day 37 methods finished |
 | Tue 10 Nov | Day 31 checks + data card | Day 46 decision test + leakage test code; **surrogate code and hyperparameters frozen (commit) before the DOI** | |
-| Wed 11 Nov | **Day 33 v0.4 and dataset DOI** (GATE: Day 31 checks). **ShellForm full start** | | |
-| Thu 12 Nov | Day 32 H1-H3 verdicts on the published data; Day 33 sensitivities run | One final surrogate run on the published data (Days 44-46) | Day 38 results draft starts |
+| Wed 11 Nov | **Day 33 v0.4 and dataset DOI** (GATE: Day 31 checks, and `python scripts/reproduce.py` rebuilds every result with provenance files; done 6 Nov, PR for day22-repro). **ShellForm full start** | | |
+| Thu 12 Nov | Day 32 H1-H3 verdicts on the published data (seed `provenance.SEED`); Day 33 sensitivities run, including the carbon-factor bounds (prereg C1); then regression tests pin the headline numbers | One final surrogate run on the published data (Days 44-46) | Day 38 results draft starts |
 | Fri 13 Nov | Day 34 frozen Paper 1 figures | Day 47 H4 verdict and leakage test; Day 48 Paper 2 figures, v0.5. **End of build** | Day 38 results |
 | Sat 14 Nov | Check window: author checks the anchor report, the dataset and H1-H3 | Check window: author checks H4 | Day 39 discussion and abstract |
 | Sun 15 Nov | Check window (Day 35 review) | Check window | **Day 40 harsh review** |
