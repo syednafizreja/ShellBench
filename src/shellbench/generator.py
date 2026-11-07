@@ -764,6 +764,24 @@ def capacity_step(b: BuildingInput, z: Sizes, cases: dict[str, CaseForces],
             return face_moment(cases[case].beam_m[key][end], cases[case].beam_v[key][end], a)
         return GAMMA_G_SEISMIC * f("GE") + s * GAMMA_EH * f("E")
 
+    def mbua(k, loc):
+        bw, h = z.beams_mm[k]
+        as_req, label = beam_steel[(k, loc)]
+        return cap.beam_mbua_knm(bars_area_mm2(label, as_req), h, c.A_S_MM, c.GAMMA_RE_BEAM_FLEXURE)
+
+    def sum_bua(i):
+        """Grade 1: larger of the two sway directions of sum M_bua at line i [J]."""
+        left, right = i - 1, i
+        dirs = []
+        for top_side in ("left", "right"):
+            m = 0.0
+            if left >= 0:
+                m += mbua(left, "right top" if top_side == "left" else "right bottom")
+            if right < n_ln - 1:
+                m += mbua(right, "left bottom" if top_side == "left" else "left top")
+            dirs.append(m)
+        return max(dirs)
+
     for s in signs:
         for j in range(1, n_st):
             for i in range(n_ln):
@@ -779,8 +797,10 @@ def capacity_step(b: BuildingInput, z: Sizes, cases: dict[str, CaseForces],
                         m_l_right = 0.0
                 sum_b = abs(m_l_right - m_r_left)
                 sum_c = abs(cm[s][(j, i)][1] + cm[s][(j + 1, i)][0])
+                need = (cap.GRADE1_MBUA_FACTOR * sum_bua(i) if grade == 1
+                        else cap.ETA_C[grade] * sum_b)
                 if sum_c > 0.0:
-                    k = max(1.0, cap.ETA_C[grade] * sum_b / sum_c)
+                    k = max(1.0, need / sum_c)
                     cm[s][(j, i)][1] *= k
                     cm[s][(j + 1, i)][0] *= k
         for i in range(n_ln):
