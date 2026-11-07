@@ -164,8 +164,11 @@ def factors() -> tuple[float, float]:
 
 def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule: str = "best_ratio",
                  beam_i_factor: float | None = None, scope: str = TAKEOFF_SCOPE,
-                 capacity_design: bool = True) -> dict:
+                 capacity_design: bool = True, base: g.BuildingInput | None = None) -> dict:
     """Run one building and return its row (all ``COLUMNS``).
+
+    ``base`` replaces ``ANCHOR`` as the input the family values are applied to
+    (the shell floor, ``shellfloor.py``); None keeps ``ANCHOR``.
 
     ``capacity_design`` False switches R14 off (the Day 19 pilot design).
 
@@ -183,7 +186,7 @@ def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule
         raise ValueError(f"unknown take-off scope {scope!r}")
     height = sum(storey_heights(spec["storeys"]))
     grade = seismic_grade(spec["intensity"], height)
-    b = replace(ANCHOR, storey_heights_m=storey_heights(spec["storeys"]), tg_s=spec["tg_s"],
+    b = replace(base or ANCHOR, storey_heights_m=storey_heights(spec["storeys"]), tg_s=spec["tg_s"],
                 axial_ratio_limit=FRAME_AXIAL_LIMIT[grade], seismic_grade=grade)
     if beam_i_factor is not None:
         b = replace(b, beam_i_factor=beam_i_factor)

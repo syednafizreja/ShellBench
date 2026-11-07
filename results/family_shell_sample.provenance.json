@@ -1,0 +1,22 @@
+{
+  "git_commit": "3f925b58d2e6d5c58518815e23ab8026664769ba+dirty",
+  "pga": 0.1,
+  "rows": 72,
+  "seed": 20261103,
+  "shellbench_version": "0.2.0",
+  "storeys": 4,
+  "toppings": [
+    0,
+    50
+  ],
+  "variants": null,
+  "versions": {
+    "matplotlib": "3.11.2",
+    "numpy": "2.5.3",
+    "openseespy": "3.8.0.0",
+    "pandas": "3.0.5",
+    "pyarrow": "26.0.1",
+    "pytest": "9.1.1",
+    "python": "3.13.17"
+  }
+}
