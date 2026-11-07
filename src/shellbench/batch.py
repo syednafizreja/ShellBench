@@ -64,6 +64,7 @@ import shellbench
 from shellbench import anchor_frame as af
 from shellbench import carbon as cb
 from shellbench import generator as g
+from shellbench import provenance
 from shellbench import seismic as s
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -277,11 +278,15 @@ def read_done(stem: Path) -> pd.DataFrame | None:
     return df if list(df.columns) == list(COLUMNS) else None
 
 
-def write(df: pd.DataFrame, stem: Path) -> None:
-    """Write ``stem``.parquet and ``stem``.csv (numbers to 4 significant figures in the CSV)."""
+def write(df: pd.DataFrame, stem: Path, **settings) -> None:
+    """Write ``stem``.parquet, ``stem``.csv (4 significant figures) and ``stem``.provenance.json.
+
+    ``settings`` (the run's command-line options) go into the provenance file.
+    """
     stem.parent.mkdir(parents=True, exist_ok=True)
     df.to_parquet(stem.with_suffix(".parquet"), index=False)
     df.to_csv(stem.with_suffix(".csv"), index=False, float_format="%.4g")
+    provenance.write_sidecar(stem, ROOT, rows=len(df), **settings)
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -299,7 +304,7 @@ def main(argv: list[str] | None = None) -> None:
                    help="keep finished rows of an earlier --out with the same columns")
     a = p.parse_args(argv)
     df = run_family(a.n, a.drift_rule, a.beam_i_factor, a.scope, read_done(a.out) if a.resume else None)
-    write(df, a.out)
+    write(df, a.out, n=a.n, drift_rule=a.drift_rule, beam_i_factor=a.beam_i_factor, scope=a.scope)
     print(df["status"].value_counts().to_string())
 
 
