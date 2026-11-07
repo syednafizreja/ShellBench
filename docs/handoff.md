@@ -2,6 +2,13 @@
 
 Newest entry first. Each session reads this at the start of a session and adds an entry at the end (see "Sync with cloud the assistant" in CONTRIBUTING.md).
 
+## 7 Nov 2026 (sync), laptop session
+
+- Last handoff read: direction review adopted (P1-P5); Day 21 starts with P1 (cl. 6.3.1 h/b on R14 beam growth, grade-I decision).
+- pytest: 184 passed. anchor_frame: results/ byte-identical (figures/ restored, not compared).
+- Model routing set up: the local `sync` command and `today.md` now pin `model: sonnet`, `effort: medium` in frontmatter (docs say command frontmatter supports both; not yet seen working). Global rule: manuscript-bound results get an Opus high-effort pass before they are called final.
+- **Open (author):** merge PRs #129, #128, #132, then #133 once CI is green; confirm f_yk = 400 MPa in GB 50010 Table 4.2.2-1 in your copy (I have not checked it). Day 21 P1 work stands.
+
 ## 6 Nov 2026 (direction review), laptop session
 
 - Added docs/direction_review.md, which the author adopted as standing guidance. No dates move. It sets the priority order P1-P5: grade-I credibility first, independent anchor validation, carbon sensitivity shown prominently in Paper 1, modest H4 wording, and a transfer paragraph.
