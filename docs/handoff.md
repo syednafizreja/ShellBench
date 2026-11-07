@@ -15,6 +15,12 @@ Newest entry first. Each the AI assistant reads this at the start of a session a
 - Author: confirm 36/40 mm HRB400 sizes in GB/T 1499.2.
 - Next: Day 29 shell floor in the generator.
 
+## 7 Nov 2026 (checks closed as far as possible), the AI assistant
+
+- **f_yk = 400 MPa: checked by the AI assistant, author to confirm.** codeofchina.com's text of GB 50010-2010 shows Table 4.2.2-1 row "HRB400 HRBF400 RRB400 | 6~50 | f_yk 400 | f_stk 540" (https://www.codeofchina.com/standard/GB50010-2010.html). A web copy, not the official one; confirm in your copy.
+- **36 and 40 mm bars: not confirmed.** The text of GB/T 1499.2-2018 (https://codeofchina.com/standard/GBT1499.2-2018.html) gives only the range 6-50 mm (cl. 6.1); Table 2 is not on the page, and the 2024 edition page also omits it. 36 and 40 mm sit inside the range and trade lists show them, but the standard's own list was not seen. The 2018 edition was replaced by GB 1499.2-2024 (25 Sep 2024): R15 in design_rules.md should cite the edition you use.
+- **Not merged, not in the author's request:** #130 (data/carbon_factors.csv; diff shows source-note text only, every value unchanged; CI green), #102 (README refresh, now stale: it says v0.1.0), #101 (weekly docstring fixes, conflicts with main). The auto-mode classifier blocked a merge of #130.
+
 ## 7 Nov 2026 (sync 2), the AI assistant
 
 - Last handoff read: Day 21 P1 part 1 (cl. 6.3.1 beam growth, grade I by 1.2 sum M_bua); then #135 (grade-I column bar layout, 36/40 mm bars) and #136 (Day 29 shell floor, family_shell) were pending.
