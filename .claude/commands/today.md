@@ -1,5 +1,7 @@
 ---
 description: Do the whole day without asking: finish today's playbook task, then sync, pull and close the day.
+model: sonnet
+effort: medium
 ---
 
 Do today's ShellBench work end to end. Never ask me questions; pick the best default, record it, and carry on. Stop only if something cannot be done even with all permissions, and then say exactly what and why.
