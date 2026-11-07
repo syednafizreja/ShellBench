@@ -180,6 +180,14 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - Claude decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 29 - 7 Nov 2026 (shell floor in the generator)
+
+Done: `shellfloor.py` designs each family building again with a vaulted shell floor. The frame is sized by the same generator under the shell's dead load (no secondary beams), and the row carries shell concrete, mesh, ties, fill and topping with their own factors. A floor variant pairs the 6.0 and 6.6 m library cases, weighted by bay length (2 x 6.0 and 4 x 6.6 m) [J]; 36 variants x 4 toppings (0, 40, 50, 60 mm) x 36 buildings = 5,184 rows (results/family_shell.csv, pre-release, not for results).
+Run: 4,856 ok, 288 outside code, 40 failed (s05-p040 28, s06-p040 11, s04-p040 1; all grade I at 0.40 g, no convergence). Rerun time 2.6 min.
+Not yet valid for any verdict (pre-release, and these are my reading of the first run only): against the conventional row, best variant per building has S_b > 0 in 94 % of buildings, median S_b about 6 %; foamed fill is worse than the conventional floor in nearly every case, recycled fill and raised floor are the candidates. The H3 diaphragm test and the topping rule (Day 27) are not built, so `diaphragm_rigid` is empty and every topping is shown; the verdict variant is chosen only after Day 27.
+Limits: beam stiffness factor stays the anchor's although there is no slab flange [J]; the roof keeps the conventional slab [J]; the vault thrust is carried by the ties only.
+Compliance: sources - floor library (Day 26), carbon_factors.csv rows as they stand. AI use - Claude wrote the module and tests; I confirm. Numbers - from the code and results/family_shell.csv. Data - nothing confidential. Repo - branch day29-shell-floor; 193 tests pass.
+
 ## Day 21 (later) - 7 Nov 2026 (P1: grade-I column bar layout)
 
 Cause found: the grade-I columns grew because no bar layout fitted. With 32 mm bars at most, about 12 bars per face hit the 50 mm clear spacing (cl. 9.3.1) at a side steel ratio of only 0.6-0.95 %. Behind it, ΣM_bua uses one beam bar set for every storey, so the strong-column factor reaches about 3 at the upper joints.
