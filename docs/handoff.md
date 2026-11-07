@@ -6,7 +6,9 @@ Newest entry first. Each the AI assistant reads this at the start of a session a
 
 Branch day21-p1-beam-growth.
 - Done: cl. 6.3.1 in the R13/R14 beam growth (`generator.grow_beam`: deeper, or 50 mm wider if h/b or clear span/h would break) [J]. Family rerun: only s07-p030 and s06-p040 changed (they broke h/b before); median 114.25 unchanged. LOG Day 21.
-- Open (P1, the author): grade-I actual beam capacity decision; hand-check or exclude the grade-I ok rows. Then re-judge decision card 2 under R14.
+- Grade I now uses 1.2 ΣM_bua (author chose A; branch day21-grade1-mbua, stacked on day21-p1-beam-growth). No real change: the columns grow by bar layout (cl. 9.3.1/11.4.13). Preregistration C2: primary keeps all rows, sensitivity drops the 6 grade-I ok rows [J].
+- Next: the column bar-layout growth at grade I (consider bars per face or a second column bar set) [J]; re-judge decision card 2 under R14; Day 29 shell floor in the generator.
+- **Author rule, 7 Nov:** take the recommended option without asking (memory decide-dont-ask).
 - Also open: PR #129 (reproducibility) and #128 (Paper 1 core), both green, need the author's merge.
 
 ## 6 Nov 2026 (direction review), the AI assistant

@@ -180,6 +180,13 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 21 (later) - 7 Nov 2026 (P1: grade I strong column by M_bua)
+
+Done: I chose option A, so grade I now uses 1.2 ΣM_bua (GB 50011 cl. 6.2.2) in place of η_c = 1.7 (`capacity.beam_mbua_knm`, f_yk 400 from GB 50010 Table 4.2.2-1 [?]). Family rerun: 32 ok, 2 failed, 2 outside code, as before; grade-I carbon moved by 0.3 kgCO2e/m² at most; median 114.25.
+Finding: the grade-I columns grow because no bar layout fits (cl. 9.3.1, 11.4.13), not because of the strong-column factor. s07-p030 stays at 1750 mm.
+Decision (The AI assistant, [J], under my 7 Nov rule to take the recommended option): the primary analysis keeps every valid row; a sensitivity case drops the 6 grade-I ok rows and shows each verdict both ways (preregistration C2).
+Compliance: sources - GB 50011-2010 cl. 6.2.2; GB 50010-2010 Table 4.2.2-1 [?]. AI use - The AI assistant wrote the code, tests and C2; I confirm. Numbers - from the code and the rerun. Data - nothing confidential. Repo - branch day21-grade1-mbua; 186 tests pass.
+
 ## Day 21 - 7 Nov 2026 (P1: cl. 6.3.1 kept when beams grow)
 
 Done: R13 and R14 beam growth now keep GB 50011 cl. 6.3.1 (h/b <= 4, clear span/h >= 4). A beam that would break it gets 50 mm wider instead of deeper (`generator.grow_beam`) [J]. Before this, two grade-I rows broke h/b: s07-p030 (300 x 1300, h/b 4.33) and s06-p040 (300 x 1250, 4.17).
