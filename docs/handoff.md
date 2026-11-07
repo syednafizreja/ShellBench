@@ -15,6 +15,13 @@ Newest entry first. Each the AI assistant reads this at the start of a session a
 - Author: confirm 36/40 mm HRB400 sizes in GB/T 1499.2.
 - Next: Day 29 shell floor in the generator.
 
+## 7 Nov 2026 (sync 2), the AI assistant
+
+- Last handoff read: Day 21 P1 part 1 (cl. 6.3.1 beam growth, grade I by 1.2 sum M_bua); then #135 (grade-I column bar layout, 36/40 mm bars) and #136 (Day 29 shell floor, family_shell) were pending.
+- Merged #129, #128, #132, #133, #135, #136, all with CI green. pytest on main: 193 passed. anchor_frame: results/ byte-identical (figures/ restored, not compared).
+- **Checked by the AI assistant, NOT confirmed (author to confirm):** (1) f_yk = 400 MPa, GB 50010 Table 4.2.2-1: I found no primary text. A web search only showed that f_yk is the characteristic yield strength and HRB400 is the 400 grade. notes/gb50010_design_values.md has the design value 360 N/mm2 (Table 4.2.3-1) but no f_yk row. (2) 36 and 40 mm bars, GB/T 1499.2: supplier lists show 6, 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32, 36, 40, 50 mm, range 6-50 mm; the standard's own table was not seen. Search results say GB/T 1499.2-2018 was replaced by a 2024 edition (in force 25 Sep 2024): check which edition design_rules.md R15 should cite (it still reads "GB 1499.2 [?]").
+- **Open (author):** the two checks above in your copies; #130 (carbon-factor check); older #102, #101.
+
 ## 7 Nov 2026 (Day 21, P1 part 1), the AI assistant
 
 Branch day21-p1-beam-growth.
