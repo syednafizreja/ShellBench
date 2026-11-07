@@ -138,6 +138,23 @@ def test_carbon_with_test_factors(quantities, tmp_path):
     assert len(rows) == 2 * len(cb.ELEMENTS)
 
 
+def test_floor_only_set_skipped(quantities, tmp_path):
+    """A set with no take-off material (like OVAL2023) adds no rows and no error."""
+    base = ["T,C40,1.0,kgCO2e/m3,test,1", "T,HRB400,2.0,kgCO2e/t,test,1",
+            "T,HPB300,2.0,kgCO2e/t,test,1"]
+    plain = cb.carbon_rows(quantities, cb.read_factors(_write_factors(tmp_path / "a.csv", base)))
+    extra = cb.carbon_rows(quantities, cb.read_factors(_write_factors(
+        tmp_path / "b.csv", [*base, "F,RAISED_FLOOR,534.5,kgCO2e/t,test,1"])))
+    assert extra == plain
+
+
+def test_real_factor_file_runs(quantities):
+    """The repository factor file gives carbon for the take-off without error."""
+    rows = cb.carbon_rows(quantities, cb.read_factors(
+        Path(__file__).resolve().parents[1] / "data" / "carbon_factors.csv"))
+    assert {r["factor_set [text]"] for r in rows} == {"GBT51366"}
+
+
 def test_factor_errors(quantities, tmp_path):
     """A missing material, source or unknown unit stops the run (rule 10)."""
     missing = _write_factors(tmp_path / "m.csv", ["T,C40,1.0,kgCO2e/m3,test,1"])
