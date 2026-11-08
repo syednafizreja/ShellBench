@@ -2,12 +2,20 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
-## 9 Nov 2026 (sync), Claude Code in VS Code
+## 9 Nov 2026 (sync; Day 31 landed), Claude Code in VS Code
 
-- Last handoff read: 8 Nov code copies fetched (JGJ 3 cl. 3.6 found, GB 50011 Table 6.1.6 read, ASCE 7-16 cl. 12.3.1.3 closed via NIST GCR 17-917-47; nothing needs the author physically).
-- pytest: 204 passed. `anchor_frame`: results/ byte-identical; figures/ restored (Windows font bytes).
-- No local step was asked for in the last entry.
-- Open: Day 31, the full family with both floors (9 Nov). The "author to confirm" lines on the code clauses stay for the record.
+- Last handoff read: 8 Nov, Day 31 worked ahead by Claude in the app (PR #148, both families rebuilt and checked). PR #148 had sat open and in conflict with main; I rebased it onto main, resolved this file, removed the Claude attribution line from the PR body, reran the tests and merged it.
+- Sync before the rebase: pytest 204 passed; `anchor_frame` left results/ byte-identical (figures/ restored, Windows font bytes). After the rebase: see the test count in the PR.
+- The "Open (author)" line in the 8 Nov Day 31 entry below is superseded: the three code checks were closed later on 8 Nov (code copies entry), checked by Claude, author to confirm.
+- Today and next, from docs/schedule.md: 9 Nov Day 31 (done); 10 Nov data card and the surrogate code and hyperparameters frozen by commit before the DOI; 11 Nov Day 33, v0.4 and the dataset DOI (gate: Day 31 checks, and `scripts/reproduce.py` rebuilds every result with provenance).
+
+## 8 Nov 2026 (Day 31, worked ahead), Claude in the app
+
+- Last handoff read: 8 Nov code checks and v0.3.0 tag (Claude Code); open author checks unchanged.
+- Day 31 done today, so the 9 Nov routine run should start from Day 32 prep and not repeat it: both families rebuilt and identical to the earlier files; `batch --floor shell`; `scripts/reproduce.py` extended; `family_checks.py` and results/day31_checks.csv (IDs, failures, sums, three hand-checked pairs: all pass). Branch day31-family-checks.
+- Failures: conventional 1 of 34 in code (2.9 %); shell 40 of 4,896 (0.8 %); all grade I at 0.40 g (s04/s05/s06-p040). Reported and counted, per the preregistration.
+- Open (author): the three checks in your copies (GB/T 1499.2 Table 2; ASCE 7-16 12.3.1.3; JGJ 3 3.6 and 5.1.5) are marked checked by Claude from secondary sources.
+- Next: Day 32 verdicts only on the published data after the 11 Nov DOI run (seed `provenance.SEED`); until then, the 10 Nov surrogate freeze and the data card.
 
 ## 8 Nov 2026 (code copies fetched), Claude Code in VS Code
 
