@@ -1,0 +1,17 @@
+quantity,unit,slab,shell
+floor carbon,kgCO2e/m2,57.60503161582341,47.37697250000001
+frame (lateral) carbon,kgCO2e/m2,44.44773538007247,48.32968222280928
+whole-building carbon,kgCO2e/m2,102.05276699589588,95.70665472280929
+T1,s,0.5484735995962555,0.5890240038510984
+largest drift ratio,-,0.0008599521610623145,0.0009516899536239868
+column size,mm,500,500
+beam depths,mm,600/550/600,600/550/600
+beam widths,mm,300/300/300,300/300/300
+seismic weight,kN,5168.3258000000005,6106.273800500002
+base shear F_Ek,kN,234.57400362736817,259.9122401080419
+floor saving S_f,-,,0.17755496054643038
+whole-building saving S_b,-,,0.06218461742778425
+floor variant,-,slab 120 mm,L60-r10-rf-m1+L66-r10-rf-m1
+topping,mm,0,0
+"hand check: weight change, code",kN,,937.9480005000014
+"hand check: weight change, by hand",kN,,937.9480005000007

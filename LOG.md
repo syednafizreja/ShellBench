@@ -180,6 +180,36 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 27 and Day 30 - 8 Nov 2026 (diaphragm test, topping rule; anchor slab against shell)
+
+**Day 27 done.** New `src/shellbench/diaphragm.py`; `shellfloor.py` now fills `diaphragm_rigid` for every `ok` row and writes `results/family_shell_diaphragm.csv` (ratios) and `results/diaphragm_library.csv` (72 CalculiX shear factors). `batch.run_building` gained `keep=` (default unchanged). Rule and model are in docs/floor_concept.md, "Diaphragm test and topping rule".
+
+- Criterion [J]: in-plane deflection of the floor at most 2 x the frame storey drift under the same storey force. Source: ASCE/SEI 7-16 cl. 12.3.1.3 [?], which the author confirms in a copy. The project files hold no GB 50011 or JGJ 3 text on diaphragms, so no Chinese numerical rule could be read; the author checks the official copies [?]. The preregistered default (2.3) is used as written, so no preregistration change.
+- Model: each floor is a deep beam between transverse frames (bay 6.0 or 6.6 m, depth 21.0 m), chords = perimeter beams. delta = p L^2 / (8 K), K = k G t + G t_top. k comes from CalculiX, one bay per library case: 0.80-0.86. Method check: the same model with a flat plate gives k = 1.0000 (tests/test_diaphragm.py).
+- Topping rule used by the generator: the smallest of 0, 40, 50, 60 mm that passes at every storey and bay (`shellfloor.topping_rule`).
+- Run (results/family_shell.csv, 5,184 rows, 3 min 27 s; pre-release): 4,856 ok rows, all rigid. Worst ratio delta / (2 x drift) = 0.0113 (median 0.0011), so the least stiff floor still has 88 times to spare. Smallest diaphragm-to-frame stiffness ratio 44 (median 465). Largest in-plane shear stress is 0.17 of f_t (information only; no clause for shell diaphragm strength [?]). Without topping, 0 % of rows fail.
+- Reading, not a verdict (pre-release; the verdict is Day 32 on published data): under this test H3 would be not supported, because the untopped floor passes everywhere and R (share of the saving lost to topping) is zero. Reviewer 2 points, all stated as limits: uncracked G; full shear connection between shell, beams and topping; transverse direction only; ties and connection slip not modelled; one criterion, an American one. A 120 mm slab would have K = G x 0.12 m, against k G t with t = 0.07 to 0.10 m and k about 0.84 for the shells, so the shell and a thin slab are in the same range of in-plane stiffness here. The result says the shell is not weaker than a slab in this model, not that nothing can go wrong. The ratio columns let a reader see how far the stiffness could drop before the verdict flips (88 times at worst).
+
+**Day 30 done.** New `src/shellbench/anchor_compare.py`: the 4-storey, 0.10 g family building (s04-p010-tg35-C40) with the slab and with the preregistered shell variant (lowest carbon that passes the diaphragm test): `L60-r10-rf-m1+L66-r10-rf-m1` (f/L = 1/10, recycled fill, one mesh layer), topping 0 mm. Files: results/anchor_slab_vs_shell.csv, results/anchor_waterfall.csv, figures/anchor_waterfall.png.
+
+| | slab | shell |
+|---|---|---|
+| floor carbon [kgCO2e/m2] | 57.6 | 47.4 (S_f 17.8 %) |
+| whole building [kgCO2e/m2] | 102.1 | 95.7 (S_b 6.2 %) |
+| seismic weight [kN] | 5,168 | 6,106 |
+| base shear F_Ek [kN] | 234.6 | 259.9 |
+| T1 [s] | 0.548 | 0.589 |
+| largest drift ratio | 0.00086 | 0.00095 |
+| column [mm] | 500 | 500 |
+| beams b x h [mm] | 300 x 600/550/600 | 300 x 600/550/600 |
+
+- Hand check (playbook): with sizes fixed, floor load change x frame-strip area less the secondary beams, over the three non-roof levels, is 937.948 kN; the generator's seismic weight change is 937.948 kN (tests/test_anchor_compare.py).
+- Waterfall (kgCO2e/m2): slab floor -57.6; shell concrete +33.8; mesh +7.8; ties +5.1; fill +0.7; topping 0; beams +3.9 (the depth the slab took, counted full depth [J]); columns +0.0. The steps add to the shell total (asserted).
+- Why the saving is smaller than the floor saving: the shell floor is heavier (+18 % seismic weight, from the recycled fill), the beams are counted full depth, and the frame sizes did not shrink. Columns and beams keep the anchor sizes in this case.
+- Limits [J]: footings are not in the take-off scope (building_v2), so no footing bar; storey height not changed for the shell; roof keeps the slab; one carbon-factor set exists in data/carbon_factors.csv (GB/T 51366), so the "both factor sets" request is covered by the C1 bounds on 12 Nov. Pre-release, not a result.
+
+Compliance: sources - ASCE/SEI 7-16 cl. 12.3.1.3 [?] from memory of the standard, to be confirmed by the author; GB 50010 f_t from spec X3. AI use - The AI assistant wrote the modules, tests and this entry; the author confirms. Numbers - from results/ files generated 8 Nov 2026 by the code at this commit; 204 tests pass. Data - nothing confidential. Repo - branch day27-diaphragm.
+
 ## Day 29 - 7 Nov 2026 (shell floor in the generator)
 
 Done: `shellfloor.py` designs each family building again with a vaulted shell floor. The frame is sized by the same generator under the shell's dead load (no secondary beams), and the row carries shell concrete, mesh, ties, fill and topping with their own factors. A floor variant pairs the 6.0 and 6.6 m library cases, weighted by bay length (2 x 6.0 and 4 x 6.6 m) [J]; 36 variants x 4 toppings (0, 40, 50, 60 mm) x 36 buildings = 5,184 rows (results/family_shell.csv, pre-release, not for results).
