@@ -79,7 +79,7 @@ Status in the family run (6 Nov 2026): 2 of the 34 buildings inside the code's h
 
 ## 5. Rounding and bars
 
-R15. **Sizes** in steps of 50 mm (playbook). **Bars** from the standard diameters 12, 14, 16, 18, 20, 22, 25, 28 and 32 mm [J; GB 1499.2 [?]]. For each section, choose the fewest bars of one diameter whose area meets the required steel, with 2 to 6 bars per layer in a 300 mm beam [J]. Spacing is not checked yet [J]. The quantity take-off uses the area of the chosen bars, not the required area [J].
+R15. **Sizes** in steps of 50 mm (playbook). **Bars** from the standard diameters 12, 14, 16, 18, 20, 22, 25, 28 and 32 mm [J]; grade-I column bars may also be 36 and 40 mm (Day 21). GB 1499.2-2024 cl. 5.1 gives the range 6 to 50 mm, and its list includes 36 and 40 mm; the 2018 Table 2 gives 1018 and 1257 mm² for them (checked by the AI assistant from secondary copies of the text, 8 Nov 2026; author to confirm Table 2 in your copy). For each section, choose the fewest bars of one diameter whose area meets the required steel, with 2 to 6 bars per layer in a 300 mm beam [J]. Spacing is not checked yet [J]. The quantity take-off uses the area of the chosen bars, not the required area [J].
 
 R16. **Stirrups.** The anchor take-off (`anchor_frame`) keeps the drawing stirrups: φ10@100 four legs in columns over the full height, and φ10@200 two legs in beams (drawings 01 and 03; D28 (c)). From 6 Nov 2026 the generator sizes the frame stirrups by R14. HPB300 is used, with diameters 6-12 mm and spacings 75-200 mm. The end zone and the mid-length are sized separately. These stirrups are added to the lateral steel in `building_v2` only.
 
