@@ -1,0 +1,11 @@
+step,kgco2e_per_m2,kind
+slab building,102.05276699589588,total
+slab floor removed,-57.60503161582341,delta
+shell concrete,33.7949375,delta
+mesh,7.80507,delta
+ties,5.124600000000001,delta
+fill or raised floor,0.6523650000000002,delta
+topping,0.0,delta
+beams,3.8642176887112822,delta
+columns,0.01772915402552755,delta
+shell building,95.70665472280929,total
