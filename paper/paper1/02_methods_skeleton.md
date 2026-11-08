@@ -100,7 +100,9 @@ Rough sentences needed: why a barrel vault on beams and not a groin vault on col
 Must say:
 - How each floor component enters the seismic weight, loads, storey height and frame model (floor_concept §5 table). The finishes cancel.
 - The thrust path: ties close the thrust inside each panel; the frame beams carry vertical reactions only [J, to confirm in Day 29 code].
-- The rigid-diaphragm rule: GB 50011 / JGJ 3 clause if found before Day 27; otherwise the approved default (largest in-plane floor deformation ≤ 2 × mean storey drift), which comes from US practice and needs a primary source before use.
+- The rigid-diaphragm rule: largest in-plane floor deformation ≤ 2 × mean storey drift, from ASCE/SEI 7-16 cl. 12.3.1.3. Source checked 8 Nov 2026 via NIST GCR 17-917-47 Sec. 5.1 and the ASCE 7-10 text; author to confirm. Say why this is a US rule. GB 50011-2010 Table 6.1.6 (only a plan aspect-ratio limit between shear walls) and JGJ 3-2010 cl. 5.1.5 (the rigid-floor assumption, with no test) give no deflection test. See docs/floor_concept.md.
+- [J] Say that ASCE 7-16 cl. 12.3.1 would require semirigid modelling for a floor that is neither rigid nor flexible. Variants are only kept if they pass the 2× test, so the frame model's rigid-floor assumption holds for every kept variant. Reviewers will ask about this.
+- [J] Mention JGJ 3-2010 cl. 3.6.2 item 5 (a cast layer ≥ 50 mm for precast floors) as a cross-check on the topping range, not as a rule that binds the cast-in-place topping.
 - The minimum topping search over 0, 40, 50, 60 mm and the topping share R.
 
 Sources: docs/floor_concept.md §5, §7; preregistration §2.3; Day 27 and Day 29 outputs (not built yet).
@@ -166,7 +168,7 @@ Must say:
 
 Sources: docs/preregistration.md.
 
-Open: none, apart from the H3 rigidity rule's source.
+Open: none. The H3 rigidity rule's source was checked on 8 Nov 2026 (see §2.5).
 
 Rough sentences needed: why you froze the hypotheses first, in your words.
 
