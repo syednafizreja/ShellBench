@@ -13,6 +13,11 @@ Steps (full run):
 4. ``python -m shellbench.floorlib``: ``results/floor_library.csv`` (needs ``ccx``).
 5. ``python -m shellbench.batch``: the primary conventional family
    (``results/family_rc_r14_building_v2``, preregistration.md) and its sensitivity runs.
+6. ``python -m shellbench.diaphragm`` data: ``results/diaphragm_library.csv`` (needs ``ccx``).
+7. ``python -m shellbench.batch --floor shell``: the shell family
+   (``results/family_shell``, with ``family_shell_diaphragm.csv``).
+8. ``python -m shellbench.anchor_compare`` and ``python -m shellbench.family_checks``
+   (``results/day31_checks.csv``).
 
 Each family file gets a ``.provenance.json`` with package versions, the git commit
 and the analysis seed (``shellbench.provenance``). After a full run, ``git status``
@@ -74,6 +79,10 @@ def full() -> None:
     run([PY, "-m", "shellbench.floorlib"])
     for stem, extra in FAMILY_RUNS:
         run([PY, "-m", "shellbench.batch", *extra, "--out", str(ROOT / "results" / stem)])
+    run([PY, "-c", "from shellbench import diaphragm; diaphragm.build_library_factors()"])
+    run([PY, "-m", "shellbench.batch", "--floor", "shell", "--out", str(ROOT / "results" / "family_shell")])
+    run([PY, "-m", "shellbench.anchor_compare"])
+    run([PY, "-m", "shellbench.family_checks"])
     run(["git", "status", "--short", "results", "figures"])
 
 
