@@ -72,7 +72,7 @@ For a parabolic vault filled level with its crown, the mean fill depth is f / 3 
 
 ### 4.4 Topping
 
-Topping thickness t_top is a variable of the family: 0, 40, 50 or 60 mm (playbook Day 22; charter, H3). The rule that sets the minimum for a rigid diaphragm comes from GB 50011 and JGJ 3 (for example JGJ 3 cl. 3.6.2 on the topping of precast floors [?]); I could not read either clause today, so this is an author item. The topping is C40 with a light mesh, the same as the shell [J].
+Topping thickness t_top is a variable of the family: 0, 40, 50 or 60 mm (playbook Day 22; charter, H3). Neither GB 50011 nor JGJ 3 gives a numerical rigid-diaphragm test for this floor (see "Diaphragm test and topping rule" below). JGJ 3-2010 cl. 3.6.2 item 5 asks for a cast-in-place layer of at least 50 mm, with a two-way mesh of bars of at least 6 mm at no more than 200 mm, but only for assembled-monolithic (precast) floors at 6 or 7 degrees and heights up to 50 m. The shell topping here is cast-in-place, so the clause does not bind it [J]; the 50 mm value is a useful cross-check for the 0/40/50/60 mm range (checked by Claude from a secondary copy of the text, 8 Nov 2026; author to confirm in your copy). The topping is C40 with a light mesh, the same as the shell [J].
 
 ### 4.5 Ties
 
@@ -137,7 +137,7 @@ The frame beams are 600 mm deep (spec M1). If the vault springs 100 mm above the
 | GB 50010 Table 8.2.1, cover for shells | ✓ Checked: 15 mm (category I), 20 mm (II-a), p. 95-96 |
 | GB 50010 cl. 8.5.1, minimum steel | ✓ Checked: Table 8.5.1 note 2, max(0.15 %, 45 f_t / f_y) = 0.214 %, p. 101-102; applied to the shell as a slab [J] |
 | GB 50010 Appendix D, plain concrete | ✓ Checked: cl. D.1.1 forbids plain flexural members that carry live load |
-| GB 50011 / JGJ 3, topping for a rigid diaphragm | Not in the project files (8 Nov), so no Chinese numerical rule could be read. Default criterion used: ASCE/SEI 7-16 cl. 12.3.1.3 [?], author to confirm; see "Diaphragm test and topping rule" |
+| GB 50011 / JGJ 3, topping for a rigid diaphragm | Read 8 Nov (checked by Claude, author to confirm). GB 50011-2010 (2016 ed.) Table 6.1.6 limits the floor length-to-width ratio between shear walls (cast or composite floors 4/4/3/2 at 6/7/8/9 degrees; beyond it, in-plane deformation must be modelled); it covers frame-shear wall and similar systems, not pure frames [J]. JGJ 3-2010 cl. 5.1.5 allows the floor to be taken as rigid in its own plane and asks for measures to keep that stiffness, with no numerical test. JGJ 3-2010 cl. 3.6.1 and 3.6.2 set when cast floors are required and the 50 mm topping for precast floors. None gives a deflection test, so the ASCE/SEI 7-16 cl. 12.3.1.3 criterion stays (checked against the 7-10 text; 7-16 copy not obtained) |
 
 7. **Red-team point accepted.** The family must contain the no-fill and raised-floor cases.
 
@@ -145,7 +145,7 @@ The frame beams are 600 mm deep (spec M1). If the vault springs 100 mm above the
 
 Code: `src/shellbench/diaphragm.py`, `shellfloor.diaphragm_test`, `shellfloor.topping_rule`. Tests: `tests/test_diaphragm.py`.
 
-**Criterion [J].** The floor is a rigid diaphragm if its largest in-plane deflection, under the storey seismic force, is no more than twice the storey drift of the frame under the same force. This is the flexible-diaphragm condition of ASCE/SEI 7-16 cl. 12.3.1.3 [?]; the author confirms it in a copy. The project files hold no text of GB 50011 or JGJ 3 on diaphragms, so I could not look for a Chinese numerical rule; the author checks this in the official copies [?]. JGJ 3 cl. 3.6.2 concerns precast floors and is not used.
+**Criterion [J].** The floor is a rigid diaphragm if its largest in-plane deflection, under the storey seismic force, is no more than twice the storey drift of the frame under the same force. This is the flexible-diaphragm condition of ASCE/SEI 7-16 cl. 12.3.1.3 [?]; the author confirms it in a copy. The Chinese codes were checked on 8 Nov 2026 (by Claude, author to confirm in your copies): GB 50011-2010 (2016 ed.) Table 6.1.6 limits plan aspect ratio between shear walls, and JGJ 3-2010 cl. 5.1.5 states the rigid-floor assumption without a numerical test. Neither gives a deflection-based test, so the ASCE criterion is kept. JGJ 3 cl. 3.6.2 concerns precast floors and is not used for the cast-in-place topping [J].
 
 **Model.** Transverse load. Each storey floor is a deep beam between transverse frame lines (vault span L = 6.0 or 6.6 m, depth 21.0 m). Chords are the perimeter longitudinal beams [J]. Shear deflection at mid-bay: delta = p L^2 / (8 K), with p = storey force / plan area of the frame strip, and K the in-plane shear stiffness per metre. The bending part is left out; for L/d = 0.3 with stiff chords it is small [J].
 
