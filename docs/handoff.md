@@ -7,7 +7,7 @@ Newest entry first. Each Claude reads this at the start of a session and adds an
 - Last handoff read: the 8 Nov close-out (data card variant count; author checks listed).
 - pytest: 204 passed. `anchor_frame`: results/ byte-identical; figures/ restored.
 - Tagged **v0.3.0** on main (f8a77b4), at the author's request. It is a plain annotated tag like v0.2.0. pyproject still says 0.2.0 and there is no docs/releases/v0.3.0.md, so release.yml makes no release and no DOI. The note in the #139 merge entry about not tagging is superseded.
-- Branch clean-up: blocked again by the permission classifier; nothing was deleted. Author to delete on GitHub (Branches page): the 27 merged branches and `claude/landing-2026-11-03`.
+- Branch clean-up: done after the author gave permission. The 27 branches merged into main and `claude/landing-2026-11-03` were deleted on GitHub. The 14 branches left are not merged into main, so they were kept.
 - Still open (author, in your copies): GB/T 1499.2 Table 2 (36/40 mm), ASCE 7-16 cl. 12.3.1.3, JGJ 3-2010 cl. 3.6 and 5.1.5.
 
 ## 8 Nov 2026 (close-out for a clean start on 9 Nov), Claude Code in VS Code
