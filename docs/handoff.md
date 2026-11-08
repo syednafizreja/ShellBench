@@ -2,6 +2,14 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 8 Nov 2026 (Day 31, worked ahead), Claude in the app
+
+- Last handoff read: 8 Nov code checks and v0.3.0 tag (Claude Code); open author checks unchanged.
+- Day 31 done today, so the 9 Nov routine run should start from Day 32 prep and not repeat it: both families rebuilt and identical to the earlier files; `batch --floor shell`; `scripts/reproduce.py` extended; `family_checks.py` and results/day31_checks.csv (IDs, failures, sums, three hand-checked pairs: all pass). Branch day31-family-checks.
+- Failures: conventional 1 of 34 in code (2.9 %); shell 40 of 4,896 (0.8 %); all grade I at 0.40 g (s04/s05/s06-p040). Reported and counted, per the preregistration.
+- Open (author): the three checks in your copies (GB/T 1499.2 Table 2; ASCE 7-16 12.3.1.3; JGJ 3 3.6 and 5.1.5) are marked checked by Claude from secondary sources.
+- Next: Day 32 verdicts only on the published data after the 11 Nov DOI run (seed `provenance.SEED`); until then, the 10 Nov surrogate freeze and the data card.
+
 ## 8 Nov 2026 (code copies fetched), Claude Code in VS Code
 
 The author asked me to get the copies and check them myself. Everything below was checked by Claude, author to confirm in your copies.

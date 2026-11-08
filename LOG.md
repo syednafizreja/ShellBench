@@ -180,6 +180,23 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - Claude decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 31 - 8 Nov 2026 (full family, both floors; checks) [worked ahead of 9 Nov, at the author's request]
+
+Done-when ("results/family_shell.parquet exists with the same building IDs as family_rc.parquet"): met. Both files were rebuilt from the code at this commit (conventional 6 s, shell 4 min 1 s) and are identical to the earlier runs (CSV and side table equal; parquet relative difference 0). `batch --floor shell` is new (it calls `shellfloor`); `scripts/reproduce.py` now also rebuilds the shell family, the diaphragm factors, the anchor comparison and the checks. Code: `src/shellbench/family_checks.py`; output: results/day31_checks.csv. 207 tests.
+
+- IDs: 36 buildings in each file. The shell file has 144 rows per building (36 variants x 4 toppings), 5,184 in all.
+- Status, conventional: 33 ok, 2 outside code (s07/s08-p040, above the 24 m limit), 1 failed (s05-p040, grade I, no convergence): 1 of 34 inside the code = 2.9 %. This is above the 2 % pilot target, which was set for the pilot; the preregistration says failures are reported and counted, so the row stays and is counted.
+- Status, shell: 4,856 ok, 288 outside code, 40 failed = 40 of 4,896 inside the code (0.8 %). All 40 are grade I at 0.40 g: s04-p040 (1 row), s05-p040 (28), s06-p040 (11); same reason, no convergence in the resize loop. The one conventional failure (s05-p040) is among them.
+- Sums: floor + lateral = building in every ok row of both files (error 0). The conventional floor carbon equals concrete x C40 + bar steel x HRB400 for all 33 rows; the shell floor carbon equals shell and topping concrete x C40 + mesh x bar factor + ties x tie factor + levelling mass x its factor for all 4,856 rows (largest error 1.4e-14). The hand sums read data/carbon_factors.csv directly and share no code with the runner.
+- Three random pairs (drawn with seed 20261103 [J, the analysis seed]), conventional against the preregistered verdict variant (lowest carbon that passes the diaphragm test), recomputed from quantities:
+  - s03-p040: slab floor 57.61, building 164.92; shell L60-r08-rs-m1+L66-r08-rs-m1, 0 mm: floor 58.03, building 152.19. S_f -0.7 %, S_b 7.7 %.
+  - s04-p020: slab floor 57.61, building 112.62; shell L60-r20-rf-m1+L66-r20-rf-m1, 0 mm: floor 50.57, building 108.51. S_f 12.2 %, S_b 3.6 %.
+  - s04-p030: slab floor 57.61, building 148.25; shell L60-r18-rf-m1+L66-r18-rf-m1, 0 mm: floor 49.35, building 142.57. S_f 14.3 %, S_b 3.8 %.
+  S_f and S_b recomputed from the quantities match the files to 1e-9. The first pair has a floor that is slightly worse (raised floor) yet a better building: the lighter floor lowers the frame carbon by more than 8 kgCO2e/m2. This is a reading of three rows, not a result.
+- Not done on purpose: the roof stays a slab and footings stay outside the take-off [J] (set 7 and 8 Nov). Verdicts are Day 32 on the published data, not today.
+
+Compliance: sources - data/carbon_factors.csv as it stands (author's values, unchanged). AI use - Claude wrote the checks module and tests and ran the families; the author confirms. Numbers - from results/day31_checks.csv and the two family files. Data - nothing confidential. Repo - branch day31-family-checks.
+
 ## Day 27 and Day 30 - 8 Nov 2026 (diaphragm test, topping rule; anchor slab against shell)
 
 **Day 27 done.** New `src/shellbench/diaphragm.py`; `shellfloor.py` now fills `diaphragm_rigid` for every `ok` row and writes `results/family_shell_diaphragm.csv` (ratios) and `results/diaphragm_library.csv` (72 CalculiX shear factors). `batch.run_building` gained `keep=` (default unchanged). Rule and model are in docs/floor_concept.md, "Diaphragm test and topping rule".
