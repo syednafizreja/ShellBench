@@ -2,6 +2,13 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 9 Nov 2026 (sync), the AI assistant
+
+- Last handoff read: 8 Nov code copies fetched (JGJ 3 cl. 3.6 found, GB 50011 Table 6.1.6 read, ASCE 7-16 cl. 12.3.1.3 closed via NIST GCR 17-917-47; nothing needs the author physically).
+- pytest: 204 passed. `anchor_frame`: results/ byte-identical; figures/ restored (Windows font bytes).
+- No local step was asked for in the last entry.
+- Open: Day 31, the full family with both floors (9 Nov). The "author to confirm" lines on the code clauses stay for the record.
+
 ## 8 Nov 2026 (code copies fetched), the AI assistant
 
 The author asked me to get the copies and check them myself. Everything below was checked by the AI assistant, author to confirm in your copies.
