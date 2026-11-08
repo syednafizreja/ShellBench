@@ -309,9 +309,15 @@ def main(argv: list[str] | None = None) -> None:
                    help="beam I factor on I0 for a sensitivity run (default: spec M7 value)")
     p.add_argument("--scope", choices=SCOPES, default=TAKEOFF_SCOPE,
                    help="take-off scope (data_card row 4)")
+    p.add_argument("--floor", choices=("slab", "shell"), default="slab",
+                   help="floor system; shell runs shellfloor.main with --out (Day 31, playbook)")
     p.add_argument("--resume", action="store_true",
                    help="keep finished rows of an earlier --out with the same columns")
     a = p.parse_args(argv)
+    if a.floor == "shell":
+        from shellbench import shellfloor
+        shellfloor.main(["--out", str(a.out)] + ([] if a.n is None else ["--variants", str(a.n)]))
+        return
     df = run_family(a.n, a.drift_rule, a.beam_i_factor, a.scope, read_done(a.out) if a.resume else None)
     write(df, a.out, n=a.n, drift_rule=a.drift_rule, beam_i_factor=a.beam_i_factor, scope=a.scope)
     print(df["status"].value_counts().to_string())

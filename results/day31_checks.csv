@@ -1,0 +1,17 @@
+check,result,detail
+same building IDs,pass,"36 in family_rc, 36 in family_shell"
+shell rows per building,pass,144 to 144 (expect 144 = 36 variants x 4 toppings)
+family_rc status,info,"{'ok': 33, 'outside_code': 2, 'failed': 1}"
+family_shell status,info,"{'ok': 4856, 'outside_code': 288, 'failed': 40}"
+"failed share inside the code, family_rc",info,1 of 34 = 2.9 %
+"failed share inside the code, family_shell",info,40 of 4896 = 0.8 %
+"failing buildings, family_shell",info,s04-p040-tg35-C40: generator did not converge in MAX_ITERATIONS resizes; s05-p040-tg35-C40: generator did not converge in MAX_ITERATIONS resizes; s06-p040-tg35-C40: generator did not converge in MAX_ITERATIONS resizes
+"failing buildings, family_rc",info,s05-p040-tg35-C40
+"a building that fails conventionally also fails with shell, or not",info,"conventional failures ['s05-p040-tg35-C40']; shell failures ['s04-p040-tg35-C40', 's05-p040-tg35-C40', 's06-p040-tg35-C40']; overlap True"
+family_rc: floor + lateral = building,pass,largest error 0.00e+00
+family_shell: floor + lateral = building,pass,largest error 0.00e+00
+family_rc: floor carbon from quantities,pass,largest error 0.00e+00
+family_shell: floor carbon from quantities,pass,largest error 1.42e-14 over 4856 rows
+pair s03-p040-tg35-C40,pass,"slab floor 57.61, building 164.92; shell L60-r08-rs-m1+L66-r08-rs-m1 + 0 mm: floor 58.03, building 152.19; S_f -0.7 %, S_b 7.7 %"
+pair s04-p020-tg35-C40,pass,"slab floor 57.61, building 112.62; shell L60-r20-rf-m1+L66-r20-rf-m1 + 0 mm: floor 50.57, building 108.51; S_f 12.2 %, S_b 3.6 %"
+pair s04-p030-tg35-C40,pass,"slab floor 57.61, building 148.25; shell L60-r18-rf-m1+L66-r18-rf-m1 + 0 mm: floor 49.35, building 142.57; S_f 14.3 %, S_b 3.8 %"
