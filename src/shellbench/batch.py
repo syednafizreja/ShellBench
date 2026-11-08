@@ -164,11 +164,15 @@ def factors() -> tuple[float, float]:
 
 def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule: str = "best_ratio",
                  beam_i_factor: float | None = None, scope: str = TAKEOFF_SCOPE,
-                 capacity_design: bool = True, base: g.BuildingInput | None = None) -> dict:
+                 capacity_design: bool = True, base: g.BuildingInput | None = None,
+                 keep: dict | None = None) -> dict:
     """Run one building and return its row (all ``COLUMNS``).
 
     ``base`` replaces ``ANCHOR`` as the input the family values are applied to
     (the shell floor, ``shellfloor.py``); None keeps ``ANCHOR``.
+
+    ``keep``, if a dict, receives the input ``b`` and the generator result ``res`` of
+    an ``ok`` row (the diaphragm test of ``shellfloor.py`` needs them).
 
     ``capacity_design`` False switches R14 off (the Day 19 pilot design).
 
@@ -214,6 +218,8 @@ def run_building(spec: dict, conc_factor: float, steel_factor: float, drift_rule
     except RuntimeError as exc:
         row.update(status="failed", failure_reason=str(exc))
         return row
+    if keep is not None:
+        keep.update(b=b, res=res)
     q = res.quantities
     floor_c, lat_c = q["slab_concrete_m3_per_m2"], q["beam_concrete_m3_per_m2"] + q["column_concrete_m3_per_m2"]
     floor_s, lat_s = 0.0, q["beam_bar_kg_per_m2"] + q["column_bar_kg_per_m2"]  # slab bars not in v1

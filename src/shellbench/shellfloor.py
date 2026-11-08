@@ -26,9 +26,8 @@ the beams are counted full depth) [J].
 
 Not modelled here (limitations, Paper 1 Methods):
 
-* the rigid-diaphragm test and the topping rule (H3, Day 27): ``topping_mm``
-  is a variable (0, 40, 50, 60 mm, preregistration 2.3) and
-  ``diaphragm_rigid`` is empty;
+* the rigid-diaphragm test (H3, Day 27, ``diaphragm.py``) fills
+  ``diaphragm_rigid`` for every row; the topping rule is ``topping_rule``;
 * the beam stiffness factor stays the anchor's (spec M7), as if the floor
   still gave a slab flange [J];
 * the roof keeps the conventional slab [J];
@@ -45,6 +44,8 @@ import pandas as pd
 
 from shellbench import batch as bt
 from shellbench import carbon as cb
+from shellbench import diaphragm as dp
+from shellbench import generator as gen
 from shellbench import panel
 from shellbench import provenance
 
@@ -127,9 +128,60 @@ def factors() -> dict[str, float]:
     return out
 
 
-def run_shell(spec: dict, v: dict, topping_mm: int, fac: dict[str, float]) -> dict:
-    """One family_shell row: the building of ``spec`` with floor variant ``v`` and a topping."""
-    rc = bt.run_building(spec, fac["concrete"], fac["bar"], scope="building_v2", base=shell_input(v, topping_mm))
+def diaphragm_test(b: gen.BuildingInput, res: gen.GeneratorResult, v: dict, topping_mm: int) -> dict:
+    """Rigid-diaphragm test of one designed building (diaphragm.py): every storey, every bay span.
+
+    Each storey takes its own seismic force from the base-shear method and its
+    own elastic drift from the generator. The two bay spans of the variant are
+    tested with their own thickness and shear factor; the worst governs.
+
+    Returns:
+        ``rigid`` (every storey and bay has delta <= 2 x drift), ``ratio`` (largest
+        delta / (2 drift)), ``stiffness_ratio`` (smallest drift / delta) and
+        ``tau_over_ft`` (largest, information only).
+    """
+    _, forces = gen.seismic_forces(b, res.final)
+    area = sum(b.spans_m) * b.tributary_width_m
+    k_lib = dp.library_factors()
+    ids = v["floor_variant_id"].split("+")
+    spans = [float(x) for x in v["vault_span_m"].split("/")]
+    thick = [float(x) / 1000.0 for x in v["shell_thickness_mm"].split("/")]
+    worst = {"ratio": 0.0, "stiffness_ratio": float("inf"), "tau_over_ft": 0.0}
+    for vid, span, t in zip(ids, spans, thick):
+        k = dp.bay_stiffness_kn_m(k_lib[vid], t, topping_mm)
+        for i, force in enumerate(forces):
+            drift_m = res.drift_ratios[i] * b.storey_heights_m[i]
+            c = dp.check_storey(force, area, drift_m, span, k, t, topping_mm)
+            worst["ratio"] = max(worst["ratio"], c["ratio"])
+            worst["stiffness_ratio"] = min(worst["stiffness_ratio"], c["stiffness_ratio"])
+            worst["tau_over_ft"] = max(worst["tau_over_ft"], c["tau_over_ft"])
+    worst["rigid"] = worst["ratio"] <= 1.0
+    return worst
+
+
+def topping_rule(side: pd.DataFrame) -> pd.DataFrame:
+    """Smallest topping that makes each building and floor variant a rigid diaphragm.
+
+    Args:
+        side: The diaphragm side table (building_id, floor_variant_id, topping_mm, rigid, ...).
+
+    Returns:
+        One row per building and variant: ``min_topping_mm`` (NaN if even 60 mm fails).
+    """
+    ok = side[side["rigid"]]
+    out = ok.groupby(["building_id", "floor_variant_id"])["topping_mm"].min().rename("min_topping_mm")
+    keys = side[["building_id", "floor_variant_id"]].drop_duplicates().set_index(["building_id", "floor_variant_id"])
+    return keys.join(out).reset_index()
+
+
+def run_shell(spec: dict, v: dict, topping_mm: int, fac: dict[str, float], side: list | None = None) -> dict:
+    """One family_shell row: the building of ``spec`` with floor variant ``v`` and a topping.
+
+    ``side``, if a list, receives the diaphragm test of an ``ok`` row (ratios and stiffness ratio).
+    """
+    kept: dict = {}
+    rc = bt.run_building(spec, fac["concrete"], fac["bar"], scope="building_v2", base=shell_input(v, topping_mm),
+                         keep=kept)
     row = dict.fromkeys(COLUMNS)
     row.update({k: rc[k] for k in bt.COLUMNS})
     row.update({k: v[k] for k in SHELL_COLUMNS if k in v})
@@ -160,7 +212,16 @@ def run_shell(spec: dict, v: dict, topping_mm: int, fac: dict[str, float]) -> di
                carbon_floor_kgco2e_per_m2=c_floor, carbon_lateral_kgco2e_per_m2=c_lat,
                carbon_building_kgco2e_per_m2=c_floor + c_lat)
     assert sec_c >= 0.0  # secondary beams are dropped with the slab
+    d = diaphragm_test(kept["b"], kept["res"], v, topping_mm)
+    row["diaphragm_rigid"] = d["rigid"]
+    if side is not None:
+        side.append({"building_id": row["building_id"], "floor_variant_id": v["floor_variant_id"],
+                     "topping_mm": topping_mm, **d})
     return row
+
+
+#: Diaphragm side table of the last ``run`` call (rows of ``ok`` buildings).
+SIDE: list[dict] = []
 
 
 def run(storeys: int | None = None, pga_g: float | None = None, n_variants: int | None = None,
@@ -170,7 +231,8 @@ def run(storeys: int | None = None, pga_g: float | None = None, n_variants: int 
     specs = [sp for sp in bt.family() if (storeys is None or sp["storeys"] == storeys)
              and (pga_g is None or sp["pga_g"] == pga_g)]
     vs = variants()[:n_variants] if n_variants else variants()
-    rows = [run_shell(sp, v, t, fac) for sp in specs for v in vs for t in toppings]
+    SIDE.clear()
+    rows = [run_shell(sp, v, t, fac, SIDE) for sp in specs for v in vs for t in toppings]
     return pd.DataFrame(rows, columns=list(COLUMNS))
 
 
@@ -185,6 +247,8 @@ def main(argv: list[str] | None = None) -> None:
     a = p.parse_args(argv)
     df = run(a.storeys, a.pga, a.variants, tuple(a.toppings))
     bt.write(df, a.out, storeys=a.storeys, pga=a.pga, variants=a.variants, toppings=a.toppings)
+    side = pd.DataFrame(SIDE)
+    side.to_csv(a.out.with_name(a.out.name + "_diaphragm.csv"), index=False)
     print(df["status"].value_counts().to_string())
 
 
