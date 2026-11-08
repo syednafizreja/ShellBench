@@ -2,6 +2,16 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 8 Nov 2026 (close-out for a clean start on 9 Nov), the AI assistant
+
+- data_card.md: family_shell row now states the 36 floor variants per building (6 rise ratios 0.05 to 0.125 × 3 levellings × 1 or 2 mesh layers; all pass at both spans, counted from `shellfloor.variants()`) and gives the two-span anchor variant ID `L60-r10-rf-m1+L66-r10-rf-m1`. That 7 Nov item is closed.
+- Roof: stays a conventional slab and footings stay outside the take-off for the 11 Nov DOI run, as the cloud entry set [J]. Closed unless the author changes it.
+- #102 (stale README): closed. #101 and #130 were already merged.
+- **36/40 mm bars: still not confirmed.** A Baidu Baike page lists 6 to 50 mm including 36 and 40 mm, but that is not the standard. The table copies found online are third-party uploads, and the scrape was blocked. Author: check Table 2 of GB/T 1499.2-2018 or GB 1499.2-2024 in your copy.
+- **GB 50011 / JGJ 3 diaphragm rule: not found.** Open search gave JGJ 3 commentary on keeping the floor stiff in plane, with no numeric test. ASCE 7-16 cl. 12.3.1.3 stays the criterion [J]. Author: check JGJ 3-2010 cl. 3.6 and 5.1.5 [?] in your copy.
+- Not done: deleting the 27 remote branches already merged into main. The permission classifier blocked it. They are harmless; delete them on GitHub if you want a tidy branch list. The branch `landing-2026-11-03` (closed #102) breaks the no-`` rule; delete it too.
+- Next: Day 31, the full family with both floors (9 Nov).
+
 ## 8 Nov 2026 (merge of #139), the AI assistant
 
 - Merged main into day27-diaphragm (conflict in this file only; both entries kept). pytest on the merged branch: 204 passed.
