@@ -2,6 +2,15 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 8 Nov 2026 (Day 27 diaphragm and topping rule; Day 30 anchor), Claude in the app
+
+- Last handoff read: 7 Nov literature check (MacNeal-Harder values agree with open verification manuals); Day 29 shell floor and grade-I bars merged; Day 27 and Day 30 open.
+- Done (branch day27-diaphragm): `diaphragm.py` (rigid-diaphragm test, 72 CalculiX shear factors, flat-plate method check k = 1.0000), `shellfloor.py` fills `diaphragm_rigid` and writes results/family_shell_diaphragm.csv, `anchor_compare.py` (Day 30: results/anchor_slab_vs_shell.csv, anchor_waterfall.csv, figures/anchor_waterfall.png). 204 tests pass. Rule in docs/floor_concept.md.
+- Result, pre-release, not a verdict: all 4,856 ok shell rows are rigid without topping (worst delta / (2 x drift) = 0.0113). H3 would read not supported on this model. Anchor: S_f 17.8 %, S_b 6.2 %, seismic weight +18 %; hand check of the weight change matches (937.948 kN).
+- Judgements [J]: ASCE/SEI 7-16 cl. 12.3.1.3 as the criterion (preregistered default); chords = perimeter beams; shear-only deep beam; topping bonded; ties not in the shear path; the verdict variant is the lowest-carbon one that passes the test.
+- Open (author): (1) confirm ASCE 7-16 cl. 12.3.1.3 and check GB 50011 / JGJ 3 for a diaphragm rule in your copies; (2) tag v0.3 after the merge (VS Code `/sync` can do it; I did not tag an unmerged branch); (3) the roof stays a slab and footings are outside the take-off before the 11 Nov DOI run [J]; (4) the 7 Nov items still open: f_yk = 400 MPa, 36/40 mm bars, #102.
+- Next: Day 31 full family, both floors (9 Nov), then checks and data card.
+
 ## 7 Nov 2026, literature access check (VS Code)
 
 **Done:** Cross-checked the MacNeal-Harder values in validation/benchmarks.csv against independent open verification manuals. Checked by Claude, author to confirm.
