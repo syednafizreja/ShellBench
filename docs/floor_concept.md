@@ -137,9 +137,23 @@ The frame beams are 600 mm deep (spec M1). If the vault springs 100 mm above the
 | GB 50010 Table 8.2.1, cover for shells | ✓ Checked: 15 mm (category I), 20 mm (II-a), p. 95-96 |
 | GB 50010 cl. 8.5.1, minimum steel | ✓ Checked: Table 8.5.1 note 2, max(0.15 %, 45 f_t / f_y) = 0.214 %, p. 101-102; applied to the shell as a slab [J] |
 | GB 50010 Appendix D, plain concrete | ✓ Checked: cl. D.1.1 forbids plain flexural members that carry live load |
-| GB 50011 / JGJ 3, topping for a rigid diaphragm | Still [?]. Neither code is in the project files. Needed before Day 27 |
+| GB 50011 / JGJ 3, topping for a rigid diaphragm | Not in the project files (8 Nov), so no Chinese numerical rule could be read. Default criterion used: ASCE/SEI 7-16 cl. 12.3.1.3 [?], author to confirm; see "Diaphragm test and topping rule" |
 
 7. **Red-team point accepted.** The family must contain the no-fill and raised-floor cases.
+
+## Diaphragm test and topping rule (Day 27, 8 Nov 2026)
+
+Code: `src/shellbench/diaphragm.py`, `shellfloor.diaphragm_test`, `shellfloor.topping_rule`. Tests: `tests/test_diaphragm.py`.
+
+**Criterion [J].** The floor is a rigid diaphragm if its largest in-plane deflection, under the storey seismic force, is no more than twice the storey drift of the frame under the same force. This is the flexible-diaphragm condition of ASCE/SEI 7-16 cl. 12.3.1.3 [?]; the author confirms it in a copy. The project files hold no text of GB 50011 or JGJ 3 on diaphragms, so I could not look for a Chinese numerical rule; the author checks this in the official copies [?]. JGJ 3 cl. 3.6.2 concerns precast floors and is not used.
+
+**Model.** Transverse load. Each storey floor is a deep beam between transverse frame lines (vault span L = 6.0 or 6.6 m, depth 21.0 m). Chords are the perimeter longitudinal beams [J]. Shear deflection at mid-bay: delta = p L^2 / (8 K), with p = storey force / plan area of the frame strip, and K the in-plane shear stiffness per metre. The bending part is left out; for L/d = 0.3 with stiff chords it is small [J].
+
+**K of the vault.** One CalculiX bay per library case (72 runs, `results/diaphragm_library.csv`): body force in y, both springing lines held, chord lines held in x. K = k G t with k between 0.80 and 0.86. Method check: the same model with a flat plate returns k = 1.0000 (test). A topping adds G t_top, fully bonded [J]. The ties carry no in-plane shear in this load direction, so they are not in the model [J].
+
+**Topping rule used by the generator.** The topping is the smallest of 0, 40, 50, 60 mm for which the test passes at every storey and both bay spans. If none passes, the variant has no verdict row. The topping's own weight is already in the frame design of each row.
+
+**Limits for Methods.** Uncracked elastic G; full shear connection between shell, topping and beams; transverse direction only; the shear stress is reported as tau / f_t for information, because I have no clause for the shear strength of a shell diaphragm [?].
 
 ## CalculiX
 

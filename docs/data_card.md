@@ -9,7 +9,10 @@ Every row released before the dataset DOI (11 Nov 2026) carries `release = "pre-
 | File | One row per | Written by | Status |
 |---|---|---|---|
 | `family_rc.parquet` | building, conventional floor (beam and slab) | `python -m shellbench.batch` | Runner done (Day 18). Sample: [../results/family_rc_sample.csv](../results/family_rc_sample.csv) |
-| `family_shell.parquet` | building × floor variant × topping | `python -m shellbench.shellfloor` (Day 29) | Format below; first full run 7 Nov 2026, pre-release (results/family_shell.csv). `floor_variant_id` joins the 6.0 m and 6.6 m library cases with `+`; span, thickness and tie columns hold both values, joined by `/`; `diaphragm_rigid` is empty until Day 27 |
+| `family_shell.parquet` | building × floor variant × topping | `python -m shellbench.shellfloor` (Day 29) | Format below; first full run 7 Nov 2026, pre-release (results/family_shell.csv). `floor_variant_id` joins the 6.0 m and 6.6 m library cases with `+`; span, thickness and tie columns hold both values, joined by `/`; `diaphragm_rigid` filled from Day 27 (8 Nov 2026) by `diaphragm.py`; the ratios behind it are in `family_shell_diaphragm.csv` (building, variant, topping: `ratio`, `stiffness_ratio`, `tau_over_ft`, `rigid`) |
+| `family_shell_diaphragm.csv` | building × floor variant × topping (`ok` rows) | `python -m shellbench.shellfloor` (Day 27) | Diaphragm test behind `diaphragm_rigid`: `ratio` = in-plane deflection / (2 × frame storey drift), rigid if <= 1; `stiffness_ratio` = frame storey drift / in-plane deflection; `tau_over_ft` = in-plane shear stress / f_t (information only). Worst storey and bay. Pre-release |
+| `diaphragm_library.csv` | floor-library case | `diaphragm.build_library_factors()` (Day 27) | In-plane shear factor k = K / (G t) of each of the 72 cases, from CalculiX |
+| `anchor_slab_vs_shell.csv`, `anchor_waterfall.csv` | compared quantity or waterfall step | `python -m shellbench.anchor_compare` (Day 30) | Anchor building, slab against the preregistered shell variant. Pre-release |
 
 Both files use the same `building_id` for the same building (the Day 31 check needs this). The ID is built from the inputs, not from a row number, so a family dimension added later does not change an existing ID: `s{storeys:02d}-p{PGA × 100:03d}-tg{Tg × 100:02d}-{grade}`, for example `s04-p010-tg35-C40` is the anchor.
 
@@ -84,7 +87,7 @@ Columns 1-34 have the same names, units and meanings, with `floor_system = shell
 | 42 | `tie_spacing_m` | m | Tie spacing along the vault |
 | 43 | `tie_prestressed` | bool | Tie tensioned against the dead-load spread |
 | 44 | `topping_mm` | mm | Structural topping: 0, 40, 50 or 60 (preregistration 2.3) |
-| 45 | `diaphragm_rigid` | bool | Passes the rigid-diaphragm rule of preregistration 2.3 |
+| 45 | `diaphragm_rigid` | bool | Passes the rigid-diaphragm rule of preregistration 2.3 (every storey and bay: in-plane deflection <= 2 x frame storey drift; docs/floor_concept.md, Diaphragm test). Empty for rows that are not `ok` |
 | 46 | `fill_kg_per_m2` | kg/m² | Levelling fill or raised-floor mass |
 | 47 | `tie_steel_kg_per_m2` | kg/m² | Tie steel (also inside column 30) |
 
