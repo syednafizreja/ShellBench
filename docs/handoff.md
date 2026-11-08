@@ -2,6 +2,14 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 8 Nov 2026 (three code checks), the AI assistant
+
+All three were checked by the AI assistant from secondary sources, author to confirm in your copies. Cloud the AI assistant's notes (pasted by the author) agree with what I found.
+- **GB 1499.2, 36 and 40 mm: confirmed (secondary).** A 2024-edition interpretation lists 15 nominal diameters, 6 to 50 mm, including 36 and 40, "the same as the previous edition" (http://www.lkgylgl.com/nd.jsp?id=53). A table copy of the 2018 edition gives 36 mm 1018 mm² 7.99 kg/m and 40 mm 1257 mm² 9.87 kg/m (https://www.caishuku.com/material/detail.php?mid=azhlNWIxMjQwNDE=). The official free preview is at openstd.samr.gov.cn (GB 1499.2-2024, in force 25 Sep 2024); I did not read it. design_rules.md R15 updated.
+- **ASCE 7-16 cl. 12.3.1.3:** as in the #139 merge entry. The 7-10 text and the CSI wiki agree: flexible if the maximum in-plane deflection is more than 2 × the average storey drift of the adjoining vertical elements. diaphragm.py matches.
+- **JGJ 3-2010 cl. 5.1.5: wording found (secondary).** A Ganzhou housing bureau document quotes it: "进行高层建筑内力与位移计算时，可假定楼板在其自身平面内为无限刚性，设计时应采取相应的措施保证楼板平面内的整体刚度" (in the internal force and displacement analysis of tall buildings, the floor may be assumed infinitely rigid in its own plane; design must take measures to keep that in-plane stiffness). https://zjj.ganzhou.gov.cn/gzszfcs/c103503/202506/f24532288f0f4002a2c9d293f8f3dfe9/files/8a79673b57e74e07808245386241349e.pdf. This is an assumption with no numeric test, so the ASCE criterion stays the test [J]. JGJ 3 covers tall buildings (10 storeys or more, or over 28 m, cl. 1.0.2 [?]), which the 3 to 8 storey family mostly is not [J].
+- **JGJ 3-2010 cl. 3.6 (floor systems): text not found** in open sources. Search hits were a Shenzhen local standard (SJG), not JGJ 3. Still open for the author.
+
 ## 8 Nov 2026 (sync and v0.3.0 tag), the AI assistant
 
 - Last handoff read: the 8 Nov close-out (data card variant count; author checks listed).
