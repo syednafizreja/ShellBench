@@ -14,11 +14,11 @@ The preregistration (docs/preregistration.md 2.3) fixes the default rule: the
 largest in-plane deformation of the floor must be no more than twice the mean
 storey drift of the vertical elements of the same storey, under the same
 tributary load. I take this from the flexible-diaphragm condition of
-ASCE/SEI 7-16 cl. 12.3.1.3 [?] (the author confirms it in a copy; it is not a
-Chinese clause). The project files hold no text of GB 50011 or JGJ 3 on
-diaphragms, so a Chinese numerical rule could not be read; the author checks
-the official copies [?]. JGJ 3 cl. 3.6.2 concerns
-precast floors with a topping and is not used.
+ASCE/SEI 7-16 cl. 12.3.1.3 (checked by the AI assistant, 8 Nov 2026, against the
+ASCE 7-10 text and NIST GCR 17-917-47, Sec. 5.1, which states the ASCE 7-16
+rule; the 7-16 text itself is paywalled; author to confirm). GB 50011-2010
+Table 6.1.6 and JGJ 3-2010 cl. 5.1.5 give no deflection test. JGJ 3 cl. 3.6.2
+concerns precast floors with a topping and is not used.
 
 The model
 ---------
@@ -70,7 +70,7 @@ from shellbench.shellfe import ShellModel, mapped_mesh, run
 ROOT = Path(__file__).resolve().parents[2]
 FACTORS_CSV = ROOT / "results" / "diaphragm_library.csv"
 
-#: ASCE/SEI 7-16 cl. 12.3.1.3 [?]: flexible if delta_d > 2 x mean storey drift.
+#: ASCE/SEI 7-16 cl. 12.3.1.3: flexible if delta_d > 2 x mean storey drift.
 RIGIDITY_LIMIT: float = 2.0
 #: Plan depth of the floor along the generators [m]: the sum of the anchor frame spans (spec G3).
 DEPTH_M: float = 21.0
