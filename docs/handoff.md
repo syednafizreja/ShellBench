@@ -2,6 +2,13 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 8 Nov 2026 (sync), Claude Code in VS Code
+
+- Last handoff read: 7 Nov literature access check (MacNeal-Harder values agree with two or more open sources; third-party copy item closed).
+- pytest: 193 passed. `python -m shellbench.anchor_frame` ran; every file in results/ byte-identical. figures/ differed in bytes (Windows fonts) and was restored.
+- No local step was asked for. Branch named day29-sync-3 because day29-sync and day29-sync-2 already exist.
+- Open (carried): Day 27 diaphragm test and topping rule; data_card two-span variant ID; roof decision before the DOI run; author to confirm 36/40 mm bars and f_yk in own copies of the codes; #130, #102, #101 still unmerged.
+
 ## 7 Nov 2026, literature access check (VS Code)
 
 **Done:** Cross-checked the MacNeal-Harder values in validation/benchmarks.csv against independent open verification manuals. Checked by Claude, author to confirm.
