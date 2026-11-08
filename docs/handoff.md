@@ -2,6 +2,14 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 8 Nov 2026 (sync and v0.3.0 tag), the AI assistant
+
+- Last handoff read: the 8 Nov close-out (data card variant count; author checks listed).
+- pytest: 204 passed. `anchor_frame`: results/ byte-identical; figures/ restored.
+- Tagged **v0.3.0** on main (f8a77b4), at the author's request. It is a plain annotated tag like v0.2.0. pyproject still says 0.2.0 and there is no docs/releases/v0.3.0.md, so release.yml makes no release and no DOI. The note in the #139 merge entry about not tagging is superseded.
+- Branch clean-up: blocked again by the permission classifier; nothing was deleted. Author to delete on GitHub (Branches page): the 27 merged branches and `landing-2026-11-03`.
+- Still open (author, in your copies): GB/T 1499.2 Table 2 (36/40 mm), ASCE 7-16 cl. 12.3.1.3, JGJ 3-2010 cl. 3.6 and 5.1.5.
+
 ## 8 Nov 2026 (close-out for a clean start on 9 Nov), the AI assistant
 
 - data_card.md: family_shell row now states the 36 floor variants per building (6 rise ratios 0.05 to 0.125 × 3 levellings × 1 or 2 mesh layers; all pass at both spans, counted from `shellfloor.variants()`) and gives the two-span anchor variant ID `L60-r10-rf-m1+L66-r10-rf-m1`. That 7 Nov item is closed.
