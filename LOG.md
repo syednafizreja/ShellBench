@@ -180,6 +180,15 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Days 43-45 - 9 Nov 2026 (Track B surrogate: splits, three models, conformal intervals) [worked ahead, pre-release data]
+
+Done: `src/shellbench/ml/` (data, train, conformal), `docs/surrogate_notes.md`, `tests/test_ml.py` (7 tests; full suite 214 passed). Two splits: random 80/20, and leave-one-storey-count-out (6 folds). Three models: HistGradientBoosting, MLP, GP (1,000-row subsample). Tuning by 5-fold CV on training data only, grids frozen in code. Split-conformal 90 % intervals, 20 % calibration set. Seed `provenance.SEED`.
+Pilot result (pre-release data, not a verdict): for whole-building carbon, HGB is best. Random split RMSE 11.30 kgCO2e/m^2 (R^2 0.967); unseen storey counts RMSE 25.62 (R^2 0.830). MLP 12.37 and 40.37; GP 17.44 and 29.82. Conformal coverage at nominal 0.90: 0.901 on the random split, 0.733 on unseen storey counts. The second is below the 0.88-0.92 band, so intervals do not transfer to new storey counts. Report this as it is (results/surrogate_accuracy.csv, results/surrogate_coverage.csv, figures/surrogate_parity.png, figures/surrogate_coverage.png).
+Why: random splits flatter a model because neighbouring rows of one building sit on both sides; the storey split is the honest test of H4.
+Limits: slab has only 33 rows, so the Day 46 decision test (surrogate choosing slab or shell) will be thin. Floor carbon is almost deterministic in the features (R^2 near 1), so its score says little. Numbers will change when run once on the published data (12 Nov).
+Next: Day 46 decision test and leakage test, then freeze code and hyperparameters by commit with author approval before the DOI.
+Compliance: no thesis data committed; scikit-learn pinned (1.9.1); seed recorded.
+
 ## Day 31 - 8 Nov 2026 (full family, both floors; checks) [worked ahead of 9 Nov, at the author's request]
 
 Done-when ("results/family_shell.parquet exists with the same building IDs as family_rc.parquet"): met. Both files were rebuilt from the code at this commit (conventional 6 s, shell 4 min 1 s) and are identical to the earlier runs (CSV and side table equal; parquet relative difference 0). `batch --floor shell` is new (it calls `shellfloor`); `scripts/reproduce.py` now also rebuilds the shell family, the diaphragm factors, the anchor comparison and the checks. Code: `src/shellbench/family_checks.py`; output: results/day31_checks.csv. 207 tests.
