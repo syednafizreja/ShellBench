@@ -2,11 +2,21 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 9 Nov 2026 (visual standard; all figures redrawn), the AI assistant
+
+- Last handoff read: 9 Nov sync (The AI assistant); #151 merged, Day 46 on 10 Nov.
+- Author's new permanent rule (9 Nov): every output must look and work like expert, best-in-class work. Done: house style `src/shellbench/style.py` + `shellbench.mplstyle` (Elsevier 90/140/190 mm widths, 7 pt Arial/Liberation Sans, validated dataviz colours, PDF+SVG+600 dpi PNG with no date stamps), `src/shellbench/figures.py` (every figure redrawn from results/ with `python -m shellbench.figures`; `--paper` for footer-free copies), `docs/visual_standard.md` (rules and the review checklist), tests/test_style.py (23 tests). The old plot functions now call figures.py; no analysis or number changed.
+- Surrogate pipeline re-run here (about 11 min): results/surrogate_accuracy.csv byte-identical. New file results/surrogate_predictions.csv (whole-building target only, %.5g) so the parity figure redraws without re-training. The conformal step was not re-run; coverage figure drawn from the committed CSV.
+- Decisions [J]: coverage drawn as a dot plot with the H4 88-92 % band; parity as 2 x 3 small multiples; waterfall horizontal with the S_b saving written on it; footer on repository figures only.
+- Surrogate freeze respected: `src/shellbench/ml/` is untouched (still as at 5c11ce8). New `scripts/surrogate_figures.py` calls the frozen functions in the same order as `conformal.main`, writes the same two CSVs plus results/surrogate_predictions.csv, and draws the two surrogate figures in the house style. For the 11 Nov DOI run, use it in place of `python -m shellbench.ml.conformal` (same CSVs; otherwise the old-style PNGs come back). Windows rebuilds use Arial (Liberation Sans here), so PNG bytes differ; committed figures still come from Linux.
+- Open: weeks 1-3 social cards left as posted; week 4 cards redone in project files (week04_linkedin/v2).
+
 ## 9 Nov 2026 (author approvals; surrogate frozen), the AI assistant
 
 - The author approved everything open on 9 Nov. Surrogate code, grids and split rules are frozen at commit 5c11ce8 (docs/surrogate_notes.md). JGJ 3 cl. 3.6.3 is not applied to the shell. The JGJ 3 cl. 1.0.2 scope goes in as a Paper 1 limitation (docs/floor_concept.md).
 - Open: `python -m shellbench.ml.conformal` was stopped twice on this laptop, at about 50 and 20 minutes, both times with no output. It uses GridSearchCV with n_jobs=-1, so it may just be slow here [J]. Run it once overnight, or in CI, to confirm the results reproduce.
 - Next: Day 46, the decision test and the leakage test (10 Nov).
+
 ## 9 Nov 2026 (sync; #151 merged; code clauses re-read), the AI assistant
 
 - Last handoff read: 9 Nov, Days 43-45 surrogate worked ahead by the AI assistant (PR #151). Its CI was green. I took the AI assistant attribution line out of the PR body and merged it.

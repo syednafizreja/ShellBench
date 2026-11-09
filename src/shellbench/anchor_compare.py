@@ -197,30 +197,13 @@ def comparison_rows(both: dict, v: dict, topping_mm: int) -> list[dict]:
 
 
 def plot_waterfall(steps: list[dict], path: Path = WATERFALL_PNG) -> None:
-    """Draw the waterfall from the slab building to the shell building."""
-    import matplotlib
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-    fig, ax = plt.subplots(figsize=(9, 5), dpi=200)
-    level = 0.0
-    for i, s in enumerate(steps):
-        x = s["kgco2e_per_m2"]
-        if s["kind"] == "total":
-            ax.bar(i, x, color="#3b6fb6")
-            ax.text(i, x + 1, f"{x:.1f}", ha="center", fontsize=8)
-            level = x
-        else:
-            ax.bar(i, x, bottom=level, color="#c0392b" if x > 0 else "#2e8b57")
-            ax.text(i, max(level, level + x) + 1, f"{x:+.1f}", ha="center", fontsize=8)
-            level += x
-    ax.set_xticks(range(len(steps)), [s["step"] for s in steps], rotation=30, ha="right", fontsize=8)
-    ax.set_ylabel("Embodied carbon A1-A3 [kgCO2e per m2 of floor]")
-    ax.set_title("Anchor building (4 storeys, 0.10 g): slab to shell, pre-release", fontsize=10)
-    fig.text(0.01, 0.01, "© 2026 Syed Nafiz Reja Hasib. Elastic, screening-level; footings not in scope.", fontsize=7)
-    fig.tight_layout()
-    path.parent.mkdir(exist_ok=True)
-    fig.savefig(path)
-    plt.close(fig)
+    """Draw the waterfall from the slab building to the shell building.
+
+    Drawn in the house style by ``figures.waterfall`` (PNG, PDF and SVG).
+    """
+    from shellbench import figures
+
+    figures.waterfall(steps, path)
 
 
 def main() -> None:
