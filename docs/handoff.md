@@ -2,6 +2,13 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 9 Nov 2026 (Days 43-45 surrogate, worked ahead), Claude in the app
+
+- Last handoff read: 9 Nov sync (Claude Code); Day 31 merged.
+- Done: surrogate pipeline in `src/shellbench/ml/`, outputs in results/ and figures/, notes in docs/surrogate_notes.md, 7 tests, `scikit-learn==1.9.1` added to tests.yml. Run on pre-release data (`python -m shellbench.ml.conformal`, about 10 minutes). Hist gradient boosting is best; conformal coverage on unseen storey counts is 0.733, below the 0.88-0.92 band. Reported, not tuned away.
+- Decisions [J]: picked HGB as the conformal model by random-split RMSE on whole-building carbon; GP uses a 1,000-row subsample.
+- Open: Day 46 decision test and leakage test; freeze commit with author approval before the DOI. Author still to confirm GB/T 1499.2 Table 2, ASCE 7-16 12.3.1.3, JGJ 3 cl. 3.6 and 5.1.5 in own copies. Do not repeat Days 27, 30, 31.
+
 ## 9 Nov 2026 (sync; Day 31 landed), Claude Code in VS Code
 
 - Last handoff read: 8 Nov, Day 31 worked ahead by Claude in the app (PR #148, both families rebuilt and checked). PR #148 had sat open and in conflict with main; I rebased it onto main, resolved this file, removed the Claude attribution line from the PR body, reran the tests and merged it.

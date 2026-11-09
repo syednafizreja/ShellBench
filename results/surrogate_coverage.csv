@@ -1,0 +1,10 @@
+model,split,fold,target,nominal,coverage,mean_width,n_calibration,n_test
+hgb,random,all,carbon_building_kgco2e_per_m2,0.9,0.90082,23.442,782,978
+hgb,unseen_storeys,storeys_3,carbon_building_kgco2e_per_m2,0.9,0.69195,24.57,804,870
+hgb,unseen_storeys,storeys_4,carbon_building_kgco2e_per_m2,0.9,0.69275,20.577,804,869
+hgb,unseen_storeys,storeys_5,carbon_building_kgco2e_per_m2,0.9,0.81094,20.664,810,841
+hgb,unseen_storeys,storeys_6,carbon_building_kgco2e_per_m2,0.9,0.87078,25.72,806,859
+hgb,unseen_storeys,storeys_7,carbon_building_kgco2e_per_m2,0.9,0.56138,24.2,833,725
+hgb,unseen_storeys,storeys_8,carbon_building_kgco2e_per_m2,0.9,0.74621,16.334,833,725
+hgb,random,pooled,carbon_building_kgco2e_per_m2,0.9,0.90082,23.442,782,978
+hgb,unseen_storeys,pooled,carbon_building_kgco2e_per_m2,0.9,0.73267,22.114,4890,4889
