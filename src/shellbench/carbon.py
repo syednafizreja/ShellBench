@@ -558,75 +558,29 @@ def carbon_rows(quantities: list[dict], factors: dict[tuple[str, str], tuple[flo
 def plot_quantities(quantities: list[dict], path: Path) -> None:
     """Save stacked bars of concrete and steel per m^2 by element (grid plan).
 
+    Drawn in the house style by ``figures.quantities`` (PNG, PDF and SVG).
+
     Args:
         quantities: Rows of ``take_off``.
-        path: Output PNG.
+        path: Output PNG (PDF and SVG are written next to it).
     """
-    import matplotlib
+    from shellbench import figures
 
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-
-    colours = ("#2a5783", "#5b8db8", "#9cc3e0", "#c9a227", "#7a7a7a", "#b5651d")
-    sources = ("thesis", "code")
-    fig, axes = plt.subplots(1, 2, figsize=(7.6, 3.6))
-    panels = ((axes[0], ("C40",), "Concrete [m³ per m² floor]"),
-              (axes[1], ("HRB400", "HPB300"), "Steel [kg per m² floor]"))
-    for ax, mats, label in panels:
-        bottom = [0.0, 0.0]
-        for e, col in zip(ELEMENTS, colours):
-            vals = [sum(q["per_floor_area [unit/m2]"] for q in quantities
-                        if q["plan [text]"] == "grid" and q["steel_source [text]"] == s
-                        and q["element [text]"] == e and q["material [text]"] in mats)
-                    for s in sources]
-            ax.bar(sources, vals, bottom=bottom, color=col, label=e, width=0.55)
-            bottom = [b + v for b, v in zip(bottom, vals)]
-        ax.set_ylabel(label)
-        ax.set_xlabel("steel source")
-        ax.grid(True, axis="y", color="#dddddd", linewidth=0.6)
-        ax.set_axisbelow(True)
-    axes[1].legend(fontsize=7, frameon=False, loc="upper left", bbox_to_anchor=(1.0, 1.0))
-    fig.suptitle("Anchor building, grid plan (B11): quantities by element", fontsize=9)
-    fig.text(0.01, 0.01, "© 2026 Syed Nafiz Reja Hasib.", fontsize=6.5, color="#666666")
-    fig.tight_layout(rect=(0, 0.03, 1, 1))
-    path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path, dpi=200, metadata={"Software": None})
-    plt.close(fig)
+    figures.quantities(quantities, path)
 
 
 def plot_carbon(rows: list[dict], path: Path) -> None:
     """Save stacked bars of A1-A3 per m^2 by element, per factor set (grid plan).
 
+    Drawn in the house style by ``figures.carbon`` (PNG, PDF and SVG).
+
     Args:
         rows: Rows of ``carbon_rows``.
-        path: Output PNG.
+        path: Output PNG (PDF and SVG are written next to it).
     """
-    import matplotlib
+    from shellbench import figures
 
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-
-    colours = ("#2a5783", "#5b8db8", "#9cc3e0", "#c9a227", "#7a7a7a", "#b5651d")
-    grid = [r for r in rows if r["plan [text]"] == "grid"]
-    bars = sorted({(r["factor_set [text]"], r["steel_source [text]"]) for r in grid})
-    labels = [f"{s}\n{src}" for s, src in bars]
-    fig, ax = plt.subplots(figsize=(6.4, 3.8))
-    bottom = [0.0] * len(bars)
-    for e, col in zip(ELEMENTS, colours):
-        vals = [sum(r["A1-A3 per floor area [kgCO2e/m2]"] for r in grid
-                    if (r["factor_set [text]"], r["steel_source [text]"]) == b
-                    and r["element [text]"] == e) for b in bars]
-        ax.bar(labels, vals, bottom=bottom, color=col, label=e, width=0.55)
-        bottom = [x + v for x, v in zip(bottom, vals)]
-    ax.set_ylabel("A1-A3 [kgCO₂e per m² floor]")
-    ax.grid(True, axis="y", color="#dddddd", linewidth=0.6)
-    ax.set_axisbelow(True)
-    ax.legend(fontsize=7, frameon=False, loc="upper left", bbox_to_anchor=(1.0, 1.0))
-    fig.text(0.01, 0.01, "© 2026 Syed Nafiz Reja Hasib.", fontsize=6.5, color="#666666")
-    fig.tight_layout(rect=(0, 0.03, 1, 1))
-    path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path, dpi=200, metadata={"Software": None})
-    plt.close(fig)
+    figures.carbon(rows, path)
 
 
 def main(repo_root: Path | None = None) -> dict:
