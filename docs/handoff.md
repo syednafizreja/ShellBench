@@ -1,7 +1,16 @@
-# Handoff between Claude in the app and Claude Code in VS Code
+﻿# Handoff between Claude in the app and Claude Code in VS Code
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 9 Nov 2026 (sync; #151 merged; code clauses re-read), Claude Code in VS Code
+
+- Last handoff read: 9 Nov, Days 43-45 surrogate worked ahead by Claude in the app (PR #151). Its CI was green. I took the Claude attribution line out of the PR body and merged it.
+- pytest after the merge: 214 passed. `anchor_frame`: results/ byte-identical (figures/ restored). `python -m shellbench.ml.conformal`: I stopped it after about 50 minutes because it had printed nothing. The handoff gave about 10 minutes, so this is not verified on this laptop. Open: rerun it on its own, or check why it is slow here.
+- Code clauses, re-read 9 Nov (checked by Claude, author to confirm):
+  - JGJ 3-2010 has a full-text copy at morgain.com/Help/JGJ3-2010. Cl. 3.6.1 and 3.6.2 match the 8 Nov reading. Cl. 5.1.5 has a second sentence: where the floor may deform noticeably in its own plane, the analysis must include that deformation or adjust the results. It gives no numeric test, so the ASCE 2× test stays. Cl. 1.0.2: the code covers residential buildings of 10 storeys or more or over 28 m, and other civil buildings over 24 m. The taller family members may fall inside it [J]. Cl. 3.6.3 sets an 80 mm minimum for cast slabs. It is not applied to the 50 to 80 mm shell, which falls under JGJ 22 [J]. **Author to decide.**
+  - GB 1499.2-2024: the full text on jianbiaoku gives cl. 5.1 (6 to 50 mm) and cl. 5.2 (areas in Table 2). Table 2 is an image there and was not read. The code uses π d²/4 = 1017.9 and 1256.6 mm², which is Table 2 to rounding. The `[?]` marks in generator.py are removed.
+  - ASCE 7-16 cl. 12.3.1.3: unchanged. The source is still NIST GCR 17-917-47 (a free government document that states the 7-16 rule) plus the 7-10 text. The 7-16 text is paywalled.
+- Not done: Day 46 decision and leakage tests (on the 10 Nov schedule) and the surrogate freeze, which needs author approval.
 ## 9 Nov 2026 (Days 43-45 surrogate, worked ahead), Claude in the app
 
 - Last handoff read: 9 Nov sync (Claude Code); Day 31 merged.
