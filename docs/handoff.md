@@ -2,6 +2,11 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 9 Nov 2026 (author approvals; surrogate frozen), Claude Code in VS Code
+
+- The author approved everything open on 9 Nov. Surrogate code, grids and split rules are frozen at commit 5c11ce8 (docs/surrogate_notes.md). JGJ 3 cl. 3.6.3 is not applied to the shell. The JGJ 3 cl. 1.0.2 scope goes in as a Paper 1 limitation (docs/floor_concept.md).
+- Open: `python -m shellbench.ml.conformal` was stopped twice on this laptop, at about 50 and 20 minutes, both times with no output. It uses GridSearchCV with n_jobs=-1, so it may just be slow here [J]. Run it once overnight, or in CI, to confirm the results reproduce.
+- Next: Day 46, the decision test and the leakage test (10 Nov).
 ## 9 Nov 2026 (sync; #151 merged; code clauses re-read), Claude Code in VS Code
 
 - Last handoff read: 9 Nov, Days 43-45 surrogate worked ahead by Claude in the app (PR #151). Its CI was green. I took the Claude attribution line out of the PR body and merged it.
