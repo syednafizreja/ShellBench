@@ -52,8 +52,6 @@ LOAD_GRAVITY: float = 1.0
 CCX_TIMEOUT_S: int = 900
 SET_ITEMS_PER_LINE: int = 12  # node numbers on one line of a set in the deck
 STRESS_COMPONENTS: int = 6  # sxx, syy, szz, sxy, sxz, syz in the .dat file
-FIGURE_SIZE_IN: tuple[float, float] = (5.5, 3.8)
-FIGURE_DPI: int = 200
 
 Surface = Callable[[float, float], tuple[float, float, float]]
 
@@ -341,30 +339,13 @@ def write_convergence(rows: list[dict], path: Path = CONVERGENCE_CSV) -> None:
 
 
 def plot_convergence(rows: list[dict], path: Path = CONVERGENCE_PNG) -> None:
-    """Plot normalised displacement against elements per side, with the 2 % band."""
-    import matplotlib
+    """Plot normalised displacement against elements per side, with the 2 % band.
 
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
+    Drawn in the house style by ``figures.convergence`` (PNG, PDF and SVG).
+    """
+    from shellbench import figures
 
-    labels = {"scordelis_lo": "Scordelis-Lo roof", "hemisphere": "Pinched hemisphere"}
-    fig, ax = plt.subplots(figsize=FIGURE_SIZE_IN)
-    ax.axhspan(1.0 - TOLERANCE, 1.0 + TOLERANCE, color="0.9", label="Within 2 %")
-    ax.axhline(1.0, color="0.4", lw=0.8)
-    for (problem, label), marker in zip(labels.items(), ("o", "s")):
-        part = [r for r in rows if r["problem"] == problem]
-        ax.plot([r["n"] for r in part], [r["normalised"] for r in part], marker=marker,
-                label=label)
-    ax.set_xscale("log", base=2)
-    ax.set_xticks(MESH_ELEMENTS, [str(n) for n in MESH_ELEMENTS])
-    ax.minorticks_off()
-    ax.set_xlabel("Elements per side of the patch")
-    ax.set_ylabel("Normalised displacement [-]")
-    ax.legend(frameon=False)
-    fig.tight_layout()
-    path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path, dpi=FIGURE_DPI)
-    plt.close(fig)
+    figures.convergence(rows, path, tolerance=TOLERANCE)
 
 
 if __name__ == "__main__":
