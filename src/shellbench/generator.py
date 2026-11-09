@@ -53,9 +53,11 @@ COLUMN_GROWTH_LIMIT = 1.5  # R11 stopping rule of the "columns_first" rule [J]
 #: R11 drift-fix rules (decision card 2, 5 Nov 2026 [J]). "best_ratio" is the
 #: default; "columns_first" is the rule of 4 Nov, kept for the sensitivity run.
 DRIFT_RULES = ("best_ratio", "columns_first")
-BAR_DIAMETERS_MM = (12, 14, 16, 18, 20, 22, 25, 28, 32)  # R15 [J]; GB 1499.2 [?]
+BAR_DIAMETERS_MM = (12, 14, 16, 18, 20, 22, 25, 28, 32)  # R15 [J]; GB 1499.2 cl. 5.1
 #: Column bars may also be 36 and 40 mm (7 Nov 2026, P1) [J]. Both are standard
-#: HRB400 sizes in GB/T 1499.2 [?] (author to confirm). Beams and panels keep
+#: sizes in GB 1499.2-2024 cl. 5.1 (6 to 50 mm); areas pi d^2 / 4 match Table 2
+#: (1018, 1257 mm^2) to rounding (checked by the AI assistant 9 Nov 2026, design_rules
+#: R15; author to confirm). Beams and panels keep
 #: BAR_DIAMETERS_MM.
 COLUMN_BAR_DIAMETERS_MM = BAR_DIAMETERS_MM + (36, 40)
 BARS_PER_LAYER = (2, 6)  # R15 [J], 300 mm beam
