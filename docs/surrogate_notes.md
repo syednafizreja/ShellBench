@@ -1,4 +1,4 @@
-# Surrogate study notes (Paper 2, H4)
+﻿# Surrogate study notes (Paper 2, H4)
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
 
@@ -27,5 +27,5 @@ When it fails: on the unseen-storeys split, the test errors are not drawn from t
 
 - Targets: whole-building carbon, floor carbon, largest drift ratio, period T1.
 - Splits: random (80 / 20) and unseen storeys (leave one storey count out, six folds), as in preregistration 2.4. The playbook mentions a third split; adding it would need a change-log entry.
-- Hyperparameter grids and the Gaussian-process subsample (1,000 rows): `ml/train.py`. Frozen by commit before the dataset DOI.
+- Hyperparameter grids and the Gaussian-process subsample (1,000 rows): `ml/train.py`. Frozen by commit before the dataset DOI. **Frozen 9 Nov 2026 at commit 5c11ce8** (`src/shellbench/ml/` unchanged since PR #151); approved by the author on 9 Nov 2026. Any later change to models, grids, split rules or the calibration fraction needs a change-log entry in the preregistration.
 - Calibration set: 20 % of the training rows.
