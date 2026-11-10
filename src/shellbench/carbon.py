@@ -440,6 +440,7 @@ class _NoFrameSteel:
     size-independent elements only (frame beams come from the generator)."""
 
     def __getitem__(self, _key):
+        """Return the same stub for any key."""
         return self
 
     def mass_kg(self, _clear_m: float) -> float:
