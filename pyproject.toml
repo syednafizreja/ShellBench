@@ -22,6 +22,9 @@ Issues = "https://github.com/syednafizreja/ShellBench/issues"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+shellbench = ["*.mplstyle"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
