@@ -7,7 +7,7 @@ Newest entry first. Each the AI assistant reads this at the start of a session a
 - Last handoff read: 10 Nov sync; nothing open; next is Day 33 (v0.4 and dataset DOI, 11 Nov).
 - README was last updated on Day 22 (30 Oct). Now current to Day 46: status, area table (anchor, preregistration, generator and family, shell floor, shell family, anchor headline, surrogate, Paper 1, figures, tests 238 passed today), diagram colours, roadmap (weeks 2-4 done, 5-7 in progress), docs table, repo map, reproduce and figure commands, waterfall figure with caption, DOIs. Every family and surrogate number is labelled pre-release.
 - DOIs checked on the Zenodo API today: concept 10.5281/zenodo.23851675, v0.1.0 10.5281/zenodo.23851676. Only v0.1.0 is on Zenodo; v0.2.0 and v0.3.0 are plain tags.
-- Open: GitHub issues 2-4 (weeks 2-4) are still open although their work is done; close them at the next week-issue comment if the author agrees with the README status.
+- Later the same day, at the author's request: merged #158 (14 docstrings only, CI green; the one in ml/decision.py changes no code, so the 5c11ce8 freeze of code and hyperparameters holds); closed #159 as superseded by #160; closed week issues 2-4 with evidence comments (week 3 notes the 36-building family from decision card 1). Open issues: 5-8. Nothing else open.
 
 ## 10 Nov 2026 (sync; #154 and #155 merged; conformal reproduced), the AI assistant
 
