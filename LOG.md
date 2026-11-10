@@ -180,6 +180,16 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 46 - 10 Nov 2026 (surrogate leakage test and decision test) [pre-release data]
+
+Done: `src/shellbench/ml/decision.py`, two new tests (216 passed), results/surrogate_leakage.csv, surrogate_decision.csv, surrogate_decision_summary.csv, figures/surrogate_decision.png, notes in docs/surrogate_notes.md. The surrogate freeze (commit 5c11ce8, approved 9 Nov) is unchanged; this adds a test only.
+Leakage: unseen-storeys split 36 of 36 checks pass; random split fails the storey and building checks as expected.
+Decision test (33 buildings, HGB fitted without the building's storey count): agreement with the full analysis 93.9 % (31 of 33). Always choosing the shell gives 97.0 %, so the surrogate is below the trivial rule. Same shell variant in 15 %; mean regret 5.5 kgCO2e/m2.
+H4 on pre-release data (not a verdict): ratio 2.27 holds, coverage 73.3 % fails, agreement holds: partly supported by rule 2.4. Final run on published data 12 Nov.
+Hand check: s03-p005 slab 103.39 and best rigid shell 97.78 kgCO2e/m2 recomputed from the raw parquet files; matches the decision file.
+Not done: ml step is not in `scripts/reproduce.py` (it runs once on published data after the DOI).
+Compliance: no thesis data; seed provenance.SEED; unseen-split leakage test passed before any decision result was read.
+
 ## Days 43-45 - 9 Nov 2026 (Track B surrogate: splits, three models, conformal intervals) [worked ahead, pre-release data]
 
 Done: `src/shellbench/ml/` (data, train, conformal), `docs/surrogate_notes.md`, `tests/test_ml.py` (7 tests; full suite 214 passed). Two splits: random 80/20, and leave-one-storey-count-out (6 folds). Three models: HistGradientBoosting, MLP, GP (1,000-row subsample). Tuning by 5-fold CV on training data only, grids frozen in code. Split-conformal 90 % intervals, 20 % calibration set. Seed `provenance.SEED`.

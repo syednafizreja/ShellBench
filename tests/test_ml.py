@@ -70,3 +70,35 @@ def test_models_fit_a_linear_target():
     for name in t.MODELS:
         est, _ = t.fit_tuned(name, x[:240], y[:240])
         assert t.metrics(y[240:], est.predict(x[240:]))["r2"] > 0.9, name
+
+
+def test_leakage_report_passes_unseen_and_fails_random(frame):
+    """Day 46: every unseen-storeys check passes; the random split fails the storey and building checks (the test can fail)."""
+    from shellbench.ml import decision as dc
+    rep = dc.leakage_report(frame)
+    assert dc.leakage_passes(rep)
+    rand = rep[rep["split"] == "random"]
+    failed = set(rand.loc[~rand["passed"], "check"])
+    assert failed == {"no storey count in both train and test", "no building in both train and test"}
+
+
+def test_decide_on_a_toy_frame():
+    """Two buildings: slab 100 vs shell 90 / 95 (shell wins); slab 100 vs shell 102 (slab wins). A wrong prediction flips one choice."""
+    import pandas as pd
+    from shellbench.ml import decision as dc
+    tgt = dc.TARGET
+    df = pd.DataFrame({
+        "building_id": ["a", "a", "a", "b", "b"], "storeys": [3, 3, 3, 4, 4], "pga_g": 0.1,
+        "floor_system": ["beam_slab", "shell_vault", "shell_vault", "beam_slab", "shell_vault"],
+        "floor_variant_id": ["slab", "v1", "v2", "slab", "v1"], tgt: [100.0, 90.0, 95.0, 100.0, 102.0]})
+    rigid = (df["floor_system"] == "shell_vault").to_numpy()
+    good = dc.decide(df, df[tgt].to_numpy(), rigid).set_index("building_id")
+    assert good.loc["a", "full_pick"] == "shell" and good.loc["b", "full_pick"] == "slab" and good["agree"].all()
+    assert good.loc["a", "true_best_variant"] == "v1" and good["regret_kgco2e_m2"].eq(0.0).all()
+    wrong = dc.decide(df, np.array([100.0, 97.0, 90.0, 100.0, 99.0]), rigid).set_index("building_id")
+    assert wrong.loc["a", "agree"] and wrong.loc["a", "surrogate_variant"] == "v2"
+    assert wrong.loc["a", "regret_kgco2e_m2"] == pytest.approx(5.0)
+    assert not wrong.loc["b", "agree"]
+    s = dc.summarise(wrong).set_index("measure")["value"]
+    assert s["agreement, surrogate vs full analysis"] == pytest.approx(0.5)
+    assert s["baseline agreement, always choose shell"] == pytest.approx(0.5)
