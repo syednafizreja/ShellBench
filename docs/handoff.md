@@ -2,6 +2,14 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 10 Nov 2026 (Day 46 surrogate decision and leakage tests), Claude in the app
+
+- Last handoff read: 9 Nov, author approvals; surrogate frozen at 5c11ce8. Pulled main (merge of #153).
+- Done: `ml/decision.py`, leakage test (unseen split 36 of 36 pass), decision test (agreement 93.9 % against an always-shell baseline of 97.0 %), figure, notes, 2 tests (216 passed). No frozen setting changed.
+- H4 on pre-release data reads partly supported (ratio and agreement hold, coverage 73 % fails). Not a verdict; the run on published data decides.
+- Open: the earlier note that `python -m shellbench.ml.conformal` hung on the laptop. It ran in about 10 minutes here, and `ml.decision` in 22 seconds; run both again after the DOI. Author still to confirm GB/T 1499.2 Table 2 and ASCE 7-16 12.3.1.3 in own copies.
+- Next: Day 33 (v0.4 and the dataset DOI, 11 Nov; gate is Day 31 checks and `scripts/reproduce.py`). Do not start the gate early.
+
 ## 9 Nov 2026 (author approvals; surrogate frozen), Claude Code in VS Code
 
 - The author approved everything open on 9 Nov. Surrogate code, grids and split rules are frozen at commit 5c11ce8 (docs/surrogate_notes.md). JGJ 3 cl. 3.6.3 is not applied to the shell. The JGJ 3 cl. 1.0.2 scope goes in as a Paper 1 limitation (docs/floor_concept.md).

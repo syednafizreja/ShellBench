@@ -29,3 +29,20 @@ When it fails: on the unseen-storeys split, the test errors are not drawn from t
 - Splits: random (80 / 20) and unseen storeys (leave one storey count out, six folds), as in preregistration 2.4. The playbook mentions a third split; adding it would need a change-log entry.
 - Hyperparameter grids and the Gaussian-process subsample (1,000 rows): `ml/train.py`. Frozen by commit before the dataset DOI. **Frozen 9 Nov 2026 at commit 5c11ce8** (`src/shellbench/ml/` unchanged since PR #151); approved by the author on 9 Nov 2026. Any later change to models, grids, split rules or the calibration fraction needs a change-log entry in the preregistration.
 - Calibration set: 20 % of the training rows.
+
+## Day 46: leakage test and decision test (10 Nov 2026, pre-release data)
+
+Code: `src/shellbench/ml/decision.py`. It adds a test and changes no frozen setting (models, grids, split rules, calibration fraction are as at commit 5c11ce8).
+
+**Leakage test.** Six checks per fold: no storey count, building or identical feature vector in both train and test; train and test rows disjoint; calibration rows inside the training rows and outside the test rows. Two global checks: no target and no identifier among the features. Result: unseen-storeys split 36 of 36 pass. The random split fails the storey and building checks, as it should (it mixes rows of one building); that failure shows the test can fail. H4 may now be judged.
+
+**Decision test.** For each building with a slab and a rigid shell row (33 of 36), the full analysis picks the lower whole-building carbon: the slab, or the best rigid shell variant. The surrogate (HGB, fitted without that building's storey count) picks the same way from its predictions.
+- Agreement 31 of 33 = 93.9 %. Threshold 80 % (preregistration 2.4).
+- Always choosing the shell agrees in 32 of 33 = 97.0 %. So the surrogate does worse than the trivial rule here. The 80 % criterion is easy to meet when the shell wins almost everywhere; I report both.
+- The full analysis picks the slab once (s05-p030, saving -0.3 %). The two misses are that building and s04-p005 (saving 4.6 % by the full analysis, the surrogate predicts -0.3 %). Neither is a clear call.
+- Shell variant: the surrogate picks the same variant as the full analysis in 5 of 33 (15 %). Mean regret 5.5 kgCO2e/m2 (3.7 % of the best shell carbon); largest 83.9. The surrogate ranks systems better than it ranks variants [J].
+- RMSE of the saving, surrogate against full analysis: 5.8 percentage points, on savings of 3 to 9 % for most buildings.
+
+**H4 read on pre-release data (not a verdict).** Error ratio unseen/random for HGB 25.62 / 11.30 = 2.27 (needs 1.5): holds. Conformal coverage on unseen storeys 73.3 % (needs 88 to 92 %): fails. Decision agreement 93.9 % (needs 80 %): holds. Two of three: *partly supported* by the rule in 2.4. The published-data run on 12 Nov decides.
+
+**Limits for Paper 2.** 33 buildings in the decision test is small: one building moves agreement by 3 points. The slab family has one design per building. Tuning grids were frozen before this run.

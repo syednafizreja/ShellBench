@@ -1,0 +1,45 @@
+split,fold,check,passed,detail
+random,all,no storey count in both train and test,False,"shared: [3, 4, 5, 6, 7, 8]"
+random,all,no building in both train and test,False,34 shared
+random,all,no identical feature vector in both,True,0 shared
+random,all,train and test rows are disjoint,True,0 shared
+random,all,calibration rows are training rows,True,782 calibration rows
+random,all,calibration and test rows are disjoint,True,0 shared
+unseen_storeys,storeys_3,no storey count in both train and test,True,shared: []
+unseen_storeys,storeys_3,no building in both train and test,True,0 shared
+unseen_storeys,storeys_3,no identical feature vector in both,True,0 shared
+unseen_storeys,storeys_3,train and test rows are disjoint,True,0 shared
+unseen_storeys,storeys_3,calibration rows are training rows,True,804 calibration rows
+unseen_storeys,storeys_3,calibration and test rows are disjoint,True,0 shared
+unseen_storeys,storeys_4,no storey count in both train and test,True,shared: []
+unseen_storeys,storeys_4,no building in both train and test,True,0 shared
+unseen_storeys,storeys_4,no identical feature vector in both,True,0 shared
+unseen_storeys,storeys_4,train and test rows are disjoint,True,0 shared
+unseen_storeys,storeys_4,calibration rows are training rows,True,804 calibration rows
+unseen_storeys,storeys_4,calibration and test rows are disjoint,True,0 shared
+unseen_storeys,storeys_5,no storey count in both train and test,True,shared: []
+unseen_storeys,storeys_5,no building in both train and test,True,0 shared
+unseen_storeys,storeys_5,no identical feature vector in both,True,0 shared
+unseen_storeys,storeys_5,train and test rows are disjoint,True,0 shared
+unseen_storeys,storeys_5,calibration rows are training rows,True,810 calibration rows
+unseen_storeys,storeys_5,calibration and test rows are disjoint,True,0 shared
+unseen_storeys,storeys_6,no storey count in both train and test,True,shared: []
+unseen_storeys,storeys_6,no building in both train and test,True,0 shared
+unseen_storeys,storeys_6,no identical feature vector in both,True,0 shared
+unseen_storeys,storeys_6,train and test rows are disjoint,True,0 shared
+unseen_storeys,storeys_6,calibration rows are training rows,True,806 calibration rows
+unseen_storeys,storeys_6,calibration and test rows are disjoint,True,0 shared
+unseen_storeys,storeys_7,no storey count in both train and test,True,shared: []
+unseen_storeys,storeys_7,no building in both train and test,True,0 shared
+unseen_storeys,storeys_7,no identical feature vector in both,True,0 shared
+unseen_storeys,storeys_7,train and test rows are disjoint,True,0 shared
+unseen_storeys,storeys_7,calibration rows are training rows,True,833 calibration rows
+unseen_storeys,storeys_7,calibration and test rows are disjoint,True,0 shared
+unseen_storeys,storeys_8,no storey count in both train and test,True,shared: []
+unseen_storeys,storeys_8,no building in both train and test,True,0 shared
+unseen_storeys,storeys_8,no identical feature vector in both,True,0 shared
+unseen_storeys,storeys_8,train and test rows are disjoint,True,0 shared
+unseen_storeys,storeys_8,calibration rows are training rows,True,833 calibration rows
+unseen_storeys,storeys_8,calibration and test rows are disjoint,True,0 shared
+all,all,no target column used as a feature,True,features: 10
+all,all,no identifier column used as a feature,True,"building_id, floor_variant_id"
