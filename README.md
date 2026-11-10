@@ -158,6 +158,7 @@ ShellBench/
 ├── figures/              generated figures
 ├── paper/                manuscripts (Paper 1 working files)
 ├── notes/                working notes (GB 50010 and GB 50011 primers)
+├── .github/workflows/    tests on every push and pull request; release workflow
 ├── .commands/     /sync and /today commands
 ├── LOG.md                daily research log
 ├── the project rules             rules for AI assistance
