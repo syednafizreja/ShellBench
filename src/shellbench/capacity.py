@@ -466,6 +466,7 @@ def beam_stirrups(grade: int, b_mm: float, h_mm: float, asv_req: float, bar_d_mm
     width = core_mm(b_mm, bar_d_mm)
 
     def best(s_max: float, d_min: int, zone_mm: float) -> Stirrups | None:
+        """Return the stirrup set with the least steel per unit length that meets the spacing, diameter and area limits in this zone, or None."""
         pick = None
         for d in STIRRUP_DIAMETERS_MM:
             if d < d_min:
@@ -541,6 +542,7 @@ def column_stirrups(grade: int, h_mm: float, asv_req: float, mu: float, bars: Co
     zone = column_zone_mm(h_mm, clear_height_m, root)
 
     def best(s_max: float, d_min: int, rho_req: float, zone_mm: float) -> Stirrups | None:
+        """Return the stirrup set with the least steel per unit length that meets the spacing, diameter, area and ratio limits in this zone, or None."""
         pick = None
         for d in STIRRUP_DIAMETERS_MM:
             if d < d_min:
@@ -579,6 +581,7 @@ def beam_stirrup_kg(b_mm: float, h_mm: float, bar_d_mm: float, clear_span_m: flo
     zone = min(end.zone_mm, ln / 2.0)
 
     def kg(st: Stirrups, length_mm: float) -> float:
+        """Return the stirrup steel mass [kg] for a member length [mm]."""
         per_set = (2.0 * (bw + hh) + (st.legs - 2) * hh) * bar_area(st.diameter_mm)  # mm^3
         return per_set * length_mm / st.spacing_mm * 1e-9 * STEEL_DENSITY_KG_M3
 
@@ -598,6 +601,7 @@ def column_stirrup_kg(h_mm: float, bar_d_mm: float, clear_height_m: float,
     z_t = min(top.zone_mm, hn - z_b)
 
     def kg(st: Stirrups, length_mm: float) -> float:
+        """Return the stirrup steel mass [kg] for a member length [mm]."""
         return 2.0 * st.legs * core * bar_area(st.diameter_mm) * length_mm / st.spacing_mm * 1e-9 * STEEL_DENSITY_KG_M3
 
     return kg(bottom, z_b) + kg(top, z_t) + kg(mid, max(0.0, hn - z_b - z_t))

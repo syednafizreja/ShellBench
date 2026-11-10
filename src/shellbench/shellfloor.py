@@ -87,6 +87,7 @@ def variants(path: Path = LIBRARY) -> list[dict]:
             continue
 
         def mean(f):
+            """Return the bay-weighted mean of f over the spans."""
             return sum(BAY_WEIGHTS_M[L] * f(cases[L], L) for L in BAY_WEIGHTS_M) / total
         out.append({
             "floor_variant_id": "+".join(cases[L].variant_id for L in sorted(cases)),
@@ -120,6 +121,7 @@ def factors() -> dict[str, float]:
     f = cb.read_factors(bt.FACTOR_FILE)
 
     def get(key):
+        """Return a carbon factor converted to the unit used here."""
         value, unit = f[key]
         return value * cb.CONVERSIONS[unit][1]
     out = {"concrete": get((bt.FACTOR_SET, bt.CONCRETE_GRADE)), "bar": get((bt.FACTOR_SET, cb.BAR_STEEL)),
