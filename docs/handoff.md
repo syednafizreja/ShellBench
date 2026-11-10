@@ -8,7 +8,7 @@ Newest entry first. Each the AI assistant reads this at the start of a session a
 - pytest on main before merges: 214 passed. `python -m shellbench.anchor_frame`: results/ byte-identical (figures restored, font bytes only).
 - On the author's "I approve all": merged #155 (Day 46 decision and leakage tests) and #154 (visual standard). They conflicted only in LOG.md and handoff.md; both entries kept, newest first. Trial merge tested first: 238 passed; anchor_compare differed by about 1e-14 only (known Windows noise), restored. CI passed on #154. The AI assistant attribution lines removed from both PR bodies.
 - Conformal open item closed: `python -m shellbench.ml.conformal` ran to the end on this laptop in 20 minutes (exit 0). results/surrogate_accuracy.csv and surrogate_coverage.csv byte-identical to the committed files; the two figures differed only in bytes and were restored. The earlier stops at 20 and 50 minutes were just too early.
-- Open for the author: `git stash list` holds "stray LOG.md lint edit 2026-11-10". It was an editor auto-format of LOG.md (table rule, a blank line, and it broke "and _runs.csv"). Not applied. Drop it with `git stash drop` if you do not want it.
+- Stray LOG.md editor auto-format (it broke "and _runs.csv"): stashed, then dropped. Nothing open.
 - Next: Day 33, v0.4 and the dataset DOI (11 Nov). The gate is the Day 31 checks and `scripts/reproduce.py`.
 
 ## 10 Nov 2026 (Day 46 surrogate decision and leakage tests), the AI assistant
