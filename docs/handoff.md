@@ -2,6 +2,13 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 10 Nov 2026 (README brought up to date), the AI assistant
+
+- Last handoff read: 10 Nov sync; nothing open; next is Day 33 (v0.4 and dataset DOI, 11 Nov).
+- README was last updated on Day 22 (30 Oct). Now current to Day 46: status, area table (anchor, preregistration, generator and family, shell floor, shell family, anchor headline, surrogate, Paper 1, figures, tests 238 passed today), diagram colours, roadmap (weeks 2-4 done, 5-7 in progress), docs table, repo map, reproduce and figure commands, waterfall figure with caption, DOIs. Every family and surrogate number is labelled pre-release.
+- DOIs checked on the Zenodo API today: concept 10.5281/zenodo.23851675, v0.1.0 10.5281/zenodo.23851676. Only v0.1.0 is on Zenodo; v0.2.0 and v0.3.0 are plain tags.
+- Open: GitHub issues 2-4 (weeks 2-4) are still open although their work is done; close them at the next week-issue comment if the author agrees with the README status.
+
 ## 10 Nov 2026 (sync; #154 and #155 merged; conformal reproduced), the AI assistant
 
 - Last handoff read: 9 Nov, author approvals; surrogate frozen at 5c11ce8; open item was the conformal run on this laptop.
