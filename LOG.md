@@ -190,6 +190,12 @@ Hand check: s03-p005 slab 103.39 and best rigid shell 97.78 kgCO2e/m2 recomputed
 Not done: ml step is not in `scripts/reproduce.py` (it runs once on published data after the DOI).
 Compliance: no thesis data; seed provenance.SEED; unseen-split leakage test passed before any decision result was read.
 
+## Visual standard - 9 Nov 2026 (house style; every figure redrawn)
+
+Done: on my rule of 9 Nov (every output premium, nothing ordinary), one house style for all figures: src/shellbench/style.py and shellbench.mplstyle (Elsevier column widths 90/140/190 mm and 7 pt lettering, Arial; colours from the validated dataviz palette; vector PDF/SVG plus 600 dpi PNG). src/shellbench/figures.py redraws all seven figures from results/ without re-running analysis. docs/visual_standard.md holds the rules and the review checklist every figure, CLI output, README and card must pass. tests/test_style.py: 23 tests. The frozen surrogate code (ml/, 5c11ce8) is untouched: new scripts/surrogate_figures.py calls it, re-run in the cloud (about 11 min); surrogate_accuracy.csv came out byte-identical, and the new results/surrogate_predictions.csv feeds the parity figure. Week 4 LinkedIn cards rebuilt from HTML templates (project files, brand/).
+Checked: pytest 227 passed, 9 skipped (ccx not installed in the cloud); results/ unchanged apart from the new predictions file; RMSE printed on the parity panels equals surrogate_accuracy.csv.
+Compliance: sources - Elsevier Artwork sizing and Artwork overview pages (read 9 Nov 2026). AI use - The AI assistant wrote the style, figures, tests and checklist. Numbers - none new; figures show only values in results/. Data - nothing confidential; thesis_source/ not tracked. Repo - branch visual-standard.
+
 ## Days 43-45 - 9 Nov 2026 (Track B surrogate: splits, three models, conformal intervals) [worked ahead, pre-release data]
 
 Done: `src/shellbench/ml/` (data, train, conformal), `docs/surrogate_notes.md`, `tests/test_ml.py` (7 tests; full suite 214 passed). Two splits: random 80/20, and leave-one-storey-count-out (6 folds). Three models: HistGradientBoosting, MLP, GP (1,000-row subsample). Tuning by 5-fold CV on training data only, grids frozen in code. Split-conformal 90 % intervals, 20 % calibration set. Seed `provenance.SEED`.

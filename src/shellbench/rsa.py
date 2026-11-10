@@ -258,7 +258,8 @@ def plot_comparison(rsa: RsaResult, bsm: s.SeismicResult, thesis: list[s.ThesisS
 
     Storey on the y-axis; three lines per quantity (reading rule 4):
     base-shear method, response spectrum, thesis Table 8-12 (four-storey
-    shears V_i - 98.29 kN; printed Δu).
+    shears V_i - 98.29 kN; printed Δu). Drawn in the house style by
+    ``figures.seismic_compare`` (PNG, PDF and SVG).
 
     Args:
         rsa: The response-spectrum run.
@@ -266,50 +267,14 @@ def plot_comparison(rsa: RsaResult, bsm: s.SeismicResult, thesis: list[s.ThesisS
         thesis: Rows from ``seismic.read_thesis_seismic``.
         path: Output PNG path.
     """
-    import matplotlib
+    from shellbench import figures
 
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-
-    storeys = [1, 2, 3, 4]
-    v_thesis = [t.v_kn - s.THESIS_LEVEL5_FORCE_KN for t in thesis[:4]]
-    du_thesis = [t.du_mm for t in thesis[:4]]
-    series = [
-        # Categorical slots 1-3 of the dataviz reference palette (validated
-        # for colour-vision deficiency); markers and line styles also differ,
-        # so identity never rests on colour alone.
-        ("Base-shear method", "#2a78d6", "o", "-"),
-        ("Response spectrum (3 modes, SRSS)", "#eb6834", "s", "--"),
-        ("Thesis Table 8-12", "#1baf7a", "^", ":"),
-    ]
-    data = {
-        "shear": [bsm.shears_kn, rsa.shear_srss_kn, v_thesis],
-        "drift": [bsm.lateral.du_mm, rsa.du_srss_mm, du_thesis],
-    }
-    fig, axes = plt.subplots(1, 2, figsize=(8.0, 4.2), sharey=True)
-    for ax, key, xlabel in zip(axes, ("shear", "drift"),
-                               ("Storey shear [kN]", "Inter-storey drift Δu [mm]")):
-        for (label, colour, marker, ls), values in zip(series, data[key]):
-            ax.plot(values, storeys, color=colour, marker=marker, linestyle=ls, linewidth=1.6,
-                    label=label)
-        ax.set_xlabel(xlabel)
-        ax.set_xlim(left=0)
-        ax.grid(True, color="#dddddd", linewidth=0.6)
-        for side in ("top", "right"):
-            ax.spines[side].set_visible(False)
-    axes[0].set_ylabel("Storey")
-    axes[0].set_yticks(storeys)
-    handles, labels = axes[0].get_legend_handles_labels()
-    fig.legend(handles, labels, frameon=False, fontsize=8, loc="upper center", ncol=3,
-               bbox_to_anchor=(0.5, 0.93))
-    fig.suptitle("Anchor frame, axis (2): earthquake at 7 degrees, 0.10 g (bare-frame period)",
-                 fontsize=10)
-    fig.text(0.01, 0.01, "Thesis shears exclude the level-5 row (decision B4); thesis Δu as printed. "
-             "© 2026 Syed Nafiz Reja Hasib.", fontsize=6.5, color="#666666")
-    fig.tight_layout(rect=(0, 0.04, 1, 0.88))
-    path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path, dpi=200, metadata={"Software": None})
-    plt.close(fig)
+    table = [{"storey": i + 1,
+              "v_bsm": bsm.shears_kn[i], "v_rsa": rsa.shear_srss_kn[i],
+              "v_thesis": thesis[i].v_kn - s.THESIS_LEVEL5_FORCE_KN,
+              "du_bsm": bsm.lateral.du_mm[i], "du_rsa": rsa.du_srss_mm[i],
+              "du_thesis": thesis[i].du_mm} for i in range(4)]
+    figures.seismic_compare(table, path)
 
 
 def main(repo_root: Path | None = None) -> dict[str, list[dict]]:
