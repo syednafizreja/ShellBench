@@ -1,0 +1,14 @@
+measure,value
+buildings compared,33
+"agreement, surrogate vs full analysis",0.93939
+agreement needed (preregistration 2.4),0.8
+"baseline agreement, always choose shell",0.9697
+buildings where the full analysis picks the slab,1
+disagreements,2
+disagreements that are near ties (< 1 % saving),1
+buildings that are near ties,1
+same shell variant as the full analysis,0.15152
+mean regret of the surrogate's variant [kgCO2e/m2],5.5113
+largest regret [kgCO2e/m2],83.913
+mean regret as share of the best shell carbon [%],3.6866
+"RMSE of the saving, surrogate vs full [percentage points]",5.7872
