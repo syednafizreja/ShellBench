@@ -97,6 +97,7 @@ def run_checks() -> list[dict]:
     out: list[dict] = []
 
     def add(check: str, passed: bool | None, detail: str) -> None:
+        """Append one check result to the output list."""
         out.append({"check": check, "result": {True: "pass", False: "FAIL", None: "info"}[passed], "detail": detail})
 
     same = set(rc["building_id"]) == set(shell["building_id"])

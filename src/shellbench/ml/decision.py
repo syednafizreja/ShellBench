@@ -80,6 +80,7 @@ def leakage_report(df: pd.DataFrame) -> pd.DataFrame:
     rows = []
 
     def add(split: str, fold: str, check: str, passed: bool, detail: str) -> None:
+        """Append one check result row to the output list."""
         rows.append({"split": split, "fold": fold, "check": check, "passed": bool(passed), "detail": detail})
 
     for split, folds in t.splits(df).items():

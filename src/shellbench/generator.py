@@ -758,9 +758,11 @@ def capacity_step(b: BuildingInput, z: Sizes, cases: dict[str, CaseForces],
         return out
 
     def n_comb(key, s):
+        """Return the seismic-combination column axial force for one key and sign s."""
         return GAMMA_G_SEISMIC * ge.column_n[key] + s * GAMMA_EH * e.column_n[key]
 
     def mu_of(key):
+        """Return the largest axial compression ratio over the load signs for one column."""
         return max(n_comb(key, s) for s in signs) * 1e3 / (c.FC_N_MM2 * area)
 
     # 1. column end moments of the seismic combinations, then magnification
@@ -768,11 +770,14 @@ def capacity_step(b: BuildingInput, z: Sizes, cases: dict[str, CaseForces],
                     for end in (0, 1)] for key in ge.column_m} for s in signs}
 
     def beam_face(key, end, s):
+        """Return the seismic-combination beam moment at the column face for one key, end and sign s."""
         def f(case):
+            """Return the face moment of one load case."""
             return face_moment(cases[case].beam_m[key][end], cases[case].beam_v[key][end], a)
         return GAMMA_G_SEISMIC * f("GE") + s * GAMMA_EH * f("E")
 
     def mbua(k, loc):
+        """Return the beam-end flexural capacity moment for beam k at location loc."""
         bw, h = z.beams_mm[k]
         as_req, label = beam_steel[(k, loc)]
         return cap.beam_mbua_knm(bars_area_mm2(label, as_req), h, c.A_S_MM, c.GAMMA_RE_BEAM_FLEXURE)
