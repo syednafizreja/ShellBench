@@ -1,7 +1,7 @@
 {
   "beam_i_factor": null,
   "drift_rule": "best_ratio",
-  "git_commit": "83b39540a7db03865e69d33a5d8405904d4ed589+dirty",
+  "git_commit": "47b70a563ef1339dbf6ad9e11687d5e7bff72ac0",
   "n": null,
   "rows": 36,
   "scope": "building_v2",
