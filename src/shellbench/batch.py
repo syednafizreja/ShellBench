@@ -70,7 +70,7 @@ from shellbench import seismic as s
 ROOT = Path(__file__).resolve().parents[2]
 FACTOR_FILE = ROOT / "data" / "carbon_factors.csv"
 FACTOR_SET = "GBT51366"  # the only set in data/carbon_factors.csv
-RELEASE = "pre-release, not for results"  # schedule.md, ShellForm hand-over item 2
+RELEASE = "v0.4.0 dataset release"  # was "pre-release, not for results" until the DOI version (schedule.md, ShellForm hand-over item 2)
 TAKEOFF_SCOPE = "frame_strip_v1"  # slab, frame beams, columns, longitudinal bars
 #: Take-off scopes. ``building_v2`` adds the size-independent elements of the
 #: anchor plan (``carbon.family_fixed_per_m2``): slab bars and secondary beams
@@ -291,11 +291,15 @@ def write(df: pd.DataFrame, stem: Path, **settings) -> None:
     """Write ``stem``.parquet, ``stem``.csv (4 significant figures) and ``stem``.provenance.json.
 
     ``settings`` (the run's command-line options) go into the provenance file.
+    The git commit is read before the result files are written, so a clean tree
+    is recorded as clean: writing a tracked result file would otherwise add
+    "+dirty" to the commit of the very run that wrote it.
     """
+    commit = provenance.git_commit(ROOT)
     stem.parent.mkdir(parents=True, exist_ok=True)
     df.to_parquet(stem.with_suffix(".parquet"), index=False)
     df.to_csv(stem.with_suffix(".csv"), index=False, float_format="%.4g")
-    provenance.write_sidecar(stem, ROOT, rows=len(df), **settings)
+    provenance.write_sidecar(stem, ROOT, rows=len(df), **{**settings, "git_commit": commit})
 
 
 def main(argv: list[str] | None = None) -> None:
