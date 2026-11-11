@@ -1,12 +1,12 @@
 {
   "beam_i_factor": null,
   "drift_rule": "best_ratio",
-  "git_commit": "44fec62e84e835ca7f81a4609f4c0b300bae30c9+dirty",
+  "git_commit": "83b39540a7db03865e69d33a5d8405904d4ed589+dirty",
   "n": null,
   "rows": 36,
   "scope": "building_v2",
   "seed": 20261103,
-  "shellbench_version": "0.2.0",
+  "shellbench_version": "0.4.0",
   "versions": {
     "matplotlib": "3.11.2",
     "numpy": "2.5.3",
