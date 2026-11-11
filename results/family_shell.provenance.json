@@ -1,9 +1,9 @@
 {
-  "git_commit": "44fec62e84e835ca7f81a4609f4c0b300bae30c9+dirty",
+  "git_commit": "a0d374a6efd5e13acb4d8885c4d106ae041fcb03",
   "pga": null,
   "rows": 5184,
   "seed": 20261103,
-  "shellbench_version": "0.2.0",
+  "shellbench_version": "0.4.0",
   "storeys": null,
   "toppings": [
     0,
