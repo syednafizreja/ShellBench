@@ -180,6 +180,14 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 33 - 11 Nov 2026 (v0.4.0 and the dataset DOI)
+
+Done-when ("GATE: Day 31 checks, and `python scripts/reproduce.py` rebuilds every result with provenance files"): met. Full `scripts/reproduce.py` from a clean main (bc697ef) in the cloud: pytest 238 passed; anchor, panel, floor library, both families, diaphragm factors, anchor comparison and Day 31 checks all rebuilt. Against the committed files: both family parquet files identical (relative difference 0); `panel_day25.csv` and `floor_library.csv` differ only in the last printed digit of a few CalculiX values (largest relative difference 1.7e-4; CalculiX 2.21 here against 2.23; no pass flag changed); `anchor_carbon.csv` in line endings only. These are the known exceptions in the reproduce.py docstring. All Day 31 checks pass (36 IDs in both files; sums; three hand-recomputed pairs).
+Then: version 0.4.0 (`pyproject.toml`, `__version__`, CITATION.cff); `batch.RELEASE = "v0.4.0"`; both families rebuilt from the committed code, so every row reads `release = "v0.4.0"`, `shellbench_version = "0.4.0"` and nothing else changed (checked column by column); `day31_checks.csv` unchanged. Data card part 2 (checks, failure counts, licence CC BY 4.0 for results/, DOI). Release notes `docs/releases/v0.4.0.md`; merging them makes release.yml publish the GitHub release, and Zenodo mints the DOI.
+Failures (counted, not dropped): conventional 1 of 34 inside the code (2.9 %), shell 40 of 4,896 (0.8 %), all grade I at 0.40 g.
+Not done: surrogate figures keep their "pre-release data" footer until the 12 Nov run on this data. The release data were built in the cloud (Python 3.13, CalculiX 2.21); the provenance files say so.
+Compliance: sources - none new. AI use - The AI assistant ran the gate, wrote the release files and the data card part 2; the author confirms. Numbers - from results/day31_checks.csv and the two family files. Data - nothing confidential; thesis_source/ not tracked. Repo - branch day33-v0.4.
+
 ## Day 46 - 10 Nov 2026 (surrogate leakage test and decision test) [pre-release data]
 
 Done: `src/shellbench/ml/decision.py`, two new tests (216 passed), results/surrogate_leakage.csv, surrogate_decision.csv, surrogate_decision_summary.csv, figures/surrogate_decision.png, notes in docs/surrogate_notes.md. The surrogate freeze (commit 5c11ce8, approved 9 Nov) is unchanged; this adds a test only.
