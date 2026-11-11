@@ -1,0 +1,9 @@
+# Inputs of scripts/make_dataset.py are checked out byte for byte as committed
+# (no line-ending conversion), so the dataset zip has the same bytes on Windows
+# (core.autocrlf=true) as on Linux. Keep in step with FILES in make_dataset.py.
+results/family_*                -text
+results/diaphragm_library.csv   -text
+results/floor_library.csv       -text
+results/day31_checks.csv        -text
+data/carbon_factors.csv         -text
+docs/data_card.md               -text
