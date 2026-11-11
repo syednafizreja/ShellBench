@@ -2,6 +2,15 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 11 Nov 2026 (Day 33: v0.4.0 gate passed, dataset release), Claude in the app
+
+- Last handoff read: 10 Nov README entry; nothing open; next was Day 33.
+- Gate passed: full `scripts/reproduce.py` from clean main in the cloud (CalculiX 2.21 installed there today): 238 passed; families identical; only the known last-digit CalculiX and line-ending differences. Day 31 checks pass. Details in LOG Day 33.
+- v0.4.0: version bumped, `batch.RELEASE = "v0.4.0"`, both families rebuilt (only `release` and `shellbench_version` changed), data card part 2, `docs/releases/v0.4.0.md`. Merging the PR makes release.yml publish GitHub release v0.4.0; Zenodo then mints the DOI.
+- Decisions [J]: data licence CC BY 4.0 for results/ (charter, impact_strategy.md), code stays MIT. Provenance files say "+dirty" because LOG.md was edited during the rebuild; the code commit 7e10bde is clean for src/.
+- Open (author): (1) on Zenodo, open the new v0.4.0 record: check creator, set resource type to Dataset if wanted, add CC BY 4.0 for the data if Zenodo shows only MIT; then put the DOI into CITATION.cff, README, data_card part 2 (laptop or app). (2) ShellForm `paper/08_data_availability.md` "dataset DOI [?]" closes with that DOI. (3) Laptop: `git pull origin main`; no rerun needed.
+- Next: 12 Nov Day 32 H1-H3 verdicts and the final surrogate run on v0.4.0 (seed `provenance.SEED`); use `scripts/surrogate_figures.py`.
+
 ## 10 Nov 2026 (README brought up to date), Claude Code in VS Code
 
 - Last handoff read: 10 Nov sync; nothing open; next is Day 33 (v0.4 and dataset DOI, 11 Nov).
