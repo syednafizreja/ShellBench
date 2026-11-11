@@ -291,11 +291,15 @@ def write(df: pd.DataFrame, stem: Path, **settings) -> None:
     """Write ``stem``.parquet, ``stem``.csv (4 significant figures) and ``stem``.provenance.json.
 
     ``settings`` (the run's command-line options) go into the provenance file.
+    The git commit is read before the result files are written, so a clean tree
+    is recorded as clean: writing a tracked result file would otherwise add
+    "+dirty" to the commit of the very run that wrote it.
     """
+    commit = provenance.git_commit(ROOT)
     stem.parent.mkdir(parents=True, exist_ok=True)
     df.to_parquet(stem.with_suffix(".parquet"), index=False)
     df.to_csv(stem.with_suffix(".csv"), index=False, float_format="%.4g")
-    provenance.write_sidecar(stem, ROOT, rows=len(df), **settings)
+    provenance.write_sidecar(stem, ROOT, rows=len(df), **{**settings, "git_commit": commit})
 
 
 def main(argv: list[str] | None = None) -> None:
