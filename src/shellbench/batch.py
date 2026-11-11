@@ -70,7 +70,7 @@ from shellbench import seismic as s
 ROOT = Path(__file__).resolve().parents[2]
 FACTOR_FILE = ROOT / "data" / "carbon_factors.csv"
 FACTOR_SET = "GBT51366"  # the only set in data/carbon_factors.csv
-RELEASE = "pre-release, not for results"  # schedule.md, ShellForm hand-over item 2
+RELEASE = "v0.4.0 dataset release"  # was "pre-release, not for results" until the DOI version (schedule.md, ShellForm hand-over item 2)
 TAKEOFF_SCOPE = "frame_strip_v1"  # slab, frame beams, columns, longitudinal bars
 #: Take-off scopes. ``building_v2`` adds the size-independent elements of the
 #: anchor plan (``carbon.family_fixed_per_m2``): slab bars and secondary beams
