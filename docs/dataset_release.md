@@ -8,6 +8,8 @@ One zip, built by `python scripts/make_dataset.py` (deterministic): `shellbench_
 
 The zip hash changes if any packaged file changes (the data card is one of them). The hash in the Zenodo record must be the one of the file that is uploaded.
 
+Laptop check, 11 Nov 2026 (Claude Code, Windows, zlib 1.3.2) [J]: a build from the v0.4.0 tag gives zip SHA-256 `17b2d57541599d0e4ea39f9abace1ac3b06b67b1534efa4cc7c5ba8f4148d60e`, not the hash above. Every file inside it is byte-identical to the committed file. The zip hash can also differ because a different zlib compresses differently, so the portable check is `SHA256SUMS.txt` inside the zip, not the zip hash. Before this fix, Windows checkouts (`core.autocrlf=true`) turned LF into CRLF and changed the packed CSVs. `.gitattributes` now checks the inputs out byte for byte. Author to confirm: the uploaded zip's `SHA256SUMS.txt` matches the one from a build of the tag.
+
 ## Gate (schedule.md, Day 33)
 
 - Day 31 checks: all pass on the rebuilt files (results/day31_checks.csv).
