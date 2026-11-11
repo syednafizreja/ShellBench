@@ -2,6 +2,12 @@
 
 Newest entry first. Each session reads this at the start of a session and adds an entry at the end (see "Sync with cloud the assistant" in CONTRIBUTING.md).
 
+## 11 Nov 2026 (Day 33, later: Zenodo route), laptop session
+
+- The author asked the laptop session to finish the Zenodo step itself. This laptop has no browser control and no Zenodo credentials, so the laptop session wrote `C:\Users\ASUS\tools\zenodo\publish.py` (deposit API: draft, upload, MD5 check, metadata from `zenodo_metadata.json`, publish). Tested only up to the missing-token exit.
+- Decisions recorded in docs/dataset_release.md [J]: upload the laptop build of the tag (`17b2d575…`); keep `carbon_factors.csv` (author to confirm).
+- Open (author, physical): create a Zenodo token (scopes deposit:write and deposit:actions) and save it to `C:\Users\ASUS\.assistant\zenodo-token.txt`, then say "publish". The laptop session then publishes, adds the DOI to README, docs/data_card.md and CITATION.cff, and fixes the zip hash on line 7. If you'd rather use the web form, upload `dist/shellbench_dataset_v0.4.0.zip` from this laptop and paste the DOI.
+
 ## 11 Nov 2026 (Day 33 sync: PR #163 merged, v0.4.0 tagged), laptop session
 
 - Last handoff read: 11 Nov (Day 33, app): v0.4.0 dataset package; tag after merge; DOI after the author's Zenodo click.
