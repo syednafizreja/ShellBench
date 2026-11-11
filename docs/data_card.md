@@ -2,7 +2,7 @@
 
 **Format frozen 4 Nov 2026 (Day 18).** From this date no column is renamed and no column changes its unit or meaning. New columns may be added at the end only (schedule.md, "ShellForm data hand-over", item 1). Part 2 (how the rows were checked, failure counts, licence, DOI) follows on Day 20 and Day 31.
 
-Every row released before the dataset DOI (11 Nov 2026) carries `release = "pre-release, not for results"`.
+Every row released before the dataset DOI (11 Nov 2026) carried `release = "pre-release, not for results"`. The DOI version (v0.4.0, Day 33) carries `release = "v0.4.0"`; only these rows are used for results. Part 2 is at the end of this file.
 
 ## Files
 
@@ -38,7 +38,7 @@ Units are in the column name, or in the Unit column for names without one. `[-]`
 | # | Column | Unit | Meaning |
 |---|---|---|---|
 | 1 | `building_id` | text | Stable ID, see above |
-| 2 | `release` | text | "pre-release, not for results" until the DOI version |
+| 2 | `release` | text | "pre-release, not for results" before the DOI version; "v0.4.0" in the DOI version (11 Nov 2026) |
 | 3 | `shellbench_version` | text | `shellbench.__version__` of the code that wrote the row |
 | 4 | `takeoff_scope` | text | Which elements the quantities and carbon include. `frame_strip_v1` = one frame strip: slab, frame beams below the slab, columns, longitudinal bars only. Stirrups, footings, slab bars, longitudinal and secondary beams are not in it yet. Decision (author, 5 Nov 2026): `frame_strip_v1` is a pilot scope only. Paper 1 uses the preregistered scope (preregistration.md, Measured): C_floor = slab or vault with its bars, ties, fill, topping and secondary beams, and C_bldg = every element in the take-off, the same element set for both systems. A new scope value marks those rows. `building_v2` (added 5 Nov 2026; the format is unchanged, this is a new allowed value) = `frame_strip_v1` plus the grid-plan elements that do not depend on member size, per m², from `carbon.family_fixed_per_m2` (equal to results/anchor_quantities.csv, grid, code). Floor gets slab bars and secondary beams (concrete, bars, stirrups); lateral gets the longitudinal beams. [J] The anchor plan's values serve every family building, and stirrups use the HRB400 factor (D28 (e)). From 6 Nov 2026 `building_v2` also includes the frame-beam and column stirrups sized by R14 (design_rules.md R14, R16). They are in columns 39-40, as HPB300 mass with the bar steel factor (D28 (e)). `frame_strip_v1` still has longitudinal bars only. Still excluded: footings, corner columns, joint cores, and crack and deflection checks. Cross-check for s04-p010 against the anchor take-off: floor 57.6 vs 57.3 kgCO2e/m²; lateral 41.2 vs 58.9. The lateral gap has three causes: the excluded stirrups (anchor HPB300 3.36 kg/m² in columns, 0.71 in frame beams); the generator's 500 mm column against the anchor's 600 mm (a design difference); and the strip against the whole plan. The plan holds 1.3125 times the strip's columns and frame beams per m², because of the edge frames. Excluding these elements understates L, and lateral items are about the same for both systems, so S_b is biased high. Paper 1 must close this, or report S_b with the lateral elements at strip factor 1.0 and 1.3125, before any S_b is quoted |
 | 5 | `storeys` | [-] | Number of storeys |
@@ -141,3 +141,24 @@ Checks on the sample:
 - Floor carbon 40.8 kgCO2e/m² = 0.12 m slab × 340 kgCO2e/m³ by hand, in every `ok` row.
 - `s07-p010` is 26.15 m tall, so it is grade 2 with axial limit 0.75 (Tables 6.1.2 and 6.3.6). Its columns are 700 mm. Under the earlier single limit of 0.85 they were 650 mm.
 - The whole family (36 buildings) was also run on 4 Nov as a check: 34 `ok`, 0 `failed`, and 2 `outside_code` (`s07-p040` and `s08-p040`, taller than 24 m at 9 degrees).
+
+## Part 2: checks, failures, licence and DOI (Day 33, 11 Nov 2026)
+
+**Version.** ShellBench v0.4.0. Rows carry `release = "v0.4.0"` and `shellbench_version = "0.4.0"`. Seed `provenance.SEED`.
+
+**How the rows were checked.**
+- Reproduction: `python scripts/reproduce.py` (pytest, anchor, panel, floor library, both families, diaphragm factors, anchor comparison, Day 31 checks) was run from a clean checkout on 11 Nov 2026 before the release label was set. Against the committed files: family parquet values identical (relative difference 0); `panel_day25.csv` and `floor_library.csv` differ only in the last printed digit of a few CalculiX values (largest relative difference 1.7e-4, no pass flag changed); `anchor_carbon.csv` in line endings only.
+- Day 31 checks (`results/day31_checks.csv`): the same 36 building IDs in both families; floor + lateral = building in every `ok` row; floor carbon recomputed from quantities and `data/carbon_factors.csv` by code that shares nothing with the runner; three random pairs (seed 20261103) recomputed by hand. All pass.
+
+**Failure counts** (failures are counted, never dropped; preregistration.md).
+
+| File | ok | outside code | failed | failed share inside the code |
+|---|---|---|---|---|
+| `family_rc_r14_building_v2` | 33 | 2 | 1 | 1 of 34 = 2.9 % |
+| `family_shell` | 4,856 | 288 | 40 | 40 of 4,896 = 0.8 % |
+
+"Outside code" is s07 and s08 at 0.40 g (above the 24 m height limit). Every failure is grade I at 0.40 g (s04, s05, s06), where the generator did not converge within its resize limit.
+
+**Licence.** Code MIT (`LICENSE`). The data files in `results/` are released under CC BY 4.0, as the charter sets (`docs/impact_strategy.md`, "Citable data"). Cite the Zenodo record of v0.4.0.
+
+**DOI.** Minted by Zenodo from the GitHub release v0.4.0. The DOI is added here, in `CITATION.cff` and in the README after Zenodo shows it.

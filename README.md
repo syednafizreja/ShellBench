@@ -3,7 +3,7 @@
 [![Tests](https://github.com/syednafizreja/ShellBench/actions/workflows/tests.yml/badge.svg)](https://github.com/syednafizreja/ShellBench/actions/workflows/tests.yml)
 ![Python 3.12](https://img.shields.io/badge/python-3.12-blue)
 ![Licence: MIT](https://img.shields.io/badge/licence-MIT-green)
-![Status: Day 46, 10 Nov 2026](https://img.shields.io/badge/status-day%2046%20(10%20Nov%202026)-orange)
+![Status: Day 33, 11 Nov 2026, v0.4.0](https://img.shields.io/badge/status-v0.4.0%20dataset%20(11%20Nov%202026)-orange)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23851675.svg)](https://doi.org/10.5281/zenodo.23851675)
 
 **How much do thin-shell floors cut the whole-building A1–A3 embodied carbon of a GB 50010 / GB 50011 RC frame across 3–8 storeys, and how does the saving change with storey count and seismic intensity once diaphragm, tie and topping needs are met?**
@@ -12,7 +12,7 @@
 
 A thinner floor weighs less. Less weight means smaller seismic forces, which can mean smaller beams, columns and footings. ShellBench follows that chain through the whole building, using real design codes, rather than comparing floors on their own.
 
-> **Status (10 Nov 2026, Day 46).** The anchor, the generator, the shell floor module, both building families and the surrogate pipeline are built and checked. All family and surrogate numbers below are **pre-release**: the hypothesis verdicts are run once on the published dataset (12–13 Nov), not before. Next: v0.4 and the dataset DOI on 11 Nov. Daily progress is in [LOG.md](LOG.md); the handover between work sessions is in [docs/handoff.md](docs/handoff.md).
+> **Status (11 Nov 2026, Day 33).** The anchor, the generator, the shell floor module, both building families and the surrogate pipeline are built and checked. **v0.4.0 is the dataset DOI version**: `scripts/reproduce.py` rebuilt every result before release, and every family row now carries `release = "v0.4.0"` ([docs/releases/v0.4.0.md](docs/releases/v0.4.0.md), [docs/data_card.md](docs/data_card.md) part 2). Family and surrogate numbers quoted below were read on the pre-release files; the hypothesis verdicts are run once on v0.4.0 (12–13 Nov), not before. Daily progress is in [LOG.md](LOG.md); the handover between work sessions is in [docs/handoff.md](docs/handoff.md).
 
 | Area | State |
 |---|---|
