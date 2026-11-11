@@ -180,6 +180,15 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - Claude decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 33 - 11 Nov 2026 (v0.4.0 and the dataset package; DOI after the author's Zenodo click)
+
+Done-when ("dataset DOI"): not yet met. The package is ready; the DOI comes from the author's Zenodo publish click.
+Gate: `python scripts/reproduce.py` ran in full (6 min); every family file came back identical to the committed one (known noise only: line endings, last digit of a few CalculiX values). Day 31 checks all pass (3 families of checks, 3 paired buildings by hand).
+Changes: version 0.4.0; `release` label "v0.4.0 dataset release" (was "pre-release, not for results"); both families rebuilt. Column-by-column comparison with the pre-release files: only `release` and `shellbench_version` differ, so the H1-H3 verdicts (12 Nov) use the same numbers. Provenance fix: `batch.write` reads the git commit before it writes the result files; before, every committed file said "+dirty". Test added.
+Package: `scripts/make_dataset.py` (deterministic zip, 15 files, SHA-256 in docs/dataset_release.md), `zenodo_metadata.json`, 7 new tests (245 passed). Licence CC BY 4.0 for the data, MIT for the code.
+Open: author publishes the zip on Zenodo and pastes the DOI; tag v0.4.0 on the merge commit; DOI goes into README, data card and CITATION.cff. Day 32 verdicts and the final surrogate run follow on the published data (12 Nov).
+Compliance: no thesis data in the package; `data/carbon_factors.csv` is included because every carbon value traces to it (author to confirm they are happy to publish it); seed `provenance.SEED`.
+
 ## Day 46 - 10 Nov 2026 (surrogate leakage test and decision test) [pre-release data]
 
 Done: `src/shellbench/ml/decision.py`, two new tests (216 passed), results/surrogate_leakage.csv, surrogate_decision.csv, surrogate_decision_summary.csv, figures/surrogate_decision.png, notes in docs/surrogate_notes.md. The surrogate freeze (commit 5c11ce8, approved 9 Nov) is unchanged; this adds a test only.

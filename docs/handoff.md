@@ -2,6 +2,14 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 11 Nov 2026 (Day 33: v0.4.0 and the dataset package), Claude in the app
+
+- Last handoff read: 10 Nov (README current to Day 46; nothing open; Day 33 next). PR #155 had been merged.
+- Done: gate (full `scripts/reproduce.py`, Day 31 checks), version 0.4.0, release label changed to "v0.4.0 dataset release", both families rebuilt (only `release` and `shellbench_version` columns changed), provenance "+dirty" bug fixed in `batch.write`, `scripts/make_dataset.py` and docs/dataset_release.md, 245 tests pass.
+- For VS Code Claude after the author merges the PR: (1) create annotated tag `v0.4.0` on the merge commit ("Dataset release"), push it, no GitHub release (a release mints a DOI); (2) when the author pastes the Zenodo DOI, add it to README, docs/data_card.md and CITATION.cff, and tell ShellForm the published version is available; (3) run `python scripts/make_dataset.py` and check the SHA-256 against docs/dataset_release.md.
+- Open (author): publish the zip on Zenodo (steps in docs/dataset_release.md); confirm you are happy to publish `carbon_factors.csv` in the dataset; GB/T 1499.2 Table 2 and ASCE 7-16 cl. 12.3.1.3 in your copies.
+- Next: 12 Nov, Day 32 H1-H3 verdicts on the published data and the single final run of the surrogate (`python -m shellbench.ml.conformal`, `python -m shellbench.ml.decision`). Do not run them before the DOI exists.
+
 ## 10 Nov 2026 (README brought up to date), Claude Code in VS Code
 
 - Last handoff read: 10 Nov sync; nothing open; next is Day 33 (v0.4 and dataset DOI, 11 Nov).

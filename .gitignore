@@ -10,3 +10,4 @@ spooles.out
 .vscode/
 .claude/settings.local.json
 *.egg-info/
+dist/
