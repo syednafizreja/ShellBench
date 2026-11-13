@@ -12,7 +12,21 @@
 
 A thinner floor weighs less. Less weight means smaller seismic forces, which can mean smaller beams, columns and footings. ShellBench follows that chain through the whole building, using real design codes, rather than comparing floors on their own.
 
-> **Status (13 Nov 2026, Day 32).** H1 to H3 are decided on the v0.4.0 files: H1 partly supported, H2 not supported, H3 not supported (preregistration section 3). The anchor, the generator, the shell floor module, both building families and the surrogate pipeline are built and checked. The surrogate (H4) is not decided: it runs once on the published data. Surrogate and anchor-comparison numbers below are **pre-release**. The dataset package for v0.4.0 is built (`scripts/make_dataset.py`, [docs/dataset_release.md](docs/dataset_release.md)); it is published on Zenodo (13 Nov 2026, CC BY 4.0) as [10.5281/zenodo.24194144](https://doi.org/10.5281/zenodo.24194144). Family files are final at version 0.4.0. Daily progress is in [LOG.md](LOG.md); the handover between work sessions is in [docs/handoff.md](docs/handoff.md).
+> **Status (13 Nov 2026, Day 47).** All four hypotheses are decided (preregistration section 3). H1 partly supported, H2 not supported, H3 not supported (v0.4.0 files). H4 partly supported: the frozen surrogate ran once on the published data (error ratio 2.27 holds; conformal coverage 73.3 % on unseen storey counts fails; decision agreement 93.9 % holds, below the 97.0 % of always choosing the shell). The anchor, the generator, the shell floor module, both building families and the surrogate pipeline are built and checked. The anchor-comparison numbers below are from the v0.4.0 files. The dataset package for v0.4.0 is built (`scripts/make_dataset.py`, [docs/dataset_release.md](docs/dataset_release.md)); it is published on Zenodo (13 Nov 2026, CC BY 4.0) as [10.5281/zenodo.24194144](https://doi.org/10.5281/zenodo.24194144). Family files are final at version 0.4.0. Daily progress is in [LOG.md](LOG.md); the handover between work sessions is in [docs/handoff.md](docs/handoff.md).
+
+### Validation at a glance
+
+Differences between the model and the reference, as reported in [docs/anchor_report.md](docs/anchor_report.md) and `results/benchmarks_convergence.csv`. Large thesis differences are mostly errors in the thesis itself, each with a flag (D1–D29); the report gives the reason for every difference above 10 %.
+
+| Check | Reference | Result | Within 10 %? |
+|---|---|---|---|
+| Frame, dead load (40 targets) | Thesis tables | median difference 4.2 %; 11 targets above 10 % | Most; reasons in report 4.1 |
+| Frame, live load (40 targets) | Thesis tables | median difference 28.5 %; 26 above 10 % | No: thesis tables do not balance (D18, D19) |
+| Frame, 1.3 D + 1.5 L (40 targets) | Thesis tables | median difference 10.7 %; 21 above 10 % | About half |
+| Seismic base shear, bare frame | Thesis Table 8-12 | 214.75 against 264.77 kN, −18.9 % | No: thesis prints no period or weights (D24) |
+| Wind storey drift | Thesis Table 8-2 | −45 % to −87 % | No: thesis drifts cannot come from one frame (D22) |
+| Shell FE, Scordelis-Lo roof | MacNeal and Harder (1985) | 0.9984 of reference | Yes (−0.16 %) |
+| Shell FE, pinched hemisphere | MacNeal and Harder (1985) | 0.9965 of reference | Yes (−0.35 %) |
 
 | Area | State |
 |---|---|
@@ -22,12 +36,12 @@ A thinner floor weighs less. Less weight means smaller seismic forces, which can
 | Generator and conventional family | Done (tag v0.2.0, 6 Nov). The generator designs a frame to [docs/design_rules.md](docs/design_rules.md) (R3–R16, including capacity design). Family: 36 buildings, 3–8 storeys × six PGAs (0.05–0.40 g). 33 ok, 2 outside the code (above the 24 m limit), 1 failed to converge (grade I, 0.40 g); failures are counted, not dropped. |
 | Shell floor module | Done (tag v0.3.0, 8 Nov). CalculiX S8R benchmarks within 0.4 % (Scordelis-Lo roof 0.9984, pinched hemisphere 0.9965). One sized panel, then a floor library of 72 cases ([docs/floor_library.md](docs/floor_library.md)). Diaphragm test (in-plane deflection ≤ 2 × storey drift) and topping rule ([docs/floor_concept.md](docs/floor_concept.md)). |
 | Shell family | Run 8 Nov: 36 buildings × 36 floor variants × 4 toppings = 5,184 rows; 4,856 ok, 288 outside the code, 40 failed. Every ok row passes the diaphragm test, with no topping needed (worst ratio 0.0113). Family checks (IDs, failures, sums, three hand-checked pairs) in results/day31_checks.csv. |
-| Anchor headline (pre-release) | The 4-storey, 0.10 g building: floor carbon 57.6 → 47.4 kgCO2e/m² (S_f 17.8 %), whole building 102.1 → 95.7 kgCO2e/m² (S_b 6.2 %). See the figure below. |
-| Surrogate (Paper 2) | Built and frozen at commit 5c11ce8 (approved 9 Nov): random and leave-one-storey-count-out splits, three models, split-conformal intervals, leakage and decision tests ([docs/surrogate_notes.md](docs/surrogate_notes.md)). Pre-release: conformal coverage 0.733 on unseen storey counts (target 0.88–0.92); decision agreement 93.9 %, below the 97.0 % of always choosing the shell. Reported as found. |
+| Anchor headline | The 4-storey, 0.10 g building: floor carbon 57.6 → 47.4 kgCO2e/m² (S_f 17.8 %), whole building 102.1 → 95.7 kgCO2e/m² (S_b 6.2 %). See the figure below. |
+| Surrogate (Paper 2) | Built and frozen at commit 5c11ce8 (approved 9 Nov): random and leave-one-storey-count-out splits, three models, split-conformal intervals, leakage and decision tests ([docs/surrogate_notes.md](docs/surrogate_notes.md)). Run once on the published data (13 Nov 2026): H4 partly supported. Conformal coverage 0.733 on unseen storey counts (target 0.88–0.92); decision agreement 93.9 %, below the 97.0 % of always choosing the shell. Reported as found. |
 | Paper 1 | Methods skeleton, numbers file and references in [paper/paper1/](paper/paper1/). |
 | Figures | One house style for every figure and output ([docs/visual_standard.md](docs/visual_standard.md)); `python -m shellbench.figures` redraws them all from results/. |
-| Tests | pytest: 238 passed (10 Nov 2026). |
-| Open | The author confirms GB/T 1499.2 Table 2 and ASCE/SEI 7-16 cl. 12.3.1.3 in their own copies (checked by the AI assistant from open sources). H1–H4 verdicts wait for the published data. |
+| Tests | pytest: 261 passed (13 Nov 2026). |
+| Open | The author confirms GB/T 1499.2 Table 2 and ASCE/SEI 7-16 cl. 12.3.1.3 in their own copies (checked by the AI assistant from open sources). H1–H4 are decided; the author checks them in the 14–17 Nov window. |
 
 ![Anchor building: whole-building carbon, slab floor against shell floor](figures/anchor_waterfall.png)
 
