@@ -71,7 +71,21 @@ The pipeline follows schedule.md (Track B, Days 43-47). Its code and hyperparame
 
 ## 3. Verdicts
 
-None yet.
+**H1 to H3, run 13 Nov 2026 on the v0.4.0 files** (code `src/shellbench/verdicts.py`; results `results/verdicts_summary.csv`, `verdicts_buildings.csv`, `verdicts_slices.csv`; seed `provenance.SEED`; the rules of 2.1 to 2.3 applied as written). 33 of the 36 buildings are compared. The other three (s05-p040, s07-p040, s08-p040) have no `ok` conventional design (one failed, two are outside the code). Base carbon factors, every valid row, grade I included (2.0).
+
+| Hypothesis | Verdict | The numbers behind it |
+|---|---|---|
+| H1 | **Partly supported** | S_b > 0 in 32 of 33 buildings (97.0 %), so the 90 % rule holds but "every building" does not. S_b is below S_f in 27 of 33. S_b: minimum -0.3 % (s05-p030), median 5.7 %, maximum 30.7 %. S_f: minimum -62.9 % (s07-p030), median 14.3 %, maximum 17.8 %. |
+| H2 | **Not supported** | S_b against PGA is positive and significant in 0 of 6 storey-count slices; against storey count in 1 of 6 PGA slices (0.05 g). The lateral-system saving against PGA: 0 of 6. Median rank correlations are -0.14 for PGA and -0.14 for storeys. |
+| H3 | **Not supported** | The untopped floor passes the rule in all 33 buildings (0 failures; 0 of 1180 untopped variants fail), so the minimum topping is 0 mm and R is 0 in every building. Neither condition of the rule holds. |
+
+Sensitivities (C1 four factor bounds, C2 grade-I rows dropped): **no verdict changes in any of the five cases.** S_b > 0 in 32 (C30), 33 (C50), 32 (converter steel), 33 (electric-arc steel) of 33 buildings, and in 25 of the 26 buildings left when the grade-I rows are dropped. Median S_b ranges from 4.95 % to 6.24 % across the cases.
+
+Reading, my judgement [J], for the author to confirm: the whole-building saving is small and positive in most buildings, with a median near 6 %. The floor-level saving is not a reliable guide to it, because the lateral system does not get lighter in the median (lateral-system saving: median -2.5 kgCO2e/m², range -5.3 to 83.2). The two largest S_b values (17.3 % at 7 storeys and 30.7 % at 8 storeys, both 0.30 g) are grade-I buildings whose conventional design has 1300 mm columns (850 mm at 6 storeys, 0.30 g). Change C2 explains the mechanism: the generator grows grade-I columns because no bar layout fits, so those two values may partly reflect a generator limit and not the floor [J]. Without the grade-I rows (7 buildings with an `ok` conventional design; C2 says 6 rows, a count to reconcile) the maximum S_b is 9.6 %. H3 is "not supported" for a reason that depends on the model: elastic, uncracked, fully bonded shell, transverse load only, and the largest ratio of deformation to limit is 0.011 (88 times margin). Paper 1 must state this and must not claim that thin-shell floors are rigid diaphragms in general.
+
+**H4 is not given here.** It needs the single run of the frozen surrogate (2.4); the pre-release reading in docs/surrogate_notes.md is not a verdict.
+
+Transparency note on timing (change C3 below): these verdicts were run on the committed v0.4.0 family files before the Zenodo record exists.
 
 Transparency note (6 Nov 2026, before any verdict). R14 capacity design was added to the generator after the plan was approved (design_rules.md R14). The analysis plan is unchanged, but the design rules that make the family rows changed:
 - R14 sizes the column bars and the frame stirrups.
@@ -101,3 +115,9 @@ The Day 19 pilot files were made without R14 and are kept as they are. `generate
 - *Why the grade-I rows are flagged.* The bar-layout growth is a generator limitation (one bar set for all columns; no beam redesign to cut the demand) [J]. Paper 1 Methods states it and lists the grade-I rows.
 - *When.* Before any shell-family row, S_f, S_b or DOI-data result.
 
+**C3, 13 Nov 2026 (schedule.md slip rule, no change to any rule): verdicts run on the v0.4.0 files before the dataset DOI exists.**
+
+- *What.* Section 2.4 and the schedule say the verdicts run on the published dataset. The Zenodo record was not published by 13 Nov (it waits on the author's Zenodo token). schedule.md ("If the dataset DOI slips past 12 Nov") says the H1-H3 verdicts and the Paper 1 figures still come before the check window. I ran H1-H3 on the family files committed at tag v0.4.0.
+- *Why this is the same data.* The files in the dataset zip are byte-identical to those committed at v0.4.0 (docs/dataset_release.md; checked by VS Code Claude on 11 Nov). Only the DOI is missing, not any byte. The pre-release run and the v0.4.0 files differ only in the columns `release` and `shellbench_version`.
+- *Not changed.* No threshold, rule, hypothesis wording, factor or row. The rules are applied as written in 2.1-2.3 and C1-C2. Two details the plan left open are marked [J] in `verdicts.py`: slices with fewer than 4 buildings count as not significant, and "the lateral-system saving also grows with PGA" uses the same rule as S_b.
+- *When.* After the dataset files were final (11 Nov) and before any Paper 1 text uses a result.
