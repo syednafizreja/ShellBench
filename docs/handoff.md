@@ -2,6 +2,14 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 13 Nov 2026 (Day 47 sync; PR #173 merged), the AI assistant
+
+- Last handoff read: Day 47, H4 partly supported on the published data; equilibrium assertion added to the generator; optional `python -m shellbench.batch` rebuild for the author.
+- Checked PR #173 on the laptop before merging: pytest 261 passed; `shellbench.anchor_frame` and `shellbench.verdicts` left results/ unchanged; CI passed. The AI assistant footer was removed from the PR body. Merged (1dfe676).
+- Optional rebuild done as a check [J]: `python -m shellbench.batch --scope building_v2` to a scratch folder (5 s) ran with `check_equilibrium` on every analysis and raised nothing. Every column of the 36 rows equals `results/family_rc_r14_building_v2.csv` apart from provenance. The committed family files were not replaced: they match the published DOI, and only provenance would change.
+- After merge on main: pytest 261 passed; results/ unchanged.
+- Open (author): confirm the H4 reading (preregistration section 3); the check window for Paper 1 and 2 numbers before v0.5; the earlier "author to confirm" lines. Not automated yet: shell (CalculiX) equilibrium and the H = qL²/8f thrust check.
+
 ## 13 Nov 2026 (Day 47: H4 verdict, finishing cross-check), the AI assistant
 
 - Last handoff read: the DOI is published (10.5281/zenodo.24194144). Ran the frozen surrogate once on the published data: **H4 partly supported** (error ratio 2.27 holds, coverage 73.3 % fails, agreement 93.9 % holds, below the 97.0 % shell baseline). Verdict in preregistration section 3; result CSVs unchanged.
