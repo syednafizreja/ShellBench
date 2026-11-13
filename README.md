@@ -12,7 +12,7 @@
 
 A thinner floor weighs less. Less weight means smaller seismic forces, which can mean smaller beams, columns and footings. ShellBench follows that chain through the whole building, using real design codes, rather than comparing floors on their own.
 
-> **Status (11 Nov 2026, Day 33).** The anchor, the generator, the shell floor module, both building families and the surrogate pipeline are built and checked. All family and surrogate numbers below are **pre-release**: the hypothesis verdicts are run once on the published dataset (12–13 Nov), not before. The dataset package for v0.4.0 is built (`scripts/make_dataset.py`, [docs/dataset_release.md](docs/dataset_release.md)); its DOI is added here after the Zenodo publish. Family files are final at version 0.4.0; the surrogate and anchor-comparison numbers stay pre-release until their runs on the published data. Daily progress is in [LOG.md](LOG.md); the handover between work sessions is in [docs/handoff.md](docs/handoff.md).
+> **Status (13 Nov 2026, Day 32).** H1 to H3 are decided on the v0.4.0 files: H1 partly supported, H2 not supported, H3 not supported (preregistration section 3). The anchor, the generator, the shell floor module, both building families and the surrogate pipeline are built and checked. The surrogate (H4) is not decided: it runs once on the published data. Surrogate and anchor-comparison numbers below are **pre-release**. The dataset package for v0.4.0 is built (`scripts/make_dataset.py`, [docs/dataset_release.md](docs/dataset_release.md)); its DOI is added here after the Zenodo publish. Family files are final at version 0.4.0. Daily progress is in [LOG.md](LOG.md); the handover between work sessions is in [docs/handoff.md](docs/handoff.md).
 
 | Area | State |
 |---|---|

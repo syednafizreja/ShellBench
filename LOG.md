@@ -180,6 +180,16 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 32 - 13 Nov 2026 (H1-H3 verdicts) [run late: the 12 Nov run stopped at a usage limit]
+
+Done-when ("verdict for each of H1-H3, with the files behind it"): met, on the v0.4.0 files (change C3 in the preregistration: the Zenodo record does not exist yet, so the schedule's slip rule applies; the zip bytes equal the committed files).
+Result: **H1 partly supported** (S_b > 0 in 32 of 33 buildings; S_b below S_f in 27 of 33; S_b median 5.7 %, min -0.3 %, max 30.7 %). **H2 not supported** (S_b against PGA 0 of 6 storey slices positive and significant; against storeys 1 of 6; lateral saving 0 of 6). **H3 not supported** (0 of 33 untopped floors fail the rule; R = 0). Sensitivities (C1 four bounds, C2 grade-I dropped): no verdict changes.
+How: `src/shellbench/verdicts.py` recomputes carbon from the quantities and the factor file, applies rules 2.1-2.3 as written, permutation test 10 000 shuffles, seed `provenance.SEED`. 33 of 36 buildings compared; the three left out are listed in results/verdicts_summary.csv.
+Checks: recomputed carbon equals the family files (max error 6e-14); the three Day 31 hand pairs and the anchor (17.8 % / 6.2 %) come out the same; Spearman rho of every slice rechecked with scipy; 11 new tests, 256 total.
+Caveats [J]: the largest S_b values (17.3 % and 30.7 %, 0.30 g, 7 and 8 storeys) are grade-I buildings with 1300 mm conventional columns; without grade-I rows the maximum is 9.6 %. H3 holds only for an elastic, uncracked, fully bonded shell (largest ratio 0.011). The lateral-system saving is negative in the median (-2.5 kgCO2e/m2). C2 says 6 grade-I rows; the files have 7 buildings.
+Not done: H4 (needs the single run on published data); Day 34 frozen figures; Zenodo publish (author's token).
+Compliance: no thesis data; verdicts reported as found; two plan gaps marked [J] in the code and in C3.
+
 ## Day 33 - 11 Nov 2026 (v0.4.0 and the dataset package; DOI after the author's Zenodo click)
 
 Done-when ("dataset DOI"): not yet met. The package is ready; the DOI comes from the author's Zenodo publish click.
