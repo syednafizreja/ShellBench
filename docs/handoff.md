@@ -2,6 +2,14 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 13 Nov 2026 (v0.5.0, end of build), the AI assistant
+
+- Last handoff read: Day 47 open checks closed (PR #175); v0.5 was left open.
+- v0.5.0 [J]: schedule.md puts v0.5 on Fri 13 Nov, at the end of the build. The 14-17 Nov check window gates v1.0, not this tag. The package version moves from 0.4.0 to 0.5.0. The dataset version is read from the family files, so the v0.4.0 dataset and its DOI do not change. The plain annotated tag `v0.5.0` goes on the merge commit. There is no GitHub release, so no DOI is minted. README status line updated.
+- pytest 272 passed. results/ was unchanged after `anchor_frame`; figures/ restored.
+- Next: the check window from 14 Nov. The author checks the anchor report, the dataset, H1-H4 and the Paper 1 draft; the AI assistant only fixes. v1.0 (the software DOI) waits for those checks.
+- Open (author): confirm v0.5.0 and the earlier "author to confirm" lines.
+
 ## 13 Nov 2026 (Day 47 open checks closed), the AI assistant
 
 - Last handoff read: Day 47 sync, PR #173 merged; open were the H4 confirmation, the shell thrust and equilibrium checks, and the v0.5 check window.
