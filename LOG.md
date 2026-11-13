@@ -180,6 +180,15 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 48 - 13 Nov 2026 (v1.0 prepared; Paper 1 numbers checked)
+
+- PR #177 (shell reactions) checked on the laptop before merging: pytest 275 passed with CalculiX; `panel` and `floorlib` rerun with the new assertion on every force-only static run (72 library cases): nothing raised, results identical (floor_library.csv differed only in line endings; restored). Diaphragm runs use gravity, so the check skips them. The AI assistant footer removed from the PR body; merged (94eaff6).
+- Paper 1 numbers (paper/paper1/numbers.md): every row read again from its file at v0.5.0 by script; `[?]` tags resolved; new column "Checked by the AI assistant (author to confirm)". Correction: row 2.6 said "up to 72 variants, 2,592 rows"; the published family has 5,184 shell rows (4,856 ok, 288 outside code, 40 not converged). Note: the dead-load median is exactly 4.25 % (report prints 4.2 %). New rows 3.x: the frozen H1-H4 numbers.
+- Strip-vs-plan bound [J]: data_card row 4 said no S_b may be quoted until the lateral gap (plan = 1.3125 × strip columns and frame beams) is closed or bounded. `scripts/strip_factor_bound.py` gives median S_b 5.66 % at 1.0 (equals the frozen verdict) and 4.13 % at 1.3125; 32/33 positive and H1 "partly supported" either way. Exploratory, not a preregistered case; verdict files unchanged.
+- v1.0 prepared, not released: `docs/releases/v1.0.0.md` (notes) and `docs/v1_gate.md` (release step and checklist). The release workflow only reads the notes of the current package version (0.5.0), so nothing is released until the version is bumped after the check window.
+- Not done on purpose: the v1.0 release (DOI; waits for the author's checks), Paper 1 prose (author's), JOSS docs and tutorials (v1.0.x).
+- Compliance: no thesis_source files; every number traces to a results file or a script.
+
 ## Day 48 (check window, 14 Nov entry made on 13 Nov) - shell equilibrium, reaction side
 
 - Done: `shellfe.run` now prints the support reactions (`RF`) of every static run and `shellfe.check_equilibrium` asserts the balance when the model has nodal forces and no gravity. CalculiX leaves the load applied on a fixed degree of freedom out of `RF` (found by test: the Day 25 strip was short by exactly its 165 N on supported nodes), so the check is: constrained reactions + applied forces on free dofs = 0 per direction, tolerance 1e-6 of the summed absolute load. `read_displacements` and `read_stresses` stop at the reaction block. 3 new tests (`tests/test_shell_equilibrium.py`: strip balance, failure when a reaction is wrong, empty reactions is an error). 275 tests pass.

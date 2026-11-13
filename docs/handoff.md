@@ -10,6 +10,15 @@ Newest entry first. Each the AI assistant reads this at the start of a session a
 - Open [J]: gravity runs (Scordelis-Lo) are not checked. Open (author): the 14-17 Nov checks of the anchor report, dataset, H1-H4 and Paper 1.
 - For the AI assistant: pull, run pytest (needs `ccx` for the new tests; they skip without it).
 
+## 13 Nov 2026 (v1.0 prepared; PR #177 merged), the AI assistant
+
+- Last handoff read: v0.5.0 tagged (on origin, 8dac3bd); next was the 14-17 Nov check window, v1.0 gated by it.
+- PR #177 (shell reactions, made in the app) checked and merged: pytest 275 passed; `panel` and `floorlib` reran with the assertion live and left results/ unchanged. main is now one merge past v0.5.0.
+- Check-window work done by the AI assistant (author to confirm): Paper 1 numbers.md checked row by row (row 2.6 corrected to 5,184 shell rows; dead-load median is 4.25 %; H1-H4 rows added). Strip-vs-plan S_b bound [J]: median 4.13 % at factor 1.3125, H1 verdict unchanged (`scripts/strip_factor_bound.py`).
+- v1.0 is one PR away: `docs/v1_gate.md` lists the release step (bump to 1.0.0, CITATION.cff, README) and the checks. `docs/releases/v1.0.0.md` is written. Do not bump the version before the author ticks the gate.
+- Branch tidy-up was blocked by the permission classifier; the commands are in the author's list below.
+- Open (author): tick docs/v1_gate.md; then the release PR (mints the software DOI). Delete merged branches if wanted: `git push origin --delete day13-anchor-report-day23-formfind day15-close day15-design-rules day15-sync day16-sync day22-floor-concept paper1-factor-sensitivity paper1-methods-skeleton` and `git branch -D day15-close day15-design-rules day15-sync day16-sync`.
+
 ## 13 Nov 2026 (v0.5.0, end of build), the AI assistant
 
 - Last handoff read: Day 47 open checks closed (PR #175); v0.5 was left open.
