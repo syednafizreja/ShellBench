@@ -9,9 +9,10 @@ not quoted until this gap is closed or bounded at factors 1.0 and 1.3125.
 This script repeats ``verdicts.building_table`` for the primary case with the
 whole lateral carbon of both systems multiplied by the factor. That overstates
 the gap, because the longitudinal beams in ``building_v2`` are already per plan
-m², so the 1.3125 row is a conservative (low) bound on S_b. The shell row is
-not re-chosen under the factor; re-choosing could only lower the shell carbon,
-so this also keeps the bound low. Exploratory check,
+m². Each building's S_b moves monotonically towards its lateral saving ratio as
+the factor grows, so factors 1.0 and 1.3125 bracket each building's value. The
+shell row is not re-chosen under the factor; re-choosing could only lower the
+shell carbon, so S_b here is not overstated. Exploratory check,
 not a preregistered sensitivity case; the frozen verdicts are not changed.
 
 Run: python scripts/strip_factor_bound.py
