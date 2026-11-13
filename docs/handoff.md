@@ -2,6 +2,18 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 13 Nov 2026 (Day 32 sync; Day 34 figures brought to main), the AI assistant
+
+- Pulled main (c7638cf). pytest: 256 passed. `python -m shellbench.anchor_frame` and `python -m shellbench.verdicts` left results/ unchanged (git status clean); figures/ restored.
+- PR #168 (Day 34 figures) was stacked on `day32-verdicts`, so its merge landed on that branch, not main. This entry's PR carries the same commit (c1e478f) to main. The AI assistant footer was removed from the #168 body first.
+- Zenodo: still no token at `C:\Users\ASUS\.AI assistant\zenodo-token.txt`, so nothing is published and no DOI exists. Only the author can create it (zenodo.org, Applications, Personal access token, scopes deposit:write and deposit:actions). Then `python -I C:\Users\ASUS\tools\zenodo\publish.py dist\shellbench_dataset_v0.4.0.zip <metadata json> --publish`.
+- Open (author): the token; carbon_factors.csv in the dataset; the verdict table in preregistration section 3; GB/T 1499.2 Table 2 and ASCE 7-16 cl. 12.3.1.3 in their copies; the C2 note says 6 grade-I rows while the files hold 7 buildings. Then H4.
+
+## 13 Nov 2026 (Day 34: frozen Paper 1 figures), the AI assistant
+
+- Done: verdict_h1, verdict_h2 and verdict_sensitivity figures (PNG, PDF, SVG, paper copies). 256 tests pass.
+- Open: PR #167 (Day 32 verdicts) still needs the author to click Merge; the merge tool was blocked. The Day 34 PR is stacked on it. Zenodo publish, H4 run and Day 47/48 still wait on the DOI.
+
 ## 13 Nov 2026 (Day 32 merged), the AI assistant
 
 - PR #167 (Day 32 H1-H3 verdicts) merged on the author's "finish all". Checked first in a clean cloud checkout: pytest 256 passed; `python -m shellbench.verdicts` rewrote results/verdicts_*.csv byte for byte. The AI assistant footer was removed from the PR body before the merge.
