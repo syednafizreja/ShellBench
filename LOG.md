@@ -180,6 +180,15 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Reviewer-2 repo audit - 13 Nov 2026 (check window, entry made on 13 Nov)
+
+- Done: full audit against ten points, written up in `docs/reviewer2_audit.md` with a findings table. 32 DOIs checked against Crossref: all match. Fresh clone: 276 tests pass, verdict CSVs rebuild byte for byte.
+- Fixed: grade-I caveat (README, numbers.md), `CITATION.cff` version and date, four missing docstrings, a test for the floor-library case list, a local path in `docs/dataset_release.md`.
+- Disclosed, no result changed: primary baseline is one conventional design per building (preregistration C4, README note); figure byte differences across platforms.
+- Not done on purpose: v1.0 tag, any rerun that could change a verdict.
+- Author to check: the six items at the end of the audit file.
+Compliance: sources - Crossref records for 32 DOIs. AI use - The AI assistant ran the audit and made the fixes under my standing hand-over. Numbers - none changed; the 9.6 % and 5.65 % without grade I come from results/verdicts_buildings.csv. Data - nothing confidential. Repo - branch reviewer2-audit.
+
 ## Day 48 - 13 Nov 2026 (v1.0 prepared; Paper 1 numbers checked)
 
 - PR #177 (shell reactions) checked on the laptop before merging: pytest 275 passed with CalculiX; `panel` and `floorlib` rerun with the new assertion on every force-only static run (72 library cases): nothing raised, results identical (floor_library.csv differed only in line endings; restored). Diaphragm runs use gravity, so the check skips them. The AI assistant footer removed from the PR body; merged (94eaff6).
@@ -594,6 +603,7 @@ Decided 25 Oct 2026 by the AI assistant under my hand-over ("I let you decide fo
 - L2 Second design code module (Eurocode 8 or ASCE 7): not in this project; GB clauses kept in one module so a follow-up can add one. Future work in both papers.
 - L3 More floor systems (CLT, composite, voided slabs): not in this project; the plug-in contract and tutorial invite others to add them.
 - L4 Documentation website: yes, free GitHub Pages, after 13 Dec and before JOSS (19 Apr 2027). No GUI or web app.
+- L6 Stronger conventional baseline: search other conventional floor types (flat, ribbed, voided) for the primary baseline; after Paper 1, outside the charter (audit F1).
 - L5 Talk or webinar: after 13 Dec, free venues only, using the Paper 1 preprint.
 - LinkedIn: 25 Oct sharing rule holds until the Paper 1 preprint is public; then posts may link the preprint, repo and dataset DOI.
 Compliance: sources - none new. AI use - The AI assistant made these impact decisions under my standing hand-over and recorded them. Numbers - hour estimates only, [J]. Data - nothing confidential. Repo - branch day07-impact-decisions, PR merged.
