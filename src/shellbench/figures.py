@@ -437,6 +437,147 @@ def parity(pred, path: Path = FIGURES / "surrogate_parity.png", paper: bool = Fa
 
 
 # ---------------------------------------------------------------------------
+# Verdicts H1 to H3 (Day 34)
+# ---------------------------------------------------------------------------
+
+CASE_NAMES = {"base": "Base factors", "concrete_C30": "Concrete C30 (295)", "concrete_C50": "Concrete C50 (385)",
+              "steel_converter": "Steel, converter (1990)", "steel_eaf": "Steel, electric arc (3030)",
+              "drop_grade_I": "Grade-I buildings dropped"}
+"""Display names of the verdict cases (factors in kgCO2e/m3 for concrete and kgCO2e/t for steel)."""
+
+
+def verdict_h1(b, path: Path = FIGURES / "verdict_h1.png", paper: bool = False, note: str = "v0.4.0 files") -> list[Path]:
+    """Whole-building saving S_b against floor-level saving S_f, one point per building (H1).
+
+    Args:
+        b: Base-case rows of results/verdicts_buildings.csv (columns ``s_f``, ``s_b``, ``seismic_grade``, ``building_id``).
+        path: Output path.
+        paper: Footer-free paper copy.
+        note: Footer qualifier.
+
+    Returns:
+        Written file paths.
+    """
+    fig, ax = st.figure("onehalf", height_mm=78)
+    lo, hi = -68.0, 24.0
+    ax.axhspan(-6, 0, color=st.NEUTRAL_FILL, linewidth=0, zorder=0)
+    ax.plot([lo, hi], [lo, hi], color=st.INK_2, linewidth=0.6, linestyle=(0, (4, 2)), zorder=1, label="S$_b$ = S$_f$")
+    ax.axhline(0, color=st.NEUTRAL, linewidth=0.6, zorder=1)
+    g1 = b["seismic_grade"] == 1
+    for sel, name, col, mk in ((~g1, "Seismic grade II to IV", st.SERIES[0], "o"), (g1, "Seismic grade I", st.SERIES[1], "D")):
+        d = b[sel]
+        ax.plot(100 * d["s_f"], 100 * d["s_b"], linestyle="none", marker=mk, markersize=4.2, color=col,
+                markeredgecolor="white", markeredgewidth=0.4, zorder=3, label=f"{name} ({len(d)})")
+    for bid, dx, dy, ha in (("s07-p030-tg35-C40", 3.0, 1.2, "left"), ("s05-p030-tg35-C40", 2.0, -2.6, "left")):
+        r = b[b["building_id"] == bid].iloc[0]
+        lab = bid.split("-tg")[0].replace("s0", "").replace("-p0", " st, 0.").replace("-p", " st, 0.")
+        ax.annotate(f"{lab} g", (100 * r["s_f"], 100 * r["s_b"]), (100 * r["s_f"] + dx, 100 * r["s_b"] + dy),
+                    fontsize=7, color=st.INK, ha=ha, va="center", arrowprops=dict(arrowstyle="-", color=st.INK_MUTED, lw=0.5))
+    ax.set_xlim(lo, hi)
+    ax.set_ylim(-6, 34)
+    ax.set_xlabel("Floor-level saving S$_f$ [%]")
+    ax.set_ylabel("Whole-building saving S$_b$ [%]")
+    st.hgrid(ax, "y")
+    ax.legend(loc="upper left", frameon=False)
+    return _finish(fig, path, "results/verdicts_buildings.csv", note, paper)
+
+
+def verdict_h2(b, path: Path = FIGURES / "verdict_h2.png", paper: bool = False, note: str = "v0.4.0 files") -> list[Path]:
+    """Whole-building saving S_b by storey count (rows) and PGA (columns), base case (H2).
+
+    Colour is a single-hue ramp clipped at 12 %; every cell carries its value, so the two larger cells are readable.
+    Grade-I buildings have a heavy outline. Empty cells are buildings without a valid conventional or shell design.
+
+    Args:
+        b: Base-case rows of results/verdicts_buildings.csv.
+        path: Output path.
+        paper: Footer-free paper copy.
+        note: Footer qualifier.
+
+    Returns:
+        Written file paths.
+    """
+    import matplotlib.colors as mcolors
+    import numpy as np
+    from matplotlib.patches import Patch, Rectangle
+
+    storeys = sorted(b["storeys"].unique())
+    pgas = [0.05, 0.10, 0.15, 0.20, 0.30, 0.40]
+    cmap = mcolors.LinearSegmentedColormap.from_list("sb", ["#f0efec", "#2a78d6"])
+    fig, ax = st.figure("onehalf", height_mm=72)
+    vmax = 12.0
+    for i, n in enumerate(storeys):
+        for j, p in enumerate(pgas):
+            r = b[(b["storeys"] == n) & (np.isclose(b["pga_g"], p))]
+            if r.empty:
+                ax.add_patch(Rectangle((j - 0.5, i - 0.5), 1, 1, facecolor="white", edgecolor=st.GRID, linewidth=0.5, hatch="////"))
+                continue
+            v = 100 * float(r["s_b"].iloc[0])
+            ax.add_patch(Rectangle((j - 0.5, i - 0.5), 1, 1, facecolor=cmap(max(0.0, min(v, vmax)) / vmax), edgecolor="white", linewidth=0.8))
+            if int(r["seismic_grade"].iloc[0]) == 1:
+                ax.add_patch(Rectangle((j - 0.5 + 0.04, i - 0.5 + 0.04), 0.92, 0.92, fill=False, edgecolor=st.INK, linewidth=1.3))
+            ax.text(j, i, f"{v:.1f}".replace("-", "−"), ha="center", va="center", fontsize=7,
+                    color="white" if v > 7.5 else st.INK)
+    ax.set_xlim(-0.5, len(pgas) - 0.5)
+    ax.set_ylim(len(storeys) - 0.5, -0.5)
+    ax.set_xticks(range(len(pgas)), [f"{p:.2f}" for p in pgas])
+    ax.set_yticks(range(len(storeys)), [str(int(n)) for n in storeys])
+    ax.set_xlabel("Peak ground acceleration [g]")
+    ax.set_ylabel("Storeys")
+    for sp in ax.spines.values():
+        sp.set_visible(False)
+    ax.tick_params(length=0)
+    handles = [Patch(facecolor="none", edgecolor=st.INK, linewidth=1.3, label="Seismic grade I"),
+               Patch(facecolor="white", edgecolor=st.GRID, hatch="////", label="No valid pair")]
+    ax.legend(handles=handles, loc="lower left", bbox_to_anchor=(0.0, 1.0), ncol=2, borderaxespad=0.2)
+    sm = __import__("matplotlib").cm.ScalarMappable(norm=mcolors.Normalize(0, vmax), cmap=cmap)
+    cb = fig.colorbar(sm, ax=ax, extend="max", pad=0.02, fraction=0.05)
+    cb.set_label("S$_b$ [%], colour clipped at 12")
+    cb.outline.set_visible(False)
+    return _finish(fig, path, "results/verdicts_buildings.csv", note, paper)
+
+
+def verdict_sensitivity(b, summary, path: Path = FIGURES / "verdict_sensitivity.png", paper: bool = False,
+                        note: str = "v0.4.0 files") -> list[Path]:
+    """Median and interquartile range of S_b in every case (C1 factor bounds, C2 grade-I rows dropped).
+
+    A dot plot, not bars: S_b is a small number near zero and the reader needs to see its spread.
+
+    Args:
+        b: Rows of results/verdicts_buildings.csv, all cases.
+        summary: Rows of results/verdicts_summary.csv (H1 rows give the count of positive S_b).
+        path: Output path.
+        paper: Footer-free paper copy.
+        note: Footer qualifier.
+
+    Returns:
+        Written file paths.
+    """
+    fig, ax = st.figure("onehalf", height_mm=66)
+    order = list(CASE_NAMES)
+    h1 = summary[summary["hypothesis"] == "H1"].set_index("case")
+    for i, case in enumerate(order):
+        d = 100 * b[b["case"] == case]["s_b"]
+        q1, med, q3 = d.quantile(0.25), d.median(), d.quantile(0.75)
+        base = case == "base"
+        ax.plot([q1, q3], [i, i], color=st.SERIES[0], linewidth=2.2 if base else 1.6, solid_capstyle="butt", zorder=2)
+        ax.plot(med, i, marker="D" if base else "o", markersize=5.0 if base else 4.2, color=st.SERIES[0],
+                markerfacecolor=st.SERIES[0] if base else "white", zorder=3)
+        k, n = int(h1.loc[case, "n_s_b_positive"]), int(h1.loc[case, "n_buildings"])
+        ax.text(12.6, i, f"{k} of {n}", ha="left", va="center", fontsize=7, color=st.INK)
+    ax.axvline(0, color=st.NEUTRAL, linewidth=0.6, zorder=1)
+    ax.set_yticks(range(len(order)), [CASE_NAMES[c] for c in order])
+    ax.invert_yaxis()
+    ax.tick_params(axis="y", length=0)
+    ax.spines["left"].set_visible(False)
+    ax.set_xlim(0, 12)
+    ax.set_xlabel("Whole-building saving S$_b$ [%]: median and interquartile range")
+    ax.text(12.6, -0.85, "S$_b$ > 0", ha="left", va="bottom", fontsize=7, color=st.INK_2)
+    st.hgrid(ax, "x")
+    return _finish(fig, path, "results/verdicts_buildings.csv", note, paper)
+
+
+# ---------------------------------------------------------------------------
 # Rebuild everything from results/
 # ---------------------------------------------------------------------------
 
@@ -509,6 +650,13 @@ def build_all(paper: bool = False) -> list[Path]:
     out += convergence(conv, paper=paper)
     note = release_note()
     out += coverage(pd.read_csv(RESULTS / "surrogate_coverage.csv"), paper=paper, note=note)
+    vb = RESULTS / "verdicts_buildings.csv"
+    if vb.exists():
+        allv = pd.read_csv(vb)
+        base = allv[allv["case"] == "base"]
+        out += verdict_h1(base, paper=paper)
+        out += verdict_h2(base, paper=paper)
+        out += verdict_sensitivity(allv, pd.read_csv(RESULTS / "verdicts_summary.csv"), paper=paper)
     pred_csv = RESULTS / "surrogate_predictions.csv"
     if pred_csv.exists():
         out += parity(pd.read_csv(pred_csv), paper=paper, note=note)
