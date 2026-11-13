@@ -29,7 +29,7 @@ The environment of record (13 Nov 2026) is pinned in two files.
 - `environment.yml` gives exact versions and works on any platform: Python 3.12, CalculiX 2.23 (conda-forge), numpy 2.5.4, scipy 1.18.1, pandas 3.0.6, pyarrow 26.0.1, matplotlib 3.11.2, scikit-learn 1.9.1, gmsh 4.15.2, openseespy 3.8.0.0, pytest 9.1.1.
 - `environment.lock.yml` is the full export of the working environment on Windows 11, every package included. Use it to trace a difference down to a library.
 
-Check a rebuilt environment with `pytest` (275 tests on 13 Nov 2026), then `python scripts/reproduce.py --quick`. `python scripts/reproduce.py` rebuilds every Paper 1 result. Compare its output with `results/` by content. A difference in the last digits (about 1e-14) between platforms is rounding noise; anything larger is a real change.
+Check a rebuilt environment with `pytest` (276 tests on 14 Nov 2026), then `python scripts/reproduce.py --quick`. `python scripts/reproduce.py` rebuilds every Paper 1 result. Compare its output with `results/` by content. A difference in the last digits (about 1e-14) between platforms is rounding noise; anything larger is a real change.
 
 If conda-forge or PyPI no longer serve these versions, rebuild in a container with an archived Python 3.12 image. The Zenodo releases hold the source of every version.
 
