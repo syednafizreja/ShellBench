@@ -18,7 +18,7 @@ Clauses (English editions; page = printed page):
 * GB 50010-2010 Chapter 11 (pp. 152-166): gamma_RE, beam and column
   section limits, shear capacity, minimum steel and confinement.
 
-Checked by Claude from the PDFs on 6 Nov 2026; author to confirm in the
+Checked by the AI assistant from the PDFs on 6 Nov 2026; author to confirm in the
 printed copies.
 
 Grade 1 frame structures must meet the capacity forms of cl. 6.2.2-6.2.5
@@ -108,7 +108,7 @@ COLUMN_MIN_MM: dict[int, int] = {1: 400, 2: 400, 3: 400, 4: 300}
 #: Bars per column face at least 3 (4 corner + 4 side bars, the R12 layout) [J].
 COLUMN_MIN_BARS_PER_SIDE: int = 3
 #: Least clear spacing of column bars [mm], GB 50010 cl. 9.3.1 item 2 (PDF p. 123).
-#: Checked by Claude, author to confirm.
+#: Checked by the AI assistant, author to confirm.
 COLUMN_MIN_CLEAR_MM: float = 50.0
 
 #: Accidental eccentricity, cl. 6.2.5 (p. 34): max(20 mm, h/30).

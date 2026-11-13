@@ -13,13 +13,13 @@ carbon per m^2 of floor area for every factor set in
 
 The reading rules were committed before the first run (docs/anchor_notes.md,
 "How the take-off is read", commit f38e731, 29 Oct 2026); the rule numbers
-below refer to that list. Every value marked [J] is Claude's judgement and
+below refer to that list. Every value marked [J] is the AI assistant's judgement and
 every value marked [?] is a code reference the author still has to confirm.
 
 Two switches
 ------------
 * ``plan``: ``"grid"`` is the full 38.4 x 21.0 m rectangle of decision B11
-  (28 columns); ``"drawn"`` follows Claude's reading of drawing 03 (no
+  (28 columns); ``"drawn"`` follows the AI assistant's reading of drawing 03 (no
   column at A4 and a 13.2 x 7.2 m notch on A-B between axes 3 and 5), a
   sensitivity until the author confirms it (rule 2).
 * ``steel``: ``"thesis"`` takes the frame beam steel from the s9.2 table and

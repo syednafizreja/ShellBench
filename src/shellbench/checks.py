@@ -240,7 +240,7 @@ def design_section(m_knm: float, b_mm: float, h_mm: float, position: str,
 #: compression steel, GB 50010 cl. 11.3.6 item 2 (PDF p. 165): >= 0.5 for
 #: grade I, >= 0.3 for grade II. Grades III-IV: 0, the singly reinforced
 #: design [J] (the grade III value is not confirmed from the text; author
-#: to confirm). Checked by Claude, author to confirm.
+#: to confirm). Checked by the AI assistant, author to confirm.
 BEAM_END_COMP_RATIO: dict[int, float] = {1: 0.5, 2: 0.3, 3: 0.0, 4: 0.0}
 
 

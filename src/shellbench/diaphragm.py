@@ -14,7 +14,7 @@ The preregistration (docs/preregistration.md 2.3) fixes the default rule: the
 largest in-plane deformation of the floor must be no more than twice the mean
 storey drift of the vertical elements of the same storey, under the same
 tributary load. I take this from the flexible-diaphragm condition of
-ASCE/SEI 7-16 cl. 12.3.1.3 (checked by Claude, 8 Nov 2026, against the
+ASCE/SEI 7-16 cl. 12.3.1.3 (checked by the AI assistant, 8 Nov 2026, against the
 ASCE 7-10 text and NIST GCR 17-917-47, Sec. 5.1, which states the ASCE 7-16
 rule; the 7-16 text itself is paywalled; author to confirm). GB 50011-2010
 Table 6.1.6 and JGJ 3-2010 cl. 5.1.5 give no deflection test. JGJ 3 cl. 3.6.2

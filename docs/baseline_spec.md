@@ -1,12 +1,12 @@
 # Baseline Specification: thesis anchor building
 
-Status: **All Part B decisions recorded by the author** (Day 2, 20 Oct 2026). Values marked [J] are Claude's arithmetic or judgement; code values are the author's own readings.
+Status: **All Part B decisions recorded by the author** (Day 2, 20 Oct 2026). Values marked [J] are the AI assistant's arithmetic or judgement; code values are the author's own readings.
 
 Source key:
 - **Th §x** = thesis, *Design of No.2 office building located at Panzhihua City, Sichuan Province* (S. N. R. Hasib, SWPU, 2023), section x.
 - **Th T x** = thesis table x. Section numbers follow the thesis headings as printed.
 - **Dwg 0x** = structural drawing number 0x (01 Column Details, 02 Standard Beam Design, 03 Standard Floor Beam Design, 04 Floor Slab Reinforcement, 05 Roof Slab Reinforcement, 06 Staircase).
-- **[J]** = Claude's judgement or arithmetic, to be checked by the author. **[?]** = unverified.
+- **[J]** = the AI assistant's judgement or arithmetic, to be checked by the author. **[?]** = unverified.
 - **Decided Bn** = the value was disputed and is fixed by the author's decision Bn in Part B.
 
 Units: SI throughout (m, mm, kN, kN/m, kN/m², N/mm²).
@@ -128,7 +128,7 @@ Units: SI throughout (m, mm, kN, kN/m, kN/m², N/mm²).
 
 ---
 
-## Part B: Inconsistencies (author decides; Claude lists options only)
+## Part B: Inconsistencies (author decides; the AI assistant lists options only)
 
 Each item: what the thesis says, the options, and what each option would change. "Decision" and "Reason" are for you to fill in after checking your calculation sheets and your copy of GB 50010 / GB 50011 / GB 50009.
 

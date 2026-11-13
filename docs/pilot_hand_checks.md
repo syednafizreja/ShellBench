@@ -52,7 +52,7 @@ Run: `python -m shellbench.batch --beam-i-factor 1.5 --out results/family_rc_pil
 
 **Finding [J].** The hand-to-generator drift gap narrows from 1.15-1.25 to 1.10-1.16. But the hand drift for s03-p030 and s06-p040 is still above 1/550. So the beam factor does not explain the gap. The hand D-value method stays higher than the matrix frame analysis, by much the same margin, under both factors. It looks like a method difference, not an error in the generator.
 
-**Decision (Claude).**
+**Decision (the AI assistant).**
 
 - Keep 2.0 as the primary value, as set by spec M7 (Th §2.6).
 - Report 1.5 as a sensitivity row; carbon moves by less than 2 %.

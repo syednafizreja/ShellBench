@@ -1,8 +1,8 @@
 # Schedule: build ends 13 Nov, author checks 14-17 Nov (approved 28 Oct 2026)
 
-On 28 Oct 2026 the author approved finishing within Claude Pro (it renews on 17 Nov), at the best quality, with Paper 1 submitted by 22 Nov. Later the same day the author added one condition: "i should have a few days in hands to check things, so must finish few days earlier than the claude pro ends". So the build ends on **Fri 13 Nov**, and **14-17 Nov is the author's check window**, while Claude can still make fixes. This file replaces the 26 Oct plan (PR #50) from the next daily run.
+On 28 Oct 2026 the author approved finishing within the AI-assistance subscription (it renews on 17 Nov), at the best quality, with Paper 1 submitted by 22 Nov. Later the same day the author added one condition: "i should have a few days in hands to check things, so must finish few days earlier than the subscription ends" (paraphrased). So the build ends on **Fri 13 Nov**, and **14-17 Nov is the author's check window**, while the AI assistant can still make fixes. This file replaces the 26 Oct plan (PR #50) from the next daily run.
 
-17 Nov is the end of Claude's help, not a journal deadline. Anything that needs only the author's hands (writing, submission clicks) can still happen after it, and nothing in this plan treats a date as a reason to drop a check.
+17 Nov is the end of the AI assistant's help, not a journal deadline. Anything that needs only the author's hands (writing, submission clicks) can still happen after it, and nothing in this plan treats a date as a reason to drop a check.
 
 ## Where we stand on 28 Oct
 
@@ -24,11 +24,11 @@ What is done by Fri 13 Nov:
 - the H1-H3 verdicts and sensitivities, and the frozen figures for both papers;
 - the H4 verdict with the leakage test, and v0.5.
 
-The check window, 14-17 Nov: the author checks the anchor report, the dataset, every verdict and the Paper 1 draft. Claude fixes what the author finds, runs the Paper 1 harsh review (Day 40) on 15 Nov, and tags v1.0 on 17 Nov only after the checks pass.
+The check window, 14-17 Nov: the author checks the anchor report, the dataset, every verdict and the Paper 1 draft. The AI assistant fixes what the author finds, runs the Paper 1 harsh review (Day 40) on 15 Nov, and tags v1.0 on 17 Nov only after the checks pass.
 
 What does not fit:
 
-- **Writing Paper 2 with Claude's help.** All its numbers and figures exist by 13 Nov and are checked in the window. The author writes it after 17 Nov. Target submission is still 8 Dec.
+- **Writing Paper 2 with the AI assistant's help.** All its numbers and figures exist by 13 Nov and are checked in the window. The author writes it after 17 Nov. Target submission is still 8 Dec.
 - **Polish:** the JOSS documentation and two tutorials, the GitHub Pages site, the profile (Day 54), the statement of purpose and the video (Day 56). These go to the author after 17 Nov. JOSS is not before 19 Apr 2027 anyway.
 
 ## Charter dates
@@ -40,7 +40,7 @@ What does not fit:
 | Floor library and v0.3 (first ShellForm data) | (14 Nov in Playbook) | 5 Nov | |
 | Dataset DOI | 17 Nov | **11 Nov** | ShellForm full start |
 | All results and frozen figures, both papers | (6 Dec in Playbook) | **13 Nov** | End of the build |
-| Author's check window | | **14-17 Nov** | Claude fixes only; no new analysis |
+| Author's check window | | **14-17 Nov** | The AI assistant fixes only; no new analysis |
 | ShellBench v1.0 with software DOI | 8 Dec | **17 Nov** | After the checks; tutorials follow as v1.0.x |
 | Paper 1 submitted | 29 Nov | **22 Nov** | Files ready 17 Nov |
 | Paper 2 submitted | 8 Dec | 8 Dec | Author writes after 17 Nov |
@@ -51,7 +51,7 @@ What does not fit:
 
 A day's date is the latest it may finish; work ahead is allowed. GATE days never start early.
 
-| Date | Track A: anchor, generator, family | Track B: shell floor, then surrogate | Paper 1 (from 14 Nov: `docs/finishing_path.md`, Claude drafts, author owns) |
+| Date | Track A: anchor, generator, family | Track B: shell floor, then surrogate | Paper 1 (from 14 Nov: `docs/finishing_path.md`, the AI assistant drafts, author owns) |
 |---|---|---|---|
 | Thu 29 Oct | Day 12 quantities and carbon (GATE: carbon factors today) | | |
 | Fri 30 Oct | Day 12 finish | Day 22 floor concept and CalculiX | |
@@ -71,7 +71,7 @@ A day's date is the latest it may finish; work ahead is allowed. GATE days never
 | Fri 13 Nov | Day 34 frozen Paper 1 figures | Day 47 H4 verdict and leakage test; Day 48 Paper 2 figures, v0.5. **End of build** | Day 38 results |
 | Sat 14 Nov | Check window: author checks the anchor report, the dataset and H1-H3 | Check window: author checks H4 | Day 39 discussion and abstract |
 | Sun 15 Nov | Check window (Day 35 review) | Check window | **Day 40 harsh review** |
-| Mon 16 Nov | Check window: Claude fixes | Check window: Claude fixes | Day 41 fixes, references, files |
+| Mon 16 Nov | Check window: the AI assistant fixes | Check window: the AI assistant fixes | Day 41 fixes, references, files |
 | Tue 17 Nov | **Day 52 v1.0 and software DOI** after the checks pass | | Paper 1 files ready |
 | After 17 Nov | | | Author: **Day 42 submit Paper 1 by 22 Nov**; Paper 2 writing (Days 50, 51, 53), submit by 8 Dec (Day 55); profile, statement and video by 13 Dec (Days 54, 56); tutorials and JOSS docs |
 
@@ -96,7 +96,7 @@ The author asked for the ShellForm data earlier, so that ShellForm can also fini
 
 **What I need from the author for this:** a short list of what ShellForm needs from ShellBench (which files and columns, for example storeys, PGA, floor type, quantities, carbon, periods, drifts), by **Mon 2 Nov**. Then the 4 Nov data format includes every column ShellForm needs, and no ShellForm need is discovered after the freeze [?].
 
-**Usage limits.** ShellForm and ShellBench share one Claude Pro allowance. Until 11 Nov the ShellBench GATE days come first; ShellForm work fits around them. From 14 Nov the check window comes first for both projects. ShellForm's own day plan belongs in the ShellForm project; it is not set here.
+**Usage limits.** ShellForm and ShellBench share one the AI-assistance subscription allowance. Until 11 Nov the ShellBench GATE days come first; ShellForm work fits around them. From 14 Nov the check window comes first for both projects. ShellForm's own day plan belongs in the ShellForm project; it is not set here.
 
 ## What the author must supply, and by when
 
@@ -144,7 +144,7 @@ What ShellForm needs from this list is not known yet [?]. If the floor-level sta
 
 - **The check window is protected.** At least 15-17 Nov stays for checking and fixing, whatever slips. The build may run into Sat 14 Nov, but no further.
 - **Check on 6 Nov.** If v0.2 or v0.3 has slipped by more than one day, the surrogate code (Track B, 7-10 Nov) gives way first, because Paper 2 is lower priority than Paper 1 and the dataset.
-- **If the surrogate is not finished with its checks by 14 Nov,** it is not run without them. The frozen code and splits are archived in v1.0, and the final surrogate run waits until Claude is available again or is done by the author. Paper 2 then moves past 8 Dec. Paper 1 and the dataset are not touched.
+- **If the surrogate is not finished with its checks by 14 Nov,** it is not run without them. The frozen code and splits are archived in v1.0, and the final surrogate run waits until the AI assistant is available again or is done by the author. Paper 2 then moves past 8 Dec. Paper 1 and the dataset are not touched.
 - **If the dataset DOI slips past 12 Nov,** the H1-H3 verdicts and Paper 1 figures still come before the check window, and the surrogate gives way.
 - **Paper 1 goes in only after its harsh review.** If the review on 15 Nov finds a real problem that cannot be fixed by 17 Nov, the author fixes it alone and submits by 29 Nov (the old charter date) rather than going in unreviewed.
 - A slipped day never shrinks the next one. A check is never cut to save a date.
@@ -155,7 +155,7 @@ What ShellForm needs from this list is not known yet [?]. If the floor-level sta
 - **No spare day in the build.** The spare day of the earlier draft (11 Nov) became the DOI day. The check window is the buffer now, which is why the surrogate is the first thing to give way.
 - **Surrogate developed on part of the family.** The conventional-floor family (from 6 Nov) is enough to build and test the pipeline, but not the decision test, which needs both floors. The decision test code is checked on the anchor and the pilot in both floors (from Day 30), then run once on the published data.
 - **A data bug after 11 Nov.** Zenodo keeps one concept DOI across versions, so a fix becomes version 2 of the dataset, and ShellForm is told. It is reported, never hidden.
-- **Paper 2 without Claude's harsh review.** The numbers are checked in the window. The prose will not get the same review unless Claude Pro renews. That is the author's choice, and nothing in this plan assumes it.
+- **Paper 2 without the AI assistant's harsh review.** The numbers are checked in the window. The prose will not get the same review unless the AI-assistance subscription renews. That is the author's choice, and nothing in this plan assumes it.
 - **ShellForm on early data.** The floor library (5 Nov) is final for floor-level work. At whole-building level ShellForm builds on pre-release files from 4 Nov and reports only on the 11 Nov DOI version (see "ShellForm data hand-over"). The risk is a need found after the 4 Nov format freeze; that is why the list of ShellForm's needs is due on 2 Nov.
 
 ## Note on family size (decision card 1, 5 Nov 2026)

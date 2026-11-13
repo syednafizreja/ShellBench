@@ -1,6 +1,6 @@
 # Research question (charter amendment, 22 Oct 2026)
 
-This file records a change to the research question in the ShellBench Project Charter. The charter PDF is kept outside this repository. The charter was reissued on 22 Oct 2026 with the revised question (storey count included) and a dated amendment note: the Claude Docs charter was edited, and a new PDF was exported as "ShellBench Project Charter (amended 22 Oct 2026).pdf". The author uploaded the new PDF to the Claude Project knowledge on 22 Oct 2026, replacing the 19 Oct PDF.
+This file records a change to the research question in the ShellBench Project Charter. The charter PDF is kept outside this repository. The charter was reissued on 22 Oct 2026 with the revised question (storey count included) and a dated amendment note: an online charter was edited, and a new PDF was exported as "ShellBench Project Charter (amended 22 Oct 2026).pdf". The author uploaded the new PDF to the AI-assistance subscriptionject knowledge on 22 Oct 2026, replacing the 19 Oct PDF.
 
 ## Revised question
 
@@ -30,7 +30,7 @@ Smaller holes H4-H9 (vertical seismic action, one building, Chinese carbon facto
 
 ## Dates (amended 28 Oct 2026)
 
-On 28 Oct 2026 the author set a hard end of 17 Nov 2026 for Claude's help (Claude Pro renewal) and asked for the best quality within it. The same day the author asked to finish a few days earlier, so the build ends on 13 Nov and 14-17 Nov is the author's check window. A second project, ShellForm, starts from ShellBench data. Day-by-day plan in [schedule.md](schedule.md). This replaces the 26 Oct amendment.
+On 28 Oct 2026 the author set a hard end of 17 Nov 2026 for the AI assistant's help (the AI-assistance subscription renewal) and asked for the best quality within it. The same day the author asked to finish a few days earlier, so the build ends on 13 Nov and 14-17 Nov is the author's check window. A second project, ShellForm, starts from ShellBench data. Day-by-day plan in [schedule.md](schedule.md). This replaces the 26 Oct amendment.
 
 | Output | Date |
 |---|---|

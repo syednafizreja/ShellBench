@@ -251,7 +251,7 @@ def review(fig, paper: bool = False) -> list[str]:
     """Automated design review of a drawn figure (docs/visual_standard.md, part A).
 
     Checks what a script can check; the visual items in part B still need a
-    person (or Claude) looking at the rendered file.
+    person (or the AI assistant) looking at the rendered file.
 
     Args:
         fig: A drawn figure (call before ``save``, which closes it).

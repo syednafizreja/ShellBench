@@ -2,7 +2,7 @@
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
 
-Playbook Day 13, 31 Oct 2026. Draft by Claude for the author to read sentence by sentence before release v0.1. Every number comes from a file in `results/` (named under each table), from `docs/baseline_spec.md`, or from `docs/anchor_notes.md`, where the full reasoning sits. Sentences that need the author's judgement are marked [J].
+Playbook Day 13, 31 Oct 2026. Draft by the AI assistant for the author to read sentence by sentence before release v0.1. Every number comes from a file in `results/` (named under each table), from `docs/baseline_spec.md`, or from `docs/anchor_notes.md`, where the full reasoning sits. Sentences that need the author's judgement are marked [J].
 
 ## 1. Purpose
 
@@ -69,7 +69,7 @@ The failure is on the thesis side. The model carries the same storey shears as t
 
 With the bare-frame period, the base-shear method gives storey forces 18-20 % below Table 8-12 at every level (`anchor_seismic.csv`). The spread over the height is under 2 points, so the distribution matches and the whole difference is in the size of the base shear. The bare frame has T1 = 0.698 s and a base shear of 214.75 kN, against 264.77 kN in the thesis (four storeys, decision on Day 7). The thesis prints neither its period nor its weights (B9), so the gap cannot be split between the two (D24, accepted by the author).
 
-The anchor uses an infill period factor ψ_T = 0.7. The source is JGJ 3-2010 cl. 4.3.17 as quoted by two secondary sources; neither the author nor Claude has opened a primary copy, so it stays [?] until one is read. It was not chosen to fit: ψ_T = 0.8 matches the thesis best, and 0.7 does not. With ψ_T = 0.7, T1 = 0.489 s and the base shear is 296.04 kN, 11.8 % above the thesis (`anchor_seismic_runs.csv`).
+The anchor uses an infill period factor ψ_T = 0.7. The source is JGJ 3-2010 cl. 4.3.17 as quoted by two secondary sources; neither the author nor the AI assistant has opened a primary copy, so it stays [?] until one is read. It was not chosen to fit: ψ_T = 0.8 matches the thesis best, and 0.7 does not. With ψ_T = 0.7, T1 = 0.489 s and the base shear is 296.04 kN, 11.8 % above the thesis (`anchor_seismic_runs.csv`).
 
 The response-spectrum method (three modes, 99.6 % of the mass) agrees with the base-shear method within 6.4 % at storeys 1-3. With the bare-frame period it is 15.3 % lower at the roof, because the base-shear method's top force is generous for a four-storey frame. With ψ_T = 0.7 the spectrum method is 2.0-5.5 % higher at every storey (`anchor_rsa.csv`). The largest drift is 43 % of the 1/550 limit, so drift does not govern.
 
@@ -102,7 +102,7 @@ Code-minimum column steel adds only 1.6 kgCO₂e/m² here, because the code stee
 
 ## 6. What this anchor can and cannot claim
 
-It can claim that the frame model reproduces the thesis gravity analysis wherever the thesis arithmetic holds. The remaining differences have named causes: axial shortening, or a flagged thesis error. Two separate implementations of the design checks gave the same numbers to the digit (Claude in the app and Claude Code), so a coding error in either is unlikely [J]. The take-off and the carbon count are reproducible from the code and one factor file.
+It can claim that the frame model reproduces the thesis gravity analysis wherever the thesis arithmetic holds. The remaining differences have named causes: axial shortening, or a flagged thesis error. Two separate implementations of the design checks gave the same numbers to the digit (the two AI assistant sessions), so a coding error in either is unlikely [J]. The take-off and the carbon count are reproducible from the code and one factor file.
 
 It cannot claim a validated wind drift, because the thesis drifts cannot come from any single frame. It cannot claim a validated seismic base shear either: the thesis hides its period and weights, and the anchor's ψ_T rests on a clause not yet read in a primary copy. The carbon number rests on one factor set, read from a third-party copy, with an interpolated C40 factor. The boundary is the structure only: no walls, stairs, finishes, ground slab or wastage (`anchor_notes.md`, Day 12 rule 1). The 3D model is a symmetric rectangle; the real building is E-shaped with stair cores, so torsion is not represented. And the thesis building itself is under-reinforced in its columns, so it is a model of a design as drawn, not of a code-compliant baseline. The generator must apply the code minimum, or the shell floor's saving will look too large [J].
 
@@ -116,6 +116,6 @@ It cannot claim a validated wind drift, because the thesis drifts cannot come fr
 
 Thesis: Syed Nafiz Reja Hasib, undergraduate thesis (completed 29 May 2023), cited by section and table. Codes: GB 50010-2010 (author's English translation; Chinese 2015 edition for three values), GB 50011-2010, GB 55001-2021, GB 55002-2021, GB/T 51366-2019; clause numbers as given in `docs/anchor_notes.md`. Flags D1-D29: `validation/thesis_values/README.md` and `docs/anchor_notes.md`.
 
-AI use: Claude drafted this report from the files named above; the author checks every sentence and number before release.
+AI use: the AI assistant drafted this report from the files named above; the author checks every sentence and number before release.
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.

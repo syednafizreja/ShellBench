@@ -2,11 +2,11 @@
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
 
-Added 14 Nov 2026 at the author's request ("make ShellBench follow the same path to finishing as ShellForm"). It replaces the older rule "the author writes, Claude checks" for Paper 1 and Paper 2. The author's rule of 10 Nov 2026: Claude writes the manuscript prose itself, in the author's voice (skills: academic-manuscript-writing, syed-academic-voice-dna, academic-humanizer); the author reads, changes and owns every sentence. No rough-sentence slots are handed to the author. The Elsevier generative-AI declaration says so.
+Added 14 Nov 2026 at the author's request ("make ShellBench follow the same path to finishing as ShellForm"). It replaces the older rule "the author writes, the AI assistant checks" for Paper 1 and Paper 2. The author's rule of 10 Nov 2026: the AI assistant writes the manuscript prose itself, in the author's voice (skills: academic-manuscript-writing, syed-academic-voice-dna, academic-humanizer); the author reads, changes and owns every sentence. No rough-sentence slots are handed to the author. The Elsevier generative-AI declaration says so.
 
 ShellForm reached a complete, self-reviewed Computers & Structures manuscript in this order (ShellForm `paper/`, 10-14 Nov). Each step is one day's task with a Done-when line.
 
-| Step | What Claude does | Done when |
+| Step | What the AI assistant does | Done when |
 |---|---|---|
 | 1. Core | `paper/paperN/00_core.md`: gap, contribution, headline number, narrative, Reviewer-2 objection, target journal | exists (Paper 1: done 6 Nov) |
 | 2. Tables and figures | built by scripts from the frozen results; never edited by hand | every planned table and figure exists and names its tag |
@@ -21,4 +21,4 @@ ShellForm reached a complete, self-reviewed Computers & Structures manuscript in
 | 11. Author check | the author reads the PDF, opens the [check] sources, accepts or cuts each [J], signs the statements | author's ticks |
 | 12. Submit | cover letter, suggested reviewers, journal checklist | submitted |
 
-Rules that carry over: frozen results are never edited; drafts are superseded once the manuscript is assembled (edit the .tex from then on); commit as the author with no Claude attribution; every result names its tag.
+Rules that carry over: frozen results are never edited; drafts are superseded once the manuscript is assembled (edit the .tex from then on); commit as the author with no the AI assistant attribution; every result names its tag.

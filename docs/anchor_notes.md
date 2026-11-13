@@ -190,7 +190,7 @@ A 2024 edition of GB 50011-2010 reportedly aligns with GB 55002 [?]; this was no
 
 ### Decisions by the author (24 Oct 2026)
 
-The author made these decisions and checks the work; Claude Code implemented them and cross-checked the clause texts.
+The author made these decisions and checks the work; the AI assistant implemented them and cross-checked the clause texts.
 
 1. **Flags D16-D21 accepted** as worded in `validation/thesis_values/README.md`. D16 and D17 take the wording revised by the cross-check. D16's A-support arithmetic was checked by the author.
 2. **Anchor (Layer 1) keeps the thesis factors.** These are 1.3/1.5 for gravity and wind, and 1.2/1.3 for seismic (Day 9), so the model can reproduce the thesis. `THESIS_COMBINATIONS` is unchanged.
@@ -205,7 +205,7 @@ Two more things in Table 8-13 do not fit [J]:
 - Its live-load column does not match table "7.2". At the roof A support it gives −22.18, against −4.55 in table "7.2".
 - The wind columns could not be reproduced. A search over simple factor sets a × D + b × L + c × W (a, b, c from 0 to ±1.95) found no set that fits even the first four roof rows of either wind column. They are left for Day 8.
 
-### Cross-check of Table 8-13 against the thesis (Claude Code, 24 Oct 2026)
+### Cross-check of Table 8-13 against the thesis (the AI assistant, 24 Oct 2026)
 
 Done on the thesis .docx (tables read in body order), not on the typed files. It changes D16 and D17:
 
@@ -253,7 +253,7 @@ The author made these decisions on Day 7, before any wind or seismic result exis
 
 ### How the wind comparison is read (written 26 Oct 2026, 03:55 UTC, before the first wind run)
 
-Claude wrote these reading rules down before any wind result existed [J]. They apply the author's decision 1 above; they do not change it.
+The AI assistant wrote these reading rules down before any wind result existed [J]. They apply the author's decision 1 above; they do not change it.
 
 1. "Storey drift" in decision 1 is read as the inter-storey displacement Δu [mm] of Table 8-2, storey by storey. That is the pass/fail test, with the 15 % tolerance, and it is reported whatever it shows.
 2. Two more references are reported next to it as diagnostics, never as pass/fail: (a) V/ΣD from the shears and ΣD printed in Table 8-2 (the thesis method with its own numbers, see D7); (b) V/ΣD with D-values recomputed from the model's own section stiffnesses by the same D-value formulas. Together they split any difference into thesis arithmetic, D-value method, and finite-element model.
@@ -264,7 +264,7 @@ Claude wrote these reading rules down before any wind result existed [J]. They a
 
 ### How the seismic comparison is read (written 27 Oct 2026, 03:41 UTC, before the first seismic run)
 
-Claude wrote these reading rules before any seismic result existed [J]. They apply the author's decisions 2 and 3 above and change neither. The author has set no pass/fail tolerance for Day 9, so none is invented here: every difference is reported, and every difference above 10 % gets a written reason (Playbook Day 6 rule).
+The AI assistant wrote these reading rules before any seismic result existed [J]. They apply the author's decisions 2 and 3 above and change neither. The author has set no pass/fail tolerance for Day 9, so none is invented here: every difference is reported, and every difference above 10 % gets a written reason (Playbook Day 6 rule).
 
 1. **Comparison targets.** The storey forces F_i = V_i − V_(i+1) of Table 8-12 for levels 1-4 (31.03, 54.56, 77.62, 101.56 kN) are the primary targets (decision 2). The level-5 force is not added at the roof. Storey shears are compared with the four-storey shears the same decision implies, V_i − 98.29 kN [J], and also listed next to the printed V_i.
 2. **Storey weights G_i (GB 50011 cl. 5.1.3, Table 5.1.3).** G_i = dead + 0.5 × floor live; roof live load is not included. The loads are those the thesis applied to the axis (2) frame (7.2 m strip, decision B10), summed from the model's own load description. Primary: the actual load shapes of Fig. 4-4 and §6.1, because they carry the true total load; the equivalent uniform loads of §6.2.1 and §7.1 were made to match fixed-end moments, not totals [J]. Each storey's column self-weight goes half to the level above and half to the level below; the lower half of the ground storey goes to the foundation. Check run: the loads the thesis used for beam shears and column axial forces (dead ``thesis_text``, live ``thesis_shear``).
@@ -278,7 +278,7 @@ Claude wrote these reading rules before any seismic result existed [J]. They app
 
 ## Wind (Day 8, 26 Oct 2026)
 
-Status: **reviewed by the author on 26 Oct 2026** (decisions at the end of this section). Explanations still marked [J] or [?] are Claude's and unverified. Numbers come from `results/anchor_wind.csv`, `anchor_wind_runs.csv`, `anchor_wind_d_values.csv` and `thesis_table_8_2_forces_check.csv`, written by `src/shellbench/anchor_wind.py` (run by `python -m shellbench.anchor_frame`), or are arithmetic on printed Table 8-2 values.
+Status: **reviewed by the author on 26 Oct 2026** (decisions at the end of this section). Explanations still marked [J] or [?] are the AI assistant's and unverified. Numbers come from `results/anchor_wind.csv`, `anchor_wind_runs.csv`, `anchor_wind_d_values.csv` and `thesis_table_8_2_forces_check.csv`, written by `src/shellbench/anchor_wind.py` (run by `python -m shellbench.anchor_frame`), or are arithmetic on printed Table 8-2 values.
 
 ### What the model does
 
@@ -303,7 +303,7 @@ The model and the thesis carry the same storey shears (column shears 42.67, 31.9
 2. Read backwards, the printed Δu implies storey stiffnesses V/Δu of 54 705, 35 088, 42 804 and 10 106 N/mm. Storeys 2-4 have identical columns, beams and heights, yet the implied stiffness changes by more than four times between them. No single elastic frame can do that, so no choice of modelling assumption (cracked sections, a different E, joint flexibility) can bring the model within 15 % of all four rows.
 3. Against V/ΣD with the thesis numbers, the model is −7.5, +18.1, +22.9 and +34.5 % off. Against V/ΣD with D-values recomputed from the model's own sections by the same formulas as Table 7-6, it is −16.7, −2.8, +1.1 and +10.6 % off.
 
-Item 3 splits the difference into its parts. The recomputed ΣD (83 633 N/mm ground, 88 416 N/mm above) is lower than the printed 92 842 and 107 488 N/mm, which is flag D6 again: the printed K and α_c in Table 7-6 cannot be reproduced from the §2.6 stiffnesses. Once the D-values are recomputed, the finite-element frame and the D-value method agree within 3 % at levels 2-3. The ground storey is 16.7 % stiffer in the model than the D-value formula gives, because the fixed-base α_c = (0.5 + K)/(2 + K) ignores the restraint the storey above gives to the column tops [J]. At the roof the model is 10.6 % more flexible than the D-value estimate. Checked on 26 Oct 2026 (Claude Code, `test_roof_storey_stiffness_depends_on_load_pattern`): the D-value method assumes equal joint rotations at both ends of each column, so its storey stiffness does not depend on the loads. The model's roof storey does. Under the Table 8-2 forces storey 3 carries 21.83 kN against 11.42 kN at the roof, so the level-3 joints rotate about 1.9 times as much as the roof joints, and that rotation adds drift to the roof storey. With the same 42.67 kN at the roof only (equal shear in every storey) the roof storey is 15.8 % stiffer than the estimate, because the roof beams restrain only the columns below them. With 42.67 kN at level 3 only, the roof storey drifts 0.115 mm while carrying no shear. So the 10.6 % is a limit of the D-value method at the top storey, not an error in the model or in the recomputed D-values [J]. It does not change the wind verdict.
+Item 3 splits the difference into its parts. The recomputed ΣD (83 633 N/mm ground, 88 416 N/mm above) is lower than the printed 92 842 and 107 488 N/mm, which is flag D6 again: the printed K and α_c in Table 7-6 cannot be reproduced from the §2.6 stiffnesses. Once the D-values are recomputed, the finite-element frame and the D-value method agree within 3 % at levels 2-3. The ground storey is 16.7 % stiffer in the model than the D-value formula gives, because the fixed-base α_c = (0.5 + K)/(2 + K) ignores the restraint the storey above gives to the column tops [J]. At the roof the model is 10.6 % more flexible than the D-value estimate. Checked on 26 Oct 2026 (the AI assistant, `test_roof_storey_stiffness_depends_on_load_pattern`): the D-value method assumes equal joint rotations at both ends of each column, so its storey stiffness does not depend on the loads. The model's roof storey does. Under the Table 8-2 forces storey 3 carries 21.83 kN against 11.42 kN at the roof, so the level-3 joints rotate about 1.9 times as much as the roof joints, and that rotation adds drift to the roof storey. With the same 42.67 kN at the roof only (equal shear in every storey) the roof storey is 15.8 % stiffer than the estimate, because the roof beams restrain only the columns below them. With 42.67 kN at level 3 only, the roof storey drifts 0.115 mm while carrying no shear. So the 10.6 % is a limit of the D-value method at the top storey, not an error in the model or in the recomputed D-values [J]. It does not change the wind verdict.
 
 ### Check runs (one change each, Δu difference from Table 8-2)
 
@@ -336,7 +336,7 @@ Every model drift ratio meets 1/550 (spec S11) by a wide margin. The largest is 
 
 ### How the response-spectrum check is read (written 27 Oct 2026, 03:49 UTC, before the first response-spectrum or 3D run)
 
-Claude wrote these before any Day 10 result existed [J]. No tolerance is set for Day 10 by the author, so none is invented; every difference above 10 % gets a written reason.
+The AI assistant wrote these before any Day 10 result existed [J]. No tolerance is set for Day 10 by the author, so none is invented; every difference above 10 % gets a written reason.
 
 1. **Same inputs as Day 9.** Same G_i, masses, spectrum, α_max, Tg and ψ_T = 1.0 (bare frame) as the primary base-shear run. Nothing is re-chosen for the second method.
 2. **Modes and combination.** First three modes of the 2D frame. For mode j, F_ji = α_j γ_j X_ji G_i with γ_j = Σ X_ji G_i / Σ X_ji² G_i (GB 50011 cl. 5.2.2 [?], to be checked in the author's copy; this is also the standard modal participation factor). Each mode's forces are applied statically; storey shears and inter-storey drifts are combined by SRSS (square root of the sum of squares) storey by storey. Displacements are not combined first and then differenced.
@@ -348,7 +348,7 @@ Claude wrote these before any Day 10 result existed [J]. No tolerance is set for
 
 ## Earthquake by the base-shear method (Day 9, 27 Oct 2026)
 
-Status: **draft for the author's review.** Explanations marked [J] are Claude's. Numbers come from `results/anchor_seismic.csv`, `anchor_seismic_runs.csv`, `anchor_seismic_weights.csv` and `anchor_seismic_period_check.csv`, written by `src/shellbench/seismic.py` (run by `python -m shellbench.anchor_frame`), or are arithmetic on printed Table 8-12 values. The reading rules above ("How the seismic comparison is read") were committed before the first run and were not changed after it.
+Status: **draft for the author's review.** Explanations marked [J] are the AI assistant's. Numbers come from `results/anchor_seismic.csv`, `anchor_seismic_runs.csv`, `anchor_seismic_weights.csv` and `anchor_seismic_period_check.csv`, written by `src/shellbench/seismic.py` (run by `python -m shellbench.anchor_frame`), or are arithmetic on printed Table 8-12 values. The reading rules above ("How the seismic comparison is read") were committed before the first run and were not changed after it.
 
 ### What the model does
 
@@ -408,7 +408,7 @@ Every storey drift meets 1/550. The largest is θ = 5.67 × 10⁻⁴ at storey 2
 ### Decisions by the author (27 Oct 2026)
 
 - D24 accepted: the thesis base shear (four storeys) is 18.9 % above the bare-frame base-shear method, and the cause cannot be split because the thesis prints neither period nor weights.
-- The author asked Claude to choose ψ_T from a citable source, not from the sensitivity table. **Change made after the Day 9 and Day 10 runs (reading rule 9):** the anchor value is ψ_T = 0.7 (`seismic.ANCHOR_PSI_T`). Source: JGJ 3-2010 cl. 4.3.17 gives 0.6-0.7 for frame structures with infill walls [?]. Claude did not open the clause; the range and clause number are as cited by Zhou (2024), "框架结构计算中对周期折减系数合理取值的研究", 建筑监督检测与造价, issue 9. JGJ 3 is the high-rise code, so using it for a four-storey frame borrows a design-office practice rule [J]. Within the range, 0.7 is the smaller reduction [J]. It is not the value that matches the thesis best (0.8, outside the cited range), so the choice is not tuned to the target. A second, independent secondary source quotes the clause wording: "当非承重墙体为砌体墙时，高层建筑结构的计算自振周期折减系数可按下列规定取值：框架结构可取0.6～0.7" (Sohu article "自振周期折减系数，没你想象的那么简单", https://www.sohu.com/a/221038015_206216, read 27 Oct 2026). Neither the author nor Claude has a primary copy of JGJ 3-2010 (author, 27 Oct 2026), so the [?] stays until one is opened, for example in a university library, before Paper 1 cites it.
+- The author asked the AI assistant to choose ψ_T from a citable source, not from the sensitivity table. **Change made after the Day 9 and Day 10 runs (reading rule 9):** the anchor value is ψ_T = 0.7 (`seismic.ANCHOR_PSI_T`). Source: JGJ 3-2010 cl. 4.3.17 gives 0.6-0.7 for frame structures with infill walls [?]. The AI assistant did not open the clause; the range and clause number are as cited by Zhou (2024), "框架结构计算中对周期折减系数合理取值的研究", 建筑监督检测与造价, issue 9. JGJ 3 is the high-rise code, so using it for a four-storey frame borrows a design-office practice rule [J]. Within the range, 0.7 is the smaller reduction [J]. It is not the value that matches the thesis best (0.8, outside the cited range), so the choice is not tuned to the target. A second, independent secondary source quotes the clause wording: "当非承重墙体为砌体墙时，高层建筑结构的计算自振周期折减系数可按下列规定取值：框架结构可取0.6～0.7" (Sohu article "自振周期折减系数，没你想象的那么简单", https://www.sohu.com/a/221038015_206216, read 27 Oct 2026). Neither the author nor the AI assistant has a primary copy of JGJ 3-2010 (author, 27 Oct 2026), so the [?] stays until one is opened, for example in a university library, before Paper 1 cites it.
 - What changes: at ψ_T = 0.7, T1 = 0.489 s (below 1.4 Tg, so δ_n = 0), α1 = 0.0592, F_Ek = 296.04 kN, 11.8 % above the thesis four-storey base shear; largest θ is 42 % of 1/550 (`results/anchor_seismic_runs.csv`, row `psi_t_0.7`). The bare-frame run stays as the method comparison above; the design checks (Day 11) and the carbon inventory use ψ_T = 0.7.
 
 ## Response-spectrum check and 3D periods (Day 10, done ahead on 27 Oct 2026)
@@ -473,7 +473,7 @@ GB 50011 cl. 5.2.2 (modal forces and SRSS) is cited from general knowledge and m
 
 ### How the design checks are read (written 28 Oct 2026, committed 00:41 UTC in 468df78, before the first design-check run)
 
-Claude wrote these before any Day 11 result existed [J]. Code values come from `notes/gb50010_design_values.md` and from the uploaded GB 50010-2010 English translation (2010 issue; page numbers ±1). The author has set no tolerance for Day 11, so none is invented: a member is flagged when the provided steel is below the required steel, by any amount.
+The AI assistant wrote these before any Day 11 result existed [J]. Code values come from `notes/gb50010_design_values.md` and from the uploaded GB 50010-2010 English translation (2010 issue; page numbers ±1). The author has set no tolerance for Day 11, so none is invented: a member is flagged when the provided steel is below the required steel, by any amount.
 
 1. **Load cases** come from the anchor frame as it stands. D and L are the primary gravity runs (`thesis_fem`, Days 5-6). W is the printed W_k of Table 8-2 at the axis-A joints (Day 8). E is the base-shear method with ψ_T = 0.7 (Day 9 decision): F_Ek 296.04 kN, δ_n = 0. G_E = D + 0.5 × floor live, with no roof live (GB 50011 Table 5.1.3), run as its own case. Wind and earthquake from the right are the mirror of the left (the frame is symmetric); they are run, not mirrored by hand.
 2. **Combinations** are the thesis set (`combinations.THESIS_COMBINATIONS`): 1.3D + 1.5L; 1.3D + 1.5(L + 0.6W); 1.3D + 1.5(0.7L + W); 1.2G_E + 1.3E, each wind and earthquake both ways. In the seismic combinations the demand is multiplied by γ_RE (GB 50010 cl. 11.1.6, p. 152): 0.75 for beam flexure. That is the same as dividing the capacity by γ_RE.
@@ -485,7 +485,7 @@ Claude wrote these before any Day 11 result existed [J]. Code values come from `
 8. **Two checks per thesis beam row**, so a flag can be traced to its cause: (a) the model's design moment against the thesis steel; (b) the thesis's own printed design moment (s9.2, column "γRE × M") put through the formula in rule 4, against its own A_s,req and A_s,prov. Check (b) uses no model numbers, so a row that fails (b) is a thesis arithmetic or method problem, whatever the model says.
 9. **Sensitivity**, reported but not used for the flags: centre-line moments instead of face moments, and the GB 55002-2021 seismic factors 1.3 / 1.4 instead of 1.2 / 1.3 (flag D21). A flag that appears only in a sensitivity run is listed as such.
 10. **Not checked on Day 11** (so no claim is made about them): column N-M capacity, strong-column weak-beam and strong-shear weak-bending factors, beam and column shear, crack width and deflection, bar spacing. They belong to the design rules of Day 15.
-11. Each flagged member goes into this file with Claude's proposed judgement (thesis error, simplification, or code-version difference) [J], for the author to accept or change. These rules stay as written whatever the results. Any later change is dated and marked as made after the run.
+11. Each flagged member goes into this file with the AI assistant's proposed judgement (thesis error, simplification, or code-version difference) [J], for the author to accept or change. These rules stay as written whatever the results. Any later change is dated and marked as made after the run.
 
 ### Results (28 Oct 2026, read with the rules above)
 
@@ -526,17 +526,17 @@ Both rows fail only on the bars, and both are rows already flagged D10. The fram
 2. Beam, level 1 AB left face (top steel): M = 236.37 kN·m; α_s = 236.37 × 10⁶ / (1.0 × 19.1 × 300 × 550²) = 0.1364; ξ = 1 − √(1 − 2 × 0.1364) = 0.1472; A_s = 19.1 × 300 × 0.1472 × 550 / 360 = 1288.6 mm²; minimum 0.261 % × 300 × 600 = 470 mm².
 
 **Status (29 Oct 2026).** Who did what:
-- **Arithmetic:** both Claudes recomputed both checks separately, and every number above matches.
-- **Code values:** Claude Code read three of them in the Chinese GB 50010-2010 (2015 edition) PDF, through its OCR text layer:
+- **Arithmetic:** two separate AI-assisted runs recomputed both checks separately, and every number above matches.
+- **Code values:** the AI assistant read three of them in the Chinese GB 50010-2010 (2015 edition) PDF, through its OCR text layer:
   - f_c = 19.1 N/mm² for C40: Table 4.1.4-1, PDF p. 35.
   - f_y = 360 N/mm² for HRB400: Table 4.2.3-1, PDF p. 39.
   - The beam minimum at the support, grade III: "0.25 和 55 f_t/f_y 中的较大值", Table 11.3.6-1, PDF p. 184.
 - **f_t = 1.71 N/mm²:** its row in Table 4.1.4-2 is missing from the OCR layer of the 2015 PDF, so this value rests on the 2010 English translation only (notes/gb50010_design_values.md) [?].
 - **The author:** accepted these checks on 29 Oct 2026 without opening the pages again.
 
-### Independent cross-check (Claude Code in VS Code, 28 Oct 2026)
+### Independent cross-check (the AI assistant, 28 Oct 2026)
 
-Claude Code, working from the Playbook and without knowing that this branch existed, wrote a second implementation of Day 11 (its own reading rules, committed before its own run, and its own code). It differed in one choice: it designed at the column centre-lines, and read the face moments only as a diagnostic. It was not merged, because this one came first. Its results agree with `results/anchor_design_*.csv`:
+The AI assistant, working from the Playbook and without knowing that this branch existed, wrote a second implementation of Day 11 (its own reading rules, committed before its own run, and its own code). It differed in one choice: it designed at the column centre-lines, and read the face moments only as a diagnostic. It was not merged, because this one came first. Its results agree with `results/anchor_design_*.csv`:
 
 - Face moments and steel at the five sensitive rows: 92.27 / 479.1 (roof CD right), 236.37 / 1288.6 (level 1 AB left), 220.46 / 1195.0 (level 1 AB right) and 122.65 / 802.0 (level 1 BC) kN·m / mm², identical to the digit.
 - Axial ratios: the same at every column (0.3203 at B1).
@@ -550,7 +550,7 @@ Two pieces of code built separately give the same numbers, so a coding error in 
 
 ### How the take-off is read (written 29 Oct 2026, committed 00:46 UTC in f38e731, before the first take-off run)
 
-Claude wrote these rules before any Day 12 number existed [J]. The carbon factors are the author's: every factor value traces to a cited source. Until `data/carbon_factors.csv` exists, the carbon columns stay empty and say "pending".
+The AI assistant wrote these rules before any Day 12 number existed [J]. The carbon factors are the author's: every factor value traces to a cited source. Until `data/carbon_factors.csv` exists, the carbon columns stay empty and say "pending".
 
 1. **Boundary.** Structure only: suspended slabs, frame beams, longitudinal and secondary beams, columns and column footings. Not counted: the ground-floor slab on grade, blinding, stairs, parapets, infill walls, finishes, formwork, laps, anchorages and wastage [J]. The same boundary is used for every floor option later, so what is left out is left out on both sides of the comparison [J].
 2. **Plan.** The primary take-off uses the drawing grid of decision B11: a full 38.4 × 21.0 m rectangle, axes 1-7 at 6.0 / 6.6 / 6.6 / 6.6 / 6.6 / 6.0 m and axes A-D at 7.2 / 6.6 / 7.2 m (spec G3, G4), 28 columns. A second run, "drawn", follows my reading of drawing 03: no column at A4, and no slab, A-line beam or axis-4 AB beam between axes 3 and 5 on A-B (a 13.2 × 7.2 m notch). The drawn run is a sensitivity until the author confirms the reading [J]. Openings marked on drawing 03 are not deducted in either run, because their sizes are not dimensioned [J].
@@ -597,7 +597,7 @@ Total steel is 17.9 kg/m² with the thesis steel and 18.6 kg/m² with the code s
 
 ### Carbon results (29 Oct 2026, GB/T 51366 set only)
 
-**Where the factors came from.** The author gave Claude permission to fill in the factors. Claude read them from GB/T 51366-2019 Table D.0.1. The official copy on mohurd.gov.cn did not resolve, so the copy read is a third-party one. The author confirms the values in an official copy.
+**Where the factors came from.** The author gave the AI assistant permission to fill in the factors. The AI assistant read them from GB/T 51366-2019 Table D.0.1. The official copy on mohurd.gov.cn did not resolve, so the copy read is a third-party one. The author confirms the values in an official copy.
 
 | Material | Factor | Source |
 |---|---|---|
@@ -642,7 +642,7 @@ So the slabs carry the most carbon, as the playbook expected. Concrete is about 
 Grid plan, axis 3, line B. The axis-2 frame gives D + L = 1 588.00 + 429.66 = 2 017.66 kN at the base of column B1. The tributary areas are 6.6 × 6.9 m² (axis 3) against 7.2 × 6.9 m² (the 2D frame), so N_k = 2 017.66 × 6.6 / 7.2 = 1 849.52 kN. With d = 0.5 + 0.6 = 1.1 m, B = √(1 849.52 / (220 − 20 × 1.1)) = 3.056 m, rounded up to 3.1 m. p_j = 1.35 × 1 849.52 / 3.1² = 259.82 kPa; M = (3.1 − 0.6)² × (2 × 3.1 + 0.6) × 259.82 / 24 = 460.1 kN·m; A_s = 460.1 × 10⁶ / (0.9 × 360 × 550) = 2 581.9 mm², less than the minimum 0.0015 × 3 100 × 600 = 2 790 mm², which governs.
 
 **Status (29 Oct 2026).**
-- **Arithmetic:** both Claudes recomputed this check separately, and every number matches. The bearing pressure is 1 849.52 / 3.1² + 20 × 1.1 = 214.5 kPa ≤ 220 kPa.
+- **Arithmetic:** two separate AI-assisted runs recomputed this check separately, and every number matches. The bearing pressure is 1 849.52 / 3.1² + 20 × 1.1 = 214.5 kPa ≤ 220 kPa.
 - **Inputs:** they follow rule 8, which the author accepted as D28 (b). The GB 50007 clause numbers are still marked [?].
 - **The author:** accepted the check on 29 Oct 2026 without working it by hand.
 
