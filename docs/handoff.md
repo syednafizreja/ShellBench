@@ -2,6 +2,14 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 13 Nov 2026 (Day 47: H4 verdict, finishing cross-check), Claude in the app
+
+- Last handoff read: the DOI is published (10.5281/zenodo.24194144). Ran the frozen surrogate once on the published data: **H4 partly supported** (error ratio 2.27 holds, coverage 73.3 % fails, agreement 93.9 % holds, below the 97.0 % shell baseline). Verdict in preregistration section 3; result CSVs unchanged.
+- Finishing cross-check: points 1, 2, 3 and 6 pass; gaps at 4 (equilibrium) and 5 (validation table) fixed in the same PR. Details in LOG.md Day 47.
+- Code change after the DOI: `generator.check_equilibrium` (no numeric change; 2-building self-test and 261 tests pass). The family files were not regenerated; if the author wants them rebuilt with the assertion before v1.0, run `python -m shellbench.batch` and check `git status` shows only provenance changes.
+- Not done: v0.5 tag (author's check window first), `release.yml` untouched.
+- Open (author): confirm the H4 reading; confirm the earlier items (verdict table, GB/T 1499.2 Table 2, ASCE 7-16 cl. 12.3.1.3); check Paper 1 and 2 numbers in the window.
+
 ## 13 Nov 2026 (Dataset DOI published), Claude Code in VS Code
 
 - The v0.4.0 dataset is published on Zenodo: **10.5281/zenodo.24194144** (record 24194144, CC BY 4.0). Uploaded with `C:\Users\ASUS\tools\zenodo\publish.py` using the author's token; the draft's file MD5 matched the local zip and the metadata (Dataset, version 0.4.0, creator with ORCID, "is supplement to" 10.5281/zenodo.23851675 and the repo URL) was checked before publishing.
