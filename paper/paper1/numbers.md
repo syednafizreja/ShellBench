@@ -4,7 +4,7 @@
 
 One row per number in the manuscript (academic-manuscript-writing §8). A number without a row does not go in the paper. If the manuscript and the repo disagree, the repo wins. Seeded on 5 Nov 2026 from the Methods skeleton; "Checked by Syed" stays empty until the author checks the value against the file.
 
-Check window, 13 Nov 2026 (The AI assistant) [J]: every value below was read again from its source file at tag v0.5.0 by a script, and the "[?] tag" cells were resolved with `git tag --contains`. The "Checked by the AI assistant" column records that; the author to confirm each row. Corrections made: row 2.6 (row counts were the pre-release plan) and a rounding note on the dead-load median. Rows 3.x are new: the frozen H1-H4 numbers.
+Check window, 13 Nov 2026 (The AI assistant) [J]: values were read again from the working tree on main after PR #177 (results/ unchanged since v0.5.0): the results/ and data/ rows by script; the geometry, generator-column and pilot hand-check rows by reading docs/anchor_report.md, tests/test_generator_anchor.py and docs/pilot_hand_checks.md. The two rows sourced to the thesis were checked against anchor_report §2 only, not the thesis. The "[?] tag" cells were resolved with `git tag --contains`. The "Checked by the AI assistant" column records that; the author to confirm each row. Corrections made: row 2.6 (row counts were the pre-release plan) and a rounding note on the dead-load median. Rows 3.x are new: the frozen H1-H4 numbers.
 
 | Manuscript location | Value | Source (file, function or table) | Commit or tag | Checked by Syed (date) | Checked by the AI assistant (author to confirm) |
 |---|---|---|---|---|---|
@@ -28,7 +28,7 @@ Check window, 13 Nov 2026 (The AI assistant) [J]: every value below was read aga
 | 2.8 | Smallest exact two-sided p: n = 4 0.083, n = 5 0.017, n = 6 0.0028 | arithmetic 2/n! | n/a | | The AI assistant 13 Nov 2026 |
 | 3.1 | H1 partly supported: S_b > 0 in 32 of 33 buildings (97.0 %); S_b < S_f in 27; S_b min −0.33 %, median 5.66 %, max 30.68 % | results/verdicts_summary.csv (case base) | v0.5.0 | | The AI assistant 13 Nov 2026 |
 | 3.1 | H1 under C1/C2 sensitivity: verdict "partly supported" in all six cases | results/verdicts_summary.csv | v0.5.0 | | The AI assistant 13 Nov 2026 |
-| 3.1 | S_b with lateral carbon × 1.3125 (strip vs plan, data_card row 4): 32 of 33 positive, median 4.13 %, min −0.29 %, max 32.36 %; verdict unchanged. Exploratory bound, not preregistered [J] | scripts/strip_factor_bound.py | this PR | | The AI assistant 13 Nov 2026 |
+| 3.1 | S_b with lateral carbon × 1.3125 (strip vs plan, data_card row 4): 32 of 33 positive, median 4.13 %, min −0.29 %, max 32.36 %; verdict unchanged. Factors 1.0 and 1.3125 bracket each building's S_b; exploratory, not preregistered [J] | scripts/strip_factor_bound.py | this PR | | The AI assistant 13 Nov 2026 |
 | 3.2 | H2 not supported; H3 not supported (all six cases) | results/verdicts_summary.csv | v0.5.0 | | The AI assistant 13 Nov 2026 |
 | 3.4 | H4 error ratio 2.27 (RMSE 25.62 vs 11.30 kgCO2e/m², unseen storeys vs random) | results/surrogate_accuracy.csv; preregistration §3 | v0.5.0 | | The AI assistant 13 Nov 2026 |
 | 3.4 | H4 conformal coverage, unseen storeys pooled 73.3 % (folds 56.1-87.1 %), nominal 90 %; random split 90.1 % | results/surrogate_coverage.csv | v0.5.0 | | The AI assistant 13 Nov 2026 |
