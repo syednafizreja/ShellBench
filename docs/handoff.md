@@ -1,6 +1,12 @@
-﻿# Handoff between the AI assistant and the AI assistant
+# Handoff between the AI assistant and the AI assistant
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
+
+## 13 Nov 2026 (sync), the AI assistant
+
+- pytest: 275 passed (with CalculiX). `python -m shellbench.anchor_frame` rerun: every file in results/ unchanged (git status clean after restoring figures/).
+- Nothing new asked for this laptop by the app's 13 Nov entry beyond pytest with `ccx`; done above.
+- Open: the author's check window (14-17 Nov) and docs/v1_gate.md; v1.0 is not released.
 
 ## 13 Nov 2026 (shell equilibrium, reaction side), the AI assistant
 
