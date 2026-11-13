@@ -35,7 +35,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable
 
-from shellbench.calculix import find_ccx, read_displacements
+from shellbench.calculix import find_ccx, read_displacements, read_reactions
 
 ROOT = Path(__file__).resolve().parents[2]
 BENCHMARKS_CSV = ROOT / "validation" / "benchmarks.csv"
@@ -92,11 +92,13 @@ class ShellResult:
         displacements: Node to (ux, uy, uz). For a buckling step, the last mode.
         stresses: (element, integration point) to (sxx, syy, szz, sxy, sxz, syz).
         buckling_factors: Load factors in mode order; empty for a static step.
+        reactions: Support node to (Fx, Fy, Fz) reaction force; empty for a buckling step.
     """
 
     displacements: dict[int, tuple[float, float, float]]
     stresses: dict[tuple[int, int], tuple[float, ...]]
     buckling_factors: list[float]
+    reactions: dict[int, tuple[float, float, float]] = field(default_factory=dict)
 
 
 def mapped_mesh(surface: Surface, nu: int, nv: int, closed_v: bool = False) -> tuple[
@@ -165,6 +167,12 @@ def deck(model: ShellModel, buckling_modes: int = 0) -> str:
     lines += ["*NODE PRINT,NSET=OUT", "U"]
     if not buckling_modes:
         lines += ["*EL PRINT,ELSET=SHELL", "S"]
+        if model.supports:  # reactions at the supported nodes, for the global equilibrium check
+            sup = sorted({n for n, _, _ in model.supports})
+            lines += ["*NODE PRINT,NSET=SUP", "RF"]
+            lines[lines.index("*NSET,NSET=OUT"):lines.index("*NSET,NSET=OUT")] = (
+                ["*NSET,NSET=SUP"] + [",".join(map(str, sup[k:k + SET_ITEMS_PER_LINE]))
+                                      for k in range(0, len(sup), SET_ITEMS_PER_LINE)])
     lines += ["*END STEP", ""]
     return "\n".join(lines)
 
@@ -176,6 +184,9 @@ def read_stresses(dat: Path) -> dict[tuple[int, int], tuple[float, ...]]:
     for line in dat.read_text().splitlines():
         if "stresses" in line:
             reading = True
+            continue
+        if "forces" in line:  # the reaction block follows the stress block: stop reading
+            reading = False
             continue
         parts = line.split()
         last = 2 + STRESS_COMPONENTS
@@ -225,7 +236,45 @@ def run(model: ShellModel, workdir: Path, name: str = "shell", buckling_modes: i
     subprocess.run([ccx, name], cwd=workdir, capture_output=True, check=True,
                    timeout=CCX_TIMEOUT_S)
     dat = workdir / f"{name}.dat"
-    return ShellResult(read_displacements(dat), read_stresses(dat), read_buckling_factors(dat))
+    result = ShellResult(read_displacements(dat), read_stresses(dat), read_buckling_factors(dat),
+                         read_reactions(dat) if not buckling_modes else {})
+    if not buckling_modes and model.supports and model.forces and not model.gravity:
+        check_equilibrium(model, result)
+    return result
+
+
+#: Relative tolerance of the shell equilibrium check [-]: reactions against applied nodal forces.
+EQUILIBRIUM_RTOL: float = 1e-6
+
+
+def check_equilibrium(model: ShellModel, result: ShellResult) -> None:
+    """Assert global equilibrium of a static run with nodal forces [N].
+
+    CalculiX prints ``RF`` at a constrained degree of freedom without the nodal force applied
+    on that same degree of freedom (found by test: the strip run is short by exactly the load on
+    its supported nodes). So per direction the check is: sum of ``RF`` over the constrained
+    degrees of freedom + applied forces on the free degrees of freedom = 0.
+
+    Verification, not validation. Runs with gravity are not checked here (the weight is not summed).
+
+    Raises:
+        RuntimeError: If the balance misses by more than ``EQUILIBRIUM_RTOL`` of the sum of the
+            absolute applied forces, or if no reaction was read.
+    """
+    if not result.reactions:
+        raise RuntimeError("no reactions read from the CalculiX output")
+    fixed = {(n, d) for n, first, last in model.supports for d in range(first, last + 1)}
+    free_load = [0.0, 0.0, 0.0]
+    scale = 1e-30
+    for n, dof, f in model.forces:
+        scale += abs(f)
+        if (n, dof) not in fixed:
+            free_load[dof - 1] += f
+    for i in range(3):
+        react = sum(result.reactions[n][i] for n, d in fixed if d == i + 1 and n in result.reactions)
+        if abs(react + free_load[i]) > EQUILIBRIUM_RTOL * scale:
+            raise RuntimeError(f"shell equilibrium failed in direction {i + 1}: constrained reactions "
+                               f"{react:.6g} N against free-dof load {free_load[i]:.6g} N")
 
 
 def load_benchmarks(path: Path = BENCHMARKS_CSV) -> dict[str, dict[str, float]]:
