@@ -182,8 +182,8 @@ Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI a
 
 ## Reviewer-2 repo audit - 13 Nov 2026 (check window, entry made on 13 Nov)
 
-- Done: full audit against ten points, written up in `docs/reviewer2_audit.md` with a findings table. 32 DOIs checked against Crossref: all match. Fresh clone: 276 tests pass, verdict CSVs rebuild byte for byte.
-- Fixed: grade-I caveat (README, numbers.md), `CITATION.cff` version and date, four missing docstrings, a test for the floor-library case list, a local path in `docs/dataset_release.md`.
+- Done: full audit against ten points, written up in `docs/reviewer2_audit.md` with a findings table. 32 DOIs checked against Crossref: all resolve, one description corrected (F9). Fresh clone: 276 tests pass, verdict CSVs rebuild byte for byte.
+- Fixed: grade-I caveat (README, numbers.md), `CITATION.cff` version and date, four missing docstrings, a test for the floor-library case list, a local path in `docs/dataset_release.md`, the description of one reference in `docs/goal_stress_test.md`, the README test count.
 - Disclosed, no result changed: primary baseline is one conventional design per building (preregistration C4, README note); figure byte differences across platforms.
 - Not done on purpose: v1.0 tag, any rerun that could change a verdict.
 - Author to check: the six items at the end of the audit file.
