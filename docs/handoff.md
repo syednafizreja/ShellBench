@@ -2,6 +2,14 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 13 Nov 2026 (shell equilibrium, reaction side), the AI assistant
+
+- Last handoff read: v0.5.0 tagged by VS Code; the check window starts 14 Nov. The two finishing gaps were closed in part by VS Code (thrust and load-side tests, PR #175); this entry closes the reaction side.
+- Done: `shellfe` prints `RF` and asserts equilibrium on static runs with nodal forces; 3 tests; 275 pass. Finding: CalculiX omits from `RF` the load applied on a fixed dof, so the check uses constrained reactions plus the load on free dofs.
+- No result file changed; panel and floorlib rerun gave only the known last-digit differences, restored.
+- Open [J]: gravity runs (Scordelis-Lo) are not checked. Open (author): the 14-17 Nov checks of the anchor report, dataset, H1-H4 and Paper 1.
+- For the AI assistant: pull, run pytest (needs `ccx` for the new tests; they skip without it).
+
 ## 13 Nov 2026 (v0.5.0, end of build), the AI assistant
 
 - Last handoff read: Day 47 open checks closed (PR #175); v0.5 was left open.
