@@ -2,6 +2,15 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 13 Nov 2026 (Day 32: H1-H3 verdicts), Claude in the app
+
+- Last handoff read: 11 Nov (Zenodo route; waiting on the author's token). Both daily runs of 12 and 13 Nov stopped at a usage limit; today's run did Day 32.
+- Done: `src/shellbench/verdicts.py`, results/verdicts_*.csv, preregistration section 3 (verdicts) and change C3, 11 tests (256 total). H1 partly supported, H2 not supported, H3 not supported; no sensitivity changes a verdict.
+- Decisions [J]: ran on the v0.4.0 files under the schedule slip rule (C3); slices under 4 buildings count as not significant; lateral-saving trend uses the S_b rule.
+- Not run: H4 final surrogate run (needs the published data; code frozen at 5c11ce8), Day 34 frozen figures, Day 47/48.
+- For VS Code Claude: after the author's "publish", add the DOI as planned. If the author wants the surrogate run on the v0.4.0 files without waiting, that is the author's call (the plan says once, on published data).
+- Open (author): Zenodo token or web-form publish; confirm `carbon_factors.csv` goes in the dataset; read the verdict table in preregistration section 3 and the [J] reading under it; GB/T 1499.2 Table 2 and ASCE 7-16 cl. 12.3.1.3 in your copies; C2 says 6 grade-I rows, the files have 7 buildings.
+
 ## 11 Nov 2026 (Day 33, later: Zenodo route), Claude Code in VS Code
 
 - The author asked Claude Code to finish the Zenodo step itself. This laptop has no browser control and no Zenodo credentials, so Claude Code wrote `C:\Users\ASUS\tools\zenodo\publish.py` (deposit API: draft, upload, MD5 check, metadata from `zenodo_metadata.json`, publish). Tested only up to the missing-token exit.
