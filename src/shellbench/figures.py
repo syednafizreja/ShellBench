@@ -610,6 +610,64 @@ def rsa_table(rows: list[dict]) -> list[dict]:
              "du_thesis": float(r["du_thesis_printed [mm]"])} for r in rows]
 
 
+def surrogate_decision(dec, path: Path = FIGURES / "surrogate_decision.png", paper: bool = False,
+                       note: str = "") -> list[Path]:
+    """Floor-system choice by the surrogate against the full analysis (H4 decision test).
+
+    Panel a: whole-building saving of each building, surrogate against full analysis, both predicted
+    without the building's storey count. Panel b: share of buildings with the same choice, by storey
+    count, with the always-choose-shell baseline and the preregistered 80 % threshold.
+
+    Args:
+        dec: Rows of results/surrogate_decision.csv.
+        path: Output path.
+        paper: Footer-free paper copy.
+        note: Footer qualifier.
+
+    Returns:
+        Written file paths.
+    """
+    import numpy as np
+
+    fig, (a, b) = st.figure("double", height_mm=76, ncols=2, gridspec_kw={"width_ratios": [1.15, 1]})
+    lo = float(min(dec["saving_full_pct"].min(), dec["saving_surrogate_pct"].min())) - 2.0
+    hi = float(max(dec["saving_full_pct"].max(), dec["saving_surrogate_pct"].max())) + 2.0
+    a.axhspan(lo, 0, color=st.NEUTRAL_FILL, linewidth=0, zorder=0)
+    a.axvspan(lo, 0, color=st.NEUTRAL_FILL, linewidth=0, zorder=0)
+    a.plot([lo, hi], [lo, hi], color=st.INK_2, linewidth=0.6, linestyle=(0, (4, 2)), zorder=1,
+           label="Surrogate = full analysis")
+    ok = dec["agree"].astype(bool)
+    for sel, name, col, mk in ((ok, "Same choice", st.SERIES[0], "o"), (~ok, "Different choice", st.SERIES[1], "D")):
+        d = dec[sel]
+        a.plot(d["saving_full_pct"], d["saving_surrogate_pct"], linestyle="none", marker=mk, markersize=4.2,
+               color=col, markeredgecolor="white", markeredgewidth=0.4, zorder=3, label=f"{name} ({len(d)})")
+    a.set_xlim(lo, hi)
+    a.set_ylim(lo, hi)
+    a.set_xlabel("Saving, full analysis [% of slab building]")
+    a.set_ylabel("Saving, surrogate [%]")
+    a.text(0.98, 0.02, "Shaded: slab is lower", transform=a.transAxes, ha="right", va="bottom",
+           fontsize=7, color=st.INK_MUTED)
+    a.legend(loc="upper left", frameon=False)
+    by = dec.groupby("storeys")["agree"].agg(["mean", "size"])
+    xs = np.arange(len(by))
+    b.bar(xs, 100 * by["mean"], color=st.SERIES[0], width=0.62, zorder=2)
+    for x, (m, n) in zip(xs, by.itertuples(index=False)):
+        b.text(x, 4.0, f"{100 * m:.0f} %\nn = {n}", ha="center", va="bottom", fontsize=7, color="white",
+               fontweight="bold")
+    base = 100 * float((dec["full_pick"] == "shell").mean())
+    b.axhline(base, color=st.SERIES[1], linewidth=0.9, zorder=3, label=f"Always choose shell: {base:.0f} %")
+    b.axhline(80.0, color=st.INK, linewidth=0.7, linestyle=(0, (4, 2)), zorder=3, label="H4 threshold: 80 %")
+    b.set_xticks(xs, by.index.astype(str))
+    b.set_xlabel("Storey count (held out in training)")
+    b.set_ylabel("Agreement with full analysis [%]")
+    b.set_ylim(0, 118)
+    b.set_yticks([0, 25, 50, 75, 100])
+    b.legend(loc="upper center", frameon=False, ncol=1)
+    st.hgrid(b, "y")
+    st.panel_labels([a, b])
+    return _finish(fig, path, "results/surrogate_decision.csv", note, paper)
+
+
 def release_note() -> str:
     """Footer qualifier for surrogate figures, read from the data they were trained on.
 
@@ -657,6 +715,9 @@ def build_all(paper: bool = False) -> list[Path]:
         out += verdict_h1(base, paper=paper)
         out += verdict_h2(base, paper=paper)
         out += verdict_sensitivity(allv, pd.read_csv(RESULTS / "verdicts_summary.csv"), paper=paper)
+    dec_csv = RESULTS / "surrogate_decision.csv"
+    if dec_csv.exists():
+        out += surrogate_decision(pd.read_csv(dec_csv), paper=paper, note=note)
     pred_csv = RESULTS / "surrogate_predictions.csv"
     if pred_csv.exists():
         out += parity(pd.read_csv(pred_csv), paper=paper, note=note)
