@@ -12,4 +12,4 @@ Paper 1: whole-building embodied carbon of thin-shell floors in GB-code RC frame
 | numbers.md | One row per manuscript number | Seeded |
 | references.md | One row per reference | Seeded |
 
-Rules: prose only from the author's rough sentences; every section passes the review panel before it goes to the author; Results only after the frozen verdicts; no em dashes; British English; Elsevier back matter including the generative-AI declaration.
+Rules: follow `docs/finishing_path.md` (from 14 Nov 2026: the AI assistant drafts the prose in the author's voice, the author owns it; this replaces "prose only from the author's rough sentences"); every section passes the review panel before it goes to the author; Results only after the frozen verdicts; no em dashes; British English; Elsevier back matter including the generative-AI declaration.

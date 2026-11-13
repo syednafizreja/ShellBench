@@ -2,6 +2,13 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 14 Nov 2026 (finishing path), the AI assistant
+
+- Last handoff read: shell equilibrium, reaction side (13 Nov); check window starts 14 Nov.
+- Done: at the author's request, ShellBench now follows the same route to a finished paper as ShellForm. New `docs/finishing_path.md` (12 steps, from core to submission; the AI assistant drafts prose in the author's voice under the author's rule of 10 Nov, the author owns it). project rule 9, `paper/paper1/README.md`, the schedule's Paper 1 column and `.commands/today.md` point to it. Docs only; no code or result changed.
+- Next for Paper 1 (files due 17 Nov, submission 22 Nov): steps 3-7 (Methods, Results, Discussion, literature search and Introduction, Abstract and Conclusions), then assemble and self-review. Methods has a skeleton (5 Nov); Results waits on nothing (verdicts frozen).
+- Open (author): confirm the target journal (README says Journal of Building Engineering, the writing skill says Engineering Structures).
+
 ## 13 Nov 2026 (shell equilibrium, reaction side), the AI assistant
 
 - Last handoff read: v0.5.0 tagged by VS Code; the check window starts 14 Nov. The two finishing gaps were closed in part by VS Code (thrust and load-side tests, PR #175); this entry closes the reaction side.
