@@ -7,7 +7,8 @@ Newest entry first. Each the AI assistant reads this at the start of a session a
 - Pulled main (c7638cf). pytest: 256 passed. `python -m shellbench.anchor_frame` and `python -m shellbench.verdicts` left results/ unchanged (git status clean); figures/ restored.
 - PR #168 (Day 34 figures) was stacked on `day32-verdicts`, so its merge landed on that branch, not main. This entry's PR carries the same commit (c1e478f) to main. The AI assistant footer was removed from the #168 body first.
 - Zenodo: still no token at `C:\Users\ASUS\.AI assistant\zenodo-token.txt`, so nothing is published and no DOI exists. Only the author can create it (zenodo.org, Applications, Personal access token, scopes deposit:write and deposit:actions). Then `python -I C:\Users\ASUS\tools\zenodo\publish.py dist\shellbench_dataset_v0.4.0.zip <metadata json> --publish`.
-- Open (author): the token; carbon_factors.csv in the dataset; the verdict table in preregistration section 3; GB/T 1499.2 Table 2 and ASCE 7-16 cl. 12.3.1.3 in their copies; the C2 note says 6 grade-I rows while the files hold 7 buildings. Then H4.
+- Checked by the AI assistant the same day (author to confirm, recorded in preregistration.md): the section 3 verdict table and sensitivity line agree with results/verdicts_*.csv. C2's "6 ok rows" was true at commit ea58baa; the Day 21 rerun (3f925b5) made s08-p030 converge, so there are 7, and a dated correction now sits under C2. The code items are already closed under the professor's call: ASCE 7-16 cl. 12.3.1.3 via NIST GCR 17-917-47 Sec. 5.1 (floor_concept.md), GB 1499.2 Table 2 via cl. 5.1/5.2 text plus two secondary copies (design_rules.md R15). carbon_factors.csv stays in the dataset (dataset_release.md).
+- Only physical step left: the Zenodo token (there are no browser tools on this laptop, so the AI assistant cannot log in). Then publish, add the DOI, and run H4.
 
 ## 13 Nov 2026 (Day 34: frozen Paper 1 figures), the AI assistant
 
