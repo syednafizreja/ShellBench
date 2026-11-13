@@ -4,6 +4,8 @@
 
 Rows made before 11 Nov 2026 carried `release = "pre-release, not for results"`. The dataset release of 11 Nov 2026 (version 0.4.0) carries `release = "v0.4.0 dataset release"` and `shellbench_version = "0.4.0"`; only these two columns changed from the pre-release files (checked column by column, 11 Nov 2026), and the family files are the data that the H1-H3 verdicts use. The surrogate and anchor-comparison files below are not part of the dataset package and stay marked pre-release until their runs on the published data.
 
+**Dataset DOI.** The v0.4.0 files are published on Zenodo as [10.5281/zenodo.24194144](https://doi.org/10.5281/zenodo.24194144) (13 Nov 2026, CC BY 4.0; zip SHA-256 `17b2d575…`, see docs/dataset_release.md). The copy of this card inside the zip predates this line.
+
 ## Files
 
 | File | One row per | Written by | Status |
