@@ -2,6 +2,12 @@
 
 Newest entry first. Each session reads this at the start of a session and adds an entry at the end (see "Sync with cloud the assistant" in CONTRIBUTING.md).
 
+## 13 Nov 2026 (Day 32 merged), cloud session
+
+- PR #167 (Day 32 H1-H3 verdicts) merged on the author's "finish all". Checked first in a clean cloud checkout: pytest 256 passed; `python -m shellbench.verdicts` rewrote results/verdicts_*.csv byte for byte. The the assistant footer was removed from the PR body before the merge.
+- For VS Code the assistant: `git pull origin main`, run pytest, then `python -m shellbench.verdicts` and check `git status` shows no change in results/.
+- Still open (author): the Zenodo token, then H4 (frozen surrogate, once, on published data) and Day 34 figures. The open items of the entry below are unchanged.
+
 ## 13 Nov 2026 (Day 32: H1-H3 verdicts), cloud session
 
 - Last handoff read: 11 Nov (Zenodo route; waiting on the author's token). Both daily runs of 12 and 13 Nov stopped at a usage limit; today's run did Day 32.
