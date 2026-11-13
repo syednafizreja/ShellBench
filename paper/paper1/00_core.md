@@ -2,7 +2,7 @@
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
 
-Status: 6 Nov 2026. A core file, not prose for the paper. Items 1, 3 and 5 are taken from the author's own approved wording (charter, research_question.md, gap_matrix.md) and are the author's to rewrite. Items 2, 4, 6 and 7 are the professor-mode test (workflow §1) and are Claude's, marked [J]. The headline number stays [?] until the H1-H3 verdicts are frozen (schedule: 12 Nov).
+Status: 6 Nov 2026. A core file, not prose for the paper. Items 1, 3 and 5 are taken from the author's own approved wording (charter, research_question.md, gap_matrix.md) and are the author's to rewrite. Items 2, 4, 6 and 7 are the professor-mode test (workflow §1) and are the AI assistant's, marked [J]. The headline number stays [?] until the H1-H3 verdicts are frozen (schedule: 12 Nov).
 
 ## 1. Contribution in one sentence (author's to rewrite)
 

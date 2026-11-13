@@ -7,7 +7,7 @@ Rules used here:
 - Every claim has a locator (section, table or abstract) and a page. Pages were first left as "p. [?]" because the papers were read as web text; all of them were filled from the PDFs by 25 Oct 2026 (row 1 last, from the Bath accepted manuscript).
 - [J] = my judgement. [?] = not verified. "Abstract only" rows cannot support a gap statement on their own.
 - Paper numbers match [reading_list.md](reading_list.md).
-- Review status: on 22 Oct 2026 the author checked every evidence locator against the papers and agreed with all rows and G1-G4. Rows marked [x] are reviewed. Row 1 was read in full from the authors' accepted manuscript on 22 Oct 2026; row 3 was removed (no open copy). Rows 21-24 were added later on 22 Oct 2026 (open access, read in full by Claude). Later on 22 Oct the author read and reviewed rows 20-24. Claude cross-checked each claim against the PDFs, corrected rows 21-23 and added page numbers. All rows except the removed row 3 are now ticked.
+- Review status: on 22 Oct 2026 the author checked every evidence locator against the papers and agreed with all rows and G1-G4. Rows marked [x] are reviewed. Row 1 was read in full from the authors' accepted manuscript on 22 Oct 2026; row 3 was removed (no open copy). Rows 21-24 were added later on 22 Oct 2026 (open access, read in full by the AI assistant). Later on 22 Oct the author read and reviewed rows 20-24. The AI assistant cross-checked each claim against the PDFs, corrected rows 21-23 and added page numbers. All rows except the removed row 3 are now ticked.
 
 Column key: **Seismic?** = were seismic or lateral loads part of the design? **Ties/fill/topping?** = were they counted in the carbon? **Scale** = element, floor bay, one storey, or whole building.
 

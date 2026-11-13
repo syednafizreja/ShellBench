@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 type: software
-title: "ShellBench"
+title: "ShellBench: whole-building embodied carbon of thin-shell floors in GB-code reinforced-concrete frames"
 version: 0.1.0
 date-released: "2026-11-01"
 abstract: >-
@@ -26,3 +26,8 @@ keywords:
   - reinforced concrete
   - seismic design
   - structural engineering
+  - life-cycle assessment
+  - GB 50011
+  - CalculiX
+  - OpenSeesPy
+  - form finding

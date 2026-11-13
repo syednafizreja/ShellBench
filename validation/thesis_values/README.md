@@ -60,7 +60,7 @@ corrections.
 - D15. Dead, s6.2.1 table 6.3: final member-end moments do not balance at joints A1 and B1-B4 (out by 39-80 kN*m; e.g. B4: 68.77 - 52.84 - 67.74 = -51.81, should be 0). Beam ends at those joints are arithmetic errors in the hand distribution, not model targets to match. Confirmed by the author 23 Oct 2026 (B4 checked by hand). Details in docs/anchor_notes.md.
 
 Found on Day 6 (24 Oct 2026). **Accepted by the author on 24 Oct 2026**
-(D16 and D17 in their revised wording); Claude Code cross-checked. Details and
+(D16 and D17 in their revised wording); the AI assistant cross-checked. Details and
 arithmetic in docs/anchor_notes.md (live-load and combination sections);
 the checks are coded in `src/shellbench/thesis_checks.py`.
 
@@ -73,7 +73,7 @@ the checks are coded in `src/shellbench/thesis_checks.py`.
 - D22 (accepted by the author 26 Oct 2026). Table 8-2 du implies storey stiffnesses V / du of 54 705, 35 088, 42 804 and 10 106 N/mm at levels 1-4. Storeys 2-4 are identical, so the printed du cannot come from one elastic frame. Extends D7. The pre-registered wind test fails on this (docs/anchor_notes.md, wind section).
 - D23 (accepted by the author 26 Oct 2026). Roof W_k = 11.42 kN uses hj = 3.6 m in Table 8-1, as if a full storey stood above the roof. Half the top storey plus the 1.2 m parapet (Th s4.2) gives 3.0 m and 9.52 kN [J], so the roof force is 20 % high and the base shear 4.5 % high (safe side). The anchor keeps the printed forces.
 
-D16 and D17 were revised on 24 Oct 2026 after Claude Code cross-checked
+D16 and D17 were revised on 24 Oct 2026 after the AI assistant cross-checked
 Table 8-13 against the thesis .docx (docs/anchor_notes.md, "Cross-check of
 Table 8-13"). The same check found all 296 typed cells of table 7.2 equal
 to the thesis.

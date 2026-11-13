@@ -1,5 +1,5 @@
 {
-  "title": "ShellBench",
+  "title": "ShellBench: whole-building embodied carbon of thin-shell floors in GB-code reinforced-concrete frames",
   "upload_type": "software",
   "description": "Quantifying the whole-building embodied-carbon savings of thin-shell floors in code-designed reinforced-concrete frames in seismic zones.",
   "creators": [
@@ -15,7 +15,12 @@
     "thin-shell floor",
     "reinforced concrete",
     "seismic design",
-    "structural engineering"
+    "structural engineering",
+    "life-cycle assessment",
+    "GB 50011",
+    "CalculiX",
+    "OpenSeesPy",
+    "form finding"
   ],
   "related_identifiers": [
     {
