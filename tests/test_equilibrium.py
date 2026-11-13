@@ -12,7 +12,7 @@ from __future__ import annotations
 import pytest
 
 from shellbench import generator as g
-from tests.test_generator_anchor import THESIS
+from test_generator_anchor import THESIS
 
 
 def _sizes() -> g.Sizes:
