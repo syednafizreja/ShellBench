@@ -395,6 +395,49 @@ def read_forces(fm: Frame) -> CaseForces:
     return CaseForces(bm, bv, cn, lu, cm, cv)
 
 
+#: Relative tolerance of the global equilibrium check [-]: base reactions against applied load.
+EQUILIBRIUM_RTOL: float = 1e-6
+
+
+def applied_load_kn(fm: Frame, b: BuildingInput, z: Sizes, case: str,
+                    lateral_kn: list[float] | None = None) -> tuple[float, float]:
+    """Total applied load of one case as (horizontal, vertical) [kN], summed from the inputs.
+
+    Vertical load is downward positive. Horizontal load is positive towards +x.
+    """
+    if case == "E":
+        return float(sum(lateral_kn or [])), 0.0
+    total = 0.0
+    for j in range(1, len(fm.ys)):
+        for k, w in enumerate(beam_line_loads(b, z, j, case)):
+            total += w * b.spans_m[k]
+        if case in ("D", "GE"):
+            wc = column_weight_kn(z, b.storey_heights_m[j - 1])
+            total += sum(wc + joint for joint in joint_dead_kn(b, z, j))
+    return 0.0, total
+
+
+def check_equilibrium(fm: Frame, b: BuildingInput, z: Sizes, case: str,
+                      lateral_kn: list[float] | None = None) -> None:
+    """Assert global equilibrium: the base reactions balance the applied load [kN].
+
+    Verification, not validation: it shows the equations were solved right.
+
+    Raises:
+        RuntimeError: If the summed base reactions differ from the applied load by
+            more than ``EQUILIBRIUM_RTOL`` of the applied load.
+    """
+    ops.reactions()
+    base = [fm.node[(0, i)] for i in range(len(fm.xs))]
+    rx = sum(ops.nodeReaction(n, 1) for n in base)
+    ry = sum(ops.nodeReaction(n, 2) for n in base)
+    fx, fy = applied_load_kn(fm, b, z, case, lateral_kn)
+    scale = max(abs(fx), abs(fy), 1.0)
+    if abs(rx + fx) > EQUILIBRIUM_RTOL * scale or abs(ry - fy) > EQUILIBRIUM_RTOL * scale:
+        raise RuntimeError(f"equilibrium failed in case {case}: reactions ({rx:.6g}, {ry:.6g}) kN "
+                           f"against applied ({fx:.6g}, {fy:.6g}) kN")
+
+
 def run_case(b: BuildingInput, z: Sizes, case: str, lateral_kn: list[float] | None = None
              ) -> CaseForces:
     """Run one load case: "D", "L", "GE" or "E" (lateral forces from the left)."""
@@ -407,6 +450,7 @@ def run_case(b: BuildingInput, z: Sizes, case: str, lateral_kn: list[float] | No
     else:
         apply_gravity(fm, b, z, case)
     solve()
+    check_equilibrium(fm, b, z, case, lateral_kn)
     return read_forces(fm)
 
 

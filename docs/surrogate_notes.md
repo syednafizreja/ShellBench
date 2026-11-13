@@ -43,6 +43,14 @@ Code: `src/shellbench/ml/decision.py`. It adds a test and changes no frozen sett
 - Shell variant: the surrogate picks the same variant as the full analysis in 5 of 33 (15 %). Mean regret 5.5 kgCO2e/m2 (3.7 % of the best shell carbon); largest 83.9. The surrogate ranks systems better than it ranks variants [J].
 - RMSE of the saving, surrogate against full analysis: 5.8 percentage points, on savings of 3 to 9 % for most buildings.
 
-**H4 read on pre-release data (not a verdict).** Error ratio unseen/random for HGB 25.62 / 11.30 = 2.27 (needs 1.5): holds. Conformal coverage on unseen storeys 73.3 % (needs 88 to 92 %): fails. Decision agreement 93.9 % (needs 80 %): holds. Two of three: *partly supported* by the rule in 2.4. The published-data run on 12 Nov decides.
+**H4 read on pre-release data (10 Nov; the verdict of 13 Nov is in the next section).** Error ratio unseen/random for HGB 25.62 / 11.30 = 2.27 (needs 1.5): holds. Conformal coverage on unseen storeys 73.3 % (needs 88 to 92 %): fails. Decision agreement 93.9 % (needs 80 %): holds. Two of three: *partly supported* by the rule in 2.4. The published-data run on 12 Nov decides.
 
 **Limits for Paper 2.** 33 buildings in the decision test is small: one building moves agreement by 3 points. The slab family has one design per building. Tuning grids were frozen before this run.
+
+## Day 47: H4 verdict on the published data (13 Nov 2026)
+
+The frozen pipeline (commit 5c11ce8, unchanged) ran once on the family files of the published dataset (Zenodo 10.5281/zenodo.24194144). Run time 13 minutes on four cores. Leakage test first: 36 of 36 checks pass on the unseen-storeys split. Results: error ratio 25.62 / 11.30 = 2.27 (holds); conformal coverage on unseen storeys 73.3 % (fails); decision agreement 93.9 %, against 97.0 % for always choosing the shell (holds). **H4 partly supported**, two of three conditions (preregistration section 3). The output files were byte-identical to the pre-release run: the family files differ only in the `release` and `shellbench_version` columns, and the pipeline is deterministic.
+
+Why coverage fails: the calibration rows are drawn from the storey counts the model was trained on, so exchangeability with the held-out storey count does not hold. The shortfall is largest at 7 storeys (56.1 %) and smallest at 6 storeys (87.1 %). The random split gives 90.1 %, so the method works when the exchangeability assumption holds. A way to restore coverage on unseen storeys (for example calibrating on a held-out storey count) is a new method, not part of this frozen study; it belongs in Paper 2 as future work [J].
+
+Figures for Paper 2 (house style, `python -m shellbench.figures --paper`): `surrogate_parity`, `surrogate_coverage`, `surrogate_decision`.
