@@ -1,0 +1,43 @@
+# Keep assistant product names out of tracked files (docs/ai_use.md excepted).
+# Cleans and commits back on every push to main, every same-repo pull request
+# and once a day; fails a pull request whose commit messages name the assistant.
+name: Wording guard
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Clean files and check commit messages
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            python .github/scripts/wording_guard.py --check-commits "origin/${{ github.base_ref }}" HEAD
+          else
+            python .github/scripts/wording_guard.py
+          fi
+      - name: Commit the cleaned files
+        if: always() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name "Syed Nafiz Reja Hasib"
+            git config user.email "syednafiz2811@gmail.com"
+            git commit -am "Wording guard: replace assistant product name"
+            git push
+          fi
