@@ -180,6 +180,14 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - Claude decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 47 - 13 Nov 2026 (H4 verdict on the published data; pre-v1.0 finishing cross-check)
+
+- Done: the frozen surrogate (commit 5c11ce8, code unchanged) ran once on the family files of the published dataset (Zenodo 10.5281/zenodo.24194144), 13 minutes. Leakage test first: 36 of 36 checks pass. **H4 partly supported**: error ratio 25.62 / 11.30 = 2.27 (needs 1.5, holds); conformal coverage on unseen storey counts 73.3 % (needs 88 to 92 %, fails); decision agreement 31 of 33 = 93.9 % (needs 80 %, holds), below the 97.0 % of always choosing the shell. Verdict and reading in preregistration section 3; notes in surrogate_notes.md. Result CSVs were byte-identical to the pre-release run.
+- Day 48 part: `figures.surrogate_decision` in house style (replaces the old PNG from `ml/decision.py`); paper copies of the three surrogate figures. v0.5 tag not made: the author's check window comes first [J].
+- Finishing cross-check (six points). (1) Tie steel in shell A1-A3: pass, `verdicts.row_carbon` prices tie steel separately and a test shows it equals the files. (2) Carbon = concrete + frame steel + mesh + tie steel + levelling, never concrete alone: pass, day31_checks.csv "floor carbon from quantities" error 1.4e-14 over 4,856 rows. (3) Same drift (1/550) and strength checks for both floors: pass, the shell family calls the same `generator.generate` with only the floor dead load changed. (4) Global equilibrium on every run: **gap**. It was asserted only in the anchor tests. Fixed: `generator.check_equilibrium` runs inside `run_case` for every case (D, L, GE, E), with tests that pass on the thesis building and fail when a load is missing. (5) Validation error table readable in 10 seconds at the top of the README: **gap**. Fixed: "Validation at a glance" table, numbers from anchor_report.md and benchmarks_convergence.csv. (6) Fresh clone: pass. Clone to a temp folder: 261 tests pass, `figures --paper` leaves git status clean, `scripts/reproduce.py --quick` passes, no absolute paths in src, scripts or tests.
+- Not checked: shell (CalculiX) runs have no equilibrium assertion; the thrust check against H = qL^2/8f is not an automated test [J, open for the check window].
+- Compliance: no thesis_source files; every number traces to a results file or the report.
+
 ## Day 34 - 13 Nov 2026 (frozen Paper 1 figures)
 
 - Done: three verdict figures in `src/shellbench/figures.py`: `verdict_h1` (floor saving against whole-building saving, 1:1 line, grade I marked), `verdict_h2` (storeys by PGA map of S_b, grade I outlined, colour clipped at 12 %), `verdict_sensitivity` (median and IQR per carbon-factor case). All read `results/verdicts_*.csv`. PNG 600 dpi, PDF, SVG; paper copies in `figures/paper/`; `style.review` passes.
