@@ -12,6 +12,13 @@ authors:
     given-names: "Syed Nafiz Reja"
     orcid: "https://orcid.org/0009-0002-7162-7890"
 repository-code: "https://github.com/syednafizreja/ShellBench"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23851675"
+    description: "Concept DOI of the software (all versions)"
+  - type: doi
+    value: "10.5281/zenodo.24194144"
+    description: "ShellBench building family dataset v0.4.0 (CC BY 4.0)"
 license: MIT
 keywords:
   - embodied carbon
