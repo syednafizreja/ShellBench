@@ -12,6 +12,7 @@ Rules for Claude when working in this repository.
 6. Keep me on today's playbook task. If I drift, remind me of today's Done-when line.
 7. Never use or ask for data from my former employer. No company processes, product names or data in any output.
 8. Writing style: plain British English, short sentences, no hype words ("novel", "first", "groundbreaking") unless I have evidence. Mark your own judgement with [J].
+9. Manuscripts follow `docs/finishing_path.md` (author's rule, 10 Nov 2026): Claude writes the prose in my voice, I read, change and own it. This replaces "the author writes, Claude checks".
 
 ## Code standards
 
