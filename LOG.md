@@ -180,6 +180,13 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - Claude decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 48 (check window, 14 Nov entry made on 13 Nov) - shell equilibrium, reaction side
+
+- Done: `shellfe.run` now prints the support reactions (`RF`) of every static run and `shellfe.check_equilibrium` asserts the balance when the model has nodal forces and no gravity. CalculiX leaves the load applied on a fixed degree of freedom out of `RF` (found by test: the Day 25 strip was short by exactly its 165 N on supported nodes), so the check is: constrained reactions + applied forces on free dofs = 0 per direction, tolerance 1e-6 of the summed absolute load. `read_displacements` and `read_stresses` stop at the reaction block. 3 new tests (`tests/test_shell_equilibrium.py`: strip balance, failure when a reaction is wrong, empty reactions is an error). 275 tests pass.
+- Why this matters: the generator already asserts equilibrium on every frame run (PR #173); with the load-side tests of 13 Nov, shell runs are now checked on both sides. Runs with gravity (Scordelis-Lo roof) are not checked: the weight is not summed [J, open].
+- Results: `panel` and `floorlib` rerun on Linux; the only differences are the known last-digit CalculiX differences (reproduce.py notes them); result files were restored, nothing committed.
+- Not done on purpose: v1.0 and any new analysis (check window).
+
 ## Day 47 - 13 Nov 2026 (H4 verdict on the published data; pre-v1.0 finishing cross-check)
 
 - Done: the frozen surrogate (commit 5c11ce8, code unchanged) ran once on the family files of the published dataset (Zenodo 10.5281/zenodo.24194144), 13 minutes. Leakage test first: 36 of 36 checks pass. **H4 partly supported**: error ratio 25.62 / 11.30 = 2.27 (needs 1.5, holds); conformal coverage on unseen storey counts 73.3 % (needs 88 to 92 %, fails); decision agreement 31 of 33 = 93.9 % (needs 80 %, holds), below the 97.0 % of always choosing the shell. Verdict and reading in preregistration section 3; notes in surrogate_notes.md. Result CSVs were byte-identical to the pre-release run.
