@@ -57,6 +57,8 @@ The saving shrinks because the floor is only part of the building: the frame, fo
 
 The verdicts are frozen and reported as found ([docs/preregistration.md](docs/preregistration.md), section 3). No verdict changes under the five carbon-factor and grade-I sensitivity cases. Multiplying the lateral-system carbon by the plan-to-strip factor 1.3125 moves the H1 median to 4.13 % and leaves the verdict unchanged (`scripts/strip_factor_bound.py`).
 
+**Scope of the baseline and of the largest savings.** The primary baseline is the one code-checked conventional design the generator makes for each building (a 120 mm slab on secondary beams), not a search over other conventional floor types such as flat or ribbed slabs; a stronger baseline could shrink the savings (preregistration, change C4). The two largest savings (17.3 % and 30.7 %) are grade-I buildings whose conventional columns grow to 1300 mm; without the seven grade-I buildings the maximum is 9.6 % and the median stays 5.65 % (change C2).
+
 ## Method
 
 Each building is designed twice: once with a flat RC slab and once with each thin-shell floor variant. Carbon is counted per m² of floor plan, A1–A3, from the material take-off:
@@ -113,7 +115,7 @@ Differences between the model and the reference, as reported in [docs/anchor_rep
 | Shell FE, Scordelis-Lo roof | MacNeal and Harder (1985) | 0.9984 of reference | Yes (−0.16 %) |
 | Shell FE, pinched hemisphere | MacNeal and Harder (1985) | 0.9965 of reference | Yes (−0.35 %) |
 
-Global equilibrium is asserted on every frame analysis and on every static shell run with nodal forces and no gravity. The test suite (276 tests) runs on every push.
+Global equilibrium is asserted on every frame analysis and on every static shell run with nodal forces and no gravity. The test suite (280 tests) runs on every push.
 
 ## Quick start
 
@@ -125,7 +127,7 @@ cd ShellBench
 conda env create -f environment.yml
 conda activate research
 pip install -e .
-pytest                                # 276 tests
+pytest                                # 280 tests
 ```
 
 Reproduce the study:

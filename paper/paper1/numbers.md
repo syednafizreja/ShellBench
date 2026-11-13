@@ -33,3 +33,4 @@ Check window, 13 Nov 2026 (the AI assistant) [J]: values were read again from th
 | 3.4 | H4 error ratio 2.27 (RMSE 25.62 vs 11.30 kgCO2e/m², unseen storeys vs random) | results/surrogate_accuracy.csv; preregistration §3 | v0.5.0 | | The AI assistant 13 Nov 2026 |
 | 3.4 | H4 conformal coverage, unseen storeys pooled 73.3 % (folds 56.1-87.1 %), nominal 90 %; random split 90.1 % | results/surrogate_coverage.csv | v0.5.0 | | The AI assistant 13 Nov 2026 |
 | 3.4 | H4 decision agreement 31/33 (93.9 %), needs 80 %; always-shell baseline 32/33 (97.0 %) | results/surrogate_decision_summary.csv | v0.5.0 | | The AI assistant 13 Nov 2026 |
+| 3.1 | Grade-I caveat: 7 of the 33 buildings are grade I; the two largest S_b (17.3 % s07-p030, 30.7 % s08-p030) are among them with 1300 mm conventional columns. Without grade I: max 9.6 %, median 5.65 % | results/verdicts_buildings.csv (case base); preregistration C2 | v0.5.0 | | The AI assistant 13 Nov 2026 |

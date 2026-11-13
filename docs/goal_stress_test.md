@@ -7,7 +7,7 @@ Original question (charter, before 22 Oct 2026): what is the whole-building embo
 ## Originality check (done first)
 
 - Searched OpenAlex (Fast_Track) and the open web for 2020-2026 work on thin-shell or vaulted floors in seismically designed buildings, and on lightweight floors and seismic knock-on carbon.
-- Found **no paper** that designs thin-shell floors inside a seismic frame. The nearest work is gravity-only shells (gap matrix rows 4, 5, 8, 9), seismic EC with fixed floors (rows 12-14), and diaphragm studies on timber and masonry vaults (for example, Bull. Earthquake Eng. 2026, doi:10.1007/s10518-026-02623-5, not read [?]).
+- Found **no paper** that designs thin-shell floors inside a seismic frame. The nearest work is gravity-only shells (gap matrix rows 4, 5, 8, 9), seismic EC with fixed floors (rows 12-14), and diaphragm stiffness studies (for example, Piluso et al. 2026, "Stiffness requirements for floor diaphragms of in-plane regular buildings", Bull. Earthquake Eng., doi:10.1007/s10518-026-02623-5, title checked against Crossref 13 Nov 2026, not read [?]).
 - Caveat: a zero count can be a vocabulary artefact. I will repeat the search with reviewers' words ("funicular floor", "vaulted slab", "diaphragm") before submission [J].
 
 Verdict: the gap is real. The weak spots are in **how** we answer it, not **whether** it is new.
