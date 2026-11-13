@@ -1,4 +1,4 @@
-# Preregistration: hypotheses H1-H4
+﻿# Preregistration: hypotheses H1-H4
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
 
@@ -83,6 +83,8 @@ Sensitivities (C1 four factor bounds, C2 grade-I rows dropped): **no verdict cha
 
 Reading, my judgement [J], for the author to confirm: the whole-building saving is small and positive in most buildings, with a median near 6 %. The floor-level saving is not a reliable guide to it, because the lateral system does not get lighter in the median (lateral-system saving: median -2.5 kgCO2e/m², range -5.3 to 83.2). The two largest S_b values (17.3 % at 7 storeys and 30.7 % at 8 storeys, both 0.30 g) are grade-I buildings whose conventional design has 1300 mm columns (850 mm at 6 storeys, 0.30 g). Change C2 explains the mechanism: the generator grows grade-I columns because no bar layout fits, so those two values may partly reflect a generator limit and not the floor [J]. Without the grade-I rows (7 buildings with an `ok` conventional design; C2 says 6 rows, a count to reconcile) the maximum S_b is 9.6 %. H3 is "not supported" for a reason that depends on the model: elastic, uncracked, fully bonded shell, transverse load only, and the largest ratio of deformation to limit is 0.011 (88 times margin). Paper 1 must state this and must not claim that thin-shell floors are rigid diaphragms in general.
 
+Checked by Claude, 13 Nov 2026 [J]: every number in the table and in the sensitivity line above was compared with `results/verdicts_summary.csv` and `verdicts_slices.csv` (rounded as shown) and agrees; the one significant H2 slice is S_b against storeys at 0.05 g (rho 0.94, p 0.017). The lateral-system range (-5.3 to 83.2 kgCO2e/m²) and the grade-I S_b values (s07-p030 17.3 %, s08-p030 30.7 %) agree with `verdicts_buildings.csv`. Author to confirm.
+
 **H4 is not given here.** It needs the single run of the frozen surrogate (2.4); the pre-release reading in docs/surrogate_notes.md is not a verdict.
 
 Transparency note on timing (change C3 below): these verdicts were run on the committed v0.4.0 family files before the Zenodo record exists.
@@ -114,6 +116,7 @@ The Day 19 pilot files were made without R14 and are kept as they are. `generate
 - *Choice [J].* The primary analysis stays as approved: every valid row, grade I included. A sensitivity case drops the grade-I rows (6 ok rows at 0.20-0.40 g), and every H1-H3 verdict is shown both ways (section 2.0, "Changes"). Excluding them from the primary analysis would drop rows because of their result, which the plan forbids.
 - *Why the grade-I rows are flagged.* The bar-layout growth is a generator limitation (one bar set for all columns; no beam redesign to cut the demand) [J]. Paper 1 Methods states it and lists the grade-I rows.
 - *When.* Before any shell-family row, S_f, S_b or DOI-data result.
+- *Count, corrected 13 Nov 2026 (checked by Claude from git) [J].* "6 ok rows" was right when C2 was written (commit ea58baa): s08-p030 had failed. The Day 21 rerun the same day (commit 3f925b5, 36 and 40 mm column bars) made it converge, so the v0.4.0 file has 7 ok grade-I rows (7 and 8 storeys at 0.20 and 0.30 g; 3, 4 and 6 storeys at 0.40 g). The drop-grade-I case therefore removes 7 of the 33 compared buildings (26 left), as section 3 reports. The same rerun cut s07-p030's columns from 1750 to 1300 mm. Nothing in the rule or the analysis changes. Author to confirm.
 
 **C3, 13 Nov 2026 (schedule.md slip rule, no change to any rule): verdicts run on the v0.4.0 files before the dataset DOI exists.**
 
