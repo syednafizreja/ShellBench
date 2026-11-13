@@ -11,6 +11,7 @@ This statement is for journal editors and reviewers (Elsevier and Springer Natur
 - Drafted working documents in `docs/` and `paper/paper1/` (specifications, reading rules, reports, checklists).
 - Searched for and summarised open-access literature; the author reviewed the rows (`docs/gap_matrix.md`, review status).
 - Read code clauses from the author's copies or from open sources, and recomputed numbers as a cross-check.
+- From 14 Nov 2026, drafts the paper prose in the author's voice; the author edits and owns it (`docs/finishing_path.md`). The paper's own AI declaration says so.
 
 Where the repository says "the AI assistant", it means this tool.
 
