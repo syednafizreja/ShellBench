@@ -8,6 +8,7 @@ Newest entry first. Each the AI assistant reads this at the start of a session a
 - Done: at the author's request, ShellBench now follows the same route to a finished paper as ShellForm. New `docs/finishing_path.md` (12 steps, from core to submission; the AI assistant drafts prose in the author's voice under the author's rule of 10 Nov, the author owns it). project rule 9, `paper/paper1/README.md`, the schedule's Paper 1 column and `.commands/today.md` point to it. Docs only; no code or result changed.
 - Next for Paper 1 (files due 17 Nov, submission 22 Nov): steps 3-7 (Methods, Results, Discussion, literature search and Introduction, Abstract and Conclusions), then assemble and self-review. Methods has a skeleton (5 Nov); Results waits on nothing (verdicts frozen).
 - Open (author): confirm the target journal (README says Journal of Building Engineering, the writing skill says Engineering Structures).
+
 ## 13 Nov 2026 (sync), the AI assistant
 
 - pytest: 275 passed (with CalculiX). `python -m shellbench.anchor_frame` rerun: every file in results/ unchanged (git status clean after restoring figures/).
