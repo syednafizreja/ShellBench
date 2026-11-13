@@ -2,6 +2,11 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 13 Nov 2026 (Day 34: frozen Paper 1 figures), Claude in the app
+
+- Done: verdict_h1, verdict_h2 and verdict_sensitivity figures (PNG, PDF, SVG, paper copies). 256 tests pass.
+- Open: PR #167 (Day 32 verdicts) still needs the author to click Merge; the merge tool was blocked. The Day 34 PR is stacked on it. Zenodo publish, H4 run and Day 47/48 still wait on the DOI.
+
 ## 13 Nov 2026 (Day 32: H1-H3 verdicts), Claude in the app
 
 - Last handoff read: 11 Nov (Zenodo route; waiting on the author's token). Both daily runs of 12 and 13 Nov stopped at a usage limit; today's run did Day 32.
