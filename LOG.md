@@ -180,6 +180,15 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Day 34 - 13 Nov 2026 (frozen Paper 1 figures)
+
+- Done: three verdict figures in `src/shellbench/figures.py`: `verdict_h1` (floor saving against whole-building saving, 1:1 line, grade I marked), `verdict_h2` (storeys by PGA map of S_b, grade I outlined, colour clipped at 12 %), `verdict_sensitivity` (median and IQR per carbon-factor case). All read `results/verdicts_*.csv`. PNG 600 dpi, PDF, SVG; paper copies in `figures/paper/`; `style.review` passes.
+- Checked by eye at full size: no overlaps, labels at 7 pt, grade I shown by shape and outline as well as colour.
+- [J] The S_f axis runs to -63 % because of one outlier (7 storeys, 0.30 g); kept, not clipped, because dropping it would hide a real result.
+- Not done on purpose: Day 47/48 (H4 verdict, Paper 2 figures, v0.5) wait for the published data.
+- Tests: 256 passed.
+- Compliance: no data from outside the repo; figures trace to the verdict CSVs.
+
 ## Day 32 - 13 Nov 2026 (H1-H3 verdicts) [run late: the 12 Nov run stopped at a usage limit]
 
 Done-when ("verdict for each of H1-H3, with the files behind it"): met, on the v0.4.0 files (change C3 in the preregistration: the Zenodo record does not exist yet, so the schedule's slip rule applies; the zip bytes equal the committed files).
