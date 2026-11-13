@@ -51,7 +51,7 @@ What does not fit:
 
 A day's date is the latest it may finish; work ahead is allowed. GATE days never start early.
 
-| Date | Track A: anchor, generator, family | Track B: shell floor, then surrogate | Paper 1 (author writes, Claude checks) |
+| Date | Track A: anchor, generator, family | Track B: shell floor, then surrogate | Paper 1 (from 14 Nov: `docs/finishing_path.md`, Claude drafts, author owns) |
 |---|---|---|---|
 | Thu 29 Oct | Day 12 quantities and carbon (GATE: carbon factors today) | | |
 | Fri 30 Oct | Day 12 finish | Day 22 floor concept and CalculiX | |
