@@ -103,6 +103,26 @@ def read_displacements(dat: Path) -> dict[int, tuple[float, float, float]]:
         if "displacements" in line:
             reading = True
             continue
+        if "forces" in line:  # a reaction block follows the displacement block: stop reading
+            reading = False
+            continue
+        parts = line.split()
+        if reading and len(parts) == 4:
+            out[int(parts[0])] = tuple(float(x) for x in parts[1:])
+    return out
+
+
+def read_reactions(dat: Path) -> dict[int, tuple[float, float, float]]:
+    """Read the nodal reaction forces (``RF``) printed in a CalculiX ``.dat`` file [N]."""
+    out = {}
+    reading = False
+    for line in dat.read_text().splitlines():
+        if "forces" in line:
+            reading = True
+            continue
+        if "displacements" in line or "stresses" in line:
+            reading = False
+            continue
         parts = line.split()
         if reading and len(parts) == 4:
             out[int(parts[0])] = tuple(float(x) for x in parts[1:])
