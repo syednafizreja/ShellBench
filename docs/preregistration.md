@@ -132,3 +132,10 @@ The Day 19 pilot files were made without R14 and are kept as they are. `generate
 - *Why this is the same data.* The files in the dataset zip are byte-identical to those committed at v0.4.0 (docs/dataset_release.md; checked by the AI assistant on 11 Nov). Only the DOI is missing, not any byte. The pre-release run and the v0.4.0 files differ only in the columns `release` and `shellbench_version`.
 - *Not changed.* No threshold, rule, hypothesis wording, factor or row. The rules are applied as written in 2.1-2.3 and C1-C2. Two details the plan left open are marked [J] in `verdicts.py`: slices with fewer than 4 buildings count as not significant, and "the lateral-system saving also grows with PGA" uses the same rule as S_b.
 - *When.* After the dataset files were final (11 Nov) and before any Paper 1 text uses a result.
+
+**C4, 13 Nov 2026 (Reviewer-2 audit; disclosure only, no rule or result changed): what the primary baseline is in practice.**
+
+- *What.* Section 2 defines the primary baseline as the lowest-carbon code-compliant conventional floor. The generator makes one conventional design per building (120 mm slab on secondary beams, checked to GB 50010/50011); it does not search other conventional floor types. The primary baseline is therefore that single design [J].
+- *Why it matters.* A lower-carbon conventional floor (for example a flat or ribbed slab) would lower S_f and S_b. The H1 verdict is relative to this baseline only. Paper 1 states it as a limit and does not claim savings against the best conventional floor.
+- *Not changed.* No threshold, row, factor or verdict. Reported in `docs/reviewer2_audit.md` (finding F1). Author to confirm the wording.
+- *When.* After the verdicts, before any Paper 1 text uses them.
