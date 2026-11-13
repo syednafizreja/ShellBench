@@ -2,6 +2,16 @@
 
 Newest entry first. Each Claude reads this at the start of a session and adds an entry at the end (see "Sync with cloud Claude" in CLAUDE.md).
 
+## 13 Nov 2026 (Day 47 open checks closed), Claude Code in VS Code
+
+- Last handoff read: Day 47 sync, PR #173 merged; open were the H4 confirmation, the shell thrust and equilibrium checks, and the v0.5 check window.
+- Thrust check automated [J]: `tests/test_thrust_results.py` reads the committed `panel_day25.csv` (42 rows) and `floor_library.csv` (72 rows). It checks that h_closed = w L^2/(8 f) and h_ratio = h_rigid/h_closed on every row, within 1.5e-3, because the writers round to 4 significant figures. It also checks the 10 % Done-when on every uniform-load row. Fill rows carry a shaped load, so their ratio is only reported (0.836 to 0.995), as `panel.size_row` does. All pass, with no CalculiX needed.
+- Shell equilibrium, load side [J]: `tests/test_shell_load_balance.py` checks three things: the deck's nodal forces sum to pressure times the loaded area (full and half span, two vaults); the fill load sums to f L / 3 times the width; and the springing weights sum to 1. Reactions are still not checked, because the shellfe deck prints displacements only. LOG Day 47 line updated.
+- H4: a laptop recheck was added to the preregistration section 3 note. Ratio 2.27, coverage 73.3 % (folds 56.1 to 87.1 %), agreement 31/33 and leakage 36/36 on the unseen split all agree with the result CSVs.
+- pytest 272 passed (261 + 11 new). No result file was changed.
+- Not done: v0.5 tag. The Paper 1 and 2 number check window is the author's.
+- Open (author): confirm the H4 reading and the checks above; run the v0.5 check window; the earlier "author to confirm" lines.
+
 ## 13 Nov 2026 (Day 47 sync; PR #173 merged), Claude Code in VS Code
 
 - Last handoff read: Day 47, H4 partly supported on the published data; equilibrium assertion added to the generator; optional `python -m shellbench.batch` rebuild for the author.
