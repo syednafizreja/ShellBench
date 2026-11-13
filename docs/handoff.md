@@ -2,6 +2,13 @@
 
 Newest entry first. Each the AI assistant reads this at the start of a session and adds an entry at the end (see "Sync with cloud the AI assistant" in the project rules).
 
+## 13 Nov 2026 (Dataset DOI published), the AI assistant
+
+- The v0.4.0 dataset is published on Zenodo: **10.5281/zenodo.24194144** (record 24194144, CC BY 4.0). Uploaded with `C:\Users\ASUS\tools\zenodo\publish.py` using the author's token; the draft's file MD5 matched the local zip and the metadata (Dataset, version 0.4.0, creator with ORCID, "is supplement to" 10.5281/zenodo.23851675 and the repo URL) was checked before publishing.
+- Uploaded file: the laptop build of tag v0.4.0, SHA-256 `17b2d575…` (now the hash in docs/dataset_release.md).
+- DOI added to README (status line and citation paragraph), docs/data_card.md and CITATION.cff (`identifiers`). The data card inside the zip predates the DOI line [J].
+- Next: H4, the single run of the frozen surrogate on the published data (preregistration 2.4; leakage test first). ShellForm can now point at the DOI for its data hand-over.
+
 ## 13 Nov 2026 (Day 32 sync; Day 34 figures brought to main), the AI assistant
 
 - Pulled main (c7638cf). pytest: 256 passed. `python -m shellbench.anchor_frame` and `python -m shellbench.verdicts` left results/ unchanged (git status clean); figures/ restored.
