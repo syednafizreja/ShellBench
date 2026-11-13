@@ -54,6 +54,7 @@ def text_ink(v: float, th: dict) -> str:
 
 
 def draw(t: pd.DataFrame, theme: str) -> Path:
+    """Draw the hero matrices for one theme and return the PNG path."""
     th = THEMES[theme]
     plt.rcParams.update({"font.family": ["Arial", "Liberation Sans", "DejaVu Sans"], "font.size": 11})
     cmap = LinearSegmentedColormap.from_list("saving", [th["neg"], th["mid"], th["pos"]])
@@ -98,6 +99,7 @@ def draw(t: pd.DataFrame, theme: str) -> Path:
 
 
 def main() -> None:
+    """Draw the hero figure in every theme and write its plotted values to hero.json."""
     t = pd.read_csv(DATA)
     t = t[t["case"] == "base"]
     for theme in THEMES:
