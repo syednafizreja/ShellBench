@@ -8,15 +8,15 @@ Date: 13 Nov 2026, on main at dabc900 (v0.5.0 plus PRs #175-#185), by the AI ass
 
 | # | Point | Result | Evidence |
 |---|---|---|---|
-| 1 | Traceability | Pass, one finding | `paper/paper1/numbers.md` has a row per manuscript number with file and tag; README numbers match `results/verdicts_summary.csv` and `results/verdicts_buildings.csv`. 32 DOIs in the repo checked against Crossref (title, first author, year, journal): 32 of 32 match the recorded citation. Grade-I caveat was missing (F2, fixed). |
+| 1 | Traceability | Pass, one finding | `paper/paper1/numbers.md` has a row per manuscript number with file and tag; README numbers match `results/verdicts_summary.csv` and `results/verdicts_buildings.csv`. 32 DOIs in the repo checked against Crossref (title, first author, year, journal): all 32 resolve; 31 match the recorded citation, one description did not (F9, fixed). Grade-I caveat was missing (F2, fixed). |
 | 2 | Reproducibility from a fresh clone | Pass | Fresh clone: 276 tests pass; both verdict CSVs rebuild byte for byte; `SHA256SUMS` is tested (`tests/test_checksums.py`). Only CRLF and floating-point differences in figures (F7, disclosed). |
 | 3 | Verification vs validation | Pass | Kept apart in README "Validation at a glance". Equilibrium is asserted on every frame run (`generator.check_equilibrium`) and on CalculiX static runs (`shellfe.check_equilibrium`); thrust and load balance are tested (`tests/test_thrust_results.py`, `tests/test_shell_load_balance.py`). A zero exit code is never used as evidence. |
 | 4 | Hypotheses vs preregistration | Pass, two disclosures | H1-H4 wording frozen; verdict rules in `docs/preregistration.md` section 2 applied as written; late run on v0.4.0 files disclosed (C3); baseline reading disclosed (C4, F1). |
-| 5 | Fair comparison | Partly | Same checks, same drift limit (1/550), same loads for both floors. The primary baseline is one conventional design per building, not a search over floor types (F1). |
+| 5 | Fair comparison | Partly | Same code checks, live load and PGA for both floors; every ok row of both families meets the 1/550 drift limit (largest 1/581 conventional, 1/552 shell, from `results/family_rc_r14_building_v2.csv` and `results/family_shell.csv`). The primary baseline is one conventional design per building, not a search over floor types (F1). |
 | 6 | Known weak points | Pass | Listed in README and Paper 1 core: hand drift above 1/550 for s03-p030 and s06-p040, grade-I columns, elastic uncracked only, 40 of 4,896 shell designs failed and reported, 288 rows outside code. |
 | 7 | Claims language | Pass | Verdicts use "partly supported" and "not supported"; H3 limited to elastic uncracked behaviour; no claim of general savings. |
-| 8 | Integrity | Pass | Verdicts frozen before Paper 1 text; failures reported not dropped; sensitivity cases change no verdict; no tracked file names an AI vendor; `thesis_source/` untracked. |
-| 9 | Software quality | Pass after fixes | 280 tests; four public functions lacked a docstring (F4); the floor-library case list had no test (F5). |
+| 8 | Integrity | Pass | Verdicts frozen before Paper 1 text; failures reported not dropped; sensitivity cases change no verdict; assistant product names appear only in `docs/ai_use.md`, the journal AI-use declaration, which the wording guard (`.github/workflows/wording.yml`) excepts by design; `thesis_source/` untracked. |
+| 9 | Software quality | Pass after fixes | 280 tests (README updated from 276); four public functions lacked a docstring (F4); the floor-library case list had no test (F5). |
 | 10 | Figures | Pass, one disclosure | House style enforced by `style.review` (widths, 7 pt minimum, axis labels, no title in paper copies); vector output; README hero figure theme and platform byte differences (F7). |
 
 ## Findings
@@ -31,6 +31,7 @@ Date: 13 Nov 2026, on main at dabc900 (v0.5.0 plus PRs #175-#185), by the AI ass
 | F6 | `docs/dataset_release.md` held a local Windows path with a username | Minor | Fixed. |
 | F7 | Figure PNGs differ by a few bytes between platforms and between README hero themes | Minor | Disclosed. `SHA256SUMS` covers `results/`, not figures. |
 | F8 | Strip-to-plan factor 1.3125 moves the H1 median to 4.13 % (max 32.4 %), verdict unchanged | Info | Rerun of `scripts/strip_factor_bound.py` confirms the README sentence. Exploratory, not preregistered. |
+| F9 | `docs/goal_stress_test.md` described doi:10.1007/s10518-026-02623-5 as a diaphragm study on timber and masonry vaults; Crossref gives Piluso et al. (2026), "Stiffness requirements for floor diaphragms of in-plane regular buildings", Bull. Earthquake Eng. | Minor | Fixed: description now follows the Crossref record, still marked not read [?]. It bears on H3 (rigid-diaphragm criterion), so it is a candidate for Paper 1's reading. |
 
 ## Mine to check, not the author's evidence yet
 

@@ -115,7 +115,7 @@ Differences between the model and the reference, as reported in [docs/anchor_rep
 | Shell FE, Scordelis-Lo roof | MacNeal and Harder (1985) | 0.9984 of reference | Yes (−0.16 %) |
 | Shell FE, pinched hemisphere | MacNeal and Harder (1985) | 0.9965 of reference | Yes (−0.35 %) |
 
-Global equilibrium is asserted on every frame analysis and on every static shell run with nodal forces and no gravity. The test suite (276 tests) runs on every push.
+Global equilibrium is asserted on every frame analysis and on every static shell run with nodal forces and no gravity. The test suite (280 tests) runs on every push.
 
 ## Quick start
 
@@ -127,7 +127,7 @@ cd ShellBench
 conda env create -f environment.yml
 conda activate research
 pip install -e .
-pytest                                # 276 tests
+pytest                                # 280 tests
 ```
 
 Reproduce the study:
