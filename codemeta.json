@@ -1,0 +1,43 @@
+{
+  "@context": "https://w3id.org/codemeta/3.0",
+  "@type": "SoftwareSourceCode",
+  "name": "ShellBench: whole-building embodied carbon of thin-shell floors in GB-code reinforced-concrete frames",
+  "description": "A GB-code RC frame generator, a thin-shell floor library and whole-building A1-A3 embodied carbon, with preregistered hypotheses H1-H4 and their verdicts.",
+  "codeRepository": "https://github.com/syednafizreja/ShellBench",
+  "identifier": "https://doi.org/10.5281/zenodo.23851675",
+  "license": "https://spdx.org/licenses/MIT",
+  "programmingLanguage": "Python 3.12",
+  "softwareRequirements": [
+    "openseespy 3.8.0.0",
+    "CalculiX 2.23",
+    "numpy",
+    "scipy",
+    "pandas",
+    "pyarrow",
+    "matplotlib",
+    "scikit-learn",
+    "gmsh"
+  ],
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Syed Nafiz Reja",
+      "familyName": "Hasib",
+      "@id": "https://orcid.org/0009-0002-7162-7890"
+    }
+  ],
+  "keywords": [
+    "embodied carbon",
+    "thin-shell floor",
+    "reinforced concrete",
+    "seismic design",
+    "life-cycle assessment",
+    "GB 50011",
+    "CalculiX",
+    "OpenSeesPy",
+    "form finding"
+  ],
+  "relatedLink": [
+    "https://doi.org/10.5281/zenodo.24194144"
+  ]
+}
