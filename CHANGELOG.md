@@ -6,7 +6,7 @@ Each version is a git tag. Release notes are in [docs/releases/](docs/releases/)
 
 | Version | Date | What it added |
 |---|---|---|
-| 1.0.0 | pending | The benchmark behind Paper 1: anchor, generator and family, shell floor, carbon, and the frozen H1-H4 verdicts ([notes](docs/releases/v1.0.0.md)). Released only after the author's gate check. |
+| 1.0.0 | 2026-11-14 | The benchmark behind Paper 1: anchor, generator and family, shell floor, carbon, and the frozen H1-H4 verdicts ([notes](docs/releases/v1.0.0.md)). Mints the v1.0.0 version DOI under the concept DOI 10.5281/zenodo.23851675. |
 | 0.5.0 | 13 Nov 2026 | End of build: H4 surrogate verdict and the Paper 2 figures. |
 | 0.4.0 | 11 Nov 2026 | Dataset release: building families, floor and diaphragm libraries, checks, carbon factors and data card; dataset DOI [10.5281/zenodo.24194144](https://doi.org/10.5281/zenodo.24194144) (CC BY 4.0). |
 | 0.3.0 | 8 Nov 2026 | Diaphragm test and topping rule; anchor slab against shell floor (pre-release, no DOI). Pinned by [ShellForm](https://github.com/syednafizreja/ShellForm). |
