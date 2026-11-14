@@ -62,7 +62,7 @@ def draw(t: pd.DataFrame, theme: str) -> Path:
     fig = plt.figure(figsize=(12.8, 6.4), dpi=100, facecolor=th["bg"])
     fig.text(0.045, 0.90, "Thin-shell floors cut floor carbon by a median 14.3 %, the whole building by 5.7 %",
              fontsize=18, fontweight="bold", color=th["ink"])
-    fig.text(0.045, 0.845, "Carbon saving of the best thin-shell floor against a flat slab, A1-A3, "
+    fig.text(0.045, 0.845, "Carbon saving of the best thin-shell floor against a conventional slab on beams, A1-A3, "
              "33 code-compliant GB-code RC frames", fontsize=12, color=th["muted"])
     panels = [("s_f", "Floor only, S_f", 0.045), ("s_b", "Whole building, S_b", 0.525)]
     for col, title, x0 in panels:
