@@ -61,7 +61,7 @@ The verdicts are frozen and reported as found ([docs/preregistration.md](docs/pr
 
 ## Method
 
-Each building is designed twice: once with a flat RC slab and once with each thin-shell floor variant. Carbon is counted per m² of floor plan, A1–A3, from the material take-off:
+Each building is designed twice: once with a conventional RC slab on secondary beams and once with each thin-shell floor variant. Carbon is counted per m² of floor plan, A1–A3, from the material take-off:
 
 $$
 C \;=\; \underbrace{V_c\,e_c + m_s\,e_s + C_\text{fill}}_{\text{floor}} \;+\; \underbrace{V_c\,e_c + m_s\,e_s}_{\text{lateral system}},
