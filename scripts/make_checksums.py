@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def main() -> None:
+    """Write SHA256SUMS for the tracked files in results/."""
     files = subprocess.run(["git", "ls-files", "results"], cwd=ROOT, capture_output=True, text=True,
                            check=True).stdout.split()
     lines = []
