@@ -207,6 +207,7 @@ def h2(t: pd.DataFrame, sl_b: pd.DataFrame, sl_lat: pd.DataFrame) -> dict:
     "More than half of the fixed slices" is counted over all slices of that axis, those too small to test included [J].
     """
     def many(sl: pd.DataFrame, axis: str) -> tuple[int, int, bool]:
+        """Slices on one axis with a significant positive trend: (count, slices, more than half)."""
         s = sl[sl["against"] == axis]
         k = int(s["positive_significant"].sum())
         return k, len(s), k > len(s) / 2
