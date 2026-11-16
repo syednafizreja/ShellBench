@@ -180,6 +180,15 @@ D29, 29 Oct. ICE is not used.
 - Day 12 is closed.
 Compliance: sources - ICE FAQ and CPCD home page, read 29 Oct. AI use - The AI assistant decided D29. Numbers - none changed. Data - no ICE values committed. Repo - branch day12-d29.
 
+## Final repo close-out - 16 Nov 2026 (check window)
+
+- Fresh clone of main, `python scripts/reproduce.py --quick`: 280 tests and the two-building self-test passed; the working tree stayed clean. CI on Ubuntu: 280 passed, none skipped.
+- Fixed: the one pytest warning (expected matplotlib layout warning on a deliberately broken figure, now filtered for that test only); `codemeta.json` had no version, now 0.5.0.
+- Added [J], for reviewers who run the suite: `tests/test_metadata.py` (pyproject, CITATION.cff, codemeta.json and CHANGELOG name the same version) and `tests/test_docs_links.py` (every relative link in the tracked Markdown resolves). 284 tests pass with warnings treated as errors.
+- Branches: old pre-rewrite branches of merged or closed PRs deleted; their PRs keep the commits on GitHub.
+- No result, verdict or figure changed. v1.0 (PR #183, the DOI) is not merged: it waits for the author's gate ticks.
+Compliance: sources - none new. AI use - The AI assistant made these fixes under my standing hand-over. Numbers - test counts only. Data - nothing confidential. Repo - branch final-cleanup.
+
 ## Reviewer-2 repo audit - 13 Nov 2026 (check window, entry made on 13 Nov)
 
 - Done: full audit against ten points, written up in `docs/reviewer2_audit.md` with a findings table. 32 DOIs checked against Crossref: all resolve, one description corrected (F9). Fresh clone: 276 tests pass, verdict CSVs rebuild byte for byte.
