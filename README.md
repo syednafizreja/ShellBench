@@ -201,7 +201,7 @@ Please cite the archived software, [10.5281/zenodo.23851675](https://doi.org/10.
 - **Dataset v0.4.0** (building families, libraries, checks, carbon factors, data card; CC BY 4.0): [10.5281/zenodo.24194144](https://doi.org/10.5281/zenodo.24194144)
 - Machine-readable metadata: [CITATION.cff](CITATION.cff) (GitHub's "Cite this repository" button) and [codemeta.json](codemeta.json).
 
-**Used by.** [ShellForm](https://github.com/syednafizreja/ShellForm), a pre-registered study of the carbon cost of seismic resilience in form-found concrete shells, built on ShellBench v0.3.0.
+**Used by.** [ShellForm](https://github.com/syednafizreja/ShellForm), a pre-registered study of the carbon cost of seismic resilience in form-found concrete shells, built on ShellBench v0.3.0. [ShellLab](https://github.com/syednafizreja/ShellLab), a browser form finder for concrete shells, takes its C40 carbon factor from ShellBench v1.0.0.
 
 **Use of AI assistance.** See [docs/ai_use.md](docs/ai_use.md).
 
