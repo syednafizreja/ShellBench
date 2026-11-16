@@ -1,0 +1,10 @@
+\begin{tabular}{llllll}
+\toprule
+hypothesis & verdict & n\_buildings & evidence & source & same\_in\_all\_sensitivity\_cases \\
+\midrule
+H1 & partly supported & 33 & S\_b > 0 in 32 of 33; S\_b < S\_f in 27; S\_b median 5.66 \% (min -0.33, max 30.68) & results/verdicts\_summary.csv (case base) & True \\
+H2 & not supported & 33 & positive and significant slices: S\_b vs PGA 0 of 6, vs storeys 1 of 6 & results/verdicts\_summary.csv (case base) & True \\
+H3 & not supported & 33 & untopped floors failing the topping rule: 0 of 33 buildings (0 of 1180 variants); median R 0, max R 0 & results/verdicts\_summary.csv (case base) & True \\
+H4 & partly supported & 33 & RMSE ratio unseen/random 2.27 (needs >= 1.5); conformal coverage unseen storeys 73.3 \% (needs 88-92 \%); decision agreement 31/33 (93.9 \%, needs 80 \%) & results/surrogate\_accuracy.csv; surrogate\_coverage.csv; surrogate\_decision\_summary.csv & True \\
+\bottomrule
+\end{tabular}

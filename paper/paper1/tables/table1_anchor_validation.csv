@@ -1,0 +1,5 @@
+check,targets,above_10pct,result,source
+"Gravity, dead load: beam-end moments",40,11,median |difference| 4.25 %,results/anchor_gravity_dead.csv
+"Gravity, live load: beam-end moments",40,26,median |difference| 28.50 %,results/anchor_gravity_live.csv
+Wind: storey drift,4,4,difference -45.5 to -87.4 %,results/anchor_wind.csv
+Earthquake: base shear (bare 2D frame),1,1,"214.75 kN vs 264.77 kN (-18.9 %); T1 0.698 s (2D), 0.622 s (3D)",results/anchor_seismic.csv; results/anchor_3d_periods.csv

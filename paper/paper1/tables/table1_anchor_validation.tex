@@ -1,0 +1,10 @@
+\begin{tabular}{lllll}
+\toprule
+check & targets & above\_10pct & result & source \\
+\midrule
+Gravity, dead load: beam-end moments & 40 & 11 & median \textbar{}difference\textbar{} 4.25 \% & results/anchor\_gravity\_dead.csv \\
+Gravity, live load: beam-end moments & 40 & 26 & median \textbar{}difference\textbar{} 28.50 \% & results/anchor\_gravity\_live.csv \\
+Wind: storey drift & 4 & 4 & difference -45.5 to -87.4 \% & results/anchor\_wind.csv \\
+Earthquake: base shear (bare 2D frame) & 1 & 1 & 214.75 kN vs 264.77 kN (-18.9 \%); T1 0.698 s (2D), 0.622 s (3D) & results/anchor\_seismic.csv; results/anchor\_3d\_periods.csv \\
+\bottomrule
+\end{tabular}

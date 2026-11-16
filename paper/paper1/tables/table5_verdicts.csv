@@ -1,0 +1,5 @@
+hypothesis,verdict,n_buildings,evidence,source,same_in_all_sensitivity_cases
+H1,partly supported,33,"S_b > 0 in 32 of 33; S_b < S_f in 27; S_b median 5.66 % (min -0.33, max 30.68)",results/verdicts_summary.csv (case base),True
+H2,not supported,33,"positive and significant slices: S_b vs PGA 0 of 6, vs storeys 1 of 6",results/verdicts_summary.csv (case base),True
+H3,not supported,33,"untopped floors failing the topping rule: 0 of 33 buildings (0 of 1180 variants); median R 0, max R 0",results/verdicts_summary.csv (case base),True
+H4,partly supported,33,"RMSE ratio unseen/random 2.27 (needs >= 1.5); conformal coverage unseen storeys 73.3 % (needs 88-92 %); decision agreement 31/33 (93.9 %, needs 80 %)",results/surrogate_accuracy.csv; surrogate_coverage.csv; surrogate_decision_summary.csv,True

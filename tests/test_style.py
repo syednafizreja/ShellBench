@@ -77,8 +77,13 @@ def test_review_catches_small_text_and_bad_width():
     assert any("100.0 mm" in p for p in problems)
 
 
+@pytest.mark.filterwarnings("ignore:constrained_layout not applied:UserWarning")
 def test_review_catches_missing_label_title_footer_and_overflow():
-    """Missing y label, a title and footer in a paper figure, and text off the page."""
+    """Missing y label, a title and footer in a paper figure, and text off the page.
+
+    The off-page text is deliberate, so matplotlib's constrained-layout
+    warning is expected here and filtered for this test only.
+    """
     fig, ax = st.figure("single", height_mm=60)
     ax.plot([0, 1], [0, 1])
     ax.set_xlabel("x [m]")

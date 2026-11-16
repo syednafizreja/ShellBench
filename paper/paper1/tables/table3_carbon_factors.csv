@@ -1,0 +1,11 @@
+set [text],material [text],value,unit [text],page [text]
+GBT51366,C30,295.0,kgCO2e/m3,"Table D.0.1, PDF p. 22 of the copy (printed page not shown)"
+GBT51366,C40,340.0,kgCO2e/m3,"Table D.0.1, PDF p. 22 of the copy (printed page not shown)"
+GBT51366,HRB400,2340.0,kgCO2e/t,"Table D.0.1, PDF p. 23 of the copy (printed page not shown)"
+GBT51366,HPB300,2340.0,kgCO2e/t,"Table D.0.1, PDF p. 23 of the copy (printed page not shown)"
+GBT51366,TIE_BAR,2340.0,kgCO2e/t,PDF p. 23 of the copy (printed page not shown)
+GBT51366,TIE_STEEL_EAF,3030.0,kgCO2e/t,PDF p. 23 of the copy (printed page not shown)
+GBT51366,TIE_STEEL_BOF,1990.0,kgCO2e/t,PDF p. 23 of the copy (printed page not shown)
+GBT51366,RECYCLED_FILL,2.18,kgCO2e/t,PDF p. 22 of the copy (printed page not shown)
+OVAL2023,RAISED_FLOOR,534.5,kgCO2e/t,PDF p. 19 of the accepted manuscript (Table 6)
+GBT51366,FOAMED_FILL,472.7,kgCO2e/t,"Table 1 of the paper; Table D.0.1, PDF p. 22 of the copy (printed page not shown)"
