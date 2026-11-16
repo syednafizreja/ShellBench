@@ -5,7 +5,7 @@
   "description": "A GB-code RC frame generator, a thin-shell floor library and whole-building A1-A3 embodied carbon, with preregistered hypotheses H1-H4 and their verdicts.",
   "codeRepository": "https://github.com/syednafizreja/ShellBench",
   "identifier": "https://doi.org/10.5281/zenodo.23851675",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "license": "https://spdx.org/licenses/MIT",
   "programmingLanguage": "Python 3.12",
   "softwareRequirements": [
