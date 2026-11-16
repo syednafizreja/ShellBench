@@ -1,27 +1,11 @@
-<h1 align="center">ShellBench</h1>
+# ShellBench
 
-<p align="center"><b>Whole-building embodied carbon of thin-shell floors in GB-code reinforced-concrete frames</b><br>
-A thin-shell floor saves concrete. Does the building save carbon once the frame, footings, diaphragm and topping are designed to code? 36 buildings, 5,184 shell-floor designs, pre-registered verdicts.</p>
+Whole-building embodied carbon of thin-shell floors in GB-code reinforced-concrete frames. A thin-shell floor saves concrete. Does the building save carbon once the frame, footings, diaphragm and topping are designed to code? 36 buildings, 5,184 shell-floor designs, pre-registered verdicts.
 
-<p align="center">
-<a href="https://github.com/syednafizreja/ShellBench/actions/workflows/tests.yml"><img alt="Tests" src="https://github.com/syednafizreja/ShellBench/actions/workflows/tests.yml/badge.svg"></a>
-<a href="https://doi.org/10.5281/zenodo.23851675"><img alt="Software DOI 10.5281/zenodo.23851675" src="https://img.shields.io/badge/software%20DOI-10.5281%2Fzenodo.23851675-2b2b29"></a>
-<a href="https://doi.org/10.5281/zenodo.24194144"><img alt="Dataset DOI 10.5281/zenodo.24194144" src="https://img.shields.io/badge/dataset%20DOI-10.5281%2Fzenodo.24194144-2b2b29"></a>
-<a href="docs/preregistration.md"><img alt="Pre-registered" src="https://img.shields.io/badge/study-pre--registered-2b2b29"></a>
-<img alt="Python 3.12" src="https://img.shields.io/badge/python-3.12-2b2b29">
-<a href="LICENSE"><img alt="Code MIT" src="https://img.shields.io/badge/code-MIT-2b2b29"></a>
-<a href="https://creativecommons.org/licenses/by/4.0/"><img alt="Data CC BY 4.0" src="https://img.shields.io/badge/data-CC%20BY%204.0-2b2b29"></a>
-</p>
+[![Tests](https://github.com/syednafizreja/ShellBench/actions/workflows/tests.yml/badge.svg)](https://github.com/syednafizreja/ShellBench/actions/workflows/tests.yml)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.23851675-555555)](https://doi.org/10.5281/zenodo.23851675)
 
-<p align="center">
-<a href="#key-finding">Key finding</a> ·
-<a href="#check-it-in-three-steps">Check it</a> ·
-<a href="#method">Method</a> ·
-<a href="#figures">Figures</a> ·
-<a href="#validation">Validation</a> ·
-<a href="#where-to-find-things">Find things</a> ·
-<a href="#citation">Cite</a>
-</p>
+[Key finding](#key-finding) | [Check it](#check-it-in-three-steps) | [Method](#method) | [Figures](#figures) | [Validation](#validation) | [Pre-registration](docs/preregistration.md) | [Dataset (CC BY 4.0)](https://doi.org/10.5281/zenodo.24194144) | [Cite](#citation)
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/img/hero_dark.png">
@@ -86,17 +70,14 @@ $$
 
 $V_c$ is the concrete volume, $m_s$ the steel mass, $e_c$ and $e_s$ their GB/T 51366-2019 carbon factors ([data/carbon_factors.csv](data/carbon_factors.csv)), and $C_\text{fill}$ the fill over the shell. For each building, the shell is the lowest-carbon variant that passes every check and acts as a rigid diaphragm ([src/shellbench/verdicts.py](src/shellbench/verdicts.py)).
 
-```mermaid
-flowchart LR
-  T[Thesis building<br>4-storey RC frame] --> A[Anchor<br>gravity, wind, earthquake]
-  A --> G[Generator<br>GB 50010 / 50011 rules R3-R16]
-  S[Shell floor<br>form-finding, CalculiX,<br>ties, buckling, diaphragm] --> B[Batch runner<br>36 buildings x 144 rows]
-  G --> B
-  B --> C[A1-A3 carbon<br>floor + lateral system]
-  C --> V[Verdicts H1-H3]
-  C --> D[(Dataset<br>Zenodo DOI)]
-  D --> M[Surrogate H4]
-```
+Steps:
+
+1. The thesis building (a 4-storey RC frame) is rebuilt as the anchor: gravity, wind and earthquake.
+2. The generator applies GB 50010 / 50011 rules R3-R16 to make the 36 buildings.
+3. The shell floor is form-found, analysed in CalculiX and checked for ties, buckling and diaphragm action.
+4. The batch runner designs 144 floor rows for each of the 36 buildings.
+5. A1-A3 carbon is counted for the floor and the lateral system.
+6. Verdicts H1-H3 are drawn; the dataset is archived on Zenodo and feeds the surrogate (H4).
 
 | Design space | |
 |---|---|
