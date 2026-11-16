@@ -84,35 +84,37 @@ Action for the author: open the first two and decide whether either belongs in t
 - Working title [J], to be rewritten last (writing order): "Whole-building embodied carbon of thin-shell concrete floors in seismically designed reinforced concrete frames".
 - CITATION.cff title "ShellBench" is the software's title, not the paper's. The paper is cited from the README with its own title when submitted [J].
 
-## 9. Figure and table list (planned)
+## 9. Figure and table list (status 16 Nov 2026)
 
-Every figure is made by a script in the repo from results/ (q1_standards R9). [J] on all of these.
+Every figure is made by a script in the repo from results/ (q1_standards R9). Paper copies: figures/paper/ (`python -m shellbench.figures`). Tables: paper/paper1/tables/ as CSV and booktabs LaTeX (`python scripts/paper1_tables.py`, checked by tests/test_paper1_tables.py). [J] on the choice and order.
 
-| # | What | Status |
-|---|---|---|
-| Fig. 1 | Workflow: anchor, generator, floor library, family, carbon, hypotheses | To make |
-| Fig. 2 | Floor build-up section and layout A plan | To make |
-| Fig. 3 | Anchor validation summary (or Table 1) | Data exist (v0.1) |
-| Fig. 4 | S_f against S_b per building (H1) | After 12 Nov |
-| Fig. 5 | S_b against PGA, one line per storey count (H2) | After 12 Nov |
-| Fig. 6 | Saving split by element: floor, lateral system, footings, and the penalties from ties, levelling and topping (workflow §2, decomposition) | After 12 Nov |
-| Fig. 7 | Topping needed and its share R (H3) | After Day 27 and 12 Nov |
-| Fig. 8 | Factor sensitivity (C1) | After the take-off scope |
-| Table 1 | Anchor validation | Data exist |
-| Table 2 | Floor library summary | Data exist |
-| Table 3 | Carbon factors with row and page | Data exist; official-copy check open |
-| Table 4 | Verification summary (set before or after the run) | Data partly exist |
-| Table 5 | H1-H3 verdicts | After 12 Nov |
+| # | What | File | Status |
+|---|---|---|---|
+| Fig. 1 | Workflow: anchor, generator, floor library, family, carbon, hypotheses | README mermaid diagram (draft) | Schematic still to draw for the journal |
+| Fig. 2 | Floor build-up section and layout A plan | none | Schematic still to draw (docs/floor_concept.md gives the dimensions) |
+| Fig. 3 | Anchor validation | anchor_waterfall, anchor_seismic_compare, anchor_quantities, anchor_carbon | Done; Table 1 carries the numbers |
+| Fig. 4 | S_f against S_b per building (H1) | verdict_h1 | Done |
+| Fig. 5 | S_b against PGA and storeys (H2) | verdict_h2 | Done |
+| Fig. 6 | Saving split per building: floor saving and lateral-system saving [kgCO2e/m2] | verdict_split | Done; medians 8.26 and -2.53. Tie, levelling and topping penalties are inside the floor term, not drawn apart [J] |
+| Fig. 7 | Topping needed and its share R (H3) | none | Dropped [J]: R = 0 in all 33 buildings, so the Table 5 H3 row says it in one line |
+| Fig. 8 | Factor sensitivity (C1) | verdict_sensitivity | Done |
+| Fig. S1-S3 | Surrogate (H4) | surrogate_parity, surrogate_coverage, surrogate_decision | Done (supplementary or Paper 2) |
+| Fig. S4 | Shell benchmark convergence | benchmarks_convergence | Done |
+| Table 1 | Anchor validation | table1_anchor_validation | Done |
+| Table 2 | Floor library summary by span | table2_floor_library | Done |
+| Table 3 | Carbon factors with page | table3_carbon_factors | Done; official-copy check recorded in data/carbon_factors.csv |
+| Table 4 | Shell benchmark convergence | table4_benchmarks | Done |
+| Table 5 | H1-H4 verdicts | table5_verdicts | Done |
 
 ## 10. Gaps against the workflow's verification standard (§2)
 
 | Workflow requirement | ShellBench now | Action |
 |---|---|---|
-| One command reproduces everything, plus a fast self-test | Not present: modules run one by one (`python -m shellbench.batch`, `.floorlib`, `.anchor_frame`) | Build thread: add a single `run_all` entry point before the DOI (11 Nov) [J] |
-| Fixed random seed; versions in the output | The H2 permutation test is not written yet; no seed recorded | Fix the seed in the analysis script when it is written; write package versions into the results file |
+| One command reproduces everything, plus a fast self-test | Done: `scripts/reproduce.py` and `--quick` (16 Nov 2026 status) | Build thread: add a single `run_all` entry point before the DOI (11 Nov) [J] |
+| Fixed random seed; versions in the output | Done: H2 permutation test uses seed `provenance.SEED` (src/shellbench/verdicts.py) | Fix the seed in the analysis script when it is written; write package versions into the results file |
 | Closed-form checks | Done (thrust, cantilever, benchmarks) | None |
 | Mesh convergence | Done for the benchmarks; panel mesh convergence [?] | Check floorlib mesh doubling before Methods 2.4 |
 | Sensitivity | C1 factor sensitivity; beam I 1.5; drift rule | Monte Carlo is not used (C1, skills_check C7) |
-| Decompose the headline into channels | Planned as Fig. 6 | Results |
-| Regression tests on headline numbers | Not yet | Add after 12 Nov, before v1.0 |
+| Decompose the headline into channels | Done: Fig. 6 (verdict_split) | Results |
+| Regression tests on headline numbers | Done: tests/test_verdicts.py, test_paper1_tables.py, test_checksums.py | None |
 | Ratios where absolutes are uncertain | S_b is a ratio already | State it in the abstract and conclusion |

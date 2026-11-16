@@ -687,6 +687,46 @@ def release_note() -> str:
     return ""
 
 
+def verdict_split(b, path: Path = FIGURES / "verdict_split.png", paper: bool = False,
+                  note: str = "v0.4.0 files") -> list[Path]:
+    """Where the saving comes from: floor and lateral-system saving per building (Paper 1 Fig. 6).
+
+    Each building gets two bars: the floor saving ``c_floor - s_floor`` and the
+    lateral-system saving ``lateral_saving`` (= ``c_lat - s_lat``), both in
+    kgCO2e per m^2 of floor area, read from the base case. A negative bar is a
+    penalty (the shell building needs more carbon there). Rows are ordered by
+    storeys, then PGA. Nothing is recomputed beyond the subtraction.
+
+    Args:
+        b: Base-case rows of results/verdicts_buildings.csv.
+        path: Output path.
+        paper: Footer-free paper copy.
+        note: Footer qualifier.
+
+    Returns:
+        Written file paths.
+    """
+    import numpy as np
+
+    d = b.sort_values(["storeys", "pga_g"]).reset_index(drop=True)
+    floor = (d["c_floor"] - d["s_floor"]).to_numpy()
+    lateral = d["lateral_saving"].to_numpy()
+    y = np.arange(len(d))
+    fig, ax = st.figure("onehalf", height_mm=150)
+    h = 0.38
+    ax.barh(y - h / 2, floor, height=h, color=st.SERIES[0], label="Floor saving", zorder=3)
+    ax.barh(y + h / 2, lateral, height=h, color=st.SERIES[1], label="Lateral-system saving", zorder=3)
+    ax.axvline(0, color=st.NEUTRAL, linewidth=0.6, zorder=2)
+    labels = [f"{int(s)} st, {p:.2f} g" + (" (I)" if g == 1 else "")
+              for s, p, g in zip(d["storeys"], d["pga_g"], d["seismic_grade"])]
+    ax.set_yticks(y, labels)
+    ax.invert_yaxis()
+    ax.set_xlabel("Saving against the conventional design [kgCO$_2$e/m$^2$]")
+    st.hgrid(ax, "x")
+    ax.legend(loc="center right", frameon=False)
+    return _finish(fig, path, "results/verdicts_buildings.csv", note, paper)
+
+
 def build_all(paper: bool = False) -> list[Path]:
     """Redraw every figure from the CSVs in results/ (no analysis is re-run).
 
@@ -714,6 +754,7 @@ def build_all(paper: bool = False) -> list[Path]:
         base = allv[allv["case"] == "base"]
         out += verdict_h1(base, paper=paper)
         out += verdict_h2(base, paper=paper)
+        out += verdict_split(base, paper=paper)
         out += verdict_sensitivity(allv, pd.read_csv(RESULTS / "verdicts_summary.csv"), paper=paper)
     dec_csv = RESULTS / "surrogate_decision.csv"
     if dec_csv.exists():
