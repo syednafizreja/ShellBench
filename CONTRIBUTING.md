@@ -6,11 +6,11 @@ ShellBench is a frozen research record. Its results back pre-registered hypothes
 
 ## Rules
 
-1. **No invented values.** Never invent references, numbers, code clauses, results or DOIs. A value that cannot be traced is marked `[?]` with the rule that closes it.
+1. **No invented values.** Never invent references, numbers, code clauses, results or DOIs. A value that cannot be traced is marked `(unverified)` with the rule that closes it.
 2. **Every number has a source:** a thesis section or table, a code clause, a paper page, or the code in this repository.
 3. **Thesis errors are flagged, not fixed.** Values are typed as printed; disputed ones are settled by a recorded decision in [docs/baseline_spec.md](docs/baseline_spec.md).
 4. **The pre-registration is fixed.** Hypotheses, thresholds and the analysis plan change only by a dated amendment that says why. Verdicts are reported as found.
-5. **Plain British English.** Short sentences, no hype words. Judgement that is not a sourced value is marked `[J]`.
+5. **Plain British English.** Short sentences, no hype words. Judgement that is not a sourced value is marked `(judgement)`.
 
 ## Code standards
 
@@ -33,6 +33,6 @@ All tests must pass, and `git status` must show no change under `results/` unles
 
 | Marker | Meaning |
 |---|---|
-| `[J]` | A judgement call, accepted or changed by the author |
+| `(judgement)` | A judgement call, accepted or changed by the author |
 | `author to confirm` | A reading or value the author still has to confirm |
-| `[?]` | A missing value, with the rule that closes it |
+| `(unverified)` | A missing value, with the rule that closes it |

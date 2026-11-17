@@ -69,7 +69,7 @@ def test_permutation_test_separates_trend_from_noise():
 
 
 def test_small_slices_cannot_be_significant():
-    """A slice with fewer than 4 buildings is reported as not significant [J]."""
+    """A slice with fewer than 4 buildings is reported as not significant (judgement)."""
     t = pd.DataFrame({"storeys": [3, 3, 3], "pga_g": [0.1, 0.2, 0.3], "s_b": [0.01, 0.02, 0.03]})
     sl = v.slices(t, "s_b")
     assert not sl["positive_significant"].any()

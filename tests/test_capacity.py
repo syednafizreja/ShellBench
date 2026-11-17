@@ -81,5 +81,5 @@ def test_doubly_reinforced_small_x_uses_cl_6_2_14():
 
 
 def test_beam_end_comp_ratio_values():
-    """cl. 11.3.6 item 2: 0.5 grade I, 0.3 grade II; grades III-IV not counted [J]."""
+    """cl. 11.3.6 item 2: 0.5 grade I, 0.3 grade II; grades III-IV not counted (judgement)."""
     assert c.BEAM_END_COMP_RATIO == {1: 0.5, 2: 0.3, 3: 0.0, 4: 0.0}

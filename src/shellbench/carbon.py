@@ -13,8 +13,8 @@ carbon per m^2 of floor area for every factor set in
 
 The reading rules were committed before the first run (docs/anchor_notes.md,
 "How the take-off is read", commit f38e731, 29 Oct 2026); the rule numbers
-below refer to that list. Every value marked [J] is the AI assistant's judgement and
-every value marked [?] is a code reference the author still has to confirm.
+below refer to that list. Every value marked (judgement) is the AI assistant's judgement and
+every value marked (unverified) is a code reference the author still has to confirm.
 
 Two switches
 ------------
@@ -51,11 +51,11 @@ SPANS_Y_M = (7.2, 6.6, 7.2)
 LINES_Y = ("A", "B", "C", "D")
 
 # Panels missing in the "drawn" plan, as (bay index, span index): the A-B
-# notch between axes 3 and 5 on drawing 03 (rule 2) [J].
+# notch between axes 3 and 5 on drawing 03 (rule 2) (judgement).
 DRAWN_NOTCH = frozenset({(2, 0), (3, 0)})
 
 STOREY_HEIGHTS_M = (4.55, 3.60, 3.60, 3.60)  # spec G6, G7 (B4)
-N_SLAB_LEVELS = 4  # levels 1-3 and the roof (rule 3) [J]
+N_SLAB_LEVELS = 4  # levels 1-3 and the roof (rule 3) (judgement)
 SLAB_T_M = 0.12  # spec G10 (B1)
 COLUMN_B_M = 0.6  # spec M5
 BEAM_B_M = 0.3  # spec M1-M4
@@ -64,44 +64,44 @@ LONG_BEAM_H_M = 0.6  # spec M3
 SECONDARY_BEAM_H_M = 0.5  # spec M4
 
 # Secondary beams at mid-span of the 7.2 m spans, by (bay index, span index),
-# as read on drawing 03 (rule 4) [J].
+# as read on drawing 03 (rule 4) (judgement).
 SECONDARY_BAYS = frozenset({(0, 0), (1, 0), (4, 0), (5, 0), (1, 2), (4, 2)})
 
-CONCRETE_GRADE = "C40"  # spec X1; footings too [J] (rule 4)
+CONCRETE_GRADE = "C40"  # spec X1; footings too (judgement) (rule 4)
 BAR_STEEL = "HRB400"  # spec X5 (B7)
 STIRRUP_STEEL = "HPB300"  # spec X6
-STEEL_DENSITY_KG_M3 = 7850.0  # [J]; GB 50009 Appendix A [?] (rule 9)
+STEEL_DENSITY_KG_M3 = 7850.0  # (judgement); GB 50009 Appendix A (unverified) (rule 9)
 
 # Slab steel (rule 5): C8@200 each way (Th Table 3.1; slab drawings).
 SLAB_BAR = "1C8"
 SLAB_BAR_SPACING_M = 0.2
-SLAB_TOP_BAR_LENGTH_M = 1.2  # each side of a beam line; drawings 0.8-1.6 m [J]
+SLAB_TOP_BAR_LENGTH_M = 1.2  # each side of a beam line; drawings 0.8-1.6 m (judgement)
 
 # Beam and column steel (rule 6).
 THESIS_COLUMN_BARS = "4C22"  # spec R1, decision B6
 CODE_COLUMN_RHO = c.RHO_MIN_COLUMN_TOTAL  # GB 50010 Table 11.4.12-1, p. 163
-LONG_BEAM_BARS = "4C16"  # drawing 03 note, top and bottom [J]
-SECONDARY_BEAM_BARS = "3C20"  # drawing 03 note, top and bottom [J]
-CONTINUOUS_TOP_BARS = "2C14"  # GB 50011 cl. 6.3.4 [?]
-TOP_END_FRACTION = 1.0 / 3.0  # top end bars over l_n / 3 from each face [J]
-THESIS_FLOOR_FOR_LEVEL = {1: "1", 2: "1", 3: "1", 4: "5"}  # B4; levels 2-3 [J]
+LONG_BEAM_BARS = "4C16"  # drawing 03 note, top and bottom (judgement)
+SECONDARY_BEAM_BARS = "3C20"  # drawing 03 note, top and bottom (judgement)
+CONTINUOUS_TOP_BARS = "2C14"  # GB 50011 cl. 6.3.4 (unverified)
+TOP_END_FRACTION = 1.0 / 3.0  # top end bars over l_n / 3 from each face (judgement)
+THESIS_FLOOR_FOR_LEVEL = {1: "1", 2: "1", 3: "1", 4: "5"}  # B4; levels 2-3 (judgement)
 
 # Stirrups (rule 7).
 STIRRUP_BAR = "1C10"  # phi10, area only
 BEAM_STIRRUP_SPACING_M = 0.2  # drawing 03 note
 COLUMN_STIRRUP_SPACING_M = 0.1  # drawing 01, phi10@100(4)
 COLUMN_STIRRUP_LEGS = 4  # legs in each direction, drawing 01
-STIRRUP_COVER_M = 0.05  # [J]
+STIRRUP_COVER_M = 0.05  # (judgement)
 
-# Footings (rule 8; proposed D28) [J].
+# Footings (rule 8; proposed D28) (judgement).
 FAK_KPA = 220.0  # decision B8
-FILL_UNIT_WEIGHT_KN_M3 = 20.0  # footing plus fill, GB 50007 cl. 5.2.1 [?]
+FILL_UNIT_WEIGHT_KN_M3 = 20.0  # footing plus fill, GB 50007 cl. 5.2.1 (unverified)
 FOUNDATION_TOP_DEPTH_M = 0.5  # spec G9
-FOOTING_T_M = 0.6  # [J]
-FOOTING_SIZE_STEP_M = 0.1  # [J]
-FOOTING_LOAD_FACTOR = 1.35  # GB 50007 cl. 3.0.6 [?]
-FOOTING_RHO_MIN = 0.0015  # GB 50007 cl. 8.2.1 [?]
-FOOTING_COVER_M = 0.05  # [J]
+FOOTING_T_M = 0.6  # (judgement)
+FOOTING_SIZE_STEP_M = 0.1  # (judgement)
+FOOTING_LOAD_FACTOR = 1.35  # GB 50007 cl. 3.0.6 (unverified)
+FOOTING_RHO_MIN = 0.0015  # GB 50007 cl. 8.2.1 (unverified)
+FOOTING_COVER_M = 0.05  # (judgement)
 ANCHOR_TRIBUTARY_WIDTH_M = 7.2  # spec G4 (B10)
 
 ELEMENTS = ("slabs", "frame beams", "longitudinal beams", "secondary beams",
@@ -167,7 +167,7 @@ class Plan:
 
 
 def make_plan(name: str) -> Plan:
-    """Build the ``"grid"`` (B11) or ``"drawn"`` (drawing 03 [J]) plan.
+    """Build the ``"grid"`` (B11) or ``"drawn"`` (drawing 03 (judgement)) plan.
 
     Args:
         name: ``"grid"`` or ``"drawn"``.
@@ -311,7 +311,7 @@ def anchor_tributary_area_m2(m: int) -> float:
 
 
 def size_footing(node: tuple[int, int], n_k_kn: float) -> Footing:
-    """Size one square pad for fak and design its bottom steel (rule 8) [J].
+    """Size one square pad for fak and design its bottom steel (rule 8) (judgement).
 
     Args:
         node: Column node.
@@ -335,7 +335,7 @@ def footings(plan: Plan, cases: dict[str, c.CaseResult]) -> list[Footing]:
     """Size the pad under every column of a plan (rule 8).
 
     N_k is D + L at the base of the axis-2 column of the same line (C and D
-    mirror B and A), scaled by tributary plan area [J].
+    mirror B and A), scaled by tributary plan area (judgement).
 
     Args:
         plan: Floor plan.
@@ -469,7 +469,7 @@ def family_fixed_per_m2(plan_name: str = "grid") -> dict[tuple[str, str], float]
     anchor's rows exactly. Every level is measured the same way, so the value
     per m^2 of floor does not depend on the storey count. Using the anchor plan
     and the anchor's secondary and longitudinal beams for every family building
-    is a judgement [J] (data_card, takeoff_scope).
+    is a judgement (judgement) (data_card, takeoff_scope).
 
     Args:
         plan_name: ``"grid"`` (B11, default) or ``"drawn"``.

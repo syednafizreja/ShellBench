@@ -9,7 +9,7 @@ drift and check results and frame quantities. It works on one transverse
 plan is Day 18's batch runner.
 
 Each step names the rule it implements (R1-R16 of docs/design_rules.md).
-Values marked [J] there are choices, not code; values marked [?] are
+Values marked (judgement) there are choices, not code; values marked (unverified) are
 cited but not yet opened. Nothing in this module is a thesis result: the
 thesis inputs live in the test, with their sources.
 
@@ -28,7 +28,7 @@ from shellbench import checks as c
 from shellbench import seismic as s
 
 SIZE_STEP_MM = 50  # R15, playbook
-CONCRETE_UNIT_WEIGHT_KN_M3 = 25.0  # GB 50009 Appendix A [?]; thesis s4.1 uses 25
+CONCRETE_UNIT_WEIGHT_KN_M3 = 25.0  # GB 50009 Appendix A (unverified); thesis s4.1 uses 25
 G_E_LIVE_FACTOR = 0.5  # GB 50011 Table 5.1.3 (floor live; roof live excluded)
 GAMMA_G_SEISMIC = 1.3  # GB 55002-2021 cl. 4.3.2, Table 4.3.2-1 (R9)
 GAMMA_EH = 1.4  # GB 55002-2021 cl. 4.3.2, Table 4.3.2-2 (R9)
@@ -45,22 +45,22 @@ BEAM_MIN_CLEAR_SPAN_OVER_H = 4.0
 PRELIM_GRAVITY_KN_M2 = 14.0  # Th s2.4, load per floor for preliminary sizing (R5)
 PRELIM_BETA_EDGE = 1.3  # Th s2.4 (R5)
 PRELIM_BETA_INTERIOR = 1.25  # Th s2.4 (R5)
-SLAB_MIN_MM = 120  # R3 decision 1, 31 Oct 2026 [J]
-SLAB_SPAN_RATIO_TWO_WAY = 40.0  # Th s2.1; GB 50010 cl. 9.1.2 [?] (R3)
-BEAM_SPAN_RATIO = 12.0  # R4 [J], within Th s2.3's L/14 to L/8
-BEAM_MIN_WIDTH_MM = 250  # R4 [J]
-COLUMN_GROWTH_LIMIT = 1.5  # R11 stopping rule of the "columns_first" rule [J]
-#: R11 drift-fix rules (decision card 2, 5 Nov 2026 [J]). "best_ratio" is the
+SLAB_MIN_MM = 120  # R3 decision 1, 31 Oct 2026 (judgement)
+SLAB_SPAN_RATIO_TWO_WAY = 40.0  # Th s2.1; GB 50010 cl. 9.1.2 (unverified) (R3)
+BEAM_SPAN_RATIO = 12.0  # R4 (judgement), within Th s2.3's L/14 to L/8
+BEAM_MIN_WIDTH_MM = 250  # R4 (judgement)
+COLUMN_GROWTH_LIMIT = 1.5  # R11 stopping rule of the "columns_first" rule (judgement)
+#: R11 drift-fix rules (decision card 2, 5 Nov 2026 (judgement)). "best_ratio" is the
 #: default; "columns_first" is the rule of 4 Nov, kept for the sensitivity run.
 DRIFT_RULES = ("best_ratio", "columns_first")
-BAR_DIAMETERS_MM = (12, 14, 16, 18, 20, 22, 25, 28, 32)  # R15 [J]; GB 1499.2 cl. 5.1
-#: Column bars may also be 36 and 40 mm (7 Nov 2026, P1) [J]. Both are standard
+BAR_DIAMETERS_MM = (12, 14, 16, 18, 20, 22, 25, 28, 32)  # R15 (judgement); GB 1499.2 cl. 5.1
+#: Column bars may also be 36 and 40 mm (7 Nov 2026, P1) (judgement). Both are standard
 #: sizes in GB 1499.2-2024 cl. 5.1 (6 to 50 mm); areas pi d^2 / 4 match Table 2
 #: (1018, 1257 mm^2) to rounding (checked by the AI assistant 9 Nov 2026, design_rules
 #: R15; author to confirm). Beams and panels keep
 #: BAR_DIAMETERS_MM.
 COLUMN_BAR_DIAMETERS_MM = BAR_DIAMETERS_MM + (36, 40)
-BARS_PER_LAYER = (2, 6)  # R15 [J], 300 mm beam
+BARS_PER_LAYER = (2, 6)  # R15 (judgement), 300 mm beam
 MAX_ITERATIONS = 40
 
 
@@ -257,8 +257,8 @@ def beam_line_loads(b: BuildingInput, z: Sizes, level: int, case: str) -> list[f
     """Uniform beam loads [kN/m] for one level and one case ("D", "L" or "GE").
 
     The slab load is the area load times the tributary width (the
-    equivalent-uniform route of the anchor [J]); beam self-weight is the web
-    below the slab. The secondary beam of the bay is spread the same way [J],
+    equivalent-uniform route of the anchor (judgement)); beam self-weight is the web
+    below the slab. The secondary beam of the bay is spread the same way (judgement),
     and the wall standing on the frame beam is added on floors (R8).
     """
     roof = level == len(b.storey_heights_m)
@@ -476,7 +476,7 @@ def drift_ratios(b: BuildingInput, quake: CaseForces) -> list[float]:
 
 
 def face_moment(m: float, v: float, half_column_m: float) -> float:
-    """Moment at the column face from the centre-line end moment and shear [J].
+    """Moment at the column face from the centre-line end moment and shear (judgement).
 
     Linear reduction over half a column width: |M| - |V| a, never below 0,
     keeping the sign of the centre-line moment.
@@ -516,7 +516,7 @@ def beam_design_moments(b: BuildingInput, z: Sizes, cases: dict[str, CaseForces]
 
 
 def choose_bars(as_req_mm2: float) -> str:
-    """R15: one diameter, 2-6 bars, area >= As; least area, then fewest bars [J].
+    """R15: one diameter, 2-6 bars, area >= As; least area, then fewest bars (judgement).
 
     Read literally, "fewest bars" picks 2C28 for 1000 mm^2 (23 % spare); the
     least-area reading picks 5C16 (0.5 % spare), which keeps the steel carbon
@@ -536,7 +536,7 @@ def choose_bars(as_req_mm2: float) -> str:
 
 
 def column_bars(column_mm: int) -> tuple[float, str]:
-    """R12: total steel at the grade III minimum, as 4 corner + 4 side bars [J]."""
+    """R12: total steel at the grade III minimum, as 4 corner + 4 side bars (judgement)."""
     as_req = c.RHO_MIN_COLUMN_TOTAL * column_mm * column_mm
     for d in BAR_DIAMETERS_MM:
         if 8 * math.pi * d * d / 4.0 >= as_req:
@@ -577,7 +577,7 @@ def grow_beam(bw: int, h: int, span_m: float, column_mm: int) -> tuple[int, int,
     """Grow one beam by one step while keeping GB 50011-2010 cl. 6.3.1 (P1, 7 Nov 2026).
 
     The beam gets 50 mm deeper. If the deeper section would break h/b <= 4 or
-    clear span/h >= 4, it gets 50 mm wider instead [J].
+    clear span/h >= 4, it gets 50 mm wider instead (judgement).
 
     Args:
         bw: Beam width [mm].
@@ -595,7 +595,7 @@ def grow_beam(bw: int, h: int, span_m: float, column_mm: int) -> tuple[int, int,
 
 
 def drift_step(b: BuildingInput, z: Sizes, drift: float) -> tuple[Sizes, str]:
-    """One R11 step of the "best_ratio" rule (decision card 2, 5 Nov 2026 [J]).
+    """One R11 step of the "best_ratio" rule (decision card 2, 5 Nov 2026 (judgement)).
 
     Two candidates are tried: all columns +50 mm, or all beams +50 mm deeper.
     The one with the larger drift reduction per m^3 of added frame concrete is
@@ -714,7 +714,7 @@ def generate(b: BuildingInput, verbose: bool = False, drift_rule: str = "best_ra
 
 
 def quantities(b: BuildingInput, z: Sizes, res: GeneratorResult) -> dict[str, float]:
-    """Concrete [m^3/m^2] and longitudinal bar steel [kg/m^2] of the frame strip [J].
+    """Concrete [m^3/m^2] and longitudinal bar steel [kg/m^2] of the frame strip (judgement).
 
     Slab over the strip, beam webs below the slab, columns full height. Bars
     run the full beam or column length at the chosen bar areas (R15). Stirrup
@@ -773,14 +773,14 @@ def capacity_step(b: BuildingInput, z: Sizes, cases: dict[str, CaseForces],
        storey times the base factor (cl. 6.2.3).
     2. Column bars from eccentric compression (GB 50010 cl. 6.2.17) under the
        magnified seismic forces (times gamma_RE) and 1.3D + 1.5L; one bar set
-       for every column [J]. Second order checked by cl. 6.2.3.
+       for every column (judgement). Second order checked by cl. 6.2.3.
     3. Beam shear eta_vb (M_l + M_r)/l_n + V_Gb, or the combined shear for
        grade 4; section limit and stirrups (cl. 11.3.2-11.3.9).
     4. Column shear eta_vc (M_t + M_b)/H_n; section limit, stirrups and
        volumetric ratio (cl. 11.4.3-11.4.18).
 
     The axial force of each column is taken at its bottom end for both ends
-    [J]. H_n is the storey height less the deepest beam of the floor above [J].
+    (judgement). H_n is the storey height less the deepest beam of the floor above (judgement).
 
     Returns:
         A dict: "grow_column" (reason or ""), "grow_beams" (span -> reason),
@@ -827,7 +827,7 @@ def capacity_step(b: BuildingInput, z: Sizes, cases: dict[str, CaseForces],
         return cap.beam_mbua_knm(bars_area_mm2(label, as_req), h, c.A_S_MM, c.GAMMA_RE_BEAM_FLEXURE)
 
     def sum_bua(i):
-        """Grade 1: larger of the two sway directions of sum M_bua at line i [J]."""
+        """Grade 1: larger of the two sway directions of sum M_bua at line i (judgement)."""
         left, right = i - 1, i
         dirs = []
         for top_side in ("left", "right"):
@@ -885,7 +885,7 @@ def capacity_step(b: BuildingInput, z: Sizes, cases: dict[str, CaseForces],
         out["grow_column"] = "no column bar layout fits (GB 50010 cl. 9.3.1, 11.4.13)"
         return out
     if bars.rho > cap.COLUMN_RHO_CAP:
-        out["grow_column"] = f"column steel above {cap.COLUMN_RHO_CAP:.0%} [J]"
+        out["grow_column"] = f"column steel above {cap.COLUMN_RHO_CAP:.0%} (judgement)"
         return out
 
     # 3. beam shear and stirrups
@@ -911,7 +911,7 @@ def capacity_step(b: BuildingInput, z: Sizes, cases: dict[str, CaseForces],
         end_ratio = max(steel[(j, k, "left top")], steel[(j, k, "right top")]) / (bw * (h - c.A_S_MM))
         pick = cap.beam_stirrups(grade, bw, h, asv, bar_d, end_ratio)
         if pick is None:
-            out["grow_beams"][k] = "no stirrup set meets the beam shear [J]"
+            out["grow_beams"][k] = "no stirrup set meets the beam shear (judgement)"
             continue
         beam_st[(j, k)] = pick
         beam_kg += cap.beam_stirrup_kg(bw, h, bar_d, ln, *pick)
@@ -934,7 +934,7 @@ def capacity_step(b: BuildingInput, z: Sizes, cases: dict[str, CaseForces],
         bottom = cap.column_stirrups(grade, h_col, asv, mu, bars, hn, root=(j == 1))
         top = cap.column_stirrups(grade, h_col, asv, mu, bars, hn, root=False)
         if bottom is None or top is None:
-            out["grow_column"] = "no hoop set meets the column shear and confinement [J]"
+            out["grow_column"] = "no hoop set meets the column shear and confinement (judgement)"
             return out
         mid = max(bottom[1], top[1], key=lambda st: st.asv_per_s)
         col_st[key] = (bottom[0], top[0], mid)

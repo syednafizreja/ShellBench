@@ -177,7 +177,7 @@ A four-storey cast-in-place RC moment-frame office building in Panzhihua, Sichua
 - **SI units everywhere.** Every CSV header states its unit, e.g. `M_end [kN*m]`.
 - **Every number traces to a source:** a thesis section or table, a code clause, or the code in this repository.
 - **Thesis errors are flagged, not fixed.** Values are typed as printed; disputed ones are settled by a recorded decision.
-- **Judgement is marked.** Reasoning rather than a sourced value carries `[J]`.
+- **Judgement is marked.** Reasoning rather than a sourced value carries `(judgement)`.
 - **Changes after pre-registration** are dated entries in its change log; rules for contributions are in [CONTRIBUTING.md](CONTRIBUTING.md).
 - **Long-term use.** Exact versions in [environment.yml](environment.yml) and [environment.lock.yml](environment.lock.yml); `sha256sum -c SHA256SUMS` on a Linux or macOS clone.
 

@@ -8,12 +8,12 @@ On 28 Oct 2026 the author approved finishing within the AI-assistance subscripti
 
 Days 9, 10 and 11 are done (LOG.md). pytest 114 passed. Day 12 is waiting on the carbon factors (GATE). The build now has 16 calendar days (29 Oct to 13 Nov) instead of 20.
 
-## How it fits [J]
+## How it fits (judgement)
 
 There are two structural changes. Neither removes a check.
 
 1. **The shell floor module (Days 22-27) runs alongside the generator (Days 15-21).** It does not depend on the generator. Its only input from the building is the anchor's storey seismic force, which already exists from Day 9. In the Playbook the two run one after the other only because one person works through them in order. Running them side by side saves about 7 days.
-2. **The surrogate code is built and frozen before the dataset exists.** Once the floor module is done (6 Nov), Track B builds the surrogate pipeline (splits, three models, conformal intervals, decision test, leakage test) and tests it on the conventional-floor family from the Day 20 run. Its code and hyperparameters are committed **before the DOI**, and then run once on the published data. This is a stricter protocol than the Playbook's: the final test data cannot influence any modelling choice, which a Q1 reviewer will value [J]. It saves about 4 days.
+2. **The surrogate code is built and frozen before the dataset exists.** Once the floor module is done (6 Nov), Track B builds the surrogate pipeline (splits, three models, conformal intervals, decision test, leakage test) and tests it on the conventional-floor family from the Day 20 run. Its code and hyperparameters are committed **before the DOI**, and then run once on the published data. This is a stricter protocol than the Playbook's: the final test data cannot influence any modelling choice, which a Q1 reviewer will value (judgement). It saves about 4 days.
 
 What is done by Fri 13 Nov:
 
@@ -79,7 +79,7 @@ Every Playbook "Done when" line stands unchanged: 2 % on the benchmarks, a failu
 
 ## ShellForm data hand-over (added 28 Oct 2026)
 
-The author asked for the ShellForm data earlier, so that ShellForm can also finish by 17 Nov, without losing quality. The published dataset cannot move much before 11 Nov without cutting a gate (pre-registration 3 Nov, benchmark, Day 31 checks). So ShellForm gets **staged pre-release data** and uses the same protocol as the surrogate study above [J]:
+The author asked for the ShellForm data earlier, so that ShellForm can also finish by 17 Nov, without losing quality. The published dataset cannot move much before 11 Nov without cutting a gate (pre-registration 3 Nov, benchmark, Day 31 checks). So ShellForm gets **staged pre-release data** and uses the same protocol as the surrogate study above (judgement):
 
 1. **The data format is frozen first.** Column names, units and meanings of `family_rc.parquet` and `family_shell.parquet` are written in `docs/data_card.md`, with a 10-row sample, on **Wed 4 Nov** (Day 18). This moves the first half of the data card forward from Day 20. After 4 Nov a column is never renamed or re-unit-ed; columns may only be added.
 2. **ShellForm builds and tests its code on pre-release files.** Each file is checked before release and is labelled "pre-release, not for results".
@@ -94,7 +94,7 @@ The author asked for the ShellForm data earlier, so that ShellForm can also fini
 | Sun 8 Nov | Anchor building with both floors (slab against shell) | Pre-release | Day 30 hand check |
 | Wed 11 Nov | **Both families, dataset DOI (v0.4)** | **Final: the only data ShellForm reports** | Day 31 checks |
 
-**What I need from the author for this:** a short list of what ShellForm needs from ShellBench (which files and columns, for example storeys, PGA, floor type, quantities, carbon, periods, drifts), by **Mon 2 Nov**. Then the 4 Nov data format includes every column ShellForm needs, and no ShellForm need is discovered after the freeze [?].
+**What I need from the author for this:** a short list of what ShellForm needs from ShellBench (which files and columns, for example storeys, PGA, floor type, quantities, carbon, periods, drifts), by **Mon 2 Nov**. Then the 4 Nov data format includes every column ShellForm needs, and no ShellForm need is discovered after the freeze (unverified).
 
 **Usage limits.** ShellForm and ShellBench share one the AI-assistance subscription allowance. Until 11 Nov the ShellBench GATE days come first; ShellForm work fits around them. From 14 Nov the check window comes first for both projects. ShellForm's own day plan belongs in the ShellForm project; it is not set here.
 
@@ -114,7 +114,7 @@ This list is the real limit on the plan. A day's delay on any GATE item moves it
 | Approve the analysis plan | Tue 3 Nov | Day 17 (GATE) |
 | Pilot hand checks (three) | Thu 5 Nov | Day 19 |
 | Topping rule decision with its source, and 5 library spot checks | Thu 5 Nov | Days 26-27 |
-| Carbon factors for floor-only materials (fill, tie steel recycled-content high and low) [?] | Fri 6 Nov | Days 29 and 33 |
+| Carbon factors for floor-only materials (fill, tie steel recycled-content high and low) (unverified) | Fri 6 Nov | Days 29 and 33 |
 | Paper 1 methods draft (author's own words) | Mon 9 Nov | Day 37 |
 | Approve the surrogate freeze (models, hyperparameters, split rules) | Tue 10 Nov | Before the DOI |
 | Zenodo dataset publish click | Wed 11 Nov | Dataset DOI |
@@ -125,7 +125,7 @@ This list is the real limit on the plan. A day's delay on any GATE item moves it
 
 ## ShellForm hand-over points (added 28 Oct 2026)
 
-The author's next project, ShellForm, starts from ShellBench data and should finish in the same window. So ShellBench hands data over in stages, each one as soon as its layer has passed its own checks. Nothing is handed over before its validation, because ShellForm would then inherit an unchecked number [J]. Each stage is a tagged release, so ShellForm can cite exactly what it used.
+The author's next project, ShellForm, starts from ShellBench data and should finish in the same window. So ShellBench hands data over in stages, each one as soon as its layer has passed its own checks. Nothing is handed over before its validation, because ShellForm would then inherit an unchecked number (judgement). Each stage is a tagged release, so ShellForm can cite exactly what it used.
 
 | Date (latest) | What ShellForm gets | Validated by | Tag |
 |---|---|---|---|
@@ -138,7 +138,7 @@ The author's next project, ShellForm, starts from ShellBench data and should fin
 
 Each stage can come a day earlier if the GATE item behind it (MacNeal-Harder values, floor concept approval) arrives a day early. That is the only way to bring the dates forward without cutting a check.
 
-What ShellForm needs from this list is not known yet [?]. If the floor-level stages are enough, ShellForm can start on 31 Oct.
+What ShellForm needs from this list is not known yet (unverified). If the floor-level stages are enough, ShellForm can start on 31 Oct.
 
 ## Fallback rules
 
@@ -149,7 +149,7 @@ What ShellForm needs from this list is not known yet [?]. If the floor-level sta
 - **Paper 1 goes in only after its harsh review.** If the review on 15 Nov finds a real problem that cannot be fixed by 17 Nov, the author fixes it alone and submits by 29 Nov (the old charter date) rather than going in unreviewed.
 - A slipped day never shrinks the next one. A check is never cut to save a date.
 
-## Risks [J]
+## Risks (judgement)
 
 - **The author is the bottleneck, not the code.** Two build tracks mean twice the approvals per day until 6 Nov. If the reserved items arrive late, the plan slips; it does not get rushed.
 - **No spare day in the build.** The spare day of the earlier draft (11 Nov) became the DOI day. The check window is the buffer now, which is why the surrogate is the first thing to give way.
@@ -162,7 +162,7 @@ What ShellForm needs from this list is not known yet [?]. If the floor-level sta
 
 The Day 19 pilot found that the family is 36 buildings, not the 200 and 2,000 written here earlier.
 
-Decision (author, 5 Nov 2026) [J]:
+Decision (author, 5 Nov 2026) (judgement):
 - Keep the frozen family of preregistration.md section 2: storeys 3-8 x six PGAs x the floor-library variants.
 - Adding span, bay or storey-height axes would change a preregistered plan. That would need a change-log entry and both-ways reporting. None is made.
 - The conventional family is 36 buildings. The shell family is each building with up to 72 floor variants (results/floor_library.csv: 2 spans x 6 rises x 2 mesh layers x 3 levelling options), so up to 2,592 building-floor rows.

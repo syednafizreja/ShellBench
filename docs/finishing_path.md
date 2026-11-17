@@ -16,9 +16,9 @@ ShellForm reached a complete, self-reviewed Computers & Structures manuscript in
 | 6. Literature search, Introduction | documented search (`13_literature_search.md`, queries, screening, inclusion), then `14_introduction_draft.md`; never "first" or "novel" | draft 1 committed |
 | 7. Abstract, highlights, title, Conclusions | `15_abstract_conclusion_draft.md`; word and character limits counted by script against the journal guide | draft 1 committed |
 | 8. Verification add-ons (optional) | cheap checks that strengthen the method without touching frozen results | results beside the frozen record |
-| 9. Assemble | one LaTeX manuscript in `paper/paperN/manuscript/` (Elsevier `elsarticle`, the journal's reference style, line numbers), supplement, `highlights.txt`, `references.bib`; review marks [check] / [J] / [?] visible; PDFs committed | both PDFs build without errors |
+| 9. Assemble | one LaTeX manuscript in `paper/paperN/manuscript/` (Elsevier `elsarticle`, the journal's reference style, line numbers), supplement, `highlights.txt`, `references.bib`; review marks (to check) / (judgement) / (unverified) visible; PDFs committed | both PDFs build without errors |
 | 10. Self-review | `16_self_review.md`: every number **recomputed from the result files** (not copied from `numbers.md`), every DOI checked against Crossref, cross-section consistency, claim-to-evidence, humanizer pass; fixes made, open items listed for the author | review committed, fixes in the manuscript |
-| 11. Author check | the author reads the PDF, opens the [check] sources, accepts or cuts each [J], signs the statements | author's ticks |
+| 11. Author check | the author reads the PDF, opens the (to check) sources, accepts or cuts each (judgement), signs the statements | author's ticks |
 | 12. Submit | cover letter, suggested reviewers, journal checklist | submitted |
 
 Rules that carry over: frozen results are never edited; drafts are superseded once the manuscript is assembled (edit the .tex from then on); commit as the author with no the AI assistant attribution; every result names its tag.

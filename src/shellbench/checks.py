@@ -27,7 +27,7 @@ Code values
 From ``notes/gb50010_design_values.md`` and the author's English translation
 of GB 50010-2010 (2010 issue; page numbers of the translation, +/- 1 page).
 Four of them were cross-checked against the Chinese 2015 edition on 27 Oct
-2026; the rest are still to be checked by the author [?].
+2026; the rest are still to be checked by the author (unverified).
 
 Units: inside OpenSees kN, m, kN*m. Section design in N and mm (moments
 converted from kN*m with 1e6). Steel areas in mm^2.
@@ -239,7 +239,7 @@ def design_section(m_knm: float, b_mm: float, h_mm: float, position: str,
 #: Ratio A_s'/A_s of bottom to top steel at a beam end that R13 counts as
 #: compression steel, GB 50010 cl. 11.3.6 item 2 (PDF p. 165): >= 0.5 for
 #: grade I, >= 0.3 for grade II. Grades III-IV: 0, the singly reinforced
-#: design [J] (the grade III value is not confirmed from the text; author
+#: design (judgement) (the grade III value is not confirmed from the text; author
 #: to confirm). Checked by the AI assistant, author to confirm.
 BEAM_END_COMP_RATIO: dict[int, float] = {1: 0.5, 2: 0.3, 3: 0.0, 4: 0.0}
 
@@ -250,7 +250,7 @@ def _doubly_reinforced(m_knm: float, b_mm: float, h0: float, as_min: float,
 
     GB 50010 cl. 6.2.10: alpha1 f_c b x = f_y A_s - f_y' A_s' and
     M = alpha1 f_c b x (h0 - x/2) + f_y' A_s' (h0 - a_s'), with f_y' = f_y and
-    a_s' = a_s [J]. With x = f_y (1 - r) A_s / (alpha1 f_c b) this is a
+    a_s' = a_s (judgement). With x = f_y (1 - r) A_s / (alpha1 f_c b) this is a
     quadratic in A_s; the smaller root is taken. If x < 2 a_s', cl. 6.2.14
     gives A_s = M / (f_y (h0 - a_s')). The x limit (xi_b, and cl. 11.3.1 at
     an end) is then checked on x / h0.

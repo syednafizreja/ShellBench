@@ -10,27 +10,27 @@ A floor variant pairs the two layout-A spans of the floor library
 (results/floor_library.csv): 6.0 m (end bays) and 6.6 m (inner bays), with
 the same rise, levelling and mesh. Its per-m^2 values are the bay-length
 weighted mean of the two cases: 2 x 6.0 and 4 x 6.6 m of the 38.4 m grid
-(spec G3) [J]. A variant is used only if both cases pass.
+(spec G3) (judgement). A variant is used only if both cases pass.
 
 Floor of one row, per m^2 of floor:
 
 * dead load = shell self-weight (concrete_m3_m2 x 25 kN/m^3) + finishes
   (panel.FINISHES_PA) + levelling (mean fill depth f/3, or the raised-floor
   mass) + topping (25 kN/m^3 x topping thickness);
-* concrete = shell + topping; steel = mesh + ties (no topping mesh [J]);
+* concrete = shell + topping; steel = mesh + ties (no topping mesh (judgement));
 * fill or raised floor mass, with its own factor (data/carbon_factors.csv).
 
 The lateral system is the conventional row's, as building_v2 counts it, plus
 the beam depth that the slab took in the conventional take-off (with no slab,
-the beams are counted full depth) [J].
+the beams are counted full depth) (judgement).
 
 Not modelled here (limitations, Paper 1 Methods):
 
 * the rigid-diaphragm test (H3, Day 27, ``diaphragm.py``) fills
   ``diaphragm_rigid`` for every row; the topping rule is ``topping_rule``;
 * the beam stiffness factor stays the anchor's (spec M7), as if the floor
-  still gave a slab flange [J];
-* the roof keeps the conventional slab [J];
+  still gave a slab flange (judgement);
+* the roof keeps the conventional slab (judgement);
 * the vault thrust is carried by the ties only (floor_concept 3).
 """
 
@@ -196,7 +196,7 @@ def run_shell(spec: dict, v: dict, topping_mm: int, fac: dict[str, float], side:
     slab_c = rc["slab_mm"] / 1000.0
     sec_c = sum(q for (e, m), q in fixed.items() if cb.FAMILY_FIXED_ELEMENTS[(e, m)] == "floor"
                 and m == cb.CONCRETE_GRADE)
-    # ... and count the beams full depth: the part the slab took [J]
+    # ... and count the beams full depth: the part the slab took (judgement)
     n = spec["storeys"]
     b = shell_input(v, topping_mm)
     beams_b = [float(x) for x in rc["beam_b_mm"].split("/")]

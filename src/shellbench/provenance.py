@@ -14,7 +14,7 @@ from pathlib import Path
 
 #: Seed for every random step of the analysis: the H2 permutation test and the
 #: 2,000-resample bootstrap (preregistration.md 2.1). The value is the
-#: preregistration approval date, 3 Nov 2026 [J]; it has no other meaning.
+#: preregistration approval date, 3 Nov 2026 (judgement); it has no other meaning.
 SEED: int = 20261103
 
 #: Packages whose versions are recorded (environment.yml).

@@ -83,7 +83,7 @@ PARAPET_HEIGHT_M: float = 1.2
 
 #: Tributary height of each level implied by the wind-table storey heights
 #: (spec W7: 4.05 m ground, 3.6 m above): half the storey below plus half the
-#: storey above, and at the roof half the top storey plus the parapet [m] [J].
+#: storey above, and at the roof half the top storey plus the parapet [m] (judgement).
 #: Th Table 8-1 uses hj = 3.6 m at the roof instead (flag D23).
 EXPECTED_TRIBUTARY_M: tuple[float, ...] = (
     (THESIS_WIND_GROUND_STOREY_M + 3.6) / 2.0, 3.6, 3.6, 3.6 / 2.0 + PARAPET_HEIGHT_M)
@@ -243,7 +243,7 @@ def apply_wind(fm: af.FrameModel, forces_kn: list[float]) -> float:
     """Apply wind from the left as horizontal forces at the windward joints.
 
     The forces act at the axis-A node of each level, the joint the façade load
-    reaches first [J]. With ``rigid_floor`` the point of application along a
+    reaches first (judgement). With ``rigid_floor`` the point of application along a
     level does not matter.
 
     Args:

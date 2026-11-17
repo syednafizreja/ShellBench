@@ -3,7 +3,7 @@
 File: src/shellbench/capacity.py
 
 Playbook Day 20 (design_rules.md decision 5, 31 Oct 2026: shear and
-strong-column checks before the family run [J]). The generator calls these
+strong-column checks before the family run (judgement)). The generator calls these
 functions after R13. They are pure: section sizes, forces and the seismic
 grade in, steel out, so each one can be checked by hand (tests/test_capacity.py).
 
@@ -24,7 +24,7 @@ printed copies.
 Grade 1 frame structures must meet the capacity forms of cl. 6.2.2-6.2.5
 (1.2 sum M_bua, 1.1 sum M_bua, 1.2 sum M_cua), which need the actual flexural
 capacity with characteristic strengths. Here the eta values of the same
-clauses are used instead [J] (limitation, design_rules.md R14).
+clauses are used instead (judgement) (limitation, design_rules.md R14).
 
 Units: N and mm inside the section formulas; kN, kN m and m at the interface.
 """
@@ -50,7 +50,7 @@ ETA_C: dict[int, float] = {1: 1.7, 2: 1.5, 3: 1.3, 4: 1.2}
 #: for reference only.
 GRADE1_MBUA_FACTOR: float = 1.2
 #: Characteristic yield strength of HRB400 [N/mm^2] for M_bua, GB 50010-2010
-#: Table 4.2.2-1 [?] (author to confirm in the official copy).
+#: Table 4.2.2-1 (unverified) (author to confirm in the official copy).
 FYK_N_MM2: float = 400.0
 #: Factor on the lower-end moment of bottom-storey columns, cl. 6.2.3 (p. 51).
 ETA_BASE: dict[int, float] = {1: 1.7, 2: 1.5, 3: 1.3, 4: 1.2}
@@ -98,14 +98,14 @@ COLUMN_RHO_MIN: dict[int, float] = {1: 0.010, 2: 0.008, 3: 0.007, 4: 0.006}
 COLUMN_RHO_400_ADD: float = 0.0005
 #: Largest total column steel ratio [-], cl. 11.4.13 (p. 164).
 COLUMN_RHO_MAX: float = 0.05
-#: Column steel above which the generator grows the column instead of the bars [J].
+#: Column steel above which the generator grows the column instead of the bars (judgement).
 COLUMN_RHO_CAP: float = 0.03
 #: Largest bar spacing of a column wider than 400 mm [mm], cl. 11.4.13 (p. 164).
 COLUMN_BAR_SPACING_MM: float = 200.0
 #: Smallest column side for grades 1-3 above two storeys, and for grade 4 [mm],
 #: cl. 11.4.11 (p. 162).
 COLUMN_MIN_MM: dict[int, int] = {1: 400, 2: 400, 3: 400, 4: 300}
-#: Bars per column face at least 3 (4 corner + 4 side bars, the R12 layout) [J].
+#: Bars per column face at least 3 (4 corner + 4 side bars, the R12 layout) (judgement).
 COLUMN_MIN_BARS_PER_SIDE: int = 3
 #: Least clear spacing of column bars [mm], GB 50010 cl. 9.3.1 item 2 (PDF p. 123).
 #: Checked by the AI assistant, author to confirm.
@@ -173,10 +173,10 @@ COLUMN_RHO_V_MIN: dict[int, float] = {1: 0.008, 2: 0.006, 3: 0.004, 4: 0.004}
 COLUMN_OUTSIDE_RHO_V_FACTOR: float = 0.5
 COLUMN_OUTSIDE_SPACING_D: dict[int, float] = {1: 10.0, 2: 10.0, 3: 15.0, 4: 15.0}
 
-#: Stirrup diameters and spacings the generator chooses from [J] (R16).
+#: Stirrup diameters and spacings the generator chooses from (judgement) (R16).
 STIRRUP_DIAMETERS_MM: tuple[int, ...] = (6, 8, 10, 12)
 STIRRUP_SPACINGS_MM: tuple[int, ...] = (75, 100, 125, 150, 200)
-#: Largest stirrup spacing tried anywhere [mm] [J]; GB 50010 cl. 9.2.9 not yet opened [?].
+#: Largest stirrup spacing tried anywhere [mm] (judgement); GB 50010 cl. 9.2.9 not yet opened (unverified).
 STIRRUP_SPACING_MAX_MM: float = 200.0
 STEEL_DENSITY_KG_M3: float = 7850.0  # as generator.quantities
 
@@ -218,7 +218,7 @@ def column_side_steel_mm2(n_kn: float, m_knm: float, b_mm: float, h_mm: float) -
       if x < 2a', moments are taken about the compression steel:
       A_s = N (e_i - h/2 + a') / [f_y (h0 - a')] (cl. 6.2.17 item 2, cl. 6.2.14).
     * Small eccentricity: xi from formula 6.2.17-8, then A_s from 6.2.17-7.
-    * Tension (N <= 0): A_s = M/[f_y (h0 - a')] + |N|/(2 f_y) [J]; the frames
+    * Tension (N <= 0): A_s = M/[f_y (h0 - a')] + |N|/(2 f_y) (judgement); the frames
       of the family have no column in net tension, so this branch is a guard.
 
     Args:
@@ -293,7 +293,7 @@ class ColumnBars:
 
 def column_bars(h_mm: int, side_req_mm2: float, grade: int,
                 diameters_mm: tuple[int, ...]) -> ColumnBars | None:
-    """Choose the column bars: one diameter, equal bars on the four faces [J].
+    """Choose the column bars: one diameter, equal bars on the four faces (judgement).
 
     Bars per face: enough for a spacing <= 200 mm when h > 400 mm (cl. 11.4.13),
     at least 3. Each face must carry ``side_req_mm2`` and 0.2 % of b h
@@ -339,7 +339,7 @@ def beam_shear_kn(grade: int, sum_end_moments_knm: float, clear_span_m: float,
                   v_gravity_kn: float, v_combined_kn: float) -> float:
     """Design shear at a beam end [kN], GB 50011 cl. 6.2.4 / GB 50010 cl. 11.3.2.
 
-    Grades 1-3: eta_vb (M_l + M_r)/l_n + V_Gb (grade 1 with eta, [J]).
+    Grades 1-3: eta_vb (M_l + M_r)/l_n + V_Gb (grade 1 with eta, (judgement)).
     Grade 4: the combined shear ``v_combined_kn``.
     """
     check_grade(grade)
@@ -441,7 +441,7 @@ def legs_for(core_mm: float, grade: int, d_mm: float, least: int = 2) -> int:
 
 
 def core_mm(side_mm: float, bar_d_mm: float) -> float:
-    """Width inside the stirrup [mm]: side - 2 (a_s - d/2), from a_s = 50 mm [J]."""
+    """Width inside the stirrup [mm]: side - 2 (a_s - d/2), from a_s = 50 mm (judgement)."""
     return side_mm - 2.0 * (c.A_S_MM - bar_d_mm / 2.0)
 
 
@@ -571,7 +571,7 @@ def column_stirrups(grade: int, h_mm: float, asv_req: float, mu: float, bars: Co
 
 def beam_stirrup_kg(b_mm: float, h_mm: float, bar_d_mm: float, clear_span_m: float,
                     end: Stirrups, mid: Stirrups) -> float:
-    """Stirrup mass of one beam over its clear span [kg] [J].
+    """Stirrup mass of one beam over its clear span [kg] (judgement).
 
     One closed hoop (two legs) per set plus (legs - 2) single legs; hooks and
     the joint core are left out. Lengths are inside the stirrup.
@@ -590,7 +590,7 @@ def beam_stirrup_kg(b_mm: float, h_mm: float, bar_d_mm: float, clear_span_m: flo
 
 def column_stirrup_kg(h_mm: float, bar_d_mm: float, clear_height_m: float,
                       top: Stirrups, bottom: Stirrups, mid: Stirrups) -> float:
-    """Hoop mass of one column over its clear height [kg] [J].
+    """Hoop mass of one column over its clear height [kg] (judgement).
 
     Each set has ``legs`` legs in both directions across the core:
     2 legs core in all. Hooks and the joint core are left out.
@@ -612,8 +612,8 @@ def beam_mbua_knm(as_mm2: float, h_mm: float, a_s_mm: float = 50.0,
     """Actual flexural capacity of one beam end, M_bua [kN m] (GB 50011 cl. 6.2.2).
 
     M_bua = f_yk A_s (h0 - a_s') / gamma_RE, with the actual tension bars A_s,
-    h0 = h - a_s and a_s' = a_s [J]. Slab bars in the flange are not counted
-    [J], which gives a lower M_bua and so smaller columns (limitation).
+    h0 = h - a_s and a_s' = a_s (judgement). Slab bars in the flange are not counted
+    (judgement), which gives a lower M_bua and so smaller columns (limitation).
 
     Args:
         as_mm2: Actual tension steel at that end [mm^2].

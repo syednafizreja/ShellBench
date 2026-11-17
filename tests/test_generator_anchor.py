@@ -5,9 +5,9 @@ File: tests/test_generator_anchor.py
 Thesis inputs and their sources: spans 7.2/6.6/7.2 m and storey heights
 4.55/3.6/3.6/3.6 m (anchor_frame.py, docs/baseline_spec.md); frame spacing
 7.2 m (B10); slab panel 3.6 m (design_rules R3); floor dead 4.05 and roof dead
-4.224 kN/m^2 (baseline L1, L2); live 2.5 office / 3.0 corridor, roof 0.5 [J]
+4.224 kN/m^2 (baseline L1, L2); live 2.5 office / 3.0 corridor, roof 0.5 (judgement)
 (B3); secondary beams 2.54 on floors and on roof BC, 2.78 on roof AB/CD
-(Th s5.2 items 1-4); wall on the frame beam 5.51 on AB/CD (L6, placement [J]
+(Th s5.2 items 1-4); wall on the frame beam 5.51 on AB/CD (L6, placement (judgement)
 as the anchor); exterior wall 8.37, interior wall 6.36, longitudinal beam 3.61
 and parapet 2.54 kN/m (B15); alpha_max 0.08 (Table 5.1.4-1, checked 25 Oct);
 Tg 0.35 s; psi_T 0.7 (anchor); E 3.25e4 MPa and 2.0 I0 (anchor_frame.py).

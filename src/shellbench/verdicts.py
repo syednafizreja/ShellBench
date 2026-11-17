@@ -26,7 +26,7 @@ Rules, in short (the file preregistration.md is the authority):
 Only buildings with an ``ok`` conventional design and at least one ``ok`` rigid
 shell row are compared. The others are counted and listed, never dropped quietly.
 
-Choices not fixed by the plan, each marked [J] where it is used:
+Choices not fixed by the plan, each marked (judgement) where it is used:
 slices with fewer than 4 buildings cannot be significant and count as not
 significant; "the lateral-system saving also grows with PGA" uses the same rule
 as S_b (positive and significant in more than half of the storey-count slices).
@@ -61,7 +61,7 @@ OUT_SLICES = ROOT / "results" / "verdicts_slices.csv"
 #: Permutations of the H2 test and the significance level (preregistration 2.2).
 N_PERMUTATIONS: int = 10_000
 ALPHA: float = 0.05
-#: Smallest slice that can reach p < 0.05 two-sided with a permutation test [J].
+#: Smallest slice that can reach p < 0.05 two-sided with a permutation test (judgement).
 MIN_SLICE: int = 4
 #: H1: share of buildings with S_b > 0 for "partly supported" (2.1).
 H1_PARTLY_SHARE: float = 0.90
@@ -204,7 +204,7 @@ def slices(t: pd.DataFrame, value: str, seed: int = provenance.SEED) -> pd.DataF
 def h2(t: pd.DataFrame, sl_b: pd.DataFrame, sl_lat: pd.DataFrame) -> dict:
     """H2 verdict from the slice tests (preregistration 2.2).
 
-    "More than half of the fixed slices" is counted over all slices of that axis, those too small to test included [J].
+    "More than half of the fixed slices" is counted over all slices of that axis, those too small to test included (judgement).
     """
     def many(sl: pd.DataFrame, axis: str) -> tuple[int, int, bool]:
         """Slices on one axis with a significant positive trend: (count, slices, more than half)."""
@@ -218,7 +218,7 @@ def h2(t: pd.DataFrame, sl_b: pd.DataFrame, sl_lat: pd.DataFrame) -> dict:
     if ok_pga and ok_sto and ok_lat:
         verdict = "supported"
     elif ok_pga != ok_sto or (ok_pga and ok_sto):
-        verdict = "partly supported"   # one axis only; or both axes but the lateral saving does not grow [J]
+        verdict = "partly supported"   # one axis only; or both axes but the lateral saving does not grow (judgement)
     else:
         verdict = "not supported"
     return {"hypothesis": "H2", "verdict": verdict, "n_buildings": len(t),

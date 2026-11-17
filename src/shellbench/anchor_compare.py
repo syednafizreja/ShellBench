@@ -25,12 +25,12 @@ not have. ``floor_weight_check`` does the sum by hand and compares.
 Limits
 ------
 * Footings are not in the take-off scope (building_v2), so the waterfall has
-  no footing bar [J].
-* The storey height is not changed for the shell floor (floor_concept 7) [J].
+  no footing bar (judgement).
+* The storey height is not changed for the shell floor (floor_concept 7) (judgement).
 * One factor set exists in data/carbon_factors.csv (GB/T 51366). The playbook
   asks for both factor sets; the carbon-factor sensitivity of preregistration
   change C1 covers the bounds instead.
-* The roof keeps the conventional slab (shellfloor.py) [J].
+* The roof keeps the conventional slab (shellfloor.py) (judgement).
 
 Units: kN, m, kg, kgCO2e.
 """
@@ -140,7 +140,7 @@ def waterfall(both: dict, v: dict, topping_mm: int) -> list[dict]:
 
     Steps: the slab floor removed; shell concrete, mesh, ties, fill, topping added;
     beams and columns changed (the beams include the depth the slab took in the
-    slab take-off, shellfloor.py [J]). The sum of steps equals the change of
+    slab take-off, shellfloor.py (judgement)). The sum of steps equals the change of
     whole-building carbon; ``assert`` checks it.
     """
     fac = both["fac"]

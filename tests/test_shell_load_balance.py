@@ -8,7 +8,7 @@ without the solver is the load side of equilibrium: the nodal forces written
 to the deck add up to the plan pressure times the loaded plan area, and the
 springing weights used for the tie force and the spread add up to one. A lost
 or doubled node load would change every thrust and spread, so these are the
-shell counterpart of ``generator.check_equilibrium`` [J].
+shell counterpart of ``generator.check_equilibrium`` (judgement).
 """
 
 from __future__ import annotations
@@ -20,7 +20,7 @@ from shellbench import panel as pn
 THICKNESS_M: float = 0.08  # any thickness in the library range (50-150 mm)
 PRESSURE_PA: float = 1.0  # the unit plan pressure of the flexibility cases
 REL_TOL: float = 1e-9  # sums of exact fractions (1/12, 1/3) in floating point
-FILL_REL_TOL: float = 1e-2  # mid-point rule against the exact integral f L / 3 [J]
+FILL_REL_TOL: float = 1e-2  # mid-point rule against the exact integral f L / 3 (judgement)
 
 
 def _vertical_sum(forces) -> float:

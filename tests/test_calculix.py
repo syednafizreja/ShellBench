@@ -3,7 +3,7 @@
 File: tests/test_calculix.py
 
 Skipped where CalculiX is not installed. The tolerance (0.5 %) is the AI assistant's
-choice for a smoke test [J]; the shell benchmark with the author's values is
+choice for a smoke test (judgement); the shell benchmark with the author's values is
 Day 24.
 """
 

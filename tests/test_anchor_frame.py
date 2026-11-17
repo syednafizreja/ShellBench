@@ -27,7 +27,7 @@ from shellbench import anchor_frame as af
 REPO = Path(__file__).resolve().parents[1]
 
 #: Closed-form tolerance: piecewise-constant loading on 0.1 m sub-elements
-#: approximates the ramps; 0.5 % is ample for that error [J].
+#: approximates the ramps; 0.5 % is ample for that error (judgement).
 REL_TOL = 5e-3
 
 

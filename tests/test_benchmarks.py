@@ -28,7 +28,7 @@ STRIP_E_PA = 30e9
 STRIP_ELEMENTS = (20, 2)
 STRIP_FORCE_N = 1000.0
 
-# Tolerances of these tests, chosen for them [J].
+# Tolerances of these tests, chosen for them (judgement).
 MESH_CHANGE_TOLERANCE = 0.01  # between the two finest meshes
 STRESS_TOLERANCE = 1e-3
 

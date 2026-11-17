@@ -24,7 +24,7 @@ the combination table (Th Table 8-13, roof rows,
    combination column of Table 8-13 with 1.3 D + 1.5 L and with 1.0 D + 1.5 L.
 
 Nothing here corrects a thesis value. The checks are arithmetic on printed
-numbers, and their findings are judgements for the author to confirm [J].
+numbers, and their findings are judgements for the author to confirm (judgement).
 
 Units: kN*m for moments, kN for shears; distribution factors are [-].
 """

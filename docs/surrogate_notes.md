@@ -23,7 +23,7 @@ Why it works: if the new building is exchangeable with the calibration rows, its
 
 When it fails: on the unseen-storeys split, the test errors are not drawn from the same distribution as the calibration errors, because the calibration rows come from storey counts the model was trained on. Then coverage can fall below 90 %, and the report says so.
 
-## Frozen choices [J]
+## Frozen choices (judgement)
 
 - Targets: whole-building carbon, floor carbon, largest drift ratio, period T1.
 - Splits: random (80 / 20) and unseen storeys (leave one storey count out, six folds), as in preregistration 2.4. The playbook mentions a third split; adding it would need a change-log entry.
@@ -40,7 +40,7 @@ Code: `src/shellbench/ml/decision.py`. It adds a test and changes no frozen sett
 - Agreement 31 of 33 = 93.9 %. Threshold 80 % (preregistration 2.4).
 - Always choosing the shell agrees in 32 of 33 = 97.0 %. So the surrogate does worse than the trivial rule here. The 80 % criterion is easy to meet when the shell wins almost everywhere; I report both.
 - The full analysis picks the slab once (s05-p030, saving -0.3 %). The two misses are that building and s04-p005 (saving 4.6 % by the full analysis, the surrogate predicts -0.3 %). Neither is a clear call.
-- Shell variant: the surrogate picks the same variant as the full analysis in 5 of 33 (15 %). Mean regret 5.5 kgCO2e/m2 (3.7 % of the best shell carbon); largest 83.9. The surrogate ranks systems better than it ranks variants [J].
+- Shell variant: the surrogate picks the same variant as the full analysis in 5 of 33 (15 %). Mean regret 5.5 kgCO2e/m2 (3.7 % of the best shell carbon); largest 83.9. The surrogate ranks systems better than it ranks variants (judgement).
 - RMSE of the saving, surrogate against full analysis: 5.8 percentage points, on savings of 3 to 9 % for most buildings.
 
 **H4 read on pre-release data (10 Nov; the verdict of 13 Nov is in the next section).** Error ratio unseen/random for HGB 25.62 / 11.30 = 2.27 (needs 1.5): holds. Conformal coverage on unseen storeys 73.3 % (needs 88 to 92 %): fails. Decision agreement 93.9 % (needs 80 %): holds. Two of three: *partly supported* by the rule in 2.4. The published-data run on 12 Nov decides.
@@ -51,6 +51,6 @@ Code: `src/shellbench/ml/decision.py`. It adds a test and changes no frozen sett
 
 The frozen pipeline (commit 5c11ce8, unchanged) ran once on the family files of the published dataset (Zenodo 10.5281/zenodo.24194144). Run time 13 minutes on four cores. Leakage test first: 36 of 36 checks pass on the unseen-storeys split. Results: error ratio 25.62 / 11.30 = 2.27 (holds); conformal coverage on unseen storeys 73.3 % (fails); decision agreement 93.9 %, against 97.0 % for always choosing the shell (holds). **H4 partly supported**, two of three conditions (preregistration section 3). The output files were byte-identical to the pre-release run: the family files differ only in the `release` and `shellbench_version` columns, and the pipeline is deterministic.
 
-Why coverage fails: the calibration rows are drawn from the storey counts the model was trained on, so exchangeability with the held-out storey count does not hold. The shortfall is largest at 7 storeys (56.1 %) and smallest at 6 storeys (87.1 %). The random split gives 90.1 %, so the method works when the exchangeability assumption holds. A way to restore coverage on unseen storeys (for example calibrating on a held-out storey count) is a new method, not part of this frozen study; it belongs in Paper 2 as future work [J].
+Why coverage fails: the calibration rows are drawn from the storey counts the model was trained on, so exchangeability with the held-out storey count does not hold. The shortfall is largest at 7 storeys (56.1 %) and smallest at 6 storeys (87.1 %). The random split gives 90.1 %, so the method works when the exchangeability assumption holds. A way to restore coverage on unseen storeys (for example calibrating on a held-out storey count) is a new method, not part of this frozen study; it belongs in Paper 2 as future work (judgement).
 
 Figures for Paper 2 (house style, `python -m shellbench.figures --paper`): `surrogate_parity`, `surrogate_coverage`, `surrogate_decision`.

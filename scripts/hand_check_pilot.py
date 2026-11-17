@@ -48,11 +48,11 @@ def floor_weights(b, row, n):
         for j in range(3):
             p[j] += w[j] * SPANS[j] / 2
             p[j + 1] += w[j] * SPANS[j] / 2
-        h_col = (hs[i] + (hs[i + 1] if i + 1 < n else 0)) / 2  # half column above and below [J]
+        h_col = (hs[i] + (hs[i + 1] if i + 1 < n else 0)) / 2  # half column above and below (judgement)
         for k in range(4):
             edge = k in (0, 3)
             p[k] += b.longitudinal_beam_kn_m * tw + gc * col * col * h_col
-            p[k] += (b.exterior_wall_kn_m if edge else b.interior_wall_kn_m) * tw  # walls at every level [J]
+            p[k] += (b.exterior_wall_kn_m if edge else b.interior_wall_kn_m) * tw  # walls at every level (judgement)
             if roof and edge:
                 p[k] += b.parapet_kn_m * tw
         levels.append(p)
@@ -96,7 +96,7 @@ def check(row, b):
     amax, tg = float(row["alpha_max"]), b.tg_s
     a1 = amax if t1 <= tg else (tg / t1) ** s.GAMMA * s.ETA2 * amax
     fek = a1 * 0.85 * sum(W)  # cl. 5.2.1, G_eq = 0.85 G_E
-    F = [fek * W[i] * H[i] / sum(W[j] * H[j] for j in range(n)) for i in range(n)]  # no top force [J]
+    F = [fek * W[i] * H[i] / sum(W[j] * H[j] for j in range(n)) for i in range(n)]  # no top force (judgement)
     Vs = [sum(F[i:]) for i in range(n)]
     drift = max(Vs[i] / D[i] / hs[i] for i in range(n))
     # axial: gravity take-down + cantilever method

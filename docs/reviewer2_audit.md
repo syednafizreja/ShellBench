@@ -2,7 +2,7 @@
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
 
-Date: 13 Nov 2026, on main at dabc900 (v0.5.0 plus PRs #175-#185), by the AI assistant, as a harsh Journal of Building Engineering Reviewer 2 and a code auditor [J]. Nothing was tuned, rerun to change a verdict, or selected. No carbon factor, benchmark value or code clause text was supplied; those are listed for the author at the end.
+Date: 13 Nov 2026, on main at dabc900 (v0.5.0 plus PRs #175-#185), by the AI assistant, as a harsh Journal of Building Engineering Reviewer 2 and a code auditor (judgement). Nothing was tuned, rerun to change a verdict, or selected. No carbon factor, benchmark value or code clause text was supplied; those are listed for the author at the end.
 
 ## Ten-point result
 
@@ -25,17 +25,17 @@ Date: 13 Nov 2026, on main at dabc900 (v0.5.0 plus PRs #175-#185), by the AI ass
 |---|---|---|---|
 | F1 | Primary baseline is the single code-checked conventional design per building (120 mm slab on secondary beams), not the lowest-carbon over other conventional floor types as preregistration 2 reads | Major | Disclosed: preregistration C4 and README note. No result changed. Author to confirm the wording. |
 | F2 | Largest savings (17.3 %, 30.7 %) are grade-I buildings with 1300 mm conventional columns; README and numbers table did not say so | Major | Fixed: README note and `numbers.md` row (max 9.6 % and median 5.65 % without grade I). |
-| F3 | `CITATION.cff` said version 0.1.0, 1 Nov | Minor | Fixed: 0.5.0, 13 Nov 2026 [J]. Author to confirm at the v1.0 tag. |
+| F3 | `CITATION.cff` said version 0.1.0, 1 Nov | Minor | Fixed: 0.5.0, 13 Nov 2026 (judgement). Author to confirm at the v1.0 tag. |
 | F4 | No docstring: `verdicts.many`, `make_checksums.main`, `readme_hero.draw`, `readme_hero.main` | Minor | Fixed. |
 | F5 | Floor-library case list (72 cases, ID format) untested | Minor | Fixed: `tests/test_floorlib_cases.py` (4 tests, includes a match to `results/floor_library.csv`). |
 | F6 | `docs/dataset_release.md` held a local Windows path with a username | Minor | Fixed. |
 | F7 | Figure PNGs differ by a few bytes between platforms and between README hero themes | Minor | Disclosed. `SHA256SUMS` covers `results/`, not figures. |
 | F8 | Strip-to-plan factor 1.3125 moves the H1 median to 4.13 % (max 32.4 %), verdict unchanged | Info | Rerun of `scripts/strip_factor_bound.py` confirms the README sentence. Exploratory, not preregistered. |
-| F9 | `docs/goal_stress_test.md` described doi:10.1007/s10518-026-02623-5 as a diaphragm study on timber and masonry vaults; Crossref gives Piluso et al. (2026), "Stiffness requirements for floor diaphragms of in-plane regular buildings", Bull. Earthquake Eng. | Minor | Fixed: description now follows the Crossref record, still marked not read [?]. It bears on H3 (rigid-diaphragm criterion), so it is a candidate for Paper 1's reading. |
+| F9 | `docs/goal_stress_test.md` described doi:10.1007/s10518-026-02623-5 as a diaphragm study on timber and masonry vaults; Crossref gives Piluso et al. (2026), "Stiffness requirements for floor diaphragms of in-plane regular buildings", Bull. Earthquake Eng. | Minor | Fixed: description now follows the Crossref record, still marked not read (unverified). It bears on H3 (rigid-diaphragm criterion), so it is a candidate for Paper 1's reading. |
 
 ## Mine to check, not the author's evidence yet
 
-Nothing above rests on an unverified source. Items that stay with the author (all [?]):
+Nothing above rests on an unverified source. Items that stay with the author (all (unverified)):
 
 1. GB 50011 Tables 5.5.1 and 6.3.1 and clause 6.2.2; GB/T 51366 Table D.0.1; GB/T 1499.2 Table 2; ASCE 7-16 clause 12.3.1.3, against official copies.
 2. `data/carbon_factors.csv` values, including foamed fill 472.7 kgCO2e/t, and the take-off scope.

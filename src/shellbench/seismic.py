@@ -101,7 +101,7 @@ GEQ_FACTOR: float = 0.85
 
 #: Combination coefficient for floor live load treated as an equivalent
 #: uniform load in civil buildings other than libraries and archives [-].
-#: GB 50011-2010 Table 5.1.3 (p. 29). Office floor, so 0.5 [J].
+#: GB 50011-2010 Table 5.1.3 (p. 29). Office floor, so 0.5 (judgement).
 LIVE_COMBINATION_COEFF_FLOOR: float = 0.5
 
 #: Combination coefficient for roof live load [-]. Table 5.1.3: "not
@@ -129,18 +129,18 @@ THESIS_LEVEL5_FORCE_KN: float = 98.29
 
 #: Trial infill period factors reported as a sensitivity only (reading rule
 #: 4). Trial values spanning the range the primer cites from JGJ 3-2010
-#: cl. 4.3.17 [?]; not code values. The primary run uses 1.0 until the author
+#: cl. 4.3.17 (unverified); not code values. The primary run uses 1.0 until the author
 #: decides.
 PSI_T_TRIALS: tuple[float, ...] = (0.9, 0.8, 0.7, 0.6)
 
 #: Infill period factor for the anchor building [-]. JGJ 3-2010 cl. 4.3.17
-#: gives 0.6-0.7 for frame structures with infill walls [?]: the clause was not
+#: gives 0.6-0.7 for frame structures with infill walls (unverified): the clause was not
 #: opened; the range is as cited by Zhou (2024), "框架结构计算中对周期折减系数
 #: 合理取值的研究", 建筑监督检测与造价 (9). JGJ 3 covers high-rise buildings, so
-#: using it for a four-storey frame is a borrowed practice rule [J]. 0.7, the
+#: using it for a four-storey frame is a borrowed practice rule (judgement). 0.7, the
 #: smaller reduction, chosen by the author on 27 Oct 2026,
 #: after the Day 9 run and not from the sensitivity table (0.8 would match the
-#: thesis best) [J]. The bare-frame runs (psi_T = 1.0) stay as the method
+#: thesis best) (judgement). The bare-frame runs (psi_T = 1.0) stay as the method
 #: comparison; downstream days (design checks, carbon) use this value.
 ANCHOR_PSI_T: float = 0.7
 

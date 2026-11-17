@@ -25,14 +25,14 @@ The model
 Load direction: transverse, the frame plane, as everywhere in the family.
 The floor of one storey spans, as a deep beam, between the transverse frame
 lines (the vault span L, 6.0 or 6.6 m) and is d = sum of frame spans deep (21.0 m).
-The perimeter longitudinal beams are the chords [J]. For a uniform lateral load
+The perimeter longitudinal beams are the chords (judgement). For a uniform lateral load
 p [kN/m^2] on the plan:
 
     delta_d = p L^2 / (8 K)        (shear deflection at mid-bay)
 
 where K = G t_eff is the in-plane shear stiffness per m of floor [kN/m].
 The bending part of the deep beam is not counted: with stiff chords it is small
-for L/d = 0.3 [J].
+for L/d = 0.3 (judgement).
 
 K of the bare vault comes from CalculiX (``shellfe``): one bay of the vault,
 21.0 m deep along the generators, supports on both springing lines, chord
@@ -40,12 +40,12 @@ lines held in x, and a body force in y (the load direction). The result is
 written as a factor k = K / (G t) < 1 that depends on the geometry. For a flat
 plate of the same size the model returns k = 1.0000, which is the check of
 the method (tests/test_diaphragm.py). A topping adds G_c t_top, fully
-bonded to the shell [J]. The ties carry no in-plane shear in this load
-direction, so they do not enter [J].
+bonded to the shell (judgement). The ties carry no in-plane shear in this load
+direction, so they do not enter (judgement).
 
 The check also gives a shear stress tau = p L / (2 t) against f_t, as
 information only; I have no code clause for the shear strength of a shell
-diaphragm [?].
+diaphragm (unverified).
 
 Limits (Paper 1 Methods): uncracked elastic shear modulus; full shear
 connection between shell, topping and beams; transverse direction only; the
@@ -76,7 +76,7 @@ RIGIDITY_LIMIT: float = 2.0
 DEPTH_M: float = 21.0
 #: Topping options [mm], preregistration 2.3.
 TOPPINGS_MM: tuple[int, ...] = (0, 40, 50, 60)
-#: Mesh [J]: 12 elements across the span, 16 along the generators.
+#: Mesh (judgement): 12 elements across the span, 16 along the generators.
 ELEMENTS_ALONG_SPAN: int = 12
 ELEMENTS_ALONG_GENERATORS: int = 16
 #: Body-force test: density [kg/m^3] and acceleration [m/s^2] in y; only the product with t matters.
@@ -161,7 +161,7 @@ def build_library_factors(path: Path = FACTORS_CSV) -> list[dict]:
 def bay_stiffness_kn_m(k_shear: float, thickness_m: float, topping_mm: float) -> float:
     """In-plane shear stiffness K of one bay with its topping [kN/m per m of floor].
 
-    K = k G t_shell + G t_top (topping fully bonded [J]).
+    K = k G t_shell + G t_top (topping fully bonded (judgement)).
     """
     g_kpa = shear_modulus_pa() / 1.0e3
     return g_kpa * (k_shear * thickness_m + topping_mm / 1000.0)

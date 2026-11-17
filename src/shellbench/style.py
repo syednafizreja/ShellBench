@@ -33,7 +33,7 @@ Sources
   on all pairs (light surface). Diverging pair blue/red with a grey neutral.
   Run log in docs/visual_standard.md.
 * Everything else (line weights, 600 dpi preview, footer wording) is a house
-  choice [J], listed in docs/visual_standard.md.
+  choice (judgement), listed in docs/visual_standard.md.
 """
 
 from __future__ import annotations
@@ -56,7 +56,7 @@ MIN_SCRIPT_PT: float = 6.0
 """Elsevier minimum for sub- and superscript characters (Artwork sizing)."""
 
 PREVIEW_DPI: int = 600
-"""PNG preview resolution [J]; vector PDF/SVG are the files sent to journals."""
+"""PNG preview resolution (judgement); vector PDF/SVG are the files sent to journals."""
 
 LINE_ART_DPI: int = 1000
 """Elsevier resolution for line art when a raster file is required (Artwork sizing)."""
@@ -122,7 +122,7 @@ def figure(width: str | float = "single", height_mm: float | None = None, nrows:
         width: Column width name or millimetres (see ``width_in``).
         height_mm: Height in millimetres. Default: 0.62 of the width per row
             of panels, capped at 230 mm (the Elsevier page body is about 240 mm
-            tall [J]).
+            tall (judgement)).
         nrows, ncols: Panel grid.
         **subplot_kw: Passed to ``plt.subplots`` (``sharex``, ``sharey``...).
 
@@ -167,7 +167,7 @@ def footer(fig, source: str, note: str = "") -> None:
     """Add the ownership and source line at the bottom left of a repository figure.
 
     Not used for paper submission files: the journal prints its own credit,
-    and a copyright line inside the artwork conflicts with its licence [J].
+    and a copyright line inside the artwork conflicts with its licence (judgement).
 
     Args:
         fig: Figure.

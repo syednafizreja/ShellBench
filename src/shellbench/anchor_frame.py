@@ -26,7 +26,7 @@ model can apply any of them (see ``LOAD_MODELS``):
     thesis moment-distribution table (Th §6.2.1, table "6.3"). Roof:
     AB 13.55 + 4.934 = 18.48 kN/m, BC 7.92 + 3.274 = 11.19 kN/m. Floors 1-3:
     AB 23.43 kN/m, BC 10.96 kN/m (printed). The roof sums are a
-    reconstruction [J]: they reproduce the printed fixed-end moments
+    reconstruction (judgement): they reproduce the printed fixed-end moments
     79.85 and 40.63 kN*m and the mid-span M0 values 119.78 and 60.95 kN*m.
 ``thesis_text``
     The equivalent loads printed in the text under Fig. 4-5. Same as
@@ -38,7 +38,7 @@ model can apply any of them (see ``LOAD_MODELS``):
     (peak 15.21 roof, 14.58 floors, ramps of 1.8 m) and triangular slab load
     on BC (peak 13.94 roof, 13.36 floors), plus the uniform beam and wall
     parts. This is not what the thesis analysed; it is used to show how much
-    of each difference comes from the equivalent-load method itself [J].
+    of each difference comes from the equivalent-load method itself (judgement).
 
 In all models the concentrated joint loads are the printed totals of Th §5.2
 (135.10, 214.11, 167.77, 254.26 kN), the eccentricity moments act at the
@@ -56,7 +56,7 @@ The live load is also given more than once, and again the versions differ
     distribution table (Th §7.1, §7.2 table "7.2"): roof AB 1.60, BC 0.94 kN/m
     (printed in §7.1); floors 1-3 back-calculated from the printed fixed-end
     moments, AB 12 x 27.70 / 7.2^2 = 6.41 kN/m and BC 12 x 3.52 / 6.6^2 =
-    0.97 kN/m [J]. These loads produced the moment targets.
+    0.97 kN/m (judgement). These loads produced the moment targets.
 ``thesis_shear``
     The loads printed in §6.1 and used for the beam shears (Tables 7-2, 7-3),
     and hence for the column axial forces: roof AB 1.60, BC 0.94; floors AB
@@ -158,7 +158,7 @@ EXTERIOR_JOINT_MOMENTS_KN_M: dict[str, float] = {"roof": 20.26, "floor": 25.16}
 #: Used only by the ``interior_moments`` check. Their sense is not drawn
 #: anywhere; it is taken anticlockwise at B and clockwise at C, because the
 #: thesis's own final moments at joint B3 sum to -39.19 kN*m (clockwise-positive
-#: member ends), which balances only an anticlockwise 38.09 at B [J].
+#: member ends), which balances only an anticlockwise 38.09 at B (judgement).
 INTERIOR_JOINT_MOMENTS_KN_M: dict[str, float] = {"roof": 31.79, "floor": 38.09}
 
 # ---------------------------------------------------------------------------
@@ -181,7 +181,7 @@ LIVE_EXTERIOR_JOINT_MOMENTS_KN_M: dict[str, float] = {"roof": 1.47, "floor": 5.8
 
 #: Live eccentricity moments at interior joints [kN*m], first row of table
 #: "7.2" (Th §7.2): 3.16 at B4 and 15.64 at B1-3. §7.1 prints 16.64 for B1-3,
-#: and 108.32 x 0.150 = 16.25 [J]; the table value is used because it entered
+#: and 108.32 x 0.150 = 16.25 (judgement); the table value is used because it entered
 #: the distribution. Used only by the ``interior_moments`` check, with the
 #: same sense as the dead-load check (anticlockwise at B).
 LIVE_INTERIOR_JOINT_MOMENTS_KN_M: dict[str, float] = {"roof": 3.16, "floor": 15.64}

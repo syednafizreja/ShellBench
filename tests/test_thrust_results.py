@@ -27,7 +27,7 @@ PANEL_CSV = pn.ROOT / "results" / "panel_day25.csv"
 LIBRARY_CSV = pn.ROOT / "results" / "floor_library.csv"
 # Writers round every float to 4 significant figures (panel.write_rows, "{v:.4g}"),
 # so each stored value is off by up to 5e-4 relative; a quotient or product of
-# two rounded values by up to 1e-3. 1.5e-3 covers that with margin [J].
+# two rounded values by up to 1e-3. 1.5e-3 covers that with margin (judgement).
 REL_TOL: float = 1.5e-3
 
 

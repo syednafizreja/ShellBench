@@ -26,7 +26,7 @@ Each is saved as PNG (600 dpi preview), PDF and SVG (vector masters) by
 ``style.save``. ``--paper`` writes footer-free copies to ``figures/paper/``
 for journal submission.
 
-Every constant here is a presentation choice [J] unless a source is given;
+Every constant here is a presentation choice (judgement) unless a source is given;
 the plotted numbers all come from the tables passed in.
 """
 

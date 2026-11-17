@@ -14,11 +14,11 @@ Family definition
 Storey counts 3-8 and PGA 0.05, 0.10, 0.15, 0.20, 0.30 and 0.40 g
 (preregistration 2.0, research_question.md). Every other input is the anchor's
 (tests/test_generator_anchor.py gives the source of each value). Taller
-buildings add 3.6 m storeys above the 4.55 m ground storey [J]. Tg 0.35 s and
-C40 for every building [J]; both are columns, so later values can be added.
+buildings add 3.6 m storeys above the 4.55 m ground storey (judgement). Tg 0.35 s and
+C40 for every building (judgement); both are columns, so later values can be added.
 
 Order: the validated 0.10 g block first, then the other PGAs in rising order;
-storeys rise inside each block [J]. ``--n 10`` takes the first ten buildings,
+storeys rise inside each block (judgement). ``--n 10`` takes the first ten buildings,
 so the sample shows the six 0.10 g rows and the first four 0.05 g rows.
 
 PGA and alpha_max
@@ -28,7 +28,7 @@ PGAs since 4 Nov 2026). A missing entry still gives status ``blocked``.
 Seismic grade from Table 6.1.2 sets the column axial ratio limit (Table 6.3.6).
 A building taller than the frame limit of Table 6.1.1 (24 m at 9 degrees) is
 kept with status ``outside_code`` and is not run. Height is the sum of storey
-heights [J].
+heights (judgement).
 
 Carbon
 ------
@@ -79,7 +79,7 @@ TAKEOFF_SCOPE = "frame_strip_v1"  # slab, frame beams, columns, longitudinal bar
 SCOPES: tuple[str, ...] = (TAKEOFF_SCOPE, "building_v2")
 
 STOREYS: tuple[int, ...] = (3, 4, 5, 6, 7, 8)  # preregistration 2.0
-PGAS_G: tuple[float, ...] = (0.10, 0.05, 0.15, 0.20, 0.30, 0.40)  # 0.10 g first [J]
+PGAS_G: tuple[float, ...] = (0.10, 0.05, 0.15, 0.20, 0.30, 0.40)  # 0.10 g first (judgement)
 #: Intensity for each PGA, GB 50011-2010 Table 3.2.2 (2016 edition, p. 6; checked:
 #: S. N. R. Hasib, 4 Nov 2026). 0.15 g and 0.30 g are designed
 #: as 7 and 8 degrees (3.2.2).
@@ -93,7 +93,7 @@ FRAME_GRADE: dict[int, tuple[int, int]] = {6: (4, 3), 7: (3, 2), 8: (2, 1), 9: (
 GRADE_SPLIT_HEIGHT_M: float = 24.0  # Table 6.1.2
 #: Column axial ratio limit of a frame by seismic grade, GB 50011-2010 Table 6.3.6 (p. 62).
 FRAME_AXIAL_LIMIT: dict[int, float] = {1: 0.65, 2: 0.75, 3: 0.85, 4: 0.90}
-TG_S: float = 0.35  # anchor, test_generator_anchor.py [J] for the family
+TG_S: float = 0.35  # anchor, test_generator_anchor.py (judgement) for the family
 CONCRETE_GRADE: str = "C40"  # spec X1; checks.py values are C40
 GROUND_STOREY_M: float = 4.55  # spec G7 (B4)
 UPPER_STOREY_M: float = 3.60  # spec G6

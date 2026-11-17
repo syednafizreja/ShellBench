@@ -2,7 +2,7 @@
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
 
-Checked: S. N. R. Hasib, 27 Oct 2026, from the English translation of GB 50010-2010 that the author uploaded ("Code for Design of Concrete Structures", China Architecture & Building Press, 2010; the translation itself says the Chinese text rules where they differ). Page numbers are the printed page numbers of that translation, located from the page markers in its text, so treat them as ±1 page. The file is not committed. Two limits, as for GB 50011 on 26 Oct: it is a translation, and it is the 2010 issue, not the 2015 revision. Whether the 2015 revision changed any value below is not known [?]. Values computed from the code's own formulas are marked "computed".
+Checked: S. N. R. Hasib, 27 Oct 2026, from the English translation of GB 50010-2010 that the author uploaded ("Code for Design of Concrete Structures", China Architecture & Building Press, 2010; the translation itself says the Chinese text rules where they differ). Page numbers are the printed page numbers of that translation, located from the page markers in its text, so treat them as ±1 page. The file is not committed. Two limits, as for GB 50011 on 26 Oct: it is a translation, and it is the 2010 issue, not the 2015 revision. Whether the 2015 revision changed any value below is not known (unverified). Values computed from the code's own formulas are marked "computed".
 
 Materials of the anchor: C40 concrete (spec X4), HRB400 bars (spec X5), seismic grade three (spec S5), frame structure.
 
@@ -51,7 +51,7 @@ Materials of the anchor: C40 concrete (spec X4), HRB400 bars (spec X5), seismic 
 
 The thesis columns have 4C22 = 1520 mm² on 600 × 600 mm (spec R1), which is 0.42 % of the gross section. That is below the 0.75 % of Table 11.4.12-1 for a grade-three frame column with 400 MPa bars (computed). This is flag B6 from 20 Oct, now with a code value behind it. Day 11 will list it with the other members.
 
-Correction to an earlier [?]: the shear modulus G_c = 0.4 E_c is cl. 4.1.5, not cl. 4.1.8 as written in `src/shellbench/anchor_3d.py` on Day 10. The value was right; the clause number was wrong (fixed on the Day 10 branch).
+Correction to an earlier (unverified): the shear modulus G_c = 0.4 E_c is cl. 4.1.5, not cl. 4.1.8 as written in `src/shellbench/anchor_3d.py` on Day 10. The value was right; the clause number was wrong (fixed on the Day 10 branch).
 
 ## Cross-check against the Chinese 2015 revision
 
@@ -66,8 +66,8 @@ Added 29 Oct 2026 (PDF page numbers):
 - Table 4.1.4-1, PDF p. 35: f_c = 19.1 N/mm² for C40. This holds for 2015.
 - Table 4.2.3-1, PDF p. 39: f_y = f'_y = 360 N/mm² for HRB400 (270 for HPB300). This holds for 2015.
 - Table 11.3.6-1, PDF p. 184: grades three and four, support, "0.25 和 55 f_t/f_y 中的较大值". This holds for 2015.
-- Table 4.1.4-2, PDF p. 35: the f_t row is missing from the OCR text layer, so f_t = 1.71 is not re-checked [?].
+- Table 4.1.4-2, PDF p. 35: the f_t row is missing from the OCR text layer, so f_t = 1.71 is not re-checked (unverified).
 
-The other rows above were not re-checked against the 2015 copy [?].
+The other rows above were not re-checked against the 2015 copy (unverified).
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.

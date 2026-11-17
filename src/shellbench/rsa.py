@@ -12,9 +12,9 @@ docs/anchor_notes.md, "How the response-spectrum check is read"), it:
 1. computes the first three modes of the 2D frame on axis (2), their
    participation factors and effective mass ratios;
 2. forms the modal storey forces F_ji = alpha_j gamma_j X_ji G_i
-   (GB 50011-2010 cl. 5.2.2 [?]: formula to be checked in the author's copy);
+   (GB 50011-2010 cl. 5.2.2 (unverified): formula to be checked in the author's copy);
 3. applies each mode's forces statically and combines storey shears and
-   inter-storey drifts by SRSS (cl. 5.2.2 [?]);
+   inter-storey drifts by SRSS (cl. 5.2.2 (unverified));
 4. compares base shear, storey shears and drifts with the base-shear method
    and with thesis Table 8-12 (as read on Day 9), and draws
    ``figures/anchor_seismic_compare.png``.
@@ -90,7 +90,7 @@ def modes(weights_kn: list[float], n_modes: int = N_MODES) -> list[Mode]:
 
 
 def modal_forces(mode: Mode, weights_kn: list[float], alpha_max: float, tg_s: float) -> list[float]:
-    """Return F_ji = alpha_j gamma_j X_ji G_i for one mode [kN] (cl. 5.2.2 [?]).
+    """Return F_ji = alpha_j gamma_j X_ji G_i for one mode [kN] (cl. 5.2.2 (unverified)).
 
     Args:
         mode: The mode.

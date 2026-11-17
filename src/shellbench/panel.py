@@ -29,14 +29,14 @@ How the moment is found
 For vertical loads on an arch pinned at both springings the bending moment is
 M(x) = M_0(x) - H z(x) and the axial force is N(x) = H cos(theta) + V_0(x)
 sin(theta), where M_0 and V_0 belong to a simply supported beam with the same
-plan load. H comes from CalculiX, so this needs no stress output [J].
+plan load. H comes from CalculiX, so this needs no stress output (judgement).
 
 Loads
 -----
 Self-weight per m^2 of shell surface (CalculiX gravity). Fill, finishes and
 live load per m^2 of plan (consistent nodal loads). The fill is taken as a
 uniform plan load of density x g x f / 3, as in floor_concept section 5; its
-true depth (f - z) is an option from Day 26 (`true_fill`) [J].
+true depth (f - z) is an option from Day 26 (`true_fill`) (judgement).
 
 Section check
 -------------
@@ -45,7 +45,7 @@ resistance of shell sections to GB 50010, so the check is GB 50010-2010 6.2.17
 for a rectangular eccentric-compression section with A_s' = 0 and the bar at
 mid-depth (h_0 = a = t / 2, so e = e_i). The additional eccentricity e_a of 6.2.5
 is added, and the first-order moment is amplified by 1 / (1 - 1 / lambda) for
-second-order effects (6.2.3 does not allow them to be ignored) [J]. Each clause
+second-order effects (6.2.3 does not allow them to be ignored) (judgement). Each clause
 was read in a third-party copy of the code; confirm it in your own copy.
 
 Units: N, m, Pa throughout.
@@ -72,9 +72,9 @@ RESULTS_CSV = ROOT / "results" / "panel_day25.csv"
 
 # Geometry
 SPAN_M: float = 6.6  # spec G4, layout A (floor_concept decision 2)
-RISE_RATIO: float = 1.0 / 15.0  # [J] floor_concept section 7 and decision 4
-TIE_SPACING_M: float = 1.2  # [J] floor_concept 4.1; the modelled strip width
-TRIAL_THICKNESSES_M: tuple[float, ...] = (0.050, 0.060, 0.070, 0.080, 0.090, 0.100, 0.120)  # floor_concept 4.1 range, widened [J]
+RISE_RATIO: float = 1.0 / 15.0  # (judgement) floor_concept section 7 and decision 4
+TIE_SPACING_M: float = 1.2  # (judgement) floor_concept 4.1; the modelled strip width
+TRIAL_THICKNESSES_M: tuple[float, ...] = (0.050, 0.060, 0.070, 0.080, 0.090, 0.100, 0.120)  # floor_concept 4.1 range, widened (judgement)
 
 # Materials
 E_CONCRETE_PA: float = 3.25e10  # spec X4, C40
@@ -95,10 +95,10 @@ EA_DEPTH_DIVISOR: float = 30.0  # same clause
 MIN_STEEL_FLOOR: float = 0.0015  # GB 50010 Table 8.5.1 note 2 (floor_concept 4.2)
 MIN_STEEL_FT_FACTOR: float = 45.0  # same note: 45 f_t / f_y, in per cent
 COVER_M: float = 0.015  # GB 50010 Table 8.2.1, shells, category I (floor_concept 4.2)
-MESH_BAR_M: float = 0.006  # [J] mesh bar diameter, for the cover check only
+MESH_BAR_M: float = 0.006  # (judgement) mesh bar diameter, for the cover check only
 
 # Loads [Pa] or densities [kg/m^3]
-G_ACCEL: float = 9.81  # standard gravity 9.80665 (3rd CGPM 1901, Declaration 2), rounded [J]
+G_ACCEL: float = 9.81  # standard gravity 9.80665 (3rd CGPM 1901, Declaration 2), rounded (judgement)
 FINISHES_PA: float = 1.05e3  # Th s4.1 via floor_concept section 5
 LIVE_PA: float = 2.5e3  # spec L9, office floor
 LEVELLING: dict[str, tuple[str, float]] = {
@@ -109,8 +109,8 @@ LEVELLING: dict[str, tuple[str, float]] = {
 }
 
 # Model
-ELEMENTS_ALONG_SPAN: int = 16  # [J]
-ELEMENTS_ACROSS: int = 4  # [J]
+ELEMENTS_ALONG_SPAN: int = 16  # (judgement)
+ELEMENTS_ACROSS: int = 4  # (judgement)
 STATICS_POINTS: int = 801
 UNIT_FORCE_N: float = 1.0e3
 BUCKLING_MODES: int = 2
@@ -133,7 +133,7 @@ class PanelRow:
             force and is stiff enough for the shell to pass (largest tried if none).
         h_elastic_n_m: Thrust per metre with that tie elastic.
         buckling_factor: First linear buckling factor under the ULS load,
-            rigid tie, no imperfection knock-down [J].
+            rigid tie, no imperfection knock-down (judgement).
         membrane_stress_pa: Largest N / t under the uniform ULS load.
         util_uniform: M / M_R, uniform ULS load, elastic tie.
         util_pattern: M / M_R, dead load plus live load on half the span.
@@ -271,7 +271,7 @@ def strip(thickness: float, rigid_tie: bool, vault: Vault | None = None):
             supports.append((node, 1, 1))
         if i in (0, 2 * nu):
             supports.append((node, 3, 3))
-        if j in (0, 2 * nv):  # strip continues along the vault: no uy [J]
+        if j in (0, 2 * nv):  # strip continues along the vault: no uy (judgement)
             supports.append((node, 2, 2))
     model = ShellModel(nodes, elements, thickness, E_CONCRETE_PA, NU_CONCRETE)
     model.supports = supports
@@ -285,7 +285,7 @@ def plan_loads(model: ShellModel, pressure_pa: float, x_max: float, vault: Vault
     For an 8-node element under uniform pressure the corner nodes take -1/12
     and the midside nodes 1/3 of the element load. With ``shape`` (a function
     of x), the pressure on each element is ``pressure_pa * shape(x_centre)``,
-    a mid-point rule over the element [J].
+    a mid-point rule over the element (judgement).
     """
     span = (vault or DAY25_VAULT).span_m
     dx = span / ELEMENTS_ALONG_SPAN
@@ -420,7 +420,7 @@ def moment_capacity(n: float, t: float, as_m2_m: float) -> float:
     GB 50010-2010 6.2.17 with A_s' = 0 and the bar at mid-depth, so
     h_0 = a = t / 2 and e = e_i. Large eccentricity (x <= xi_b h_0): sigma_s = f_y,
     alpha_1 f_c x = N + f_y A_s (6.2.17-1), N e <= alpha_1 f_c x (h_0 - x / 2)
-    (6.2.17-2). Otherwise the mesh is ignored (sigma_s A_s = 0) [J].
+    (6.2.17-2). Otherwise the mesh is ignored (sigma_s A_s = 0) (judgement).
     """
     c = n + as_m2_m * FY_PA
     x = c / (ALPHA_1 * FC_PA)
@@ -434,7 +434,7 @@ def two_layer_cover_m() -> float:
     """Distance a = a' from a face to the inner bar of a two-direction mesh [m].
 
     Cover plus one outer bar plus half the inner bar (the inner direction
-    governs) [J].
+    governs) (judgement).
     """
     return COVER_M + 1.5 * MESH_BAR_M
 
@@ -451,7 +451,7 @@ def moment_capacity_two_layer(n: float, t: float, as_face_m2_m: float) -> float:
       counted): alpha_1 f_c x = N + f_y A_s, N e <= alpha_1 f_c x (h_0 - x / 2),
       valid while x <= xi_b h_0. This branch is never below the one-layer value.
     - Small eccentricity (x > xi_b h_0): the steel is ignored, as in the one-layer
-      check (conservative) [J].
+      check (conservative) (judgement).
     Returns the largest N e_i of the valid branches (the AI assistant's reading of 6.2.17,
     4 Nov 2026).
     """
@@ -479,7 +479,7 @@ def utilisation(p_plan: np.ndarray, h: float, t: float, as_m2_m: float, buckle: 
     moment times 1 / (1 - 1 / lambda), with lambda the FE buckling factor. GB 50010
     6.2.3 does not let second-order moments be ignored here (l_c / i is far above
     34 - 12 M_1 / M_2). The amplifier stands in for 6.2.4, which is written for
-    straight members [J]. ``layers`` = 2 uses the two-layer capacity, with
+    straight members (judgement). ``layers`` = 2 uses the two-layer capacity, with
     ``as_m2_m`` the steel of each face.
     """
     _, m, n = arch_forces(p_plan, h, vault)
@@ -511,12 +511,12 @@ def size_row(t: float, levelling: str, fl: Flexibility, buckle: float,
         buckle: First buckling factor at this thickness and levelling.
         prestressed: True if the tie is tensioned (turnbuckle) until the
             springings do not spread under the dead load, so only the live
-            load stretches it [J]; False for an unstressed bar.
+            load stretches it (judgement); False for an unstressed bar.
         vault: Geometry; the Day 25 vault if None.
         true_fill: Fill at its true depth f - z (needs ``fl.plan_fill``);
             False keeps the Day 25 uniform fill f / 3 deep.
         layers: 1 mesh at mid-depth (Day 25) or 2, one near each face, each
-            at the minimum ratio [J].
+            at the minimum ratio (judgement).
 
     The Day 25 Done-when (rigid-tie thrust within 10 % of w L^2 / (8 f)) is a
     pass condition only for uniform load; with ``true_fill`` the load is not

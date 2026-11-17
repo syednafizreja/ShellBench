@@ -4,9 +4,9 @@
 
 Status: skeleton only, 5 Nov 2026. This is an outline, not prose. Each subsection lists what it must say, the repo file each fact comes from, the numbers that go in `numbers.md`, what is still open, and the rough sentences needed from the author. Prose is written only from the author's rough sentences (academic-manuscript-writing rule 0.1), then reviewed by the panel (`reviews/02_methods_skeleton.md`).
 
-Target: Journal of Building Engineering (Elsevier) [author to confirm, choice 1]. Voice: "this study" plus passive for method steps [author to confirm, choice 2]. No em dashes in the manuscript (skills_check C3). British English. Tags: [J] judgement, [?] unverified.
+Target: Journal of Building Engineering (Elsevier) [author to confirm, choice 1]. Voice: "this study" plus passive for method steps [author to confirm, choice 2]. No em dashes in the manuscript (skills_check C3). British English. Tags: (judgement) judgement, (unverified) unverified.
 
-Planned length [J]: about 3,000-3,500 words, 4 tables, 3 figures in Methods. Long detail (D-flags, clause readings, spot checks) goes to Supplementary Material or the repo docs, cited by file.
+Planned length (judgement): about 3,000-3,500 words, 4 tables, 3 figures in Methods. Long detail (D-flags, clause readings, spot checks) goes to Supplementary Material or the repo docs, cited by file.
 
 ---
 
@@ -44,10 +44,10 @@ Must say:
 
 Sources: docs/anchor_report.md; docs/anchor_notes.md; docs/baseline_spec.md; validation/thesis_values/; results/anchor_*.csv.
 
-Open [?]:
+Open (unverified):
 - ψ_T = 0.7 rests on JGJ 3-2010 cl. 4.3.17 via secondary sources; primary copy not read.
 - GB 50011 cl. 5.2.2 and f_t = 1.71 N/mm² in primary copies.
-- The thesis is unpublished: decide how to cite it (thesis citation with institution and year, plus the repo's validation files as the public record) [J].
+- The thesis is unpublished: decide how to cite it (thesis citation with institution and year, plus the repo's validation files as the public record) (judgement).
 
 Rough sentences needed: why a failed wind test is still reported, in your words; what you would say if a reviewer asks "why trust a model that misses the thesis base shear by 19 %?".
 
@@ -68,7 +68,7 @@ Must say:
 
 Sources: docs/design_rules.md; src/shellbench/generator.py, checks.py, seismic.py; docs/pilot_hand_checks.md; results/family_rc_pilot*.csv; docs/data_card.md (family definition).
 
-Open [?]: final R14 status; GB 50007 clause numbers behind the footing rule (D28).
+Open (unverified): final R14 status; GB 50007 clause numbers behind the footing rule (D28).
 
 Rough sentences needed: why best_ratio rather than columns first, in your words; how you read the hand-drift gap.
 
@@ -81,15 +81,15 @@ Must say:
 - Why this differs from the shells in the literature: those sit on columns with no beams and are compared with long-span flat slabs (Hawkins et al. 2020; Oval et al. 2023); here the baseline is a 120 mm slab on beams, so the saving is expected to be much smaller (floor_concept §6). Say this before a reviewer does.
 - Form-finding: force density, 2D per panel; checked against the parabola and thrust closed forms within 1 % (Day 23).
 - Shell analysis: CalculiX 2.23, S8R; MacNeal and Harder (1985) Scordelis-Lo roof and pinched hemisphere within 2 % at 16 elements per side (0.9984 and 0.9965); which reference value is used and why (0.3024 vs 0.3086); whole models, no rotational supports.
-- Panel sizing: GB 50010 6.2.17 eccentric compression with e_a (6.2.5) and the FE-based second-order amplifier 1/(1 − 1/λ) [J]; JGJ 22-2012 3.2.1, 3.3.2, 3.2.9; unstressed ties fail, prestressed ties approved 3 Nov 2026; fill load at its true depth.
+- Panel sizing: GB 50010 6.2.17 eccentric compression with e_a (6.2.5) and the FE-based second-order amplifier 1/(1 − 1/λ) (judgement); JGJ 22-2012 3.2.1, 3.3.2, 3.2.9; unstressed ties fail, prestressed ties approved 3 Nov 2026; fill load at its true depth.
 - Floor library: 72 cases (2 spans × 6 rises × 3 levelling × 2 mesh layers), all sized at 70-100 mm; concrete 0.071-0.104 m³/m²; buckling factor 9.0-33.2; five spot checks.
-- Limits: linear buckling, no imperfection knock-down (decision 4 Nov 2026 [J]); no dedicated nonlinear stability analysis; shell constructability not assessed.
+- Limits: linear buckling, no imperfection knock-down (decision 4 Nov 2026 (judgement)); no dedicated nonlinear stability analysis; shell constructability not assessed.
 
 Figure 2 [planned]: floor build-up section and the layout plan. Table 2: floor library summary.
 
 Sources: docs/floor_concept.md; docs/floor_library.md; src/shellbench/formfind.py, shellfe.py, panel.py, floorlib.py; validation/benchmarks.csv; results/benchmarks_convergence.csv, floor_library.csv.
 
-Open [?]: MacNeal-Harder pages against the publisher's version; Liew et al. (2017) page for the "without explicit ties" quote; AAM page numbers against the versions of record.
+Open (unverified): MacNeal-Harder pages against the publisher's version; Liew et al. (2017) page for the "without explicit ties" quote; AAM page numbers against the versions of record.
 
 Rough sentences needed: why a barrel vault on beams and not a groin vault on columns; why prestressed ties.
 
@@ -101,13 +101,13 @@ Must say:
 - How each floor component enters the seismic weight, loads, storey height and frame model (floor_concept §5 table). The finishes cancel.
 - The thrust path: ties close the thrust inside each panel; the frame beams carry vertical reactions only [J, to confirm in Day 29 code].
 - The rigid-diaphragm rule: largest in-plane floor deformation ≤ 2 × mean storey drift, from ASCE/SEI 7-16 cl. 12.3.1.3. Source checked 8 Nov 2026 via NIST GCR 17-917-47 Sec. 5.1 and the ASCE 7-10 text; author to confirm. Say why this is a US rule. GB 50011-2010 Table 6.1.6 (only a plan aspect-ratio limit between shear walls) and JGJ 3-2010 cl. 5.1.5 (the rigid-floor assumption, with no test) give no deflection test. See docs/floor_concept.md.
-- [J] Say that ASCE 7-16 cl. 12.3.1 would require semirigid modelling for a floor that is neither rigid nor flexible. Variants are only kept if they pass the 2× test, so the frame model's rigid-floor assumption holds for every kept variant. Reviewers will ask about this.
-- [J] Mention JGJ 3-2010 cl. 3.6.2 item 5 (a cast layer ≥ 50 mm for precast floors) as a cross-check on the topping range, not as a rule that binds the cast-in-place topping.
+- (judgement) Say that ASCE 7-16 cl. 12.3.1 would require semirigid modelling for a floor that is neither rigid nor flexible. Variants are only kept if they pass the 2× test, so the frame model's rigid-floor assumption holds for every kept variant. Reviewers will ask about this.
+- (judgement) Mention JGJ 3-2010 cl. 3.6.2 item 5 (a cast layer ≥ 50 mm for precast floors) as a cross-check on the topping range, not as a rule that binds the cast-in-place topping.
 - The minimum topping search over 0, 40, 50, 60 mm and the topping share R.
 
 Sources: docs/floor_concept.md §5, §7; preregistration §2.3; Day 27 and Day 29 outputs (not built yet).
 
-Open [?]: Day 27 (diaphragm check, topping rule and its source) and Day 29 (shell floor in the generator) are not done. This subsection cannot be drafted until they are.
+Open (unverified): Day 27 (diaphragm check, topping rule and its source) and Day 29 (shell floor in the generator) are not done. This subsection cannot be drafted until they are.
 
 Rough sentences needed: after Day 27.
 
@@ -120,7 +120,7 @@ Must say:
 - Everything else fixed at the anchor values (spans, frame spacing, loads, storey heights, Tg 0.35 s, C40).
 - Stable building IDs; the frozen data format (data_card, 4 Nov 2026).
 - Failures are counted and reported, never dropped (preregistration §2.0).
-- Why the family is a controlled sweep and not a sample: one plan, one site class, one concrete grade. The result is the trend with storeys and PGA in this building type, not a population estimate [J].
+- Why the family is a controlled sweep and not a sample: one plan, one site class, one concrete grade. The result is the trend with storeys and PGA in this building type, not a population estimate (judgement).
 
 Sources: docs/data_card.md; docs/preregistration.md §2.0; docs/schedule.md (note on family size, 5 Nov 2026).
 
@@ -136,7 +136,7 @@ Must say:
 - Boundary: A1-A3 under EN 15978; structure only (no walls, stairs, finishes, ground slab, wastage); reported per m² of floor and per building.
 - Take-off scope: the preregistered scope, the same element set for both systems (author decision 5 Nov 2026). List the elements and say which are measured per building and which are taken per m² from the anchor plan (building_v2, data_card row 4).
 - Floor and building totals: C_floor (slab or vault with bars, ties, fill, topping, secondary beams) and C_bldg (every element).
-- Factor set: GB/T 51366-2019 Table D.0.1 only (D29: ICE licence forbids redistribution). C40 interpolated from C30 and C50 [J]. Floor-only rows (tie steel high/low recycled content, crushed-stone proxy for recycled fill). Raised floor from Oval et al. (2023) Table 6, ecoinvent background, kept as its own set.
+- Factor set: GB/T 51366-2019 Table D.0.1 only (D29: ICE licence forbids redistribution). C40 interpolated from C30 and C50 (judgement). Floor-only rows (tie steel high/low recycled content, crushed-stone proxy for recycled fill). Raised floor from Oval et al. (2023) Table 6, ecoinvent background, kept as its own set.
 - Foamed fill factor: state the final source, or state that the foamed-fill variants are excluded from the verdicts if no factor is found. A missing factor raises an error in the code; it is never counted as 0 (handoff 5 Nov).
 - Factor sensitivity (author's decision 3, 6 Nov 2026; preregistration change log C1): one at a time, C40 between the C30 (295) and C50 (385) rows, and all steel between the converter (1990) and electric-arc (3030) rows of Table D.0.1. A sensitivity, not an uncertainty band; verdicts use base factors. State the crude-steel caveat.
 
@@ -144,7 +144,7 @@ Table 3: carbon factors with source, row and page.
 
 Sources: src/shellbench/carbon.py; data/carbon_factors.csv; docs/data_card.md; docs/anchor_report.md §5; docs/anchor_notes.md (D28, D29).
 
-Open [?]:
+Open (unverified):
 - The preregistered take-off scope is not built yet (stirrups, footings, full-plan lateral elements). Until it is, S_b is biased high (data_card row 4). No S_b is quoted before this is closed.
 - Table D.0.1 official-copy check and printed page (author).
 - Foamed-fill factor.

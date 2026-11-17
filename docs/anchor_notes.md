@@ -4,7 +4,7 @@
 
 One line of explanation for every difference above 10 % between the anchor model and the thesis (Playbook Day 6). Dead load was added on Day 5 (23 Oct 2026); live load and the load combinations on Day 6 (24 Oct 2026).
 
-Status: dead-load section **reviewed by the author on 23 Oct 2026** (decisions at the end of that section). Live-load and combination sections: **draft, Day 6, for the author to review**; every explanation there is [J] until then. Numbers come from files in `results/` (written by `src/shellbench/anchor_frame.py`) or are arithmetic on printed thesis values, with the table named.
+Status: dead-load section **reviewed by the author on 23 Oct 2026** (decisions at the end of that section). Live-load and combination sections: **draft, Day 6, for the author to review**; every explanation there is (judgement) until then. Numbers come from files in `results/` (written by `src/shellbench/anchor_frame.py`) or are arithmetic on printed thesis values, with the table named.
 
 Sign convention: beam-end moments are clockwise positive on the member end, as in the thesis. Column axial forces are positive in compression.
 
@@ -20,7 +20,7 @@ The thesis gives the dead load three times, and the three do not agree at roof l
 | Text under Fig. 4-5 | 17.15 | 10.23 | 23.43 | 10.96 | Beam shears (Tables 4-6, 4-7), so column axial forces |
 | Fixed-end row of table 6.3 | 18.48 (from FEM 79.85) | 11.19 (from FEM 40.63) | 23.43 | 10.96 | Beam-end moments |
 
-All values are kN/m. The roof values in the last row are back-calculated from the printed fixed-end moments (FEM × 12 / L²). They equal 13.55 + 4.934 and 7.92 + 3.274, the §5.1 slab loads plus the §4.1 beam weights [J]. The floor value 23.43 equals 12.99 + 4.934 + 5.51 (slab, beam, interior wall of §4.2) [J].
+All values are kN/m. The roof values in the last row are back-calculated from the printed fixed-end moments (FEM × 12 / L²). They equal 13.55 + 4.934 and 7.92 + 3.274, the §5.1 slab loads plus the §4.1 beam weights (judgement). The floor value 23.43 equals 12.99 + 4.934 + 5.51 (slab, beam, interior wall of §4.2) (judgement).
 
 The model's primary run uses the last row, because those loads produced the moment targets. The other runs change one thing each:
 
@@ -49,12 +49,12 @@ All five runs satisfy vertical equilibrium: the base reactions equal the applied
 | B2 | 87.18 − 61.29 − 61.29 − 44.24 = −79.64 | 0 | 79.6 |
 | B1 | 89.20 − 53.16 − 37.01 − 51.33 = −52.30 | 0 | 52.3 |
 
-Joints A2 to A4 are nearly balanced. A1 and every B joint are not, so the thesis moments at those joints contain arithmetic or copying errors [J]. B3 balances only if the interior eccentric moment (38.09) was applied there, which suggests the table and the figures used different load sets.
+Joints A2 to A4 are nearly balanced. A1 and every B joint are not, so the thesis moments at those joints contain arithmetic or copying errors (judgement). B3 balances only if the interior eccentric moment (38.09) was applied there, which suggests the table and the figures used different load sets.
 
 **2. Running sums in Table 4-9.**
 - Roof, B/C column: N_top = 214.11 + 61.88 = 275.99. The 61.88 is only the AB beam shear. The BC beam shear (33.75, Table 4-7) is missing. At floors 1-3, the same column includes both shears (e.g. 83.60 + 36.16 = 119.76).
-- Floor 1, both columns: N_top is 9.46 kN (A/D) and 9.15 kN (B/C) higher than the running sum. For A/D, 810.69 + 167.77 + 85.44 = 1063.90, but 1073.36 is printed. The 9.46 equals 45.32 − 35.86, the difference between the ground and typical column weights. So the ground-storey column weight was probably added twice [J].
-- Global check: the thesis base axial forces add up to 2 × (1118.68 + 1558.41) = 5354.18 kN. Its own loads (text roof values) add up to 5385.81 kN in the model. That is 31.6 kN short. Most of this is the missing roof BC shears (2 × 33.75 = 67.5) minus the floor-1 excess (2 × 9.46 + 2 × 9.15 = 37.2), which leaves 30.3; the last 1.3 kN is small rounding in the running sums [J].
+- Floor 1, both columns: N_top is 9.46 kN (A/D) and 9.15 kN (B/C) higher than the running sum. For A/D, 810.69 + 167.77 + 85.44 = 1063.90, but 1073.36 is printed. The 9.46 equals 45.32 − 35.86, the difference between the ground and typical column weights. So the ground-storey column weight was probably added twice (judgement).
+- Global check: the thesis base axial forces add up to 2 × (1118.68 + 1558.41) = 5354.18 kN. Its own loads (text roof values) add up to 5385.81 kN in the model. That is 31.6 kN short. Most of this is the missing roof BC shears (2 × 33.75 = 67.5) minus the floor-1 excess (2 × 9.46 + 2 × 9.15 = 37.2), which leaves 30.3; the last 1.3 kN is small rounding in the running sums (judgement).
 
 ### Differences above 10 % (primary run)
 
@@ -72,14 +72,14 @@ Joints A2 to A4 are nearly balanced. A1 and every B joint are not, so the thesis
 - **N, floor 1, A/D (−0.1 %).** The good match hides two effects that cancel: the thesis adds about 9.46 kN too much, and the model's roof shear is larger by 4.8 kN (18.48 against 17.15 kN/m).
 - **N, B/C, floors 1-3 (2-6 %).** These carry the missing roof BC shear down the column.
 - **M, AB right ends (1-5 %).** These look close, but with rigid columns they move to 8-13 %. Axial shortening and the unbalanced B joints happen to offset each other here. So the closeness is not evidence that either side is right.
-- **Equivalent-load method.** Replacing the trapezoid and triangle with equivalent uniform loads gives the right fixed-end moments; the closed-form test in `tests/test_anchor_frame.py` confirms this. But the equivalent loads carry 19 % (trapezoid, α = 0.25) and 25 % (triangle) more total load than the shapes they replace [J]. That changes the beam shears and the column axial forces: the `actual_load_shape` run gives axial forces 2-4 % lower than the primary run. For the carbon model, the load path should use the actual shapes, not the equivalent loads.
+- **Equivalent-load method.** Replacing the trapezoid and triangle with equivalent uniform loads gives the right fixed-end moments; the closed-form test in `tests/test_anchor_frame.py` confirms this. But the equivalent loads carry 19 % (trapezoid, α = 0.25) and 25 % (triangle) more total load than the shapes they replace (judgement). That changes the beam shears and the column axial forces: the `actual_load_shape` run gives axial forces 2-4 % lower than the primary run. For the carbon model, the load path should use the actual shapes, not the equivalent loads.
 
 ### Decisions by the author (23 Oct 2026)
 
 1. **Table 4-9 findings accepted.** They become flags D13 (roof BC shear missing at B/C) and D14 (ground-column weight counted twice at floor 1) in `validation/thesis_values/README.md`.
 2. **Table 6.3 joint imbalance flagged.** This is D15. The author checked B4 by hand: 68.77 − 52.84 − 67.74 = −51.81 kN·m, not 0. So the 36 % on the roof BC moment is a thesis arithmetic error, not a modelling error.
 3. **Load set:** the anchor keeps the table-6.3 loads (the `primary` run: roof 18.48 / 11.19 kN/m), because they generated the later force tables.
-4. **Interior eccentric moments at B and C are left out**, as in Fig. 4-4 and 4-5. The `interior_moments` run stays only as a check. Note [J]: the B3 balance (−39.19 against 38.09) is the one sign that the table may have used them. The anchor report should mention it as a possible remaining cause at B3 only.
+4. **Interior eccentric moments at B and C are left out**, as in Fig. 4-4 and 4-5. The `interior_moments` run stays only as a check. Note (judgement): the B3 balance (−39.19 against 38.09) is the one sign that the table may have used them. The anchor report should mention it as a possible remaining cause at B3 only.
 
 Still open: Fig. 4-4 labels the AB beam weight 3.61 kN/m, while the fixed-end moments use 4.934 kN/m (§4.1). This is consistent with decision B13, so no action is needed.
 
@@ -98,9 +98,9 @@ As with the dead load, the thesis gives the live load more than once, and the ve
 | §6.1 equivalent loads | 1.60 | 2.06 | 8.08 | 12.37 | Beam shears, Tables 7-2 and 7-3 (roof BC uses 0.94) |
 | Fixed-end row of table "7.2" (§7.1) | 1.60 (FEM 6.91) | 0.94 (FEM 3.41) | 6.41 (from FEM 27.70) | 0.97 (from FEM 3.52) | Beam-end moments |
 
-All values are kN/m. The floor values in the last row are back-calculated from the printed fixed-end moments (q = 12 M / L²) [J]. The text under table "7.2" also says that beam BC "does not bear the live load", and Table 7-1 sets its span moment to 0, which matches neither 12.37 nor 0.97.
+All values are kN/m. The floor values in the last row are back-calculated from the printed fixed-end moments (q = 12 M / L²) (judgement). The text under table "7.2" also says that beam BC "does not bear the live load", and Table 7-1 sets its span moment to 0, which matches neither 12.37 nor 0.97.
 
-Two observations [J]:
+Two observations (judgement):
 - 6.41 = 2.0 × 3.6 × (1 − 2 × 0.25² + 0.25³), the office load of §3.2.2 (2.0 kN/m²), not the 2.5 kN/m² of §6.1. So the live **moment** targets correspond to the code office value, while the **shear and axial** targets correspond to 2.5 / 3.0 kN/m² (decision B3). This does not change B3, but the anchor report should say it.
 - §6.1 converts the AB trapezoid with "(1 − 2 × 0.92² + 0.92³)", but the numbers only come out (1.80 → 1.60; 9.00 → 8.01) with α = 1.8 / 7.2 = 0.25. The joint-load line uses 8.01, the shear tables 8.08.
 
@@ -129,9 +129,9 @@ All five runs satisfy vertical equilibrium, and the applied load equals a hand s
 
 Full list: `results/thesis_table_7_2_check.csv`.
 
-**2. Joint balance in table "7.2".** With the column sums, the exterior joints balance the printed eccentric moment (A4: −1.46 against −1.47; A3: −5.87 and A2: −5.86 against −5.89). A1 is out by 1.03. The interior joints do not balance, either at 0 (no interior moment) or at +15.64 (moment applied): B4 −4.40, B3 −0.47, B2 +6.22, B1 −27.67 kN·m. At B the first distribution step is also not the distribution factor times the unbalanced moment: at B3 the step adds to −12.18, while the fixed-end moments give 27.70 − 3.52 = 24.18 (or 8.54 with the 15.64 applied) [J]. So at B3 the balance near 0 is a coincidence of the carry-overs, and the table does not show which interior moment, if any, was used. Full list: `results/thesis_table_7_2_joints.csv`.
+**2. Joint balance in table "7.2".** With the column sums, the exterior joints balance the printed eccentric moment (A4: −1.46 against −1.47; A3: −5.87 and A2: −5.86 against −5.89). A1 is out by 1.03. The interior joints do not balance, either at 0 (no interior moment) or at +15.64 (moment applied): B4 −4.40, B3 −0.47, B2 +6.22, B1 −27.67 kN·m. At B the first distribution step is also not the distribution factor times the unbalanced moment: at B3 the step adds to −12.18, while the fixed-end moments give 27.70 − 3.52 = 24.18 (or 8.54 with the 15.64 applied) (judgement). So at B3 the balance near 0 is a coincidence of the carry-overs, and the table does not show which interior moment, if any, was used. Full list: `results/thesis_table_7_2_joints.csv`.
 
-**3. Running sums for the B/C column (Figure 7-2 table).** Flag D4 (Day 3) already notes that 30.40 + 32.77 + 108.32 = 171.49, not 409.08. The "V transfer" of 32.77 also equals the AB right shear 29.67 plus the roof BC shear 3.10. The floor BC shear in Table 7-3 is 40.82. So the axial forces use the roof BC value at every floor [J], which fits the fixed-end-moment load (0.97 kN/m), not the shear table. Continuing the thesis's own sums without the jump: 171.49 (floor 3), 171.49 + 32.78 + 108.32 = 312.59 (floor 2), 312.59 + 30.84 + 108.32 = 451.75 (floor 1).
+**3. Running sums for the B/C column (Figure 7-2 table).** Flag D4 (Day 3) already notes that 30.40 + 32.77 + 108.32 = 171.49, not 409.08. The "V transfer" of 32.77 also equals the AB right shear 29.67 plus the roof BC shear 3.10. The floor BC shear in Table 7-3 is 40.82. So the axial forces use the roof BC value at every floor (judgement), which fits the fixed-end-moment load (0.97 kN/m), not the shear table. Continuing the thesis's own sums without the jump: 171.49 (floor 3), 171.49 + 32.78 + 108.32 = 312.59 (floor 2), 312.59 + 30.84 + 108.32 = 451.75 (floor 1).
 
 ### Differences above 10 % (primary run)
 
@@ -156,8 +156,8 @@ Moments are compared with the printed table "7.2" values in `results/anchor_grav
 
 - **N, A/D, all floors (−6 to +9 %).** The thesis sums use the 8.08 kN/m shears; the model uses 6.41 kN/m. The roof is +9 % because the model's roof end moments differ from the printed ones (see the table above), which moves shear towards A (small numbers: 16.44 against 15.10 kN).
 - **M, floor 1, AB left (2.6 %).** This is the one interior-floor beam end where the column sum, the joint balance and the model all agree.
-- **Axial shortening is a larger effect for live load than for dead load.** For dead load, making the columns rigid moved the AB left ends by about 8-9 percentage points (Day 5); for live load it moves them by about 17-20 points, because the live joint loads are much larger at B and C than at A and D. For the carbon model this matters [J]: the hand method's moments are not a conservative stand-in for a frame analysis.
-- **Pattern loading.** The thesis puts the full live load on every span at once, and so does the model. A reviewer may ask about chequerboard live load for beam span moments. It is not in the thesis or the charter, so it is not modelled here [J].
+- **Axial shortening is a larger effect for live load than for dead load.** For dead load, making the columns rigid moved the AB left ends by about 8-9 percentage points (Day 5); for live load it moves them by about 17-20 points, because the live joint loads are much larger at B and C than at A and D. For the carbon model this matters (judgement): the hand method's moments are not a conservative stand-in for a frame analysis.
+- **Pattern loading.** The thesis puts the full live load on every span at once, and so does the model. A reviewer may ask about chequerboard live load for beam span moments. It is not in the thesis or the charter, so it is not modelled here (judgement).
 
 ## Load combinations (Day 6)
 
@@ -186,7 +186,7 @@ The thesis was completed on 29 May 2023 (cover page). Its references list GB 500
 - The gravity factors 1.3/1.5 match GB 55001-2021, which the thesis does not cite.
 - The seismic factors 1.2/1.3 come from GB 50011-2010. The mandatory GB 55002-2021, in force at thesis time, requires at least 1.3/1.4. This is flag D21.
 
-A 2024 edition of GB 50011-2010 reportedly aligns with GB 55002 [?]; this was not checked.
+A 2024 edition of GB 50011-2010 reportedly aligns with GB 55002 (unverified); this was not checked.
 
 ### Decisions by the author (24 Oct 2026)
 
@@ -194,14 +194,14 @@ The author made these decisions and checks the work; the AI assistant implemente
 
 1. **Flags D16-D21 accepted** as worded in `validation/thesis_values/README.md`. D16 and D17 take the wording revised by the cross-check. D16's A-support arithmetic was checked by the author.
 2. **Anchor (Layer 1) keeps the thesis factors.** These are 1.3/1.5 for gravity and wind, and 1.2/1.3 for seismic (Day 9), so the model can reproduce the thesis. `THESIS_COMBINATIONS` is unchanged.
-3. **Generator (Layer 2) uses the current codes.** Gravity uses GB 55001-2021 cl. 3.1.13 (1.3/1.5). Seismic uses GB 55002-2021 cl. 4.3.2 (1.3/1.4), held in `CODE_SEISMIC_COMBINATIONS`. This is the code-compliant baseline the charter asks for [J].
+3. **Generator (Layer 2) uses the current codes.** Gravity uses GB 55001-2021 cl. 3.1.13 (1.3/1.5). Seismic uses GB 55002-2021 cl. 4.3.2 (1.3/1.4), held in `CODE_SEISMIC_COMBINATIONS`. This is the code-compliant baseline the charter asks for (judgement).
 4. **Table 8-13 is not used as a validation target** (D17). Later checks compare the model with tables 6.3 and "7.2" and with Table 4-9, and name their flags.
 
 ### A check on Table 8-13
 
-In 13 of the 15 roof rows of Table 8-13 the column headed "1.3 Dead load + 1.5 × live" equals **1.0 × dead + 1.5 × live** (the first draft said all 13 typed rows; see the cross-check below). For example, at the A support: −67.76 + 1.5 × (−22.18) = −101.03, as printed; 1.3 × (−67.76) + 1.5 × (−22.18) = −121.36 would be expected. The test `tests/test_combinations.py` checks every row. If this holds through the rest of the table, the thesis design forces for gravity are about 23 % low on the dead-load part [J]. (The cross-check below shows that it does not hold at level 1, and that the inputs are not frame forces, so this estimate is withdrawn.) This matters for Layer 2: a generator that applies 1.3 correctly may not reproduce the thesis member sizes, and the reason would be this, not the generator.
+In 13 of the 15 roof rows of Table 8-13 the column headed "1.3 Dead load + 1.5 × live" equals **1.0 × dead + 1.5 × live** (the first draft said all 13 typed rows; see the cross-check below). For example, at the A support: −67.76 + 1.5 × (−22.18) = −101.03, as printed; 1.3 × (−67.76) + 1.5 × (−22.18) = −121.36 would be expected. The test `tests/test_combinations.py` checks every row. If this holds through the rest of the table, the thesis design forces for gravity are about 23 % low on the dead-load part (judgement). (The cross-check below shows that it does not hold at level 1, and that the inputs are not frame forces, so this estimate is withdrawn.) This matters for Layer 2: a generator that applies 1.3 correctly may not reproduce the thesis member sizes, and the reason would be this, not the generator.
 
-Two more things in Table 8-13 do not fit [J]:
+Two more things in Table 8-13 do not fit (judgement):
 - Its live-load column does not match table "7.2". At the roof A support it gives −22.18, against −4.55 in table "7.2".
 - The wind columns could not be reproduced. A search over simple factor sets a × D + b × L + c × W (a, b, c from 0 to ±1.95) found no set that fits even the first four roof rows of either wind column. They are left for Day 8.
 
@@ -214,11 +214,11 @@ Done on the thesis .docx (tables read in body order), not on the typed files. It
 3. **The dead and wind inputs are cells of table 6.3, not frame forces.** Every level-5 dead value is a roof-block cell of table 6.3. These come from the final row (67.76, 68.77, 52.84, 67.74), the second distribution step (25.72, 18.96) and the carry-over row (9.92). The "V" rows hold moments: A support V 68.77 is the B4 left-beam final moment, while the roof AB shear is 61.88 (Table 4-9). Every non-zero level-5 wind value is a table 6.3 cell too. These come from the roof first-step and carry-over rows (2.77, 4.08, 9.92, 1.38) and the floor-3 carry-over row (5.87, 7.74). The level-1 dead values are floor-3 and floor-2 cells of table 6.3, not floor-1 cells. They include −97.64, which is the D1 copy error.
 4. **The live values (22.18, 23.55, 17.65, 25.59, 22.60, 8.22, 5.63) appear nowhere else in the thesis text** except Tables 8-14 and 8-15. Their source is unknown. Figures were not searched.
 
-What follows [J]: Table 8-13 cannot be a validation target for combined forces. The 1.0 factor in D16 is real arithmetic, but it is applied to inputs that are not frame forces. So the "about 23 % low on the dead part" estimate above does not measure the error in the thesis design forces; that error is not known. The Layer 2 warning stands, in a stronger form: the thesis member sizes may not follow from any correct combination. The wind columns could not be reproduced (D17) partly because their inputs are table 6.3 cells.
+What follows (judgement): Table 8-13 cannot be a validation target for combined forces. The 1.0 factor in D16 is real arithmetic, but it is applied to inputs that are not frame forces. So the "about 23 % low on the dead part" estimate above does not measure the error in the thesis design forces; that error is not known. The Layer 2 warning stands, in a stronger form: the thesis member sizes may not follow from any correct combination. The wind columns could not be reproduced (D17) partly because their inputs are table 6.3 cells.
 
 Typed table "7.2" was checked in the same way: all 296 cells in `live_distribution_table_7_2.csv` equal the thesis cells, in reading order. Two D18/D19 numbers were redone by hand from those cells. Floor 2, C right beam: −27.70 + 2.31 − 2.18 + 0.91 = −26.66 (printed −3.38). Joint B1: 17.64 − 26.89 − 10.56 − 7.86 = −27.67.
 
-**Seismic wording (§8.7).** Items i to v write "1.31.5" for "1.3 D + 1.5", and mark right-hand wind with a minus ("primary freight-0.6 right wind"). Read the same way, item vi ("multiplied by1.21.3 times left of collision") is 1.2 G_E + 1.3 E_h with the earthquake from the left. Item vii ("multiplied by1.2-1.3 times") is 1.2 G_E − 1.3 E_h, from the right [J]. This is what `combinations.py` holds. It matches GB 50011-2010 cl. 5.4.1 (see "Code clauses" above).
+**Seismic wording (§8.7).** Items i to v write "1.31.5" for "1.3 D + 1.5", and mark right-hand wind with a minus ("primary freight-0.6 right wind"). Read the same way, item vi ("multiplied by1.21.3 times left of collision") is 1.2 G_E + 1.3 E_h with the earthquake from the left. Item vii ("multiplied by1.2-1.3 times") is 1.2 G_E − 1.3 E_h, from the right (judgement). This is what `combinations.py` holds. It matches GB 50011-2010 cl. 5.4.1 (see "Code clauses" above).
 
 ### Differences above 10 % (1.3 D + 1.5 L)
 
@@ -241,7 +241,7 @@ The reference is 1.3 × (thesis dead) + 1.5 × (thesis live), from the typed tab
 - **D18.** Table "7.2": at floors 2-4 the printed finals are not the sums of their columns (up to 6.2 kN·m; 23.28 at the D2 cell).
 - **D19.** Table "7.2": joints B4, B2 and B1 do not balance even with the column sums (−4.40, +6.22, −27.67 kN·m), and the first distribution step at B does not follow the distribution factors.
 - **D20.** Live load sets: the fixed-end moments use 6.41 / 0.97 kN/m, the shears 8.08 / 12.37 kN/m, the text says BC carries no live load, and the B/C axial sums use the roof BC shear (3.10) at every floor.
-- **D21.** §8.7 seismic combination: 1.2 gravity + 1.3 earthquake follows GB 50011-2010 cl. 5.4.1, but GB 55002-2021 cl. 4.3.2 (in force from 1 Jan 2022; thesis completed 29 May 2023) requires at least 1.3 and 1.4. The thesis seismic design forces are therefore below the code minimum then in force [J].
+- **D21.** §8.7 seismic combination: 1.2 gravity + 1.3 earthquake follows GB 50011-2010 cl. 5.4.1, but GB 55002-2021 cl. 4.3.2 (in force from 1 Jan 2022; thesis completed 29 May 2023) requires at least 1.3 and 1.4. The thesis seismic design forces are therefore below the code minimum then in force (judgement).
 
 ## Lateral loads: decisions made before the runs (25 Oct 2026)
 
@@ -253,7 +253,7 @@ The author made these decisions on Day 7, before any wind or seismic result exis
 
 ### How the wind comparison is read (written 26 Oct 2026, 03:55 UTC, before the first wind run)
 
-The AI assistant wrote these reading rules down before any wind result existed [J]. They apply the author's decision 1 above; they do not change it.
+The AI assistant wrote these reading rules down before any wind result existed (judgement). They apply the author's decision 1 above; they do not change it.
 
 1. "Storey drift" in decision 1 is read as the inter-storey displacement Δu [mm] of Table 8-2, storey by storey. That is the pass/fail test, with the 15 % tolerance, and it is reported whatever it shows.
 2. Two more references are reported next to it as diagnostics, never as pass/fail: (a) V/ΣD from the shears and ΣD printed in Table 8-2 (the thesis method with its own numbers, see D7); (b) V/ΣD with D-values recomputed from the model's own section stiffnesses by the same D-value formulas. Together they split any difference into thesis arithmetic, D-value method, and finite-element model.
@@ -264,13 +264,13 @@ The AI assistant wrote these reading rules down before any wind result existed [
 
 ### How the seismic comparison is read (written 27 Oct 2026, 03:41 UTC, before the first seismic run)
 
-The AI assistant wrote these reading rules before any seismic result existed [J]. They apply the author's decisions 2 and 3 above and change neither. The author has set no pass/fail tolerance for Day 9, so none is invented here: every difference is reported, and every difference above 10 % gets a written reason (Playbook Day 6 rule).
+The AI assistant wrote these reading rules before any seismic result existed (judgement). They apply the author's decisions 2 and 3 above and change neither. The author has set no pass/fail tolerance for Day 9, so none is invented here: every difference is reported, and every difference above 10 % gets a written reason (Playbook Day 6 rule).
 
-1. **Comparison targets.** The storey forces F_i = V_i − V_(i+1) of Table 8-12 for levels 1-4 (31.03, 54.56, 77.62, 101.56 kN) are the primary targets (decision 2). The level-5 force is not added at the roof. Storey shears are compared with the four-storey shears the same decision implies, V_i − 98.29 kN [J], and also listed next to the printed V_i.
-2. **Storey weights G_i (GB 50011 cl. 5.1.3, Table 5.1.3).** G_i = dead + 0.5 × floor live; roof live load is not included. The loads are those the thesis applied to the axis (2) frame (7.2 m strip, decision B10), summed from the model's own load description. Primary: the actual load shapes of Fig. 4-4 and §6.1, because they carry the true total load; the equivalent uniform loads of §6.2.1 and §7.1 were made to match fixed-end moments, not totals [J]. Each storey's column self-weight goes half to the level above and half to the level below; the lower half of the ground storey goes to the foundation. Check run: the loads the thesis used for beam shears and column axial forces (dead ``thesis_text``, live ``thesis_shear``).
+1. **Comparison targets.** The storey forces F_i = V_i − V_(i+1) of Table 8-12 for levels 1-4 (31.03, 54.56, 77.62, 101.56 kN) are the primary targets (decision 2). The level-5 force is not added at the roof. Storey shears are compared with the four-storey shears the same decision implies, V_i − 98.29 kN (judgement), and also listed next to the printed V_i.
+2. **Storey weights G_i (GB 50011 cl. 5.1.3, Table 5.1.3).** G_i = dead + 0.5 × floor live; roof live load is not included. The loads are those the thesis applied to the axis (2) frame (7.2 m strip, decision B10), summed from the model's own load description. Primary: the actual load shapes of Fig. 4-4 and §6.1, because they carry the true total load; the equivalent uniform loads of §6.2.1 and §7.1 were made to match fixed-end moments, not totals (judgement). Each storey's column self-weight goes half to the level above and half to the level below; the lower half of the ground storey goes to the foundation. Check run: the loads the thesis used for beam shears and column axial forces (dead ``thesis_text``, live ``thesis_shear``).
 3. **Period.** The thesis prints no period (B9). The primary T1 is the first-mode period of the bare OpenSeesPy frame, with G_i/g lumped as horizontal mass at the four column-line nodes of each level. A Rayleigh estimate from the static deflection under lateral forces equal to G_i is reported as an arithmetic check of the eigenvalue, not as a separate method.
-4. **Infill period factor ψ_T.** This is the author's decision (docs/schedule.md, Day 9). Until it is made, the primary run uses ψ_T = 1.0, which needs no outside value. Runs with ψ_T = 0.9, 0.8, 0.7 and 0.6 are reported as a sensitivity only. These are trial values spanning the range the primer cites from JGJ 3-2010 cl. 4.3.17 [?]; they are not code values, and none of them becomes the primary run until the author chooses one from a source.
-5. **Implied period.** The period at which the GB 50011 curve, with the model's G_eq, gives the thesis base shear (V_1 − 98.29 kN) is reported as a diagnostic. It must not be used to choose ψ_T, because that would tune the model to the target [J].
+4. **Infill period factor ψ_T.** This is the author's decision (docs/schedule.md, Day 9). Until it is made, the primary run uses ψ_T = 1.0, which needs no outside value. Runs with ψ_T = 0.9, 0.8, 0.7 and 0.6 are reported as a sensitivity only. These are trial values spanning the range the primer cites from JGJ 3-2010 cl. 4.3.17 (unverified); they are not code values, and none of them becomes the primary run until the author chooses one from a source.
+5. **Implied period.** The period at which the GB 50011 curve, with the model's G_eq, gives the thesis base shear (V_1 − 98.29 kN) is reported as a diagnostic. It must not be used to choose ψ_T, because that would tune the model to the target (judgement).
 6. **Spectrum and forces.** α_max = 0.08 (decision 3), Tg = 0.35 s (B5), 5 % damping with γ = 0.9, η1 = 0.02, η2 = 1.0 (cl. 5.1.5); F_Ek = α1 × 0.85 ΣG_i (cl. 5.2.1); F_i by G_i H_i with the top additional force δ_n from Table 5.2.1 (H_i measured from the top of the footing, 4.55 m ground storey, B4). Only the four values read from the English translation of GB 50011-2010 on 26 Oct are used; they are still to be checked against the Chinese 2016 copy.
 7. **Drifts.** The model's forces act at the axis-A node of each level, as for wind; storey displacement is the mean of the four column-line nodes. Model Δu is reported against the printed Δu, against V/ΣD with the printed ΣD and four-storey shears, and against the 1/550 limit (S11). A second run applies the thesis F_1-F_4 to the model, so the stiffness comparison does not depend on the forces.
 8. **Minimum shear.** Every storey is checked against λ ΣG_j with λ = 0.016 (cl. 5.2.5, Table 5.2.5, 7 degrees 0.10 g, T1 < 3.5 s).
@@ -278,7 +278,7 @@ The AI assistant wrote these reading rules before any seismic result existed [J]
 
 ## Wind (Day 8, 26 Oct 2026)
 
-Status: **reviewed by the author on 26 Oct 2026** (decisions at the end of this section). Explanations still marked [J] or [?] are the AI assistant's and unverified. Numbers come from `results/anchor_wind.csv`, `anchor_wind_runs.csv`, `anchor_wind_d_values.csv` and `thesis_table_8_2_forces_check.csv`, written by `src/shellbench/anchor_wind.py` (run by `python -m shellbench.anchor_frame`), or are arithmetic on printed Table 8-2 values.
+Status: **reviewed by the author on 26 Oct 2026** (decisions at the end of this section). Explanations still marked (judgement) or (unverified) are the AI assistant's and unverified. Numbers come from `results/anchor_wind.csv`, `anchor_wind_runs.csv`, `anchor_wind_d_values.csv` and `thesis_table_8_2_forces_check.csv`, written by `src/shellbench/anchor_wind.py` (run by `python -m shellbench.anchor_frame`), or are arithmetic on printed Table 8-2 values.
 
 ### What the model does
 
@@ -303,7 +303,7 @@ The model and the thesis carry the same storey shears (column shears 42.67, 31.9
 2. Read backwards, the printed Δu implies storey stiffnesses V/Δu of 54 705, 35 088, 42 804 and 10 106 N/mm. Storeys 2-4 have identical columns, beams and heights, yet the implied stiffness changes by more than four times between them. No single elastic frame can do that, so no choice of modelling assumption (cracked sections, a different E, joint flexibility) can bring the model within 15 % of all four rows.
 3. Against V/ΣD with the thesis numbers, the model is −7.5, +18.1, +22.9 and +34.5 % off. Against V/ΣD with D-values recomputed from the model's own sections by the same formulas as Table 7-6, it is −16.7, −2.8, +1.1 and +10.6 % off.
 
-Item 3 splits the difference into its parts. The recomputed ΣD (83 633 N/mm ground, 88 416 N/mm above) is lower than the printed 92 842 and 107 488 N/mm, which is flag D6 again: the printed K and α_c in Table 7-6 cannot be reproduced from the §2.6 stiffnesses. Once the D-values are recomputed, the finite-element frame and the D-value method agree within 3 % at levels 2-3. The ground storey is 16.7 % stiffer in the model than the D-value formula gives, because the fixed-base α_c = (0.5 + K)/(2 + K) ignores the restraint the storey above gives to the column tops [J]. At the roof the model is 10.6 % more flexible than the D-value estimate. Checked on 26 Oct 2026 (the AI assistant, `test_roof_storey_stiffness_depends_on_load_pattern`): the D-value method assumes equal joint rotations at both ends of each column, so its storey stiffness does not depend on the loads. The model's roof storey does. Under the Table 8-2 forces storey 3 carries 21.83 kN against 11.42 kN at the roof, so the level-3 joints rotate about 1.9 times as much as the roof joints, and that rotation adds drift to the roof storey. With the same 42.67 kN at the roof only (equal shear in every storey) the roof storey is 15.8 % stiffer than the estimate, because the roof beams restrain only the columns below them. With 42.67 kN at level 3 only, the roof storey drifts 0.115 mm while carrying no shear. So the 10.6 % is a limit of the D-value method at the top storey, not an error in the model or in the recomputed D-values [J]. It does not change the wind verdict.
+Item 3 splits the difference into its parts. The recomputed ΣD (83 633 N/mm ground, 88 416 N/mm above) is lower than the printed 92 842 and 107 488 N/mm, which is flag D6 again: the printed K and α_c in Table 7-6 cannot be reproduced from the §2.6 stiffnesses. Once the D-values are recomputed, the finite-element frame and the D-value method agree within 3 % at levels 2-3. The ground storey is 16.7 % stiffer in the model than the D-value formula gives, because the fixed-base α_c = (0.5 + K)/(2 + K) ignores the restraint the storey above gives to the column tops (judgement). At the roof the model is 10.6 % more flexible than the D-value estimate. Checked on 26 Oct 2026 (the AI assistant, `test_roof_storey_stiffness_depends_on_load_pattern`): the D-value method assumes equal joint rotations at both ends of each column, so its storey stiffness does not depend on the loads. The model's roof storey does. Under the Table 8-2 forces storey 3 carries 21.83 kN against 11.42 kN at the roof, so the level-3 joints rotate about 1.9 times as much as the roof joints, and that rotation adds drift to the roof storey. With the same 42.67 kN at the roof only (equal shear in every storey) the roof storey is 15.8 % stiffer than the estimate, because the roof beams restrain only the columns below them. With 42.67 kN at level 3 only, the roof storey drifts 0.115 mm while carrying no shear. So the 10.6 % is a limit of the D-value method at the top storey, not an error in the model or in the recomputed D-values (judgement). It does not change the wind verdict.
 
 ### Check runs (one change each, Δu difference from Table 8-2)
 
@@ -320,12 +320,12 @@ Every model drift ratio meets 1/550 (spec S11) by a wide margin. The largest is 
 
 ### A check on the printed wind forces
 
-`thesis_table_8_2_forces_check.csv` recomputes W_k = β_z μ_s μ_z w₀ B h from the Table 8-1 inputs (spec W1-W6). The printed shears are exact running sums of the printed forces. Levels 1-3 reproduce to 0.01 kN with tributary heights of 3.825 m ((4.05 + 3.6)/2) and 3.60 m. The roof force 11.42 kN implies a tributary height of 3.60 m, the same as a typical floor. Table 8-1 confirms it: the roof row has h_i = 3.6 m and h_j = 3.6 m. The parapet is 1.2 m high (Th §4.2, parapet wall 1.2 × 0.24 × 5.5), so half the top storey plus the parapet gives 1.8 + 1.2 = 3.0 m and W_k = 3.173 × 3.0 = 9.52 kN [J]. The printed roof force is 20 % higher than that, and the base shear 42.67 kN is about 4.5 % higher than 40.77 kN. This is flag D23. It errs on the safe side and does not change the drift verdict.
+`thesis_table_8_2_forces_check.csv` recomputes W_k = β_z μ_s μ_z w₀ B h from the Table 8-1 inputs (spec W1-W6). The printed shears are exact running sums of the printed forces. Levels 1-3 reproduce to 0.01 kN with tributary heights of 3.825 m ((4.05 + 3.6)/2) and 3.60 m. The roof force 11.42 kN implies a tributary height of 3.60 m, the same as a typical floor. Table 8-1 confirms it: the roof row has h_i = 3.6 m and h_j = 3.6 m. The parapet is 1.2 m high (Th §4.2, parapet wall 1.2 × 0.24 × 5.5), so half the top storey plus the parapet gives 1.8 + 1.2 = 3.0 m and W_k = 3.173 × 3.0 = 9.52 kN (judgement). The printed roof force is 20 % higher than that, and the base shear 42.67 kN is about 4.5 % higher than 40.77 kN. This is flag D23. It errs on the safe side and does not change the drift verdict.
 
 ### Proposed flags (for the author)
 
 - **D22.** Table 8-2 Δu implies storey stiffnesses V/Δu of 54 705, 35 088, 42 804 and 10 106 N/mm; storeys 2-4 are identical, so the printed Δu cannot come from one frame. Extends D7. Effect: the pre-registered wind test fails on the thesis side; the anchor report names it.
-- **D23.** Roof W_k = 11.42 kN uses h_j = 3.6 m (Table 8-1) where half the top storey plus the 1.2 m parapet (Th §4.2) gives 3.0 m, so 9.52 kN [J]. Effect: the thesis roof wind force is 20 % high and the base shear 4.5 % high, on the safe side. The anchor keeps the printed forces.
+- **D23.** Roof W_k = 11.42 kN uses h_j = 3.6 m (Table 8-1) where half the top storey plus the 1.2 m parapet (Th §4.2) gives 3.0 m, so 9.52 kN (judgement). Effect: the thesis roof wind force is 20 % high and the base shear 4.5 % high, on the safe side. The anchor keeps the printed forces.
 
 ### Decisions by the author (26 Oct 2026)
 
@@ -336,19 +336,19 @@ Every model drift ratio meets 1/550 (spec S11) by a wide margin. The largest is 
 
 ### How the response-spectrum check is read (written 27 Oct 2026, 03:49 UTC, before the first response-spectrum or 3D run)
 
-The AI assistant wrote these before any Day 10 result existed [J]. No tolerance is set for Day 10 by the author, so none is invented; every difference above 10 % gets a written reason.
+The AI assistant wrote these before any Day 10 result existed (judgement). No tolerance is set for Day 10 by the author, so none is invented; every difference above 10 % gets a written reason.
 
 1. **Same inputs as Day 9.** Same G_i, masses, spectrum, α_max, Tg and ψ_T = 1.0 (bare frame) as the primary base-shear run. Nothing is re-chosen for the second method.
-2. **Modes and combination.** First three modes of the 2D frame. For mode j, F_ji = α_j γ_j X_ji G_i with γ_j = Σ X_ji G_i / Σ X_ji² G_i (GB 50011 cl. 5.2.2 [?], to be checked in the author's copy; this is also the standard modal participation factor). Each mode's forces are applied statically; storey shears and inter-storey drifts are combined by SRSS (square root of the sum of squares) storey by storey. Displacements are not combined first and then differenced.
+2. **Modes and combination.** First three modes of the 2D frame. For mode j, F_ji = α_j γ_j X_ji G_i with γ_j = Σ X_ji G_i / Σ X_ji² G_i (GB 50011 cl. 5.2.2 (unverified), to be checked in the author's copy; this is also the standard modal participation factor). Each mode's forces are applied statically; storey shears and inter-storey drifts are combined by SRSS (square root of the sum of squares) storey by storey. Displacements are not combined first and then differenced.
 3. **Mass participation** of each mode = (Σ m φ)² / (Σ m φ² × Σ m), reported with the cumulative sum.
 4. **Comparison.** Base shear, storey shears and drifts of the response-spectrum method against the Day 9 base-shear run, and both against Table 8-12 as read on Day 9 (four-storey shears V_i − 98.29 kN; printed Δu). The figure has storey on the y-axis and three lines per quantity: base-shear method, response spectrum, thesis.
 5. **Which method governs** is read from the larger base shear and the larger drift. It is reported as found, not chosen.
-6. **3D model.** Whole building on the drawing grid (spec G4 and B11: bays 6.0, 6.6, 6.6, 6.6, 6.6, 6.0 m along axes 1-7; 7.2, 6.6, 7.2 m across), same storey heights, 600 × 600 columns at every grid point, transverse beams as the 2D frame, longitudinal beams 300 × 600 (M3). Beam I factor 2.0 for interior lines and 1.5 for edge lines (M7, applied to both directions [J]). Rigid floors (one diaphragm per level). Mass per level = the 2D frame's G_i / g scaled by plan area, 38.4 × 21.0 m against 7.2 × 21.0 m, placed at the plan centre with the rotational inertia of a uniform rectangle [J]. Shear modulus 0.4 E (GB 50010 cl. 4.1.8 [?]). The first three periods are reported next to the 2D frame's first three, with each mode's direction. The E-shaped wings and stair cores are not modelled (B11 open point).
+6. **3D model.** Whole building on the drawing grid (spec G4 and B11: bays 6.0, 6.6, 6.6, 6.6, 6.6, 6.0 m along axes 1-7; 7.2, 6.6, 7.2 m across), same storey heights, 600 × 600 columns at every grid point, transverse beams as the 2D frame, longitudinal beams 300 × 600 (M3). Beam I factor 2.0 for interior lines and 1.5 for edge lines (M7, applied to both directions (judgement)). Rigid floors (one diaphragm per level). Mass per level = the 2D frame's G_i / g scaled by plan area, 38.4 × 21.0 m against 7.2 × 21.0 m, placed at the plan centre with the rotational inertia of a uniform rectangle (judgement). Shear modulus 0.4 E (GB 50010 cl. 4.1.8 (unverified)). The first three periods are reported next to the 2D frame's first three, with each mode's direction. The E-shaped wings and stair cores are not modelled (B11 open point).
 7. These rules stay as written whatever the results. Any later change is dated and marked as made after the run.
 
 ## Earthquake by the base-shear method (Day 9, 27 Oct 2026)
 
-Status: **draft for the author's review.** Explanations marked [J] are the AI assistant's. Numbers come from `results/anchor_seismic.csv`, `anchor_seismic_runs.csv`, `anchor_seismic_weights.csv` and `anchor_seismic_period_check.csv`, written by `src/shellbench/seismic.py` (run by `python -m shellbench.anchor_frame`), or are arithmetic on printed Table 8-12 values. The reading rules above ("How the seismic comparison is read") were committed before the first run and were not changed after it.
+Status: **draft for the author's review.** Explanations marked (judgement) are the AI assistant's. Numbers come from `results/anchor_seismic.csv`, `anchor_seismic_runs.csv`, `anchor_seismic_weights.csv` and `anchor_seismic_period_check.csv`, written by `src/shellbench/seismic.py` (run by `python -m shellbench.anchor_frame`), or are arithmetic on printed Table 8-12 values. The reading rules above ("How the seismic comparison is read") were committed before the first run and were not changed after it.
 
 ### What the model does
 
@@ -363,12 +363,12 @@ G_i comes from the loads the thesis put on the axis (2) frame, with half the flo
 | 3 | 63.34 | 77.62 | −18.4 % | 146.01 | 179.18 | −18.5 % |
 | 4 | 82.67 | 101.56 | −18.6 % | 82.67 | 101.56 | −18.6 % |
 
-Every force is 18-20 % below the thesis, and the spread across the four levels is under 2 points. So the way the base shear is spread up the height matches the thesis; the whole difference is in the size of the base shear, α1 × G_eq. That difference is above 10 %, so it needs a reason. I cannot give one cause, because the thesis prints neither its period nor its weights (B9). Two readings fit the numbers [J]:
+Every force is 18-20 % below the thesis, and the spread across the four levels is under 2 points. So the way the base shear is spread up the height matches the thesis; the whole difference is in the size of the base shear, α1 × G_eq. That difference is above 10 %, so it needs a reason. I cannot give one cause, because the thesis prints neither its period nor its weights (B9). Two readings fit the numbers (judgement):
 
 1. **Period.** With the model's G_eq, the thesis base shear 264.77 kN needs α1 = 0.0530, which the curve gives at T = 0.553 s (`T_implied_by_thesis_V`). That is 0.79 times the bare-frame period. A period reduction for infill walls would do this, and the thesis building has infill walls (Th §4.2). This number is a diagnostic only (reading rule 5); it must not be used to pick ψ_T.
-2. **Weights.** At the model's own T1, the same base shear needs G_eq = 6160 kN, 23 % more than the model's. The model's ΣG is 9.7 kN/m² over the 7.2 m strip (4 × 151.2 m²), a little below the 12-15 kN/m² the primer gave as a normal range [J]. So heavier thesis weights are possible too. The check run with the loads the thesis used for beam shears (`thesis_shear_weights`) adds only 3 % to ΣG and closes the gap to −17.5 %, so the beam-load model is not the cause.
+2. **Weights.** At the model's own T1, the same base shear needs G_eq = 6160 kN, 23 % more than the model's. The model's ΣG is 9.7 kN/m² over the 7.2 m strip (4 × 151.2 m²), a little below the 12-15 kN/m² the primer gave as a normal range (judgement). So heavier thesis weights are possible too. The check run with the loads the thesis used for beam shears (`thesis_shear_weights`) adds only 3 % to ΣG and closes the gap to −17.5 %, so the beam-load model is not the cause.
 
-Most likely both play a part [J]. The anchor report will name this as a stated assumption, not a resolved difference.
+Most likely both play a part (judgement). The anchor report will name this as a stated assumption, not a resolved difference.
 
 ### The infill period factor (the author's decision)
 
@@ -380,7 +380,7 @@ Most likely both play a part [J]. The anchor report will name this as a stated a
 | 0.7 | 0.489 | 0.0592 | 296.04 | +11.8 % | 0 | 0.42 |
 | 0.6 | 0.419 | 0.0681 | 340.10 | +28.5 % | 0 | 0.48 |
 
-These ψ_T are trial values (reading rule 4), not code values. Please choose ψ_T from a source you can cite (JGJ 3-2010 cl. 4.3.17 [?], or your course notes) and not from this table. The ψ_T = 0.8 row lands close to the thesis, and picking it for that reason would be tuning. One thing to know when choosing: at ψ_T ≤ 0.7 the period drops below 1.4 Tg and the top force disappears.
+These ψ_T are trial values (reading rule 4), not code values. Please choose ψ_T from a source you can cite (JGJ 3-2010 cl. 4.3.17 (unverified), or your course notes) and not from this table. The ψ_T = 0.8 row lands close to the thesis, and picking it for that reason would be tuning. One thing to know when choosing: at ψ_T ≤ 0.7 the period drops below 1.4 Tg and the top force disappears.
 
 ### Drifts
 
@@ -391,7 +391,7 @@ These ψ_T are trial values (reading rule 4), not code values. Please choose ψ_
 | 3 | 1.605 | 2.67 | −39.9 % | 1.667 | −3.7 % | 1.972 | +18.3 % |
 | 4 | 0.982 | 1.93 | −49.1 % | 0.945 | +4.0 % | 1.207 | +27.7 % |
 
-The −36 to −49 % against the printed Δu has three parts, and each is already known [J]:
+The −36 to −49 % against the printed Δu has three parts, and each is already known (judgement):
 
 1. The printed shears include the spurious 98.29 kN level-5 force (B4). Taking it out lowers V by 27 % at level 1 and by 49 % at level 4.
 2. The forces are 19 % lower in the model (above).
@@ -408,7 +408,7 @@ Every storey drift meets 1/550. The largest is θ = 5.67 × 10⁻⁴ at storey 2
 ### Decisions by the author (27 Oct 2026)
 
 - D24 accepted: the thesis base shear (four storeys) is 18.9 % above the bare-frame base-shear method, and the cause cannot be split because the thesis prints neither period nor weights.
-- The author asked the AI assistant to choose ψ_T from a citable source, not from the sensitivity table. **Change made after the Day 9 and Day 10 runs (reading rule 9):** the anchor value is ψ_T = 0.7 (`seismic.ANCHOR_PSI_T`). Source: JGJ 3-2010 cl. 4.3.17 gives 0.6-0.7 for frame structures with infill walls [?]. The AI assistant did not open the clause; the range and clause number are as cited by Zhou (2024), "框架结构计算中对周期折减系数合理取值的研究", 建筑监督检测与造价, issue 9. JGJ 3 is the high-rise code, so using it for a four-storey frame borrows a design-office practice rule [J]. Within the range, 0.7 is the smaller reduction [J]. It is not the value that matches the thesis best (0.8, outside the cited range), so the choice is not tuned to the target. A second, independent secondary source quotes the clause wording: "当非承重墙体为砌体墙时，高层建筑结构的计算自振周期折减系数可按下列规定取值：框架结构可取0.6～0.7" (Sohu article "自振周期折减系数，没你想象的那么简单", https://www.sohu.com/a/221038015_206216, read 27 Oct 2026). Neither the author nor the AI assistant has a primary copy of JGJ 3-2010 (author, 27 Oct 2026), so the [?] stays until one is opened, for example in a university library, before Paper 1 cites it.
+- The author asked the AI assistant to choose ψ_T from a citable source, not from the sensitivity table. **Change made after the Day 9 and Day 10 runs (reading rule 9):** the anchor value is ψ_T = 0.7 (`seismic.ANCHOR_PSI_T`). Source: JGJ 3-2010 cl. 4.3.17 gives 0.6-0.7 for frame structures with infill walls (unverified). The AI assistant did not open the clause; the range and clause number are as cited by Zhou (2024), "框架结构计算中对周期折减系数合理取值的研究", 建筑监督检测与造价, issue 9. JGJ 3 is the high-rise code, so using it for a four-storey frame borrows a design-office practice rule (judgement). Within the range, 0.7 is the smaller reduction (judgement). It is not the value that matches the thesis best (0.8, outside the cited range), so the choice is not tuned to the target. A second, independent secondary source quotes the clause wording: "当非承重墙体为砌体墙时，高层建筑结构的计算自振周期折减系数可按下列规定取值：框架结构可取0.6～0.7" (Sohu article "自振周期折减系数，没你想象的那么简单", https://www.sohu.com/a/221038015_206216, read 27 Oct 2026). Neither the author nor the AI assistant has a primary copy of JGJ 3-2010 (author, 27 Oct 2026), so the (unverified) stays until one is opened, for example in a university library, before Paper 1 cites it.
 - What changes: at ψ_T = 0.7, T1 = 0.489 s (below 1.4 Tg, so δ_n = 0), α1 = 0.0592, F_Ek = 296.04 kN, 11.8 % above the thesis four-storey base shear; largest θ is 42 % of 1/550 (`results/anchor_seismic_runs.csv`, row `psi_t_0.7`). The bare-frame run stays as the method comparison above; the design checks (Day 11) and the carbon inventory use ψ_T = 0.7.
 
 ## Response-spectrum check and 3D periods (Day 10, done ahead on 27 Oct 2026)
@@ -434,7 +434,7 @@ Three modes carry 99.6 % of the mass, so a fourth would change nothing that matt
 | 3 | 146.01 | 142.57 | −2.4 % | 1.605 | 1.539 | −4.1 % |
 | 4 | 82.67 | 70.06 | −15.3 % | 0.982 | 0.870 | −11.4 % |
 
-The two routes agree within 6.4 % at storeys 1-3. Two things explain the pattern [J]:
+The two routes agree within 6.4 % at storeys 1-3. Two things explain the pattern (judgement):
 
 1. **The base.** The base-shear method takes G_eq = 0.85 ΣG. The first mode alone has 88.9 % of the mass, so its base shear is 0.889 / 0.85 = 1.046 times larger: 224.57 against 214.75 kN. The higher modes add another 4 kN through SRSS. So the spectrum method is 6.4 % higher at the base.
 2. **The roof.** The base-shear method puts δ_n F_Ek = 27.0 kN on the roof to stand in for higher modes (Table 5.2.1). For this four-storey frame that stand-in is generous: the spectrum method's roof shear is 70.06 kN against 82.67 kN. That is why storey 4 differs by more than 10 %, in shear and in drift. The difference sits on the safe side of the simpler method.
@@ -449,7 +449,7 @@ The two routes agree within 6.4 % at storeys 1-3. Two things explain the pattern
 | 2 | 0.571 | longitudinal (X) | 0.215 (2nd transverse mode) |
 | 3 | 0.518 | torsion | 0.115 (3rd transverse mode) |
 
-The comparison that matters is the transverse T1: 0.622 s in 3D against 0.698 s for the 2D frame, so the 2D model is 12 % longer. That is not a 3D effect as such. Each 2D-frame storey carries the mass of a 7.2 m strip (decision B10, the thesis calculation width), while the seven drawn transverse frames share 38.4 m, 5.49 m each. With mass alone the period would scale by √(5.49 / 7.2) = 0.873. The two edge frames have the 1.5 beam factor instead of 2.0, which makes the average frame a little softer, and the result, 0.891, sits just above 0.873 [J]. So the 2D simplification mainly changes T1 through the tributary width, and the paper should say so: the 7.2 m width is kept for validating against the thesis tables, and the drawn grid is what the whole-building model (and Layer 2) uses.
+The comparison that matters is the transverse T1: 0.622 s in 3D against 0.698 s for the 2D frame, so the 2D model is 12 % longer. That is not a 3D effect as such. Each 2D-frame storey carries the mass of a 7.2 m strip (decision B10, the thesis calculation width), while the seven drawn transverse frames share 38.4 m, 5.49 m each. With mass alone the period would scale by √(5.49 / 7.2) = 0.873. The two edge frames have the 1.5 beam factor instead of 2.0, which makes the average frame a little softer, and the result, 0.891, sits just above 0.873 (judgement). So the 2D simplification mainly changes T1 through the tributary width, and the paper should say so: the 7.2 m width is kept for validating against the thesis tables, and the drawn grid is what the whole-building model (and Layer 2) uses.
 
 The plan is symmetric in the model, so the translational modes carry no rotation and torsion comes third. The real building is E-shaped with stair cores (B11 open point), which would add eccentricity; the simple model cannot show that, and the anchor report should say it was left out.
 
@@ -461,9 +461,9 @@ With every modal period multiplied by 0.7, the spectrum method gives 312.38, 267
 
 - D25 accepted: the 2D frame's T1 is 12 % longer than the whole building's transverse T1 because it carries a 7.2 m strip of mass against 5.49 m for the drawn frames.
 
-### Code values still marked [?]
+### Code values still marked (unverified)
 
-GB 50011 cl. 5.2.2 (modal forces and SRSS) is cited from general knowledge and must be checked in the author's copy. Update 27 Oct 2026: G_c = 0.4 E_c is GB 50010 cl. 4.1.5 (p. 19 of the author's translation), not cl. 4.1.8 as first written; the value is confirmed. The rest of this paragraph was written before that check: GB 50011 cl. 5.2.2 and GB 50010 cl. 4.1.8 (G_c = 0.4 E_c) are cited from general knowledge and must be checked in the author's copies. The square-section torsion constant (0.1406 a⁴) is a standard textbook result [?]; it only affects member torsion in the 3D model.
+GB 50011 cl. 5.2.2 (modal forces and SRSS) is cited from general knowledge and must be checked in the author's copy. Update 27 Oct 2026: G_c = 0.4 E_c is GB 50010 cl. 4.1.5 (p. 19 of the author's translation), not cl. 4.1.8 as first written; the value is confirmed. The rest of this paragraph was written before that check: GB 50011 cl. 5.2.2 and GB 50010 cl. 4.1.8 (G_c = 0.4 E_c) are cited from general knowledge and must be checked in the author's copies. The square-section torsion constant (0.1406 a⁴) is a standard textbook result (unverified); it only affects member torsion in the 3D model.
 
 ### Proposed flag (for the author)
 
@@ -473,19 +473,19 @@ GB 50011 cl. 5.2.2 (modal forces and SRSS) is cited from general knowledge and m
 
 ### How the design checks are read (written 28 Oct 2026, committed 00:41 UTC in 468df78, before the first design-check run)
 
-The AI assistant wrote these before any Day 11 result existed [J]. Code values come from `notes/gb50010_design_values.md` and from the uploaded GB 50010-2010 English translation (2010 issue; page numbers ±1). The author has set no tolerance for Day 11, so none is invented: a member is flagged when the provided steel is below the required steel, by any amount.
+The AI assistant wrote these before any Day 11 result existed (judgement). Code values come from `notes/gb50010_design_values.md` and from the uploaded GB 50010-2010 English translation (2010 issue; page numbers ±1). The author has set no tolerance for Day 11, so none is invented: a member is flagged when the provided steel is below the required steel, by any amount.
 
 1. **Load cases** come from the anchor frame as it stands. D and L are the primary gravity runs (`thesis_fem`, Days 5-6). W is the printed W_k of Table 8-2 at the axis-A joints (Day 8). E is the base-shear method with ψ_T = 0.7 (Day 9 decision): F_Ek 296.04 kN, δ_n = 0. G_E = D + 0.5 × floor live, with no roof live (GB 50011 Table 5.1.3), run as its own case. Wind and earthquake from the right are the mirror of the left (the frame is symmetric); they are run, not mirrored by hand.
 2. **Combinations** are the thesis set (`combinations.THESIS_COMBINATIONS`): 1.3D + 1.5L; 1.3D + 1.5(L + 0.6W); 1.3D + 1.5(0.7L + W); 1.2G_E + 1.3E, each wind and earthquake both ways. In the seismic combinations the demand is multiplied by γ_RE (GB 50010 cl. 11.1.6, p. 152): 0.75 for beam flexure. That is the same as dividing the capacity by γ_RE.
 3. **Beam design moments** are taken at the column faces, 0.3 m in from each column centre-line (half the 600 mm column). This is the design section the thesis intended (Table 8-13 reduces moments to the column face). No moment redistribution is applied (GB 50010 cl. 5.4.3 allows it but does not require it). Each beam end is designed for the largest hogging moment (top steel) and the largest sagging moment (bottom steel) at that face. Mid-span is designed for the largest sagging moment between the faces.
 4. **Required steel**, rectangular section with b = 300 mm, h0 = h − 50 mm (spec X10, B14), C40 and HRB400: α_s = M / (α1 f_c b h0²), ξ = 1 − √(1 − 2α_s), A_s = α1 f_c b ξ h0 / f_y (GB 50010 cl. 6.2.10, p. 36-37; α1 = 1.0). Singly reinforced. If ξ > ξ_b = 0.518, or ξ > 0.35 at a beam end (cl. 11.3.1, p. 154, grade III), the section is reported as needing compression steel. It is not redesigned.
-5. **Minimum steel.** Beams, grade III: 0.261 % at supports and 0.214 % at mid-span of b × h (Table 11.3.6-1, p. 156). Columns: total 0.75 % (frame column, middle or side, 400 MPa bars), each side ≥ 0.20 % (Table 11.4.12-1, p. 163). Axis (2) is an interior frame, so its A and D columns are side columns, not corner columns [J]. Required steel = max(calculated, minimum).
+5. **Minimum steel.** Beams, grade III: 0.261 % at supports and 0.214 % at mid-span of b × h (Table 11.3.6-1, p. 156). Columns: total 0.75 % (frame column, middle or side, 400 MPa bars), each side ≥ 0.20 % (Table 11.4.12-1, p. 163). Axis (2) is an interior frame, so its A and D columns are side columns, not corner columns (judgement). Required steel = max(calculated, minimum).
 6. **Column axial ratio** μ = N / (f_c A), with N the largest axial compression in the two seismic combinations at the bottom of each column, and A = 600 × 600 mm (Table 11.4.16 note 1, p. 164). The limit is 0.85 (decision B16). The largest N under the gravity combinations is reported too, for information.
-7. **Thesis steel.** Beams: the s9.2 table (`validation/thesis_values/beam_steel_areas.csv`). Floor "5" is the roof beam (model level 4; B4) and floor 1 is level 1. "Left end" and "right end" are read as top steel at that face, "middle" as bottom steel at mid-span [J]. Both the printed A_s,prov and the area of the printed bars are checked, because they disagree in 6 rows (D10). Columns: 4C22 in every column (spec R1, decision B6). The KZ-2 4C20 and KZ-3 4C25 entries for floors 2 and 4 on drawing 01 are checked for the ratio only, because the drawing does not say which axis each KZ type sits on.
+7. **Thesis steel.** Beams: the s9.2 table (`validation/thesis_values/beam_steel_areas.csv`). Floor "5" is the roof beam (model level 4; B4) and floor 1 is level 1. "Left end" and "right end" are read as top steel at that face, "middle" as bottom steel at mid-span (judgement). Both the printed A_s,prov and the area of the printed bars are checked, because they disagree in 6 rows (D10). Columns: 4C22 in every column (spec R1, decision B6). The KZ-2 4C20 and KZ-3 4C25 entries for floors 2 and 4 on drawing 01 are checked for the ratio only, because the drawing does not say which axis each KZ type sits on.
 8. **Two checks per thesis beam row**, so a flag can be traced to its cause: (a) the model's design moment against the thesis steel; (b) the thesis's own printed design moment (s9.2, column "γRE × M") put through the formula in rule 4, against its own A_s,req and A_s,prov. Check (b) uses no model numbers, so a row that fails (b) is a thesis arithmetic or method problem, whatever the model says.
 9. **Sensitivity**, reported but not used for the flags: centre-line moments instead of face moments, and the GB 55002-2021 seismic factors 1.3 / 1.4 instead of 1.2 / 1.3 (flag D21). A flag that appears only in a sensitivity run is listed as such.
 10. **Not checked on Day 11** (so no claim is made about them): column N-M capacity, strong-column weak-beam and strong-shear weak-bending factors, beam and column shear, crack width and deflection, bar spacing. They belong to the design rules of Day 15.
-11. Each flagged member goes into this file with the AI assistant's proposed judgement (thesis error, simplification, or code-version difference) [J], for the author to accept or change. These rules stay as written whatever the results. Any later change is dated and marked as made after the run.
+11. Each flagged member goes into this file with the AI assistant's proposed judgement (thesis error, simplification, or code-version difference) (judgement), for the author to accept or change. These rules stay as written whatever the results. Any later change is dated and marked as made after the run.
 
 ### Results (28 Oct 2026, read with the rules above)
 
@@ -495,12 +495,12 @@ Status: **draft for the author's review.** The numbers come from `results/anchor
 
 **Thesis beam steel, check (a): model moments against the s9.2 steel.** 16 of the 18 rows pass on both the printed A_s,prov and the printed bars. Two rows fail, both at level 1:
 
-| Row | Model A_s,req [mm²] | Printed A_s,prov [mm²] | Printed bars [mm²] | Proposed judgement [J] |
+| Row | Model A_s,req [mm²] | Printed A_s,prov [mm²] | Printed bars [mm²] | Proposed judgement (judgement) |
 |---|---|---|---|---|
 | Floor 1, AB left end (top) | 1288.6 | 1472 (passes) | 3C20 = 942 (fails, 73 %) | Thesis error: the bars do not match the printed area (D10). 1472 mm² is 3C25, the bar group printed for the CD ends. |
 | Floor 1, AB right end (top) | 1195.0 | 1472 (passes) | 3C16 = 603 (fails, 50 %) | Same thesis error (D10). The mirrored CD left end has 3C25 and passes. |
 
-Both rows fail only on the bars, and both are rows already flagged D10. The frame is symmetric, and the thesis gives 3C25 at the mirrored CD ends, so I read both as transcription errors in the bar column, not as an under-designed beam [J]. If the drawn beam really had 3C20 and 3C16, it would be under-reinforced for earthquake by 27 % and 50 %.
+Both rows fail only on the bars, and both are rows already flagged D10. The frame is symmetric, and the thesis gives 3C25 at the mirrored CD ends, so I read both as transcription errors in the bar column, not as an under-designed beam (judgement). If the drawn beam really had 3C20 and 3C16, it would be under-reinforced for earthquake by 27 % and 50 %.
 
 **Thesis beam steel, check (b): the thesis's own numbers.** No row fails. The printed "γRE × M" (which is 0.3 × M, D12) needs less steel than the thesis provides in every row. But the printed A_s,req cannot be reproduced from the printed γRE × M with the cl. 6.2.10 formula: the ratio of the recomputed to the printed A_s,req runs from 0.04 to 2.30. So the s9.2 table is not internally consistent, and its A_s,req column is not a usable target. One example is D11: at floor 1 CD mid-span the thesis prints A_s,req = 2030.66 mm²; its own γRE × M of 38.48 kN·m needs 197 mm² (the minimum, 385 mm², governs), and 3C16 = 603 mm² is enough. D11 is therefore an arithmetic error in the thesis, not a shortfall. Proposed as flag D26 below.
 
@@ -508,13 +508,13 @@ Both rows fail only on the bars, and both are rows already flagged D10. The fram
 
 **Columns.** Every axial ratio passes: the largest is 0.320 at the ground-storey B and C columns (N = 1.2 × 1787.98 + 1.3 × 43.44 = 2202.04 kN; 0.347 with the 1.3 / 1.4 factors), against the 0.85 limit. The thesis prints ratios of about 0.05-0.07 (Table 9.3, spec note); the model's are about five times larger, which supports the spec note that Table 9.3 used the wrong N. All 16 columns fail the minimum steel: 4C22 is 0.42 % of the section against 0.75 %. One side holds 0.21 % and passes the 0.20 % rule. The drawing's other bar sets fail as well: KZ-2 4C20 is 0.35 % (and 0.17 % per side, below 0.20 %), and KZ-3 4C25 is 0.55 %. A frame column on axis (2) needs at least 2700 mm², for example 4C25 + 4C18 [J, a bar choice for illustration only, not checked for spacing].
 
-| Flagged member | What fails | Proposed judgement [J] |
+| Flagged member | What fails | Proposed judgement (judgement) |
 |---|---|---|
 | All 16 columns, 4C22 (spec R1) | Total 0.42 % < 0.75 % (Table 11.4.12-1) | Thesis error. The 0.75 % minimum is in GB 50010-2010 and GB 50011-2010 (Table 6.3.7-1, author's reading, B6), the codes the thesis cites, so this is not a code-version difference. 4C22 is also below the non-seismic 0.55 % of Table 8.5.1. This confirms B6. |
 | Dwg 01 KZ-2, floors 2 and 4, 4C20 | Total 0.35 % and one side 0.17 % | Thesis error, as above. The drawing set aside under B6. |
 | Dwg 01 KZ-3, floors 2 and 4, 4C25 | Total 0.55 % < 0.75 % | Thesis error, as above. |
 
-**What this means for the carbon count [J].** The anchor reproduces the thesis as designed (decision B6), so its column steel stays 4C22. A code-compliant column holds about 1.8 times that steel (2700 against 1520 mm²). The generator therefore has to apply the code minimum (the open point under B6), or the baseline frame's steel carbon will be too low and the shell floor's saving will look too large. This is a Day 15 design-rule decision for the author.
+**What this means for the carbon count (judgement).** The anchor reproduces the thesis as designed (decision B6), so its column steel stays 4C22. A code-compliant column holds about 1.8 times that steel (2700 against 1520 mm²). The generator therefore has to apply the code minimum (the open point under B6), or the baseline frame's steel carbon will be too low and the shell floor's saving will look too large. This is a Day 15 design-rule decision for the author.
 
 ### Proposed flag (for the author)
 
@@ -531,7 +531,7 @@ Both rows fail only on the bars, and both are rows already flagged D10. The fram
   - f_c = 19.1 N/mm² for C40: Table 4.1.4-1, PDF p. 35.
   - f_y = 360 N/mm² for HRB400: Table 4.2.3-1, PDF p. 39.
   - The beam minimum at the support, grade III: "0.25 和 55 f_t/f_y 中的较大值", Table 11.3.6-1, PDF p. 184.
-- **f_t = 1.71 N/mm²:** its row in Table 4.1.4-2 is missing from the OCR layer of the 2015 PDF, so this value rests on the 2010 English translation only (notes/gb50010_design_values.md) [?].
+- **f_t = 1.71 N/mm²:** its row in Table 4.1.4-2 is missing from the OCR layer of the 2015 PDF, so this value rests on the 2010 English translation only (notes/gb50010_design_values.md) (unverified).
 - **The author:** accepted these checks on 29 Oct 2026 without opening the pages again.
 
 ### Independent cross-check (the AI assistant, 28 Oct 2026)
@@ -542,7 +542,7 @@ The AI assistant, working from the Playbook and without knowing that this branch
 - Axial ratios: the same at every column (0.3203 at B1).
 - Flags: at the faces, the same two level-1 AB bar rows. At the centre-lines it flagged the same five rows as `sens_flag_centreline` here (roof AB left and CD right, level 1 AB left, AB right and CD right).
 
-Two pieces of code built separately give the same numbers, so a coding error in either is unlikely [J]. The cross-check found one more thing in the typed thesis values:
+Two pieces of code built separately give the same numbers, so a coding error in either is unlikely (judgement). The cross-check found one more thing in the typed thesis values:
 
 - **D27 (accepted by the author, 29 Oct 2026).** Th s9.2, roof rows: the printed M for CD (44.51, 28.11, 19.22 kN·m) is not the mirror of AB (119.78, 151.85, 96.15 kN·m), although the frame and its loads are symmetric. The level-1 rows are symmetric (358.20, 128.28, 308.0 both ways). This adds to D26: the roof M column of §9.2 is not a usable target either.
 
@@ -550,20 +550,20 @@ Two pieces of code built separately give the same numbers, so a coding error in 
 
 ### How the take-off is read (written 29 Oct 2026, committed 00:46 UTC in f38e731, before the first take-off run)
 
-The AI assistant wrote these rules before any Day 12 number existed [J]. The carbon factors are the author's: every factor value traces to a cited source. Until `data/carbon_factors.csv` exists, the carbon columns stay empty and say "pending".
+The AI assistant wrote these rules before any Day 12 number existed (judgement). The carbon factors are the author's: every factor value traces to a cited source. Until `data/carbon_factors.csv` exists, the carbon columns stay empty and say "pending".
 
-1. **Boundary.** Structure only: suspended slabs, frame beams, longitudinal and secondary beams, columns and column footings. Not counted: the ground-floor slab on grade, blinding, stairs, parapets, infill walls, finishes, formwork, laps, anchorages and wastage [J]. The same boundary is used for every floor option later, so what is left out is left out on both sides of the comparison [J].
-2. **Plan.** The primary take-off uses the drawing grid of decision B11: a full 38.4 × 21.0 m rectangle, axes 1-7 at 6.0 / 6.6 / 6.6 / 6.6 / 6.6 / 6.0 m and axes A-D at 7.2 / 6.6 / 7.2 m (spec G3, G4), 28 columns. A second run, "drawn", follows my reading of drawing 03: no column at A4, and no slab, A-line beam or axis-4 AB beam between axes 3 and 5 on A-B (a 13.2 × 7.2 m notch). The drawn run is a sensitivity until the author confirms the reading [J]. Openings marked on drawing 03 are not deducted in either run, because their sizes are not dimensioned [J].
-3. **Floor area** for the functional unit is 4 storeys × the plan area of the run (B11: 38.4 × 21.0 × 4 = 3 225.6 m² for the grid run). Suspended slabs are at levels 1, 2, 3 and the roof (4 slabs) [J].
-4. **Concrete volumes.** Slab: plan area × 0.12 m (G10), less the column footprints. Beams: b × (h − 0.12) × clear length between column faces, so the slab depth is counted once. Frame beams: AB and CD 300 × 600, BC 300 × 500 (M1, M2) on all 7 transverse axes. Longitudinal beams 300 × 600 (M3) on axes A-D. Secondary beams 300 × 500 (M4) at mid-span of the 7.2 m spans, in the bays drawn on drawing 03 (A-B in bays 1-2, 2-3, 5-6 and 6-7; C-D in bays 2-3 and 5-6), at every level [J]. Their clear length is the bay less one 300 mm beam width. Columns: 0.6 × 0.6 m × storey height, 4.55 m at storey 1 and 3.60 m above (G6, G7), joints included. Concrete grade C40 everywhere (X1); footings are also taken as C40 [J], and the grade is a column in the output so the author can map a different factor.
-5. **Slab steel** (both runs, both steel sources): C8@200 = 251 mm²/m each way, bottom over the whole slab (Th Table 3.1; floor and roof slab drawings). Top bars C8@200 across every beam line, 1.2 m each side of an interior beam and 1.2 m in from an edge beam [J]. The drawings give 0.8 to 1.6 m for these lengths, so 1.2 m is a mid value, not a measured one.
+1. **Boundary.** Structure only: suspended slabs, frame beams, longitudinal and secondary beams, columns and column footings. Not counted: the ground-floor slab on grade, blinding, stairs, parapets, infill walls, finishes, formwork, laps, anchorages and wastage (judgement). The same boundary is used for every floor option later, so what is left out is left out on both sides of the comparison (judgement).
+2. **Plan.** The primary take-off uses the drawing grid of decision B11: a full 38.4 × 21.0 m rectangle, axes 1-7 at 6.0 / 6.6 / 6.6 / 6.6 / 6.6 / 6.0 m and axes A-D at 7.2 / 6.6 / 7.2 m (spec G3, G4), 28 columns. A second run, "drawn", follows my reading of drawing 03: no column at A4, and no slab, A-line beam or axis-4 AB beam between axes 3 and 5 on A-B (a 13.2 × 7.2 m notch). The drawn run is a sensitivity until the author confirms the reading (judgement). Openings marked on drawing 03 are not deducted in either run, because their sizes are not dimensioned (judgement).
+3. **Floor area** for the functional unit is 4 storeys × the plan area of the run (B11: 38.4 × 21.0 × 4 = 3 225.6 m² for the grid run). Suspended slabs are at levels 1, 2, 3 and the roof (4 slabs) (judgement).
+4. **Concrete volumes.** Slab: plan area × 0.12 m (G10), less the column footprints. Beams: b × (h − 0.12) × clear length between column faces, so the slab depth is counted once. Frame beams: AB and CD 300 × 600, BC 300 × 500 (M1, M2) on all 7 transverse axes. Longitudinal beams 300 × 600 (M3) on axes A-D. Secondary beams 300 × 500 (M4) at mid-span of the 7.2 m spans, in the bays drawn on drawing 03 (A-B in bays 1-2, 2-3, 5-6 and 6-7; C-D in bays 2-3 and 5-6), at every level (judgement). Their clear length is the bay less one 300 mm beam width. Columns: 0.6 × 0.6 m × storey height, 4.55 m at storey 1 and 3.60 m above (G6, G7), joints included. Concrete grade C40 everywhere (X1); footings are also taken as C40 (judgement), and the grade is a column in the output so the author can map a different factor.
+5. **Slab steel** (both runs, both steel sources): C8@200 = 251 mm²/m each way, bottom over the whole slab (Th Table 3.1; floor and roof slab drawings). Top bars C8@200 across every beam line, 1.2 m each side of an interior beam and 1.2 m in from an edge beam (judgement). The drawings give 0.8 to 1.6 m for these lengths, so 1.2 m is a mid value, not a measured one.
 6. **Beam and column steel, two sources** (the playbook flag):
-   - "thesis": the s9.2 printed A_s,prov for frame beams (floor "5" for the roof, floor 1 for levels 1-3 [J]; the printed areas, not the printed bars, per the D10 judgement); columns 4C22 (R1, B6). Longitudinal beams 4C16 top and bottom and secondary beams 3C20 top and bottom, from the drawing 03 notes [J].
-   - "code": frame beams from `checks.py` (`results/anchor_design_beams.csv`, axis 2, used for all 7 axes [J]); columns at the GB 50010 minimum, 0.75 % of 600 × 600 = 2 700 mm² (Table 11.4.12-1, p. 163), since the Day 11 run found that every column is governed by it. Longitudinal and secondary beams as in the thesis source, because no design for them exists yet [J].
-   Beam bar lengths: bottom steel over the full clear span (the larger of mid-span and end bottom steel); top end steel over one third of the clear span from each face [J]; 2C14 continuous top steel over the middle third (GB 50011 cl. 6.3.4 [?]). Column bars run the full column height.
-7. **Stirrups.** Beams φ10@200, 2 legs (drawing 03 note) [J for the leg count]. Columns φ10@100, 4 legs, full height (drawing 01, "φ10@100(4)"). Leg lengths are the section perimeter less the cover, taken as 50 mm all round [J]. Stirrups are HPB300 (X6); they are reported as a separate steel row so the author can give them their own factor.
-8. **Footings** (no thesis calculation exists, B8): one square pad under each column, sized so the characteristic pressure is within fak = 220 kPa (B8) with no width or depth correction [J]: B = √(N_k / (fak − 20 × d)), rounded up to 0.1 m, with 20 kN/m³ for footing plus fill (GB 50007 cl. 5.2.1 [?]) and d = 0.5 m (G9) + the pad thickness. Pad thickness 0.6 m for every footing [J]. N_k = D + L at the base of the axis-2 column of the same line (A or B; C and D mirror), times the column's tributary length along the building over 7.2 m [J]. Bottom steel each way from M = (B − 0.6)² (2B + 0.6) p_j / 24 with p_j = 1.35 N_k / B² (GB 50007 eq. 8.2.11 and cl. 3.0.6 [?]), A_s = M / (0.9 f_y h_0), h_0 = thickness − 0.05 m, and at least 0.15 % of the section (GB 50007 cl. 8.2.1 [?]). The footing rule is a [J] model for the author to accept, change or replace (proposed D28).
-9. **Steel mass** uses 7 850 kg/m³ [J; confirm against GB 50009 Appendix A [?]]. Concrete is reported as volume, because concrete factors are usually per m³ [J]; the carbon step converts with the unit given in each factor row.
+   - "thesis": the s9.2 printed A_s,prov for frame beams (floor "5" for the roof, floor 1 for levels 1-3 (judgement); the printed areas, not the printed bars, per the D10 judgement); columns 4C22 (R1, B6). Longitudinal beams 4C16 top and bottom and secondary beams 3C20 top and bottom, from the drawing 03 notes (judgement).
+   - "code": frame beams from `checks.py` (`results/anchor_design_beams.csv`, axis 2, used for all 7 axes (judgement)); columns at the GB 50010 minimum, 0.75 % of 600 × 600 = 2 700 mm² (Table 11.4.12-1, p. 163), since the Day 11 run found that every column is governed by it. Longitudinal and secondary beams as in the thesis source, because no design for them exists yet (judgement).
+   Beam bar lengths: bottom steel over the full clear span (the larger of mid-span and end bottom steel); top end steel over one third of the clear span from each face (judgement); 2C14 continuous top steel over the middle third (GB 50011 cl. 6.3.4 (unverified)). Column bars run the full column height.
+7. **Stirrups.** Beams φ10@200, 2 legs (drawing 03 note) [J for the leg count]. Columns φ10@100, 4 legs, full height (drawing 01, "φ10@100(4)"). Leg lengths are the section perimeter less the cover, taken as 50 mm all round (judgement). Stirrups are HPB300 (X6); they are reported as a separate steel row so the author can give them their own factor.
+8. **Footings** (no thesis calculation exists, B8): one square pad under each column, sized so the characteristic pressure is within fak = 220 kPa (B8) with no width or depth correction (judgement): B = √(N_k / (fak − 20 × d)), rounded up to 0.1 m, with 20 kN/m³ for footing plus fill (GB 50007 cl. 5.2.1 (unverified)) and d = 0.5 m (G9) + the pad thickness. Pad thickness 0.6 m for every footing (judgement). N_k = D + L at the base of the axis-2 column of the same line (A or B; C and D mirror), times the column's tributary length along the building over 7.2 m (judgement). Bottom steel each way from M = (B − 0.6)² (2B + 0.6) p_j / 24 with p_j = 1.35 N_k / B² (GB 50007 eq. 8.2.11 and cl. 3.0.6 (unverified)), A_s = M / (0.9 f_y h_0), h_0 = thickness − 0.05 m, and at least 0.15 % of the section (GB 50007 cl. 8.2.1 (unverified)). The footing rule is a (judgement) model for the author to accept, change or replace (proposed D28).
+9. **Steel mass** uses 7 850 kg/m³ [J; confirm against GB 50009 Appendix A (unverified)]. Concrete is reported as volume, because concrete factors are usually per m³ (judgement); the carbon step converts with the unit given in each factor row.
 10. **Carbon.** A1-A3 = Σ quantity × factor, for each factor set in `data/carbon_factors.csv`, per element type, then over the floor area of rule 3. A factor row must give set, material, value, unit, source and page; a missing material stops the run with an error rather than a silent zero.
 11. **Checks before any number is reported:** the slab volume equals plan area × 0.12 less the column footprints; the column count is 28 (grid) or 27 (drawn); the hand check of one footing (rule 8) is in this file. These rules stay as written whatever the results; any later change is dated and marked as made after the run.
 
@@ -585,15 +585,15 @@ Status: **quantities done; carbon pending** until the author's `data/carbon_fact
 | Footings | 0.034 | 0.81 | 0.81 | n/a |
 | **Total** | **0.254** (819.2 m³) | **12.86** | **13.55** | **5.01** |
 
-Total steel is 17.9 kg/m² with the thesis steel and 18.6 kg/m² with the code steel. The drawn plan gives 0.262 m³/m² and 18.8 / 19.5 kg/m²: per m² it is slightly heavier, because it loses slab but keeps most of the frame [J].
+Total steel is 17.9 kg/m² with the thesis steel and 18.6 kg/m² with the code steel. The drawn plan gives 0.262 m³/m² and 18.8 / 19.5 kg/m²: per m² it is slightly heavier, because it loses slab but keeps most of the frame (judgement).
 
-**What carries the most.** The slabs hold 47 % of the concrete and the most bar steel. Concrete usually dominates the carbon of an RC frame [J], so the slabs will probably carry the most carbon, as the playbook expects, but that is not shown until the factors are in. With the code column steel, the columns hold more total steel than the slabs (6.2 against 5.6 kg/m²), so the ranking of steel depends on the steel source.
+**What carries the most.** The slabs hold 47 % of the concrete and the most bar steel. Concrete usually dominates the carbon of an RC frame (judgement), so the slabs will probably carry the most carbon, as the playbook expects, but that is not shown until the factors are in. With the code column steel, the columns hold more total steel than the slabs (6.2 against 5.6 kg/m²), so the ranking of steel depends on the steel source.
 
 **After the run (29 Oct 2026; the rules above are unchanged).**
 
-- Column stirrups are two thirds of the column steel (3.36 of 4.95 kg/m², thesis source). Drawing 01 labels φ10@100(4) as the stirrup "in encrypted area", that is, the confined zones at the column ends. Rule 7 runs it over the full height, so the column stirrup mass is an upper bound [J]. The spacing outside the confined zones is not drawn. This is part of D28.
+- Column stirrups are two thirds of the column steel (3.36 of 4.95 kg/m², thesis source). Drawing 01 labels φ10@100(4) as the stirrup "in encrypted area", that is, the confined zones at the column ends. Rule 7 runs it over the full height, so the column stirrup mass is an upper bound (judgement). The spacing outside the confined zones is not drawn. This is part of D28.
 - The frame beam bars are lower with the code steel (1.47 against 2.02 kg/m²), because rule 6 gives levels 2 and 3 the floor-1 thesis steel, while the model designs each level for its own forces.
-- In every footing the minimum steel (0.15 % [?]) governs, not bending.
+- In every footing the minimum steel (0.15 % (unverified)) governs, not bending.
 
 ### Carbon results (29 Oct 2026, GB/T 51366 set only)
 
@@ -602,18 +602,18 @@ Total steel is 17.9 kg/m² with the thesis steel and 18.6 kg/m² with the code s
 | Material | Factor | Source |
 |---|---|---|
 | C30 | 295 kgCO₂e/m³ | Table D.0.1 |
-| C40 | 340 kgCO₂e/m³ | The table has no C40 row. 340 is the mean of its C30 (295) and C50 (385) rows, a linear interpolation [J]. |
+| C40 | 340 kgCO₂e/m³ | The table has no C40 row. 340 is the mean of its C30 (295) and C50 (385) rows, a linear interpolation (judgement). |
 | HRB400 | 2 340 kgCO₂e/t | Row 热轧碳钢钢筋 (hot-rolled carbon steel bar) |
 | HPB300 | 2 340 kgCO₂e/t | The same row: the table has no separate HPB300 row (D28 (e)) |
 
-The printed page of Table D.0.1 was not read [?].
+The printed page of Table D.0.1 was not read (unverified).
 
 **D29: ICE is not used (decided by the author on 29 Oct 2026; the author may reverse it).** H6 had planned ICE v3 as the sensitivity set. It cannot be used here:
 - Circular Ecology no longer supplies or supports ICE v3.0. The current version is v4.0.
 - The ICE FAQ (circularecology.com/ice-database-faqs.html, read 29 Oct 2026) says the free version is "intended for educational purposes only", and that "Distribution of the ICE Database – in whole, or in part – is not permitted". ShellBench publishes its factor file in an open repository and an open dataset, so it would distribute part of ICE.
 - The candidate Chinese database, CPCD (lca.cityghg.com), states no licence ("All rights reserved"), so it cannot be used either.
 
-So for now GB/T 51366 is the only factor set. The planned sensitivity on the factors is carried by the H6 Monte Carlo band instead. [Update, 6 Nov 2026: the Monte Carlo band is withdrawn; it was never in the analysis plan. The factor sensitivity is now the one-at-a-time sensitivity in preregistration.md, change log C1, author's decision.] An openly licensed second set can be added later if one is found [J].
+So for now GB/T 51366 is the only factor set. The planned sensitivity on the factors is carried by the H6 Monte Carlo band instead. [Update, 6 Nov 2026: the Monte Carlo band is withdrawn; it was never in the analysis plan. The factor sensitivity is now the one-at-a-time sensitivity in preregistration.md, change log C1, author's decision.] An openly licensed second set can be added later if one is found (judgement).
 
 **A1-A3 per m² of floor area** (`results/anchor_carbon.csv`):
 
@@ -643,12 +643,12 @@ Grid plan, axis 3, line B. The axis-2 frame gives D + L = 1 588.00 + 429.66 = 2 
 
 **Status (29 Oct 2026).**
 - **Arithmetic:** two separate AI-assisted runs recomputed this check separately, and every number matches. The bearing pressure is 1 849.52 / 3.1² + 20 × 1.1 = 214.5 kPa ≤ 220 kPa.
-- **Inputs:** they follow rule 8, which the author accepted as D28 (b). The GB 50007 clause numbers are still marked [?].
+- **Inputs:** they follow rule 8, which the author accepted as D28 (b). The GB 50007 clause numbers are still marked (unverified).
 - **The author:** accepted the check on 29 Oct 2026 without working it by hand.
 
 ### Proposed decision (for the author)
 
-- **D28.** The take-off assumptions marked [J] and [?] in rules 2 and 4-9. Before Paper 1, the author confirms or changes: (a) whether the grid plan (B11) or the drawn plan is primary, and the reading of drawing 03 (no A4 column, the notch, the six secondary beams); (b) the footing rule (fak without correction, 0.6 m pads, 20 kN/m³, 1.35, 0.15 % minimum, and the GB 50007 clause numbers); (c) the column stirrup length (full height, or @100 in the confined zones only, with what spacing elsewhere); (d) the 2C14 continuous top bars (GB 50011 cl. 6.3.4) and the l_n / 3 top bar length; (e) one factor for HPB300 stirrups, or the HRB400 factor for both. None of these changes the frame analysis; they change only the quantities.
+- **D28.** The take-off assumptions marked (judgement) and (unverified) in rules 2 and 4-9. Before Paper 1, the author confirms or changes: (a) whether the grid plan (B11) or the drawn plan is primary, and the reading of drawing 03 (no A4 column, the notch, the six secondary beams); (b) the footing rule (fak without correction, 0.6 m pads, 20 kN/m³, 1.35, 0.15 % minimum, and the GB 50007 clause numbers); (c) the column stirrup length (full height, or @100 in the confined zones only, with what spacing elsewhere); (d) the 2C14 continuous top bars (GB 50011 cl. 6.3.4) and the l_n / 3 top bar length; (e) one factor for HPB300 stirrups, or the HRB400 factor for both. None of these changes the frame analysis; they change only the quantities.
 
 ### Author decisions (29 Oct 2026)
 
@@ -672,7 +672,7 @@ The thesis's n = 5 has no basis in a four-storey building (B4) and 0.75 is not t
 
 **Correction made the same day.** The first version loaded the frame with the slab and the beam webs only. At the anchor's sizes its ΣG was 3 832 kN against 5 879 kN in `results/anchor_seismic_weights.csv`, 35 % low, and it reported T1 0.468 s, drift 1/1412 and axial ratio 0.340. R8 asks for the build-up of each element, so walls, parapet, longitudinal beams and secondary beams are now inputs. Sizes did not change; the check values above replace the first ones.
 
-**What is left at the anchor's sizes.** ΣG is 5 288 kN, 10.1 % below the anchor, and bare T1 is 0.662 s against 0.698 s (5.2 % below). The gap at a typical floor is 159.8 kN, and it is the generator's choice, not a lost load [J]:
+**What is left at the anchor's sizes.** ΣG is 5 288 kN, 10.1 % below the anchor, and bare T1 is 0.662 s against 0.698 s (5.2 % below). The gap at a typical floor is 159.8 kN, and it is the generator's choice, not a lost load (judgement):
 
 | Item | kN per floor | Why the generator differs |
 |---|---|---|
@@ -683,7 +683,7 @@ The thesis's n = 5 has no basis in a four-storey building (B4) and 0.75 is not t
 | Interior wall | 4.3 | Printed 44.11 kN per node against 6.36 × 6.6 = 41.98 kN |
 | Sum | 159.8 | |
 
-The eccentricity moments of Th §6.2.1 are not applied, so exterior beam-end moments are a little different from the anchor's [J].
+The eccentricity moments of Th §6.2.1 are not applied, so exterior beam-end moments are a little different from the anchor's (judgement).
 
 **Carried to Day 18 from the playbook's Day 16 list:** PGA and concrete grade are not inputs yet (`alpha_max` and the C40 values of `checks.py` are), and quantities are for one frame strip, not the whole plan. R7 and R14 are not coded.
 

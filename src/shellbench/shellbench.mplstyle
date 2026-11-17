@@ -11,7 +11,7 @@
 #   "Artwork sizing". https://www.elsevier.com/about/policies-and-standards/author/artwork-and-media-instructions/artwork-sizing
 # - Colours: dataviz reference palette, categorical slots in fixed order,
 #   checked with its validator (see docs/visual_standard.md).
-# - Line weights, tick lengths and grid tone are house choices [J], listed in
+# - Line weights, tick lengths and grid tone are house choices (judgement), listed in
 #   docs/visual_standard.md.
 
 # ---- Type ----------------------------------------------------------------

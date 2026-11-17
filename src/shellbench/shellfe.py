@@ -42,7 +42,7 @@ BENCHMARKS_CSV = ROOT / "validation" / "benchmarks.csv"
 CONVERGENCE_CSV = ROOT / "results" / "benchmarks_convergence.csv"
 CONVERGENCE_PNG = ROOT / "figures" / "benchmarks_convergence.png"
 
-#: Elements per side of the modelled patch, coarse to fine [J].
+#: Elements per side of the modelled patch, coarse to fine (judgement).
 MESH_ELEMENTS: tuple[int, ...] = (4, 8, 16)
 #: Playbook Day 24: finest mesh within this fraction of the reference.
 TOLERANCE: float = 0.02
@@ -324,10 +324,10 @@ def pinched_hemisphere(p: dict[str, float], n: int, force: float) -> tuple[Shell
     u runs from the hole to the equator and v round the axis. Four forces
     alternate in sign on the equator, outward on the X axis. Both edges are free.
     Fig. 9 prints F = 2.0 (on quadrant). That is the force at each point of the
-    whole shell [J]: it gives the paper's 0.094, and half of it on each of the
+    whole shell (judgement): it gives the paper's 0.094, and half of it on each of the
     two quadrants that share a point is what a symmetric model would carry.
     The supports only stop rigid movement. Each lies on a symmetry plane or is
-    matched by its mirror images, so each carries nothing [J].
+    matched by its mirror images, so each carries nothing (judgement).
 
     Args:
         p: The ``hemisphere`` values of ``load_benchmarks``.

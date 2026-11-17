@@ -22,7 +22,7 @@ when a true value is zero; no target here is zero.
 
 Splits: ``random`` and ``unseen_storeys`` (leave one storey count out, six
 folds, test predictions pooled). The playbook asks for a third split; the
-preregistration lists two, and a third would need a change-log entry [J].
+preregistration lists two, and a third would need a change-log entry (judgement).
 
 Output: ``results/surrogate_accuracy.csv`` and ``figures/surrogate_parity.png``.
 Rows run on pre-release data are pipeline tests, not results.

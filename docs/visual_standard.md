@@ -14,17 +14,17 @@ Presentation never changes a number. A figure shows only values that sit in a fi
 | Lettering | 7 pt at printed size; nothing smaller, except sub/superscripts at 6 pt minimum | Elsevier, Artwork sizing |
 | Fonts | Arial; Liberation Sans on Linux (same metrics); embedded as TrueType in PDF | Elsevier, Artwork overview |
 | Vector masters | PDF and SVG, text kept as text in SVG | Elsevier, Artwork overview (PDF accepted for all artwork) |
-| Raster preview | PNG at 600 dpi [J]; if a journal wants a raster, TIFF at 1000 dpi for line art | Elsevier, Artwork sizing |
-| Axes | left and bottom spines only, 0.6 pt, ticks out, 3 pt long [J] | house choice |
-| Grid | hairline 0.4 pt `#e1e0d9`, one direction only, behind the data [J] | dataviz reference palette |
-| Data lines | 1.25 pt, round caps; markers 4 pt [J] | house choice |
+| Raster preview | PNG at 600 dpi (judgement); if a journal wants a raster, TIFF at 1000 dpi for line art | Elsevier, Artwork sizing |
+| Axes | left and bottom spines only, 0.6 pt, ticks out, 3 pt long (judgement) | house choice |
+| Grid | hairline 0.4 pt `#e1e0d9`, one direction only, behind the data (judgement) | dataviz reference palette |
+| Data lines | 1.25 pt, round caps; markers 4 pt (judgement) | house choice |
 | Colours | fixed categorical order (below); diverging blue/red with grey midpoint | dataviz reference palette, validated |
-| Panel labels | bold (a), (b), ... at 8 pt, top left outside the plot area [J] | house choice |
+| Panel labels | bold (a), (b), ... at 8 pt, top left outside the plot area (judgement) | house choice |
 | Footer | repository figures: owner, ShellBench, data file, qualifier; paper figures: none | author rule 23 Oct 2026; journal credit line |
 
 Links: https://www.elsevier.com/about/policies-and-standards/author/artwork-and-media-instructions/artwork-sizing and .../artwork-overview.
 
-Everything marked [J] is a house choice, not a rule from a source. It can change, but only here, and then for every figure at once.
+Everything marked (judgement) is a house choice, not a rule from a source. It can change, but only here, and then for every figure at once.
 
 ## 2. Colour
 

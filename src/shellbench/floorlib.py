@@ -10,7 +10,7 @@ layout, always with a prestressed tie every 1.2 m (approved by the author on
 passes every check of ``panel.size_row``. A case where no trial thickness
 passes is kept and marked ``sized = False``; it is never dropped.
 
-Variants [J]
+Variants (judgement)
 ------------
 - Span 6.0 and 6.6 m: the two bay widths of layout A (spec G4, floor_concept
   decision 2).
@@ -21,7 +21,7 @@ Variants [J]
 - Mesh: one layer at mid-depth (Day 25), or one layer near each face at the
   minimum ratio each (handoff of 3 Nov, Day 26 to-do).
 
-Trial thicknesses run from 50 to 150 mm in 10 mm steps [J]. Buckling is linear,
+Trial thicknesses run from 50 to 150 mm in 10 mm steps (judgement). Buckling is linear,
 with no imperfection allowance: the JGJ 22-2012 stability analysis (3.2.9) is
 still open (handoff of 3 Nov).
 
@@ -47,7 +47,7 @@ RESULTS_CSV = ROOT / "results" / "floor_library.csv"
 SPANS_M: tuple[float, ...] = (6.0, 6.6)  # layout A bays, spec G4
 RISE_DENOMINATORS: tuple[int, ...] = (8, 10, 12, 15, 18, 20)  # f / L = 1 / n, floor_concept decision 4
 MESH_LAYERS: tuple[int, ...] = (1, 2)
-THICKNESSES_M: tuple[float, ...] = tuple(round(0.050 + 0.010 * i, 3) for i in range(11))  # 50-150 mm [J]
+THICKNESSES_M: tuple[float, ...] = tuple(round(0.050 + 0.010 * i, 3) for i in range(11))  # 50-150 mm (judgement)
 SHORT: dict[str, str] = {"foamed_fill": "ff", "recycled_fill": "rf", "raised_floor": "rs"}
 
 

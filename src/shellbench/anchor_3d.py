@@ -16,10 +16,10 @@ response-spectrum check is read"):
 - transverse beams (along Y) as the 2D frame (AB, CD 300 x 600; BC
   300 x 500, spec M1, M2); longitudinal beams (along X) 300 x 600 (spec M3);
   beam I factor 2.0 on interior lines and 1.5 on edge lines (spec M7, applied
-  to both directions [J]);
+  to both directions (judgement));
 - one rigid diaphragm per level; the mass of each level is the 2D frame's
   G_i / g scaled by plan area, placed at the plan centre with the rotational
-  inertia of a uniform rectangle [J].
+  inertia of a uniform rectangle (judgement).
 
 The E-shaped wings and stair cores are not modelled (decision B11 open point).
 
@@ -59,8 +59,8 @@ def torsion_constant(b_m: float, h_m: float) -> float:
 
     Approximation J = beta b^3 h with beta = 1/3 - 0.21 (b/h) (1 - (b/h)^4 / 12),
     b <= h (standard series result for rectangular sections, as tabulated in
-    Roark's Formulas for Stress and Strain [?]). Torsion has a minor effect on
-    the frame's periods [J].
+    Roark's Formulas for Stress and Strain (unverified)). Torsion has a minor effect on
+    the frame's periods (judgement).
 
     Args:
         b_m: Shorter side [m].
@@ -90,7 +90,7 @@ def level_masses_t(weights_2d_kn: list[float]) -> list[float]:
     """Scale the 2D frame's level weights to the whole plan and convert to mass [t].
 
     The 2D frame carries a 7.2 m strip (decision B10) of the 21.0 m width;
-    the whole plan is 38.4 m long, so the factor is 38.4 / 7.2 [J].
+    the whole plan is 38.4 m long, so the factor is 38.4 / 7.2 (judgement).
 
     Args:
         weights_2d_kn: G_i of the 2D frame, level 1 first [kN].

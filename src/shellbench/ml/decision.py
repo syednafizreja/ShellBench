@@ -58,9 +58,9 @@ SUMMARY_CSV = ROOT / "results" / "surrogate_decision_summary.csv"
 DECISION_PNG = ROOT / "figures" / "surrogate_decision.png"
 
 TARGET: str = d.TARGETS[0]
-#: Agreement needed for the H4 decision criterion (preregistration 2.4 [J]).
+#: Agreement needed for the H4 decision criterion (preregistration 2.4 (judgement)).
 AGREEMENT_THRESHOLD: float = 0.80
-#: A building is a near tie if the two systems differ by less than this share of the slab building [J].
+#: A building is a near tie if the two systems differ by less than this share of the slab building (judgement).
 NEAR_TIE: float = 0.01
 
 

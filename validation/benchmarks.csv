@@ -13,6 +13,6 @@ hemisphere,hole_angle,18.0,deg,9,Fig. 9 drawing
 hemisphere,thickness,0.04,consistent,9,Fig. 9 caption
 hemisphere,e,6.825e7,consistent,9,Fig. 9 caption
 hemisphere,nu,0.3,-,9,Fig. 9 caption
-hemisphere,point_force,2.0,consistent,9,"Fig. 9 drawing prints F = 2.0 (on quadrant), outward at X, inward at Y; taken as the force at each point of the whole shell [J], see docs/floor_concept.md"
+hemisphere,point_force,2.0,consistent,9,"Fig. 9 drawing prints F = 2.0 (on quadrant), outward at X, inward at Y; taken as the force at each point of the whole shell (judgement), see docs/floor_concept.md"
 hemisphere,reference_displacement,0.0940,consistent,11,"Table 5(b): radial displacement under load, value used for normalisation"
 hemisphere,closed_lower_bound,0.0924,consistent,11,"Table 5(b): lower bound of reference [7] with the hole closed; not the normalisation value"

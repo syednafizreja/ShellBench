@@ -2,7 +2,7 @@
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.
 
-Learning note for Day 9 (27 Oct 2026), written on Day 7 (25 Oct 2026). It is a study aid, not a validation result. Every clause number below must be checked in your own copy of GB 50011-2010 (2016 edition) before `src/shellbench/seismic.py` cites it. Values I give from memory of the code are marked [?] until you confirm them; my judgement is marked [J].
+Learning note for Day 9 (27 Oct 2026), written on Day 7 (25 Oct 2026). It is a study aid, not a validation result. Every clause number below must be checked in your own copy of GB 50011-2010 (2016 edition) before `src/shellbench/seismic.py` cites it. Values I give from memory of the code are marked (unverified) until you confirm them; my judgement is marked (judgement).
 
 ## Why this method applies to the anchor
 
@@ -10,9 +10,9 @@ The base-shear method (底部剪力法) replaces the earthquake with one static 
 
 ## The six steps
 
-**1. Representative gravity load G_E (cl. 5.1.3, pp. 29-30).** For each storey, take all dead load plus a fraction of the variable load. Table 5.1.3 gives 0.5 for snow, 0.5 for roof dust, roof live load not considered, 1.0 for floor live load calculated from actual conditions, and 0.5 for floor live load as an equivalent uniform load in "other civil buildings" (0.8 for libraries and archives). The anchor's floor live load is an equivalent uniform load in an office, so 0.5 applies [J]. So storey i has G_i = dead_i + 0.5 × live_i, with roof live left out. This is why the live-load choice from Day 6 (2.0 against 2.5/3.0 kN/m², flag D20) reaches the seismic forces.
+**1. Representative gravity load G_E (cl. 5.1.3, pp. 29-30).** For each storey, take all dead load plus a fraction of the variable load. Table 5.1.3 gives 0.5 for snow, 0.5 for roof dust, roof live load not considered, 1.0 for floor live load calculated from actual conditions, and 0.5 for floor live load as an equivalent uniform load in "other civil buildings" (0.8 for libraries and archives). The anchor's floor live load is an equivalent uniform load in an office, so 0.5 applies (judgement). So storey i has G_i = dead_i + 0.5 × live_i, with roof live left out. This is why the live-load choice from Day 6 (2.0 against 2.5/3.0 kN/m², flag D20) reaches the seismic forces.
 
-**2. Fundamental period T1.** The thesis prints no period (baseline_spec S7, decision B9), so Day 9 will report the OpenSeesPy modal period. A bare-frame model leaves out the stiffness of the infill walls, so its period is longer than the real building's. Design practice reduces the computed period for infilled frames by a factor of about 0.6-0.7 (JGJ 3-2010 cl. 4.3.17 [?]). Whether the anchor applies that factor is your decision on Day 9, and it changes α1 directly.
+**2. Fundamental period T1.** The thesis prints no period (baseline_spec S7, decision B9), so Day 9 will report the OpenSeesPy modal period. A bare-frame model leaves out the stiffness of the infill walls, so its period is longer than the real building's. Design practice reduces the computed period for infilled frames by a factor of about 0.6-0.7 (JGJ 3-2010 cl. 4.3.17 (unverified)). Whether the anchor applies that factor is your decision on Day 9, and it changes α1 directly.
 
 **3. Seismic influence coefficient α1 (cl. 5.1.4 and 5.1.5, pp. 30-31, Fig. 5.1.5).** Read α_max from Table 5.1.4-1 for frequent earthquakes at 7 degrees, 0.10 g; the value is 0.08 (confirmed by the author in Table 5.1.4-1, 25 Oct 2026). Tg = 0.35 s is fixed by your decision B5 (site class II, group 1; Table 5.1.4-2 gives 0.35 s). With 5 % damping, η2 = 1.0, and the curve has four parts: a straight rise from 0.45 α_max at T = 0 to η2 α_max at 0.1 s; a plateau at η2 α_max from 0.1 s to Tg; a curved fall α = (Tg/T)^γ η2 α_max from Tg to 5Tg, with γ = 0.9; and a straight fall α = [η2 0.2^γ − η1 (T − 5Tg)] α_max from 5Tg to 6.0 s, with η1 = 0.02. Other damping ratios use formulas 5.1.5-1 to 5.1.5-3.
 
@@ -34,7 +34,7 @@ The thesis prints storey shears but not the steps behind them. Subtracting conse
 | 4 | 199.85 | 101.56 | 15.35 | 6.62 |
 | 5 | 98.29 | 98.29 | 18.95 | 5.19 |
 
-For levels 1-4, F_i/H_i stays between 6.61 and 6.82 kN/m. That is what step 5 gives when the storey weights G_i are nearly equal, so the thesis almost certainly used the base-shear distribution with similar floor weights [J]. Level 4 shows no jump that a ΔF_n would cause, unless it was put on level 5 [J]. This is a reading of the numbers, not something the thesis states.
+For levels 1-4, F_i/H_i stays between 6.61 and 6.82 kN/m. That is what step 5 gives when the storey weights G_i are nearly equal, so the thesis almost certainly used the base-shear distribution with similar floor weights (judgement). Level 4 shows no jump that a ΔF_n would cause, unless it was put on level 5 (judgement). This is a reading of the numbers, not something the thesis states.
 
 ## A sense of scale, before Day 9
 
@@ -48,7 +48,7 @@ Because F_Ek = α1 G_eq, the printed base shear of 363.06 kN implies a G_eq for 
 | 0.65 | 0.0458 | 7 922 | 9 320 |
 | 0.75 | 0.0403 | 9 011 | 10 601 |
 
-The 7.2 m strip of one transverse frame covers about 7.2 × 21.0 = 151 m² per floor (baseline_spec G4 and B10), or about 605 m² over four floors. A total of 7 000-9 000 kN would be roughly 12-15 kN/m², which is a normal range for an RC frame with infill walls [J]. So a period near 0.55-0.65 s would be consistent with the printed shears. If Day 9 finds T1 well outside that, the cause is more likely the period (infill factor) or the weights than the method.
+The 7.2 m strip of one transverse frame covers about 7.2 × 21.0 = 151 m² per floor (baseline_spec G4 and B10), or about 605 m² over four floors. A total of 7 000-9 000 kN would be roughly 12-15 kN/m², which is a normal range for an RC frame with infill walls (judgement). So a period near 0.55-0.65 s would be consistent with the printed shears. If Day 9 finds T1 well outside that, the cause is more likely the period (infill factor) or the weights than the method.
 
 ## Clauses to read before Monday evening
 
@@ -60,8 +60,8 @@ The 7.2 m strip of one transverse frame covers about 7.2 × 21.0 = 151 m² per f
 6. Cl. 5.2.5 (minimum seismic shear coefficient).
 7. JGJ 3-2010 cl. 4.3.17, or the period-reduction rule in your own course notes, for the infill factor.
 
-Still open on 25 Oct 2026: Table 5.1.3 coefficients, the cl. 5.1.5 curve shape, Table 5.2.1 δ_n and Table 5.2.5 λ. The web transcription shows these tables only as images, so they need the author's copy. Write the confirmed value next to each [?] above. Seismic.py will only use values you have confirmed.
+Still open on 25 Oct 2026: Table 5.1.3 coefficients, the cl. 5.1.5 curve shape, Table 5.2.1 δ_n and Table 5.2.5 λ. The web transcription shows these tables only as images, so they need the author's copy. Write the confirmed value next to each (unverified) above. Seismic.py will only use values you have confirmed.
 
-Update, 26 Oct 2026 (the AI assistant): the four values above were read from the author's downloaded copy, "China GB50011-2010 (in English).pdf" (English translation of the 2010 issue; page numbers are the printed code pages). All four match what the primer gave from memory; the [?] marks are removed. Two limits: this is a translation, not the Chinese text, and it is the 2010 issue, not the 2016 revision. I do not know whether the 2016 revision changed any of these four clauses. The author should check the four pages against their Chinese copy before `seismic.py` cites them. The infill period factor (step 2, JGJ 3-2010 cl. 4.3.17 [?]) is not in GB 50011 and stays the author's Day 9 decision.
+Update, 26 Oct 2026 (the AI assistant): the four values above were read from the author's downloaded copy, "China GB50011-2010 (in English).pdf" (English translation of the 2010 issue; page numbers are the printed code pages). All four match what the primer gave from memory; the (unverified) marks are removed. Two limits: this is a translation, not the Chinese text, and it is the 2010 issue, not the 2016 revision. I do not know whether the 2016 revision changed any of these four clauses. The author should check the four pages against their Chinese copy before `seismic.py` cites them. The infill period factor (step 2, JGJ 3-2010 cl. 4.3.17 (unverified)) is not in GB 50011 and stays the author's Day 9 decision.
 
 © 2026 Syed Nafiz Reja Hasib. All rights reserved.

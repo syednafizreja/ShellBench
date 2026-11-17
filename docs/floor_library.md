@@ -11,20 +11,20 @@ A case is one floor variant of layout A, sized to the smallest trial thickness t
 | Variable | Values | Source |
 |---|---|---|
 | Span L | 6.0, 6.6 m | the two bays of layout A (spec G4, floor_concept decision 2) |
-| Rise f/L | 1/8, 1/10, 1/12, 1/15, 1/18, 1/20 | floor_concept decision 4 [J] |
+| Rise f/L | 1/8, 1/10, 1/12, 1/15, 1/18, 1/20 | floor_concept decision 4 (judgement) |
 | Levelling | foamed fill, recycled fill, raised floor | floor_concept 4.3 |
 | Mesh | 1 layer at mid-depth, or 2 layers (one near each face) | Day 25; handoff of 3 Nov (Day 26 to-do) |
 | Tie | prestressed, every 1.2 m | approved by the author on 3 Nov |
-| Trial thickness | 50-150 mm in 10 mm steps | [J] |
+| Trial thickness | 50-150 mm in 10 mm steps | (judgement) |
 
 2 × 6 × 3 × 2 = 72 cases. The case ID is `L{span×10}-r{n}-{ff|rf|rs}-m{layers}`, for example `L66-r15-ff-m1`.
 
 What changed from Day 25:
 
 - **Fill at its true depth.** The fill is f − z(x), deepest at the springings, not a uniform f/3. CalculiX runs a fifth unit case with this shaped load. The buckling run carries the same shaped fill.
-- **Two-layer mesh.** a = a′ = cover + 1.5 × mesh bar = 24 mm [J]. The capacity is GB 50010 6.2.17 with A_s = A_s′. In these shells x < 2a′, so the rule in the last paragraph of 6.2.17 (as in 6.2.14) applies: moments are taken about the compression steel. 6.2.17 also allows the check with the compression steel not counted, so the capacity is the larger of the two valid branches (the AI assistant's reading of 6.2.17). When x > ξ_b h₀ the steel is ignored, as in the one-layer check [J]. Each face carries the minimum ratio, so the mesh mass is 2 × layers × ρ × t × arc factor × 7850 kg/m³ [J].
+- **Two-layer mesh.** a = a′ = cover + 1.5 × mesh bar = 24 mm (judgement). The capacity is GB 50010 6.2.17 with A_s = A_s′. In these shells x < 2a′, so the rule in the last paragraph of 6.2.17 (as in 6.2.14) applies: moments are taken about the compression steel. 6.2.17 also allows the check with the compression steel not counted, so the capacity is the larger of the two valid branches (the AI assistant's reading of 6.2.17). When x > ξ_b h₀ the steel is ignored, as in the one-layer check (judgement). Each face carries the minimum ratio, so the mesh mass is 2 × layers × ρ × t × arc factor × 7850 kg/m³ (judgement).
 - With true fill, the Day 25 ratio check (closed form against FE) is not a pass condition. Spot check 5 replaces it.
-- Buckling is linear, with no imperfection allowance. JGJ 22-2012 asks for a stability analysis (3.2.9), but chapter 7 gives no stability formula for cylindrical shells (LOG, 3 Nov). Decision of 4 Nov 2026 [J]: stability enters through the linear FE buckling factor λ, in two ways:
+- Buckling is linear, with no imperfection allowance. JGJ 22-2012 asks for a stability analysis (3.2.9), but chapter 7 gives no stability formula for cylindrical shells (LOG, 3 Nov). Decision of 4 Nov 2026 (judgement): stability enters through the linear FE buckling factor λ, in two ways:
   - the 1/(1 − 1/λ) amplifier in the 6.2.17 check;
   - the lowest λ in the library is 9.0, far above 1.
 
@@ -60,7 +60,7 @@ Ranges over the library:
 
 Findings:
 
-1. **The two-layer mesh is 0-20 mm thinner than one layer in every case.** A first run had it 10-30 mm thicker. That came from checking only the x < 2a′ branch, which leaves N a lever arm of only t/2 − a′. The capacity now takes the larger of that branch and the branch with the compression steel not counted, and a test checks that two layers never give less capacity than one [J].
+1. **The two-layer mesh is 0-20 mm thinner than one layer in every case.** A first run had it 10-30 mm thicker. That came from checking only the x < 2a′ branch, which leaves N a lever arm of only t/2 − a′. The capacity now takes the larger of that branch and the branch with the compression steel not counted, and a test checks that two layers never give less capacity than one (judgement).
 2. Recycled fill is heavier, so it governs at 6.6 m. Foamed fill and the raised floor come out much the same.
 3. In each column the flattest vault (1/20) is at least as thick as any of 1/10-1/15. The thinnest case (70 mm) is the raised floor with two layers at 6.0 m, 1/8-1/15.
 

@@ -79,5 +79,5 @@ def test_topping_rule_picks_smallest_rigid_topping():
 
 
 def test_ft_is_the_spec_value():
-    """tau / f_t uses f_t = 1.71 MPa (spec X3, GB 50010 Table 4.1.4-1 [?])."""
+    """tau / f_t uses f_t = 1.71 MPa (spec X3, GB 50010 Table 4.1.4-1 (unverified))."""
     assert panel.FT_PA == pytest.approx(1.71e6)
